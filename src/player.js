@@ -7,8 +7,8 @@ waw.Player = waw.Unit.extend({
     ctor: function() {
         this._super();
 
-        this.setContentSize(new cc.Size(32, 32));
-        this.setAnchorPoint(new cc.Point(0, -0.5));
+        this.setContentSize(new cc.Size(24, 16));
+        this.setAnchorPoint(new cc.Point(0, -1));
         this.speed = 1.5;
         this.movement = {
             left: false,
@@ -29,45 +29,45 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 128, 32, 64)
+                    cc.rect(0, 96, 32, 48)
                 ]
             },
             "standing_down":
             {
                 frameRects:
                 [
-                    cc.rect(0, 0, 32, 64)
+                    cc.rect(0, 0, 32, 48)
                 ]
             },
             "standing_horiz":
             {
                 frameRects:
                 [
-                    cc.rect(0, 64, 32, 64)
+                    cc.rect(0, 48, 32, 48)
                 ]
             },
             "walking_up":
             {
                 frameRects:
                 [
-                    cc.rect(0, 128, 32, 64),
-                    cc.rect(32, 128, 32, 64)
+                    cc.rect(0, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48)
                 ]
             },
             "walking_down":
             {
                 frameRects:
                 [
-                    cc.rect(0, 0, 32, 64),
-                    cc.rect(32, 0, 32, 64)
+                    cc.rect(0, 0, 32, 48),
+                    cc.rect(32, 0, 32, 48)
                 ]
             },
             "walking_horiz":
             {
                 frameRects:
                 [
-                    cc.rect(0, 64, 32, 64),
-                    cc.rect(32, 64, 32, 64)
+                    cc.rect(0, 48, 32, 48),
+                    cc.rect(32, 48, 32, 48)
                 ]
             }
         };
