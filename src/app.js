@@ -36,6 +36,12 @@ waw.MainLayer = cc.Layer.extend({
         lazyLayer.addChild(block, 0);
         this.units.push(block);
 
+        // Block #3 Moving
+        block = new waw.movingBlock();
+        block.setPosition(40, 50);
+        lazyLayer.addChild(block, 0);
+        this.units.push(block);
+
         //this.setTouchEnabled(true);
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();

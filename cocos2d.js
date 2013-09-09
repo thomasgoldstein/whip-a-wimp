@@ -19,6 +19,7 @@
             'src/animatedSprite.js',
             'src/player.js',
             'src/block.js',
+            'src/movingBlock.js',
             'src/app.js'
         ]
     };
