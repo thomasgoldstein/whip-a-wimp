@@ -113,24 +113,30 @@ waw.Player = waw.Unit.extend({
         this.direction.right = this.movement.right;
     },
     getNextPosition: function() {
-        var p = this.getPosition();
+        var p = this.getPosition(),
+            speed = this.speed;
+
+        if ((this.movement.left || this.movement.right) &&
+            (this.movement.up || this.movement.down)) {
+            speed *= (2 / 3);
+        }
 
         if (this.movement.left)
         {
-            p.x -= this.speed;
+            p.x -= speed;
         }
         else if (this.movement.right)
         {
-            p.x += this.speed;
+            p.x += speed;
         }
 
         if (this.movement.up)
         {
-            p.y += this.speed;
+            p.y += speed;
         }
         else if (this.movement.down)
         {
-            p.y -= this.speed;
+            p.y -= speed;
         }
 
         return p;
