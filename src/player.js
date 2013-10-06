@@ -143,7 +143,7 @@ waw.Player = waw.Unit.extend({
     },
     update: function(pos) {
         var animKey = this.getState() + "_" + this.getDirection();
-        this.sprite.setFlipX(this.direction.left);
+        this.sprite.setFlippedX(this.direction.left);
         this.sprite.playAnimation(animKey);
 
         this.setPosition(pos);
