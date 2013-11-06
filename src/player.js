@@ -9,7 +9,7 @@ waw.Player = waw.Unit.extend({
 
         this.setContentSize(new cc.Size(24, 16));
         this.setAnchorPoint(new cc.Point(0, -1));
-        this.speed = 1.5;
+        this.speed = 0.75;
         this.movement = {
             left: false,
             right: false,
