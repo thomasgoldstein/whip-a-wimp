@@ -30,21 +30,24 @@ waw.Player = waw.Unit.extend({
                 frameRects:
                 [
                     cc.rect(0, 96, 32, 48)
-                ]
+                ],
+                delay: 0.2
             },
             "standing_down":
             {
                 frameRects:
                 [
                     cc.rect(0, 0, 32, 48)
-                ]
+                ],
+                delay: 0.2
             },
             "standing_horiz":
             {
                 frameRects:
                 [
                     cc.rect(0, 48, 32, 48)
-                ]
+                ],
+                delay: 0.2
             },
             "walking_up":
             {
@@ -52,7 +55,8 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 96, 32, 48),
                     cc.rect(32, 96, 32, 48)
-                ]
+                ],
+                delay: 0.2
             },
             "walking_down":
             {
@@ -60,7 +64,8 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 0, 32, 48),
                     cc.rect(32, 0, 32, 48)
-                ]
+                ],
+                delay: 0.2
             },
             "walking_horiz":
             {
@@ -68,11 +73,12 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 48, 32, 48),
                     cc.rect(32, 48, 32, 48)
-                ]
+                ],
+                delay: 0.2
             }
         };
 
-        this.sprite = new waw.AnimatedSprite(s_Jesus, animData, 0.2);
+        this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
     },
     keyDown: function(e) {

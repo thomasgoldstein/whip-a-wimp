@@ -2,7 +2,7 @@
 waw.AnimatedSprite = cc.Sprite.extend({
     animationSequences: null,
     currentAnimationKey: null,
-    ctor: function(spriteFilePath, animData, speed) {
+    ctor: function(spriteFilePath, animData) {
         var me = this;
         me._super();
 
@@ -27,7 +27,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
                 frames.push(allFrames[frameKey]);
             });
 
-            var anim = cc.Animation.create(frames, speed);
+            var anim = cc.Animation.create(frames, animData[key].delay);
             var action = cc.Animate.create(anim);
             me.animationSequences[key] = cc.Sequence.create(action, cc.CallFunc.create());
         }
