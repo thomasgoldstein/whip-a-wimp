@@ -29,10 +29,14 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
             var anim = cc.Animation.create(frames, animData[key].delay);
             var action = cc.Animate.create(anim);
-            me.animationSequences[key] = cc.Sequence.create(action, cc.CallFunc.create());
+            var seq = !animData[key].mirrorX ? cc.CallFunc.create() : cc.CallFunc.create(this.mirrorAnimationX, this);
+            me.animationSequences[key] = cc.Sequence.create(action, seq);
         }
 
         me.init();
+    },
+    mirrorAnimationX: function() {
+        this.setFlippedX(!this.isFlippedX());
     },
     playAnimation: function(animationKey) {
         if (this.currentAnimationKey === animationKey)
@@ -42,6 +46,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
         this.currentAnimationKey = animationKey;
         this.stopAllActions();
+        this.setFlippedX(false);
         this.runAction(cc.RepeatForever.create(this.animationSequences[this.currentAnimationKey]));
     }
 });

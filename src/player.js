@@ -31,7 +31,7 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 96, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1
             },
             "standing_down":
             {
@@ -39,7 +39,7 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 0, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1
             },
             "standing_horiz":
             {
@@ -47,7 +47,7 @@ waw.Player = waw.Unit.extend({
                 [
                     cc.rect(0, 48, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1
             },
             "walking_up":
             {
@@ -56,16 +56,19 @@ waw.Player = waw.Unit.extend({
                     cc.rect(0, 96, 32, 48),
                     cc.rect(32, 96, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1
             },
             "walking_down":
             {
                 frameRects:
                 [
                     cc.rect(0, 0, 32, 48),
+                    cc.rect(32, 0, 32, 48),
+                    cc.rect(64, 0, 32, 48),
                     cc.rect(32, 0, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1,
+                mirrorX: true
             },
             "walking_horiz":
             {
@@ -74,7 +77,7 @@ waw.Player = waw.Unit.extend({
                     cc.rect(0, 48, 32, 48),
                     cc.rect(32, 48, 32, 48)
                 ],
-                delay: 0.2
+                delay: 0.1
             }
         };
 
@@ -149,7 +152,6 @@ waw.Player = waw.Unit.extend({
     },
     update: function(pos) {
         var animKey = this.getState() + "_" + this.getDirection();
-        this.sprite.setFlippedX(this.direction.left);
         this.sprite.playAnimation(animKey);
 
         this.setPosition(pos);
