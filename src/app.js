@@ -21,6 +21,23 @@ waw.MainLayer = cc.Layer.extend({
 		lazyLayer.addChild(this.player, 1);
 
         this.initWalls(size);
+	// Temp! Add doors sprites 128x128
+	// Left Door Place
+        var door = cc.Sprite.create(s_Door);
+	door.setPosition(24-64,size.height/2);
+	lazyLayer.addChild(door);	
+	// Right Door Place
+        var door = cc.Sprite.create(s_Door);
+	door.setPosition(64-24+size.width,size.height/2);
+	lazyLayer.addChild(door);	
+	// Left Door Place
+        var door = cc.Sprite.create(s_Door);
+	door.setPosition(24-64,size.height/2);
+	lazyLayer.addChild(door);	
+	// Left Door Place
+        var door = cc.Sprite.create(s_Door);
+	door.setPosition(24-64,size.height/2);
+	lazyLayer.addChild(door);	
 
         var block;
 
@@ -37,7 +54,7 @@ waw.MainLayer = cc.Layer.extend({
         this.units.push(block);
 
         // Block #3 Moving
-        block = new waw.movingBlock();
+        block = new waw.MovingBlock();
         block.setPosition(40, 50);
         lazyLayer.addChild(block, 0);
         this.units.push(block);
@@ -124,6 +141,7 @@ waw.MainLayer = cc.Layer.extend({
 waw.MainScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
+	var level = waw.level;
         var layer = new waw.MainLayer();
         layer.init();
         this.addChild(layer);
