@@ -188,6 +188,7 @@
                 <file name="src/player.js"/>
                 <file name="src/block.js"/>
                 <file name="src/movingBlock.js"/>
+                <file name="src/level.js"/>
                 <file name="src/app.js"/>
                 <file name="main.js"/>
             </sources>

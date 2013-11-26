@@ -20,6 +20,7 @@
             'src/player.js',
             'src/block.js',
             'src/movingBlock.js',
+            'src/level.js',
             'src/app.js'
         ]
     };
