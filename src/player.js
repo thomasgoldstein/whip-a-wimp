@@ -54,9 +54,12 @@ waw.Player = waw.Unit.extend({
                 frameRects:
                 [
                     cc.rect(0, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48),
+                    cc.rect(64, 96, 32, 48),
                     cc.rect(32, 96, 32, 48)
                 ],
-                delay: 0.1
+                delay: 0.1,
+                mirrorX: true
             },
             "walking_down":
             {
