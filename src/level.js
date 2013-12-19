@@ -1,4 +1,5 @@
 "use strict";
+
 //Level Generator
 //console.log("Init...");
 //console.log(document); //you can log virtually any JavaScript object
@@ -13,8 +14,8 @@
 // #####
 // #####
 
-//constructor - walls in a room
-function walls() {
+//constructor - Walls in a Room
+function Walls() {
 	this.up = "wall";
 	this.right = "wall";
 	this.down = "wall";
@@ -24,12 +25,12 @@ function walls() {
 	this.bottom = "wall";
 } 
 
-//a room generator
-function room(_name,_x,_y) {
-	this.name = _name || "nameless room";
+//a Room generator
+function Room(_name,_x,_y) {
+	this.name = _name || "nameless Room";
 	this.x = _x;
 	this.y = _y;
-	this.walls = new walls();
+	this.walls = new Walls();
 } 
 
 var rooms = {};
@@ -38,47 +39,64 @@ rooms.initLevel = function() {
 	for(var y = 0; y < 9 ; y++) {
 		rooms[y] = {};
 		for(var x = 0; x < 9 ; x++) {
-			//var t = new room("name"+x+"_"+y,x,y);
+			//var t = new Room("name"+x+"_"+y,x,y);
 			rooms[y][x] = null;
 		}
 	}
 }
 
 rooms.genLevel = function() {
-	//1st room is at 4,4 pas always
+	//1st Room is at 4,4 pas always
 	var x = 4;
 	var y = 4;
 	var oldx = x;
 	var oldy = y;
 	var noCycle = 0;
+    var temp = "empty";
 	do {
 		noCycle++;
 		if(!rooms[y][x]) {
-			var r = new room("Room "+x+"-"+y,x,y);
-			if(x == 4 && y == 4){ //for TEST mark start room
-				//r.walls.up = r.walls.down = r.walls.left = r.walls.right = "empty";
+			var r = new Room("Room "+x+"-"+y,x,y);
+			if(x == 4 && y == 4){ //for TEST mark start Room x4,y4
+				//r.Walls.up = r.Walls.down = r.Walls.left = r.Walls.right = "empty";
 				r.walls.bottom = "start";
 			}
 			//make connection between previous and current rooms
 			if(oldx < x){
-				rooms[oldy][oldx].walls.right = "empty";
-				r.walls.left = "empty";
+                if(Math.random()<0.2)   //20% chance for a closed door
+                    temp = "door";
+                else
+                    temp = "empty";     //80% - passage
+				rooms[oldy][oldx].walls.right = temp;
+				r.walls.left = temp;
 			}
 			if(oldx > x){
-				rooms[oldy][oldx].walls.left = "empty";
-				r.walls.right = "empty";
+                if(Math.random()<0.2)
+                    temp = "door";
+                else
+                    temp = "empty";
+				rooms[oldy][oldx].walls.left = temp;
+				r.walls.right = temp;
 			}
 			if(oldy < y){
-				rooms[oldy][oldx].walls.down = "empty";
-				r.walls.up = "empty";
+                if(Math.random()<0.2)
+                    temp = "door";
+                else
+                    temp = "empty";
+				rooms[oldy][oldx].walls.down = temp;
+				r.walls.up = temp;
 			}
 			if(oldy > y){
-				rooms[oldy][oldx].walls.up = "empty";
-				r.walls.down = "empty";
+                if(Math.random()<0.2)
+                    temp = "door";
+                else
+                    temp = "empty";
+				rooms[oldy][oldx].walls.up = temp;
+				r.walls.down = temp;
 			}
 			rooms[y][x] = r;
 		} else {
-			//cannot put a room here
+			//cannot put a Room here
 			noCycle--;
 		}
 
@@ -118,26 +136,26 @@ rooms.genLevel = function() {
 
 		//check for max number of rooms to generate
 	} while(noCycle<15 );
-	//r.walls.up = "door";
+	//r.Walls.up = "door";
 
-	//room - marker 0,0
+	//Room - marker 0,0
 	x = 0; y = 0;
-	r = new room("Room "+x+"-"+y,x,y);
+	r = new Room("Room "+x+"-"+y,x,y);
 	r.walls.down = r.walls.right = "empty";
 	rooms[y][x] = r;
 
-	//room - marker 8,8
+	//Room - marker 8,8
 	x = 8; y = 8;
-	r = new room("Room "+x+"-"+y,x,y);
+	r = new Room("Room "+x+"-"+y,x,y);
 	r.walls.up = r.walls.left = "empty";	
 	rooms[y][x] = r;
 }
 
-//print 1 of 3 lines of the set room 4 debug
+//print 1 of 3 lines of the set Room 4 debug
 // #|#  ###
 // - -  # #  .
 // #|#  ###
-function getLineRoom(room, line){
+/*function getLineRoom(room, line){
 	if(!room)
 		if(line == 1)
 			return " . ";
@@ -159,16 +177,16 @@ function getLineRoom(room, line){
 	default:
 		return "???";
 	}
-}
+}*/
 
 //Small
-rooms.printSLevel = function() {
+/*rooms.printSLevel = function() {
 	//print Small debug level map
 	for(var y = 0; y < 9 ; y++) {
 		var s ="";
 		for(var x = 0; x < 9; x++) {
 			var r = rooms[y][x];
-			if(r)	//is it a start room?
+			if(r)	//is it a start Room?
 				if(r.walls.bottom == "start")
 					s = s + "S";
 				else
@@ -197,14 +215,131 @@ rooms.printLevel = function() {
 			console.log(s);
 		}
 	}
+}*/
+
+
+
+
+//Generate MiniMap
+rooms.GenerateMiniMapLayer = function() {
+    //bare map
+    var layer;
+    layer = new cc.Layer();
+    //layer.setContentSize(cc.size(9*3-1,9*3-1));
+    var draw = cc.DrawNode.create();
+    layer.addChild(draw,10);
+//    nextLayer.init();
+
+    for(var y = 0; y < 9 ; y++) {
+        for(var x = 0; x < 9; x++) {
+            var r = rooms[y][x];
+            if(r)	//is it a Room
+                draw.drawDot( cc.p(x*3+1, y*3+1), 3, cc.c4f( Math.random(), Math.random(), Math.random(), 1) );
+        }
+    }
+    return layer;
 }
 
+//preparesand adds elements of a room onto existing layer
+waw.prepareRoomLayer = function(room, layer) {
+    //layer.addChild();
+    if(!room) throw "unknown room";
+    if(!layer) throw "need a layer to add elements";
+
+    //add room Background
+    var background = cc.Sprite.create(s_Background);
+    background.setAnchorPoint(0, 0);
+    layer.addChild(background, -1);
+
+    //TODO add some random debris
+
+    //add doors
+    switch (room.walls.up) {
+        case "door":
+            var d = cc.Sprite.create(s_DoorUp);
+            //d.setAnchorPoint(0, 0);
+            layer.addChild(d);
+            d.setPosition(cc.p(160,208+16));
+            break;
+        case "empty":
+            var d = cc.Sprite.create(s_PassUp);
+            //d.setAnchorPoint(0, 0);
+            layer.addChild(d);
+            d.setPosition(cc.p(160,208+16));
+            break;
+        case "wall":
+            //we don't draw wall (it's on the bg)
+            break;
+    }
+    switch (room.walls.right) {
+        case "door":
+            var d = cc.Sprite.create(s_DoorRight);
+            //d.setAnchorPoint(0, 0);
+            layer.addChild(d);
+            d.setPosition(cc.p(320-16,120));
+            break;
+        case "empty":
+            var d = cc.Sprite.create(s_PassRight);
+            //d.setAnchorPoint(0, 0);
+            layer.addChild(d);
+            d.setPosition(cc.p(320-16,120));
+            break;
+        case "wall":
+            //we don't draw wall (it's on the bg)
+            break;
+    }
+    switch (room.walls.down) {
+        case "door":
+            var d = cc.Sprite.create(s_DoorDown);
+            //d.setAnchorPoint(0, 0);
+            d.setPosition(cc.p(160,16));
+            layer.addChild(d);
+            break;
+        case "empty":
+            var d = cc.Sprite.create(s_PassDown);
+            //d.setAnchorPoint(0, 0);
+            d.setPosition(cc.p(160,16));
+            layer.addChild(d);
+            break;
+        case "wall":
+            //we don't draw wall (it's on the bg)
+            break;
+    }
+    switch (room.walls.left) {
+        case "door":
+            var d = cc.Sprite.create(s_DoorLeft);
+            //d.setAnchorPoint(0, 0);
+            d.setPosition(cc.p(16,120));
+            layer.addChild(d);
+            break;
+        case "empty":
+            var d = cc.Sprite.create(s_PassLeft);
+            //d.setAnchorPoint(0, 0);
+            d.setPosition(cc.p(16,120));
+            layer.addChild(d);
+            break;
+        case "wall":
+            //we don't draw wall (it's on the bg)
+            break;
+    }
+
+    //TODO add room obstacles
+
+    //print room coords X,Y at the upper left corner
+    var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY, "Arial", 10);
+    layer.addChild(label, 0); //, TAG_LABEL_SPRITE1);
+    label.setPosition(cc.p(42, 240-10));
+    label.setOpacity(200);
+
+}
 
 rooms.initLevel();
 rooms.genLevel();
-console.info("Small Level");
-rooms.printSLevel();
-console.info("Big Level");
-rooms.printLevel();
 
-console.log(rooms);
+//console.info("Small Level");
+//rooms.printSLevel();
+//console.info("Big Level");
+//rooms.printLevel();
+//console.log(rooms);
+
+//var miniMapLayer = rooms.GenerateMiniMapLayer();

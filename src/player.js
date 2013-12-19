@@ -4,9 +4,10 @@ waw.Player = waw.Unit.extend({
     speed: 0,
     movement: null,
     direction: null,
+    alive: null,    //if not, then disable all the player functions that might cause changing rooms / score / etc
     ctor: function() {
         this._super();
-
+        console.info("Player ctor");
         this.setContentSize(new cc.Size(24, 16));
         this.setAnchorPoint(new cc.Point(0, -1));
         this.speed = 0.75;
@@ -86,12 +87,17 @@ waw.Player = waw.Unit.extend({
 
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
+        this.alive = true;
     },
     keyDown: function(e) {
+        if(!this.alive)
+            return;
         this.changeKey(e, true);
         this.updateDirection();
     },
     keyUp: function(e) {
+        if(!this.alive)
+            return;
         this.changeKey(e, false);
 
         if (this.getState() === "walking")
