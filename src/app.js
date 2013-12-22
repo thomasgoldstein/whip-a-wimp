@@ -32,6 +32,7 @@ waw.MainLayer = cc.Layer.extend({
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
+        this.units = new Array();   //?
         //Initially draw room BG, walls, enemies onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
         if(currentRoom) {
