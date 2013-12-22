@@ -49,3 +49,10 @@ waw.Unit = cc.Node.extend({
         return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
     }
 });
+
+//we add it to prototype to use common sprites as our waw.unit to check their collisions
+cc.Sprite.prototype.collideRect = function() {
+    var s = this.getContentSize();
+    var pos = this.getPosition();
+    return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
+}

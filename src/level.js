@@ -241,9 +241,10 @@ rooms.GenerateMiniMapLayer = function() {
 }
 
 //preparesand adds elements of a room onto existing layer
-waw.prepareRoomLayer = function(room, layer) {
+waw.prepareRoomLayer = function(room, units, layer) {
     //layer.addChild();
     if(!room) throw "unknown room";
+    if(!units) throw "need a units array to add elements";
     if(!layer) throw "need a layer to add elements";
 
     //add room Background
@@ -257,69 +258,105 @@ waw.prepareRoomLayer = function(room, layer) {
     switch (room.walls.up) {
         case "door":
             var d = cc.Sprite.create(s_DoorUp);
-            //d.setAnchorPoint(0, 0);
             layer.addChild(d);
             d.setPosition(cc.p(160,208+16));
+            //we set here obstacle
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(160,240));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassUp);
-            //d.setAnchorPoint(0, 0);
             layer.addChild(d);
             d.setPosition(cc.p(160,208+16));
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(160,240));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.right) {
         case "door":
             var d = cc.Sprite.create(s_DoorRight);
-            //d.setAnchorPoint(0, 0);
             layer.addChild(d);
             d.setPosition(cc.p(320-16,120));
+            // obstacle
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(320,120));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassRight);
-            //d.setAnchorPoint(0, 0);
             layer.addChild(d);
             d.setPosition(cc.p(320-16,120));
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(320,120));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.down) {
         case "door":
             var d = cc.Sprite.create(s_DoorDown);
-            //d.setAnchorPoint(0, 0);
             d.setPosition(cc.p(160,16));
             layer.addChild(d);
+            // obstacle
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(160,0));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassDown);
-            //d.setAnchorPoint(0, 0);
             d.setPosition(cc.p(160,16));
             layer.addChild(d);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(160,0));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.left) {
         case "door":
             var d = cc.Sprite.create(s_DoorLeft);
-            //d.setAnchorPoint(0, 0);
             d.setPosition(cc.p(16,120));
             layer.addChild(d);
+            // obstacle
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(0,120));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassLeft);
-            //d.setAnchorPoint(0, 0);
             d.setPosition(cc.p(16,120));
             layer.addChild(d);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
+            var wall = new cc.Sprite.create(s_Empty32x32);
+            wall.setContentSize(new cc.Size(32, 32));
+            wall.setPosition(cc.p(0,120));
+            units.push(wall);
+            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
 
@@ -333,6 +370,7 @@ waw.prepareRoomLayer = function(room, layer) {
 
 }
 
+//init the current labyrinth of rooms;
 rooms.initLevel();
 rooms.genLevel();
 
@@ -341,5 +379,3 @@ rooms.genLevel();
 //console.info("Big Level");
 //rooms.printLevel();
 //console.log(rooms);
-
-//var miniMapLayer = rooms.GenerateMiniMapLayer();
