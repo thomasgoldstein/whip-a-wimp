@@ -36,7 +36,7 @@ waw.MainLayer = cc.Layer.extend({
         //Initially draw room BG, walls, enemies onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
         if(currentRoom) {
-            this.initWalls(size); //init array units with non-destructable walls (8 pieces)
+            waw.initWalls(currentRoom, this.units); //init array units with non-destructable walls (8 pieces)
             waw.prepareRoomLayer(currentRoom, this.units, this);
         } else
             throw "this room coords are out of the grid"
@@ -51,55 +51,6 @@ waw.MainLayer = cc.Layer.extend({
             this.player.runAction(cc.Blink.create(1, 5)); //Blink Player sprite
 
         //}
-    },
-    //init 8 pieces of impassable walls
-    initWalls: function(size) {
-        var wall;
-        var wallSize = 16; //thickness of the border walls
-
-        // Top wall left
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(320 - 32, wallSize));
-        wall.setPosition(0, 240-wallSize/2);
-        this.units.push(wall);
-        // Top wall right
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(320 - 32, wallSize));
-        wall.setPosition(320, 240-wallSize/2);
-        this.units.push(wall);
-
-        // Left wall upper
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(wallSize, 240-32));
-        wall.setPosition(wallSize / 2, 240);
-        this.units.push(wall);
-        // Left wall lower
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(wallSize, 240-32));
-        wall.setPosition(wallSize / 2, 0);
-        this.units.push(wall);
-
-        // Right wall upper
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(wallSize, 240-32));
-        wall.setPosition(320-wallSize / 2, 240);
-        this.units.push(wall);
-        // Right wall lower
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(wallSize, 240-32));
-        wall.setPosition(320-wallSize / 2, 0);
-        this.units.push(wall);
-
-        // Bottom wall left
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(320 - 32, wallSize));
-        wall.setPosition(0, wallSize / 2);
-        this.units.push(wall);
-        // Bottom wall right
-        wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(320 - 32, wallSize));
-        wall.setPosition(320, wallSize / 2);
-        this.units.push(wall);
     },
     onEnterTransitionDidFinish: function() {
     console.info("onEnterTransitionDidFinish ROOM: "+currentRoomX+","+currentRoomY);
