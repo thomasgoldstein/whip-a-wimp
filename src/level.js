@@ -30,7 +30,7 @@ function Room(_name,_x,_y) {
 	this.x = _x;
 	this.y = _y;
 	this.walls = new Walls();
-} 
+}
 
 var rooms = {};
 rooms.initLevel = function() {
@@ -42,7 +42,7 @@ rooms.initLevel = function() {
 			rooms[y][x] = null;
 		}
 	}
-}
+};
 
 rooms.genLevel = function() {
 	//1st Room is at 4,4 pas always
@@ -143,18 +143,18 @@ rooms.genLevel = function() {
 	} while(noCycle<15 );
 	//r.Walls.up = "door";
 
-	//Room - marker 0,0
-	x = 0; y = 0;
-	r = new Room("Room "+x+"-"+y,x,y);
-	r.walls.down = r.walls.right = "empty";
-	rooms[y][x] = r;
-
-	//Room - marker 8,8
-	x = 8; y = 8;
-	r = new Room("Room "+x+"-"+y,x,y);
-	r.walls.up = r.walls.left = "empty";	
-	rooms[y][x] = r;
-}
+//	//Room - marker 0,0
+//	x = 0; y = 0;
+//	r = new Room("Room "+x+"-"+y,x,y);
+//	r.walls.down = r.walls.right = "empty";
+//	rooms[y][x] = r;
+//
+//	//Room - marker 8,8
+//	x = 8; y = 8;
+//	r = new Room("Room "+x+"-"+y,x,y);
+//	r.walls.up = r.walls.left = "empty";
+//	rooms[y][x] = r;
+};
 
 //print 1 of 3 lines of the set Room 4 debug
 // #|#  ###
@@ -243,7 +243,7 @@ rooms.GenerateMiniMapLayer = function() {
         }
     }
     return layer;
-}
+};
 
 //init 8 pieces of impassable walls
 waw.initWalls = function(room,units) {
@@ -295,7 +295,7 @@ waw.initWalls = function(room,units) {
     wall.setContentSize(new cc.Size(320 - 32, wallSize));
     wall.setPosition(320+room.walls.down_d, wallSize / 2);
     units.push(wall);
-}
+};
 
 //preparesand adds elements of a room onto existing layer
 waw.prepareRoomLayer = function(room, units, layer) {
@@ -425,7 +425,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
     label.setPosition(cc.p(42, 240-10));
     label.setOpacity(200);
 
-}
+};
 
 //init the current labyrinth of rooms;
 rooms.initLevel();

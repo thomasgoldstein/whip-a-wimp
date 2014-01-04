@@ -164,6 +164,8 @@ waw.Player = waw.Unit.extend({
         this.sprite.playAnimation(animKey);
 
         this.setPosition(pos);
+        //Z Index
+        this.setZOrder(250- pos.y);
     },
     getState: function() {
         var state =
