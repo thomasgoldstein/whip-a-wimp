@@ -68,8 +68,9 @@ rooms.genLevel = function() {
                 else
                     temp = "empty";     //80% - passage
                 r.walls.left = rooms[oldy][oldx].walls.right = temp;
+                //TODO in the final ver, make the cance of the shifted door at 30% 1-> 0.3 . Now it is for debugging
                 if(Math.random()<1)     //30% - chance of the shifted passage
-                    r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(100- Math.random()*200); // -100 .. 100
+                    r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(80- Math.random()*160); // -80 .. 80
             }
 			if(oldx > x){
                 if(Math.random()<0.2)
@@ -78,7 +79,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.right = rooms[oldy][oldx].walls.left = temp;
                 if(Math.random()<1)
-                    r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(100- Math.random()*200); // -100 .. 100
+                    r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(80- Math.random()*160); // -80 .. 80
 			}
 			if(oldy < y){
                 if(Math.random()<0.2)
@@ -87,7 +88,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.up = rooms[oldy][oldx].walls.down = temp;
                 if(Math.random()<1)
-                    r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(80- Math.random()*160); // -80 .. 80
+                    r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(100- Math.random()*200); // -100 .. 100
 			}
 			if(oldy > y){
                 if(Math.random()<0.2)
@@ -96,7 +97,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.down = rooms[oldy][oldx].walls.up = temp;
                 if(Math.random()<1)
-                    r.walls.down_d = rooms[oldy][oldx].walls.up_d = Math.round(80- Math.random()*160); // -80 .. 80
+                    r.walls.down_d = rooms[oldy][oldx].walls.up_d = Math.round(100- Math.random()*200); // -100 .. 100
 			}
 			rooms[y][x] = r;
 		} else {
@@ -251,51 +252,48 @@ waw.initWalls = function(room,units) {
     var wall;
     var wallSize = 16; //thickness of the border walls
 
-//    console.log(room);
-
-    //TODO - fill gaps in corners.. due to shifted invisible walls
-    // Top wall left
-    wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(0+room.up_d, 240-wallSize/2);
-    units.push(wall);
-    // Top wall right
-    wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(320+room.up_d, 240-wallSize/2);
-    units.push(wall);
-
-    // Left wall upper
+    // Left wall lower
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(wallSize, 240-32));
-    wall.setPosition(wallSize / 2, 240+room.left_d);
+    wall.setPosition(wallSize / 2, 240+room.walls.left_d);
     units.push(wall);
     // Left wall lower
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(wallSize, 240-32));
-    wall.setPosition(wallSize / 2, 0+room.left_d);
+    wall.setPosition(wallSize / 2, 0+   room.walls.left_d);
     units.push(wall);
 
     // Right wall upper
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(wallSize, 240-32));
-    wall.setPosition(320-wallSize / 2, 240+room.right_d);
+    wall.setPosition(320-wallSize / 2, 240+room.walls.right_d);
     units.push(wall);
     // Right wall lower
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(wallSize, 240-32));
-    wall.setPosition(320-wallSize / 2, 0+room.right_d);
+    wall.setPosition(320-wallSize / 2, 0+room.walls.right_d);
+    units.push(wall);
+
+    // Top wall. left half
+    wall = new waw.Unit();
+    wall.setContentSize(new cc.Size(320 - 32, wallSize));
+    wall.setPosition(0+room.walls.up_d, 240-wallSize/2);
+    units.push(wall);
+    // Top wall. right
+    wall = new waw.Unit();
+    wall.setContentSize(new cc.Size(320 - 32, wallSize));
+    wall.setPosition(320+room.walls.up_d, 240-wallSize/2);
     units.push(wall);
 
     // Bottom wall left
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(0+room.down_d, wallSize / 2);
+    wall.setPosition(0+room.walls.down_d, wallSize / 2);
     units.push(wall);
     // Bottom wall right
     wall = new waw.Unit();
     wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(320+room.down_d, wallSize / 2);
+    wall.setPosition(320+room.walls.down_d, wallSize / 2);
     units.push(wall);
 }
 
