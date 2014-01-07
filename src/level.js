@@ -227,13 +227,12 @@ waw.prepareRoomLayer = function(room, units, layer) {
     layer.addChild(background, -10);
 
     //TODO stick some random debris to PSEUDOrandom per a room
-    for(var x = 0; x < Math.random()*5+2; x++) {
-//        var d = cc.Sprite.create(s_Debris);
+    for(var x = 0; x < Math.random()*3+1; x++) {
         var d = cc.Sprite.create(s_Debris,
             cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
 
         layer.addChild(d,-9); //on the floor
-        d.setPosition(cc.p(Math.round(32+Math.random()*256),Math.round(32+Math.random()*176)));
+        d.setPosition(cc.p(Math.round(64+Math.random()*192),Math.round(64+Math.random()*112)));
         if(Math.random()>0.5)
             continue;
         d.setRotation(Math.random()*360);
@@ -241,6 +240,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
             continue;
         d.setScale(0.75 + Math.random()*0.3);
         //d.runAction(cc.FadeTo.create(5,0.5));
+    }
+    //TODO pool / pit like debris (you cannot step over it)
+    for(var x = 0; x < Math.random()*2; x++) {
+        var d = cc.Sprite.create(s_Pit,
+            cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+        layer.addChild(d,-8); //on the floor
+        d.setPosition(cc.p(Math.round(64+Math.random()*192),Math.round(64+Math.random()*112)));
+        units.push(d);
     }
 
     //add doors
@@ -254,7 +261,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(160+room.walls.up_d,240));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassUp);
@@ -267,7 +274,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(160,240));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.right) {
@@ -280,7 +287,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(320,120+room.walls.right_d));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassRight);
@@ -293,7 +300,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(320,120));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.down) {
@@ -306,7 +313,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(160+room.walls.down_d,0));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassDown);
@@ -319,7 +326,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(160,0));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.left) {
@@ -332,7 +339,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(0,120+room.walls.left_d));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
             var d = cc.Sprite.create(s_PassLeft);
@@ -345,7 +352,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             wall.setContentSize(new cc.Size(32, 32));
             wall.setPosition(cc.p(0,120));
             units.push(wall);
-            layer.addChild(wall); //DEBUG! to see obstacle
+//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
 
