@@ -69,7 +69,7 @@ rooms.genLevel = function() {
                     temp = "empty";     //80% - passage
                 r.walls.left = rooms[oldy][oldx].walls.right = temp;
                 //TODO in the final ver, make the cance of the shifted door at 30% 1-> 0.3 . Now it is for debugging
-                if(Math.random()<1)     //30% - chance of the shifted passage
+                if(Math.random()<0.3)     //30% - chance of the shifted passage
                     r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(80- Math.random()*160); // -80 .. 80
             }
 			if(oldx > x){
@@ -78,7 +78,7 @@ rooms.genLevel = function() {
                 else
                     temp = "empty";
                 r.walls.right = rooms[oldy][oldx].walls.left = temp;
-                if(Math.random()<1)
+                if(Math.random()<0.3)
                     r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(80- Math.random()*160); // -80 .. 80
 			}
 			if(oldy < y){
@@ -87,7 +87,7 @@ rooms.genLevel = function() {
                 else
                     temp = "empty";
                 r.walls.up = rooms[oldy][oldx].walls.down = temp;
-                if(Math.random()<1)
+                if(Math.random()<0.3)
                     r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(100- Math.random()*200); // -100 .. 100
 			}
 			if(oldy > y){
@@ -96,7 +96,7 @@ rooms.genLevel = function() {
                 else
                     temp = "empty";
                 r.walls.down = rooms[oldy][oldx].walls.up = temp;
-                if(Math.random()<1)
+                if(Math.random()<0.3)
                     r.walls.down_d = rooms[oldy][oldx].walls.up_d = Math.round(100- Math.random()*200); // -100 .. 100
 			}
 			rooms[y][x] = r;
@@ -138,92 +138,9 @@ rooms.genLevel = function() {
 			y=0;
 			//noCycle--;
 		}
-
 		//check for max number of rooms to generate
 	} while(noCycle<15 );
-	//r.Walls.up = "door";
-
-//	//Room - marker 0,0
-//	x = 0; y = 0;
-//	r = new Room("Room "+x+"-"+y,x,y);
-//	r.walls.down = r.walls.right = "empty";
-//	rooms[y][x] = r;
-//
-//	//Room - marker 8,8
-//	x = 8; y = 8;
-//	r = new Room("Room "+x+"-"+y,x,y);
-//	r.walls.up = r.walls.left = "empty";
-//	rooms[y][x] = r;
 };
-
-//print 1 of 3 lines of the set Room 4 debug
-// #|#  ###
-// - -  # #  .
-// #|#  ###
-/*function getLineRoom(room, line){
-	if(!room)
-		if(line == 1)
-			return " . ";
-		else
-			return "   ";
-	switch(line){
-	case 0:	//up
-		if(room.walls.up == "wall")
-			return "###";
-		else
-			return "#|#";
-	case 1:	//left + right
-		return ((room.walls.left == "wall")?"#":"-")+((room.walls.bottom == "start")?"S":" ")+((room.walls.right == "wall")?"#":"-");
-	case 2:	//down
-		if(room.walls.down == "wall")
-			return "##W";
-		else
-			return "#|#"; // i return different line, because FireBug does shorten the outpt. If I output 2 equal lines, it prints only 1 instead
-	default:
-		return "???";
-	}
-}*/
-
-//Small
-/*rooms.printSLevel = function() {
-	//print Small debug level map
-	for(var y = 0; y < 9 ; y++) {
-		var s ="";
-		for(var x = 0; x < 9; x++) {
-			var r = rooms[y][x];
-			if(r)	//is it a start Room?
-				if(r.walls.bottom == "start")
-					s = s + "S";
-				else
-					s = s + "W";
-				//s = s + r.name[0];
-			else	//wall
-				s = s + ".";
-		}
-		console.log(s);
-	}
-}
-
-//BIG
-rooms.printLevel = function() {
-	//print debug level map
-	for(var y = 0; y < 9 ; y++) {
-		for(var i=0; i<3; i++) {
-			var s ="";
-			for(var x = 0; x < 9; x++) {
-				s = s + getLineRoom(rooms[y][x], i);
-				//if(rooms[y][x])
-				//	s = s + rooms[y][x].name[0];
-				//else
-				//	s = s + "#";
-			}
-			console.log(s);
-		}
-	}
-}*/
-
-
-
 
 //Generate MiniMap
 rooms.GenerateMiniMapLayer = function() {
@@ -307,9 +224,24 @@ waw.prepareRoomLayer = function(room, units, layer) {
     //add room Background
     var background = cc.Sprite.create(s_Background);
     background.setAnchorPoint(0, 0);
-    layer.addChild(background, -1);
+    layer.addChild(background, -10);
 
-    //TODO add some random debris
+    //TODO stick some random debris to PSEUDOrandom per a room
+    for(var x = 0; x < Math.random()*5+2; x++) {
+//        var d = cc.Sprite.create(s_Debris);
+        var d = cc.Sprite.create(s_Debris,
+            cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+
+        layer.addChild(d,-9); //on the floor
+        d.setPosition(cc.p(Math.round(32+Math.random()*256),Math.round(32+Math.random()*176)));
+        if(Math.random()>0.5)
+            continue;
+        d.setRotation(Math.random()*360);
+        if(Math.random()>0.5)
+            continue;
+        d.setScale(0.75 + Math.random()*0.3);
+        //d.runAction(cc.FadeTo.create(5,0.5));
+    }
 
     //add doors
     switch (room.walls.up) {
@@ -417,7 +349,20 @@ waw.prepareRoomLayer = function(room, units, layer) {
             break;
     }
 
-    //TODO add room obstacles
+    //TODO DEBUG! Adding random BLOCK sprites to test Z-index
+    for(var y = 32+16; y < 240-16; y += 16 ) {
+        if(Math.random()>0.3)
+            continue;
+        var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+        //coords
+        var x = Math.round(20+Math.random()*280);
+        sprite.setPosition(new cc.p(x, y));
+        layer.addChild(sprite, 250 - y);
+        var wall = new waw.Unit();
+        wall.setContentSize(new cc.Size(32, 16)); //collision box
+        wall.setPosition(cc.p(x,y-8)); //collision box 32x16
+        units.push(wall);
+    }
 
     //print room coords X,Y at the upper left corner
     var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY, "Arial", 10);

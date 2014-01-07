@@ -11,6 +11,7 @@ var s_PassDown = "res/PassDown.fw.png";
 var s_PassLeft = "res/PassLeft.fw.png";
 var s_PassRight = "res/PassRight.fw.png";
 var s_Empty32x32 = "res/Empty32x32.fw.png";
+var s_Debris = "res/Debris.fw.png";
 //var s_WallBreach = "res/WallBreach.fw.png";
 
 var g_resources = [
@@ -26,7 +27,8 @@ var g_resources = [
     {src:s_PassDown},
     {src:s_PassLeft},
     {src:s_PassRight},
-    {src:s_Empty32x32}
+    {src:s_Empty32x32},
+    {src:s_Debris}
 //    {src:s_DoorOpen},
 //    {src:s_WallBreach}
     //plist

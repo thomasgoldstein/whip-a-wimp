@@ -52,12 +52,7 @@ waw.MainLayer = cc.Layer.extend({
 
         //}
 
-        //DEBUG! Adding random BLOCK sprites to test Z-index
-        for(var y = 32; y < 240; y += 16 ) {
-            var sprite = cc.Sprite.create(s_Block);
-            sprite.setPosition(new cc.p(20+Math.random()*280, y));
-            this.addChild(sprite, 250 - y);
-        }
+
     },
     onEnterTransitionDidFinish: function() {
     console.info("onEnterTransitionDidFinish ROOM: "+currentRoomX+","+currentRoomY);
