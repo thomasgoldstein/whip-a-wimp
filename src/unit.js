@@ -47,6 +47,19 @@ waw.Unit = cc.Node.extend({
         }
 
         return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
+    },
+    doesCollide: function (_units) {
+        if(!_units) throw "must be an array in the arg";
+        for (var unit in _units) {
+            if(!_units[unit] || _units[unit] == this)    //do not compare with self
+                continue;
+            //console.info(_units[unit]);
+            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
+
+            if (rect.width > 0 && rect.height > 0) // Collision!
+                return true;
+        }
+        return false;
     }
 });
 
@@ -55,4 +68,4 @@ cc.Sprite.prototype.collideRect = function() {
     var s = this.getContentSize();
     var pos = this.getPosition();
     return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
-}
+};

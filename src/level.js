@@ -22,6 +22,10 @@ function Walls() {
     //TODO add usage of top / bottom ladders in the level
 	this.top = "wall";
 	this.bottom = "wall";
+    // Random Seed to generate the same lists of decorative elements
+    this.randomSeedDebris = Math.random()*100000;
+    this.randomSeedObstacles = Math.random()*100000;
+
 } 
 
 //a Room generator
