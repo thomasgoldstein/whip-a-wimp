@@ -183,11 +183,12 @@
             <sources dir="${basedir}">
                 <file name="src/resource.js"/>
                 <file name="src/namespace.js"/>
-                <file name="src/rand.js"/>
+                <file name="src/seedrandom.js"/>
                 <file name="src/unit.js"/>
                 <file name="src/animatedSprite.js"/>
                 <file name="src/player.js"/>
                 <file name="src/block.js"/>
+                <file name="src/enemy.js"/>
                 <file name="src/movingBlock.js"/>
                 <file name="src/level.js"/>
                 <file name="src/app.js"/>

@@ -15,7 +15,7 @@
         appFiles:[
             'src/resource.js',
             'src/namespace.js',
-            'src/rand.js',
+            'src/seedrandom.js',
             'src/unit.js',
             'src/animatedSprite.js',
             'src/player.js',

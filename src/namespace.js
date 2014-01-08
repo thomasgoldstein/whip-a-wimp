@@ -2,4 +2,7 @@
  * @namespace
  */
 "use strict";
-var waw = {};
+var waw = {
+           rand:null
+
+};

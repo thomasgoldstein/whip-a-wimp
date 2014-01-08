@@ -28,7 +28,7 @@ waw.MainLayer = cc.Layer.extend({
 
     init: function () {
         this._super();
-        var size = cc.Director.getInstance().getWinSize();
+//        var size = cc.Director.getInstance().getWinSize();
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();

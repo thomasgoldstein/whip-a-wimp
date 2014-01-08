@@ -22,11 +22,7 @@ function Walls() {
     //TODO add usage of top / bottom ladders in the level
 	this.top = "wall";
 	this.bottom = "wall";
-    // Random Seed to generate the same lists of decorative elements
-    this.randomSeedDebris = Math.random()*100000;
-    this.randomSeedObstacles = Math.random()*100000;
-
-} 
+}
 
 //a Room generator
 function Room(_name,_x,_y) {
@@ -34,6 +30,9 @@ function Room(_name,_x,_y) {
 	this.x = _x;
 	this.y = _y;
 	this.walls = new Walls();
+// Random Seed to generate the same lists of decorative elements
+    this.randomSeedDebris = Math.round(Math.random()*100000);
+    this.randomSeedObstacles = Math.round(Math.random()*100000);
 }
 
 var rooms = {};
@@ -147,6 +146,7 @@ rooms.genLevel = function() {
 };
 
 //Generate MiniMap
+//TODO it doesnt work
 rooms.GenerateMiniMapLayer = function() {
     //bare map
     var layer;
@@ -230,27 +230,29 @@ waw.prepareRoomLayer = function(room, units, layer) {
     background.setAnchorPoint(0, 0);
     layer.addChild(background, -10);
 
-    //TODO stick some random debris to PSEUDOrandom per a room
-    for(var x = 0; x < Math.random()*3+1; x++) {
+    //some random debris to PSEUDO random per a room
+    waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
+    for(var x = 0; x < waw.rand()*3+1; x++) {
         var d = cc.Sprite.create(s_Debris,
-            cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
 
         layer.addChild(d,-9); //on the floor
-        d.setPosition(cc.p(Math.round(64+Math.random()*192),Math.round(64+Math.random()*112)));
-        if(Math.random()>0.5)
+        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
+        if(waw.rand()>0.5)
             continue;
-        d.setRotation(Math.random()*360);
-        if(Math.random()>0.5)
+        d.setRotation(waw.rand()*360);
+        if(waw.rand()>0.5)
             continue;
-        d.setScale(0.75 + Math.random()*0.3);
+        d.setScale(0.75 + waw.rand()*0.3);
         //d.runAction(cc.FadeTo.create(5,0.5));
     }
     //TODO pool / pit like debris (you cannot step over it)
-    for(var x = 0; x < Math.random()*2; x++) {
+    //TODO remove them from there. they'll be in the patterns
+    for(var x = 0; x < waw.rand()*2; x++) {
         var d = cc.Sprite.create(s_Pit,
-            cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
         layer.addChild(d,-8); //on the floor
-        d.setPosition(cc.p(Math.round(64+Math.random()*192),Math.round(64+Math.random()*112)));
+        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
         units.push(d);
     }
 
@@ -360,13 +362,15 @@ waw.prepareRoomLayer = function(room, units, layer) {
             break;
     }
 
-    //TODO DEBUG! Adding random BLOCK sprites to test Z-index
+    //DEBUG! Adding P-random BLOCK sprites to test Z-index
+    //TODO move it to the rooms patterns
+    waw.rand = new Math.seedrandom(room.randomSeedObstacles); //a temp Pseudo random func with set seed
     for(var y = 32+16; y < 240-16; y += 16 ) {
-        if(Math.random()>0.3)
+        if(waw.rand()>0.3)
             continue;
-        var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(Math.random()*10)*32, 0, 32, 32));
+        var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
         //coords
-        var x = Math.round(20+Math.random()*280);
+        var x = Math.round(20+waw.rand()*280);
         sprite.setPosition(new cc.p(x, y));
         layer.addChild(sprite, 250 - y);
         var wall = new waw.Unit();
