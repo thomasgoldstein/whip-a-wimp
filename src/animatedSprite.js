@@ -49,6 +49,8 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
         this.currentAnimationKey = animationKey;
         this.stopAllActions();
+		// TODO: Fix the visual glitch caused by the fact the sprite is redrawn for a split second
+		// between the time we flip it and display the new animation sequence
         this.setFlippedX(this.animationSequencesFlippedX[this.currentAnimationKey]);
         this.runAction(cc.RepeatForever.create(this.animationSequences[this.currentAnimationKey]));
     }
