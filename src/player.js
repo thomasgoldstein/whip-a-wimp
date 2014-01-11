@@ -8,7 +8,7 @@ waw.Player = waw.Unit.extend({
     ctor: function() {
         this._super();
         console.info("Player ctor");
-        this.setContentSize(new cc.Size(16, 16));  //was 24x16
+        this.setContentSize(new cc.Size(24, 16));
         this.setAnchorPoint(new cc.Point(0, -1));
         this.speed = 0.75;
         this.movement = {
@@ -30,7 +30,7 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 96, 32, 48)
+                    cc.rect(0, 48, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -42,11 +42,20 @@ waw.Player = waw.Unit.extend({
                 ],
                 delay: 0.1
             },
-            "standing_horiz":
+            "standing_left":
             {
                 frameRects:
                 [
-                    cc.rect(0, 48, 32, 48)
+                    cc.rect(0, 96, 32, 48)
+                ],
+                delay: 0.1,
+                flippedX: true
+            },
+            "standing_right":
+            {
+                frameRects:
+                [
+                    cc.rect(0, 96, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -54,10 +63,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 96, 32, 48),
-                    cc.rect(32, 96, 32, 48),
-                    cc.rect(64, 96, 32, 48),
-                    cc.rect(32, 96, 32, 48)
+                    cc.rect(0, 48, 32, 48),
+                    cc.rect(32, 48, 32, 48),
+                    cc.rect(64, 48, 32, 48),
+                    cc.rect(32, 48, 32, 48)
                 ],
                 delay: 0.1,
                 mirrorX: true
@@ -74,16 +83,34 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 mirrorX: true
             },
-            "walking_horiz":
+            "walking_left":
             {
                 frameRects:
                 [
-//                    cc.rect(0, 48, 32, 48),
-//                    cc.rect(32, 48, 32, 48)
-                    cc.rect(0, 0, 32, 48),
-                    cc.rect(32, 0, 32, 48),
-                    cc.rect(64, 0, 32, 48),
-                    cc.rect(32, 0, 32, 48)
+                    cc.rect(0, 96, 32, 48),
+                    cc.rect(0, 144, 32, 48),
+                    cc.rect(32, 144, 32, 48),
+                    cc.rect(0, 144, 32, 48),
+                    cc.rect(0, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48),
+                    cc.rect(64, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48)
+                ],
+                delay: 0.1,
+                flippedX: true
+            },
+            "walking_right":
+            {
+                frameRects:
+                [
+                    cc.rect(0, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48),
+                    cc.rect(64, 96, 32, 48),
+                    cc.rect(32, 96, 32, 48),
+                    cc.rect(0, 96, 32, 48),
+                    cc.rect(0, 144, 32, 48),
+                    cc.rect(32, 144, 32, 48),
+                    cc.rect(0, 144, 32, 48)
                 ],
                 delay: 0.1
             }
@@ -182,7 +209,8 @@ waw.Player = waw.Unit.extend({
     },
     getDirection: function() {
         var dir =
-            this.direction.left || this.direction.right ? "horiz" :
+            this.direction.left ? "left" :
+            this.direction.right ? "right" :
             this.direction.up ? "up" : "down";
 
         return dir;
