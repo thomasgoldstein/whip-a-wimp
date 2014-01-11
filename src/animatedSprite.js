@@ -1,12 +1,14 @@
 "use strict";
 waw.AnimatedSprite = cc.Sprite.extend({
     animationSequences: null,
+    animationSequencesFlippedX: null,
     currentAnimationKey: null,
     ctor: function(spriteFilePath, animData) {
         var me = this;
         me._super();
 
         me.animationSequences = {};
+        me.animationSequencesFlippedX = {};
         var allFrames = {};
 
         var texture = cc.TextureCache.getInstance().addImage(spriteFilePath);
@@ -31,6 +33,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
             var action = cc.Animate.create(anim);
             var seq = !animData[key].mirrorX ? cc.CallFunc.create() : cc.CallFunc.create(this.mirrorAnimationX, this);
             me.animationSequences[key] = cc.Sequence.create(action, seq);
+            me.animationSequencesFlippedX[key] = animData[key].flippedX === true;
         }
 
         me.init();
@@ -46,7 +49,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
         this.currentAnimationKey = animationKey;
         this.stopAllActions();
-        this.setFlippedX(false);
+        this.setFlippedX(this.animationSequencesFlippedX[this.currentAnimationKey]);
         this.runAction(cc.RepeatForever.create(this.animationSequences[this.currentAnimationKey]));
     }
 });
