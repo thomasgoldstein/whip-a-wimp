@@ -56,6 +56,19 @@ waw.MainLayer = cc.Layer.extend({
             this.player.setPosition(currentPlayerPos);
         }
         this.player.runAction(cc.Blink.create(1, 5)); //Blink Player sprite
+
+        //-------------TEST enemy
+        //put player sprite on the screen
+        this.foes[0] = new waw.Enemy();
+        this.foes[0].setPosition(currentPlayerPos);
+        this.addChild(this.foes[0], 6);
+        //anti stuck START POSITION of player check
+       /* while( this.foes[0].doesCollide(this.units)) {
+            currentPlayerPos.x = Math.round(Math.random()*320);
+            currentPlayerPos.y = Math.round(Math.random()*240);
+            this.player.setPosition(currentPlayerPos);
+        }*/
+        this.foes[0].runAction(cc.Blink.create(1, 5)); //Blink Player sprite
     },
     onEnterTransitionDidFinish: function () {
         console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
@@ -172,6 +185,10 @@ waw.MainLayer = cc.Layer.extend({
         return nextPos;
     },
     update: function (dt) {
+        //for(var i in foes)
+        if(this.foes[0])
+            this.foes[0].update();
+
         if (!this.player)
             return;
         var nextPos = this.handleCollisions();

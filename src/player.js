@@ -8,7 +8,7 @@ waw.Player = waw.Unit.extend({
     ctor: function() {
         this._super();
         console.info("Player ctor");
-        this.setContentSize(new cc.Size(24, 16));
+        this.setContentSize(new cc.Size(16, 16));  //was 24x16
         this.setAnchorPoint(new cc.Point(0, -1));
         this.speed = 0.75;
         this.movement = {
@@ -78,8 +78,12 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 48, 32, 48),
-                    cc.rect(32, 48, 32, 48)
+//                    cc.rect(0, 48, 32, 48),
+//                    cc.rect(32, 48, 32, 48)
+                    cc.rect(0, 0, 32, 48),
+                    cc.rect(32, 0, 32, 48),
+                    cc.rect(64, 0, 32, 48),
+                    cc.rect(32, 0, 32, 48)
                 ],
                 delay: 0.1
             }

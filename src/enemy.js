@@ -8,82 +8,39 @@ waw.Enemy = waw.Unit.extend({
     ctor: function() {
         this._super();
         console.info("Enemy ctor");
-        this.setContentSize(new cc.Size(24, 16));
+        this.setContentSize(new cc.Size(16, 16));
         this.setAnchorPoint(new cc.Point(0, -1));
-        this.speed = 0.75;
-        this.movement = {
-            left: false,
-            right: false,
-            up: false,
-            down: false
-        };
-        this.direction = {
-            left: false,
-            right: false,
-            up: false,
-            down: true
-        };
-        this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
+        this.speed = 0.75; //??
+
+        this.sprite = cc.Sprite.create(s_EnemyPlain,
+            cc.rect(Math.floor(waw.rand()*3)*32, 0, 32, 32));
+
         this.addChild(this.sprite);
         this.alive = true;
     },
-    updateDirection: function() {
-        this.direction.up = this.movement.up;
-        this.direction.down = this.movement.down;
-        this.direction.left = this.movement.left;
-        this.direction.right = this.movement.right;
-    },
-    getNextPosition: function() {
-        var p = this.getPositionF(),
-            speed = this.speed;
 
-        if ((this.movement.left || this.movement.right) &&
-            (this.movement.up || this.movement.down)) {
-            speed *= (2 / 3);
-        }
+    update: function() {
+        var pos = this.getPosition();
 
-        if (this.movement.left)
+        //var animKey = this.getState() + "_" + this.getDirection();
+        //this.sprite.;
+        if(Math.random()<0.3)
         {
-            p.x -= speed;
+            if(Math.random()<0.5)
+                pos.y--;
+            else
+                pos.y++;
         }
-        else if (this.movement.right)
+        if(Math.random()<0.3)
         {
-            p.x += speed;
+            if(Math.random()<0.5)
+                pos.x--;
+            else
+                pos.x++;
         }
-
-        if (this.movement.up)
-        {
-            p.y += speed;
-        }
-        else if (this.movement.down)
-        {
-            p.y -= speed;
-        }
-
-        return p;
-    },
-    update: function(pos) {
-        var animKey = this.getState() + "_" + this.getDirection();
-        this.sprite.playAnimation(animKey);
 
         this.setPosition(pos);
         //Z Index
         this.setZOrder(250- pos.y);
-    },
-    getState: function() {
-        var state =
-            this.movement.left ||
-            this.movement.right ||
-            this.movement.up ||
-            this.movement.down ? "walking" : "standing";
-
-        return state;
-    },
-    getDirection: function() {
-        var dir =
-            this.direction.left || this.direction.right ? "horiz" :
-            this.direction.up ? "up" : "down";
-
-        return dir;
     }
 });
