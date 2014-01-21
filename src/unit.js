@@ -3,40 +3,36 @@ waw.Unit = cc.Node.extend({
     _positionF: null,
     ctor: function() {
         this._super();
-        
-        this._positionF = this._position;
-        
-        // Make it so _position always returns a point with rounded (integer) values.
-        // This way, the getPosition, getPositionX and getPositionY functions return a point with integer values.
-        // This is necessary to avoid sprite blur (since Cocos2D HTML5 2.1.6).
-        Object.defineProperty(this, '_position', {
-            get: function() { return cc.p(Math.round(this._positionF.x), Math.round(this._positionF.y)); }
-        });
+        this._positionF = cc._pConst(0, 0);
     },
     // Override setPosition to update _positionF
     setPosition: function (newPosOrxValue, yValue) {
         if (arguments.length === 2) {
-            this._positionF.x = newPosOrxValue;
-            this._positionF.y = yValue;
+            this._positionF._x = newPosOrxValue;
+            this._positionF._y = yValue;
         } else if (arguments.length === 1) {
-            this._positionF.x = newPosOrxValue.x;
-            this._positionF.y = newPosOrxValue.y;
+            this._positionF._x = newPosOrxValue.x;
+            this._positionF._y = newPosOrxValue.y;
         }
+        this._position._x = Math.round(this._positionF.x);
+        this._position._y = Math.round(this._positionF.y);
         this.setNodeDirty();
     },
     // Override setPositionX to update _positionF
     setPositionX: function (x) {
-        this._positionF.x = x;
+        this._positionF._x = x;
+        this._position._x = Math.round(this._positionF.x);
         this.setNodeDirty();
     },
     // Override setPositionY to update _positionF
     setPositionY: function (y) {
-        this._positionF.y = y;
+        this._positionF._y = y;
+        this._position._y = Math.round(this._positionF.y);
         this.setNodeDirty();
     },
     // Gets the unit position with float X/Y values
     getPositionF: function() {
-        return cc.p(this._positionF.x, this._positionF.y);
+        return this._positionF;
     },
     collideRect: function(pos) {
         var s = this.getContentSize();

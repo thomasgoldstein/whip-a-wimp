@@ -20,27 +20,27 @@ waw.Enemy = waw.Unit.extend({
     },
 
     update: function() {
-        var pos = this.getPosition();
-
-        //var animKey = this.getState() + "_" + this.getDirection();
-        //this.sprite.;
+        var pos = this.getPosition(),
+            x = pos.x,
+            y = pos.y;
+        
         if(Math.random()<0.3)
         {
             if(Math.random()<0.5)
-                pos.y--;
+                y--;
             else
-                pos.y++;
+                y++;
         }
         if(Math.random()<0.3)
         {
             if(Math.random()<0.5)
-                pos.x--;
+                x--;
             else
-                pos.x++;
+                x++;
         }
 
-        this.setPosition(pos);
+        this.setPosition(cc.p(x, y));
         //Z Index
-        this.setZOrder(250- pos.y);
+        this.setZOrder(250 - y);
     }
 });
