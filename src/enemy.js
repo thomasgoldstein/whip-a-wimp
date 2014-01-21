@@ -8,8 +8,8 @@ waw.Enemy = waw.Unit.extend({
     ctor: function() {
         this._super();
         console.info("Enemy ctor");
-        this.setContentSize(new cc.Size(16, 16));
-        this.setAnchorPoint(new cc.Point(0, -1));
+        this.setContentSize(16, 16);
+        this.setAnchorPoint(0, -1);
         this.speed = 0.75; //??
 
         this.sprite = cc.Sprite.create(s_EnemyPlain,
@@ -39,7 +39,7 @@ waw.Enemy = waw.Unit.extend({
                 x++;
         }
 
-        this.setPosition(cc.p(x, y));
+        this.setPosition(x, y);
         //Z Index
         this.setZOrder(250 - y);
     }
