@@ -19,8 +19,9 @@ waw.Enemy = waw.Unit.extend({
         this.alive = true;
     },
 
-    update: function() {
+    update: function(env) {
         var pos = this.getPosition(),
+            oldPos = pos,
             x = pos.x,
             y = pos.y;
         
@@ -38,8 +39,14 @@ waw.Enemy = waw.Unit.extend({
             else
                 x++;
         }
-
+       //check collision with obstacles
+       if(this.doesCollide(env.units)) {
+            this.setPosition(oldPos);
+            //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
+        } else
         this.setPosition(x, y);
+        //TODO 1.make enemy not stuck 2.check collision with other foes
+
         //Z Index
         this.setZOrder(250 - y);
     }

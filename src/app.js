@@ -59,16 +59,20 @@ waw.MainLayer = cc.Layer.extend({
 
         //-------------TEST enemy
         //put player sprite on the screen
-        this.foes[0] = new waw.Enemy();
-        this.foes[0].setPosition(currentPlayerPos);
-        this.addChild(this.foes[0], 6);
+        for(var i=0; i<5; ++i){
+            var e = new waw.Enemy();
+            e.setPositionX(Math.round(Math.random()*320));
+            e.setPositionY(Math.round(Math.random()*240));
+            e.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
+            this.addChild(e, 6);
+            this.foes.push(e);
+        }
         //anti stuck START POSITION of player check
        /* while( this.foes[0].doesCollide(this.units)) {
             currentPlayerPos.x = Math.round(Math.random()*320);
             currentPlayerPos.y = Math.round(Math.random()*240);
             this.player.setPosition(currentPlayerPos);
         }*/
-        this.foes[0].runAction(cc.Blink.create(1, 5)); //Blink Player sprite
     },
     onEnterTransitionDidFinish: function () {
         console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
@@ -185,10 +189,11 @@ waw.MainLayer = cc.Layer.extend({
         return nextPos;
     },
     update: function (dt) {
-        //for(var i in foes)
-        if(this.foes[0])
-            this.foes[0].update();
 
+        for(var i=0; i<this.foes.length; ++i){
+            if(this.foes[i])
+            this.foes[i].update(this); //pass current closure to have access to its Units arr
+        }
         if (!this.player)
             return;
         var nextPos = this.handleCollisions();
