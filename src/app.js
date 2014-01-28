@@ -48,17 +48,36 @@ waw.MainLayer = cc.Layer.extend({
         //put player sprite on the screen
         this.player = new waw.Player();
         this.player.setPosition(currentPlayerPos);
-        this.addChild(this.player, 5);
+        this.addChild(this.player, 250-currentPlayerPos.y);
         //anti stuck START POSITION of player check
         while( this.player.doesCollide(this.units)) {
             currentPlayerPos.x = Math.round(Math.random()*320);
             currentPlayerPos.y = Math.round(Math.random()*240);
             this.player.setPosition(currentPlayerPos);
         }
+        //guess player sprite facing on spawn
+        if (this.player.getPositionX() < 40) {
+            this.player.direction.left = false;
+            this.player.direction.right = true;
+        } else if (this.player.getPositionY() < 40) {
+            this.player.direction.down = false;
+            this.player.direction.up = true;
+        } else if (this.player.getPositionX() > 320 - 40) {
+            this.player.direction.left = true;
+            this.player.direction.right = false;
+        } else if (this.player.getPositionY() > 240 - 40) {
+            this.player.direction.down = true;
+            this.player.direction.up = false;
+        } else {
+            this.player.direction.down = true;  //at room center, or other player pos
+            this.player.direction.up = false;
+        }
+        this.player.update(currentPlayerPos);   //to update players sprite facing direction
+
         this.player.runAction(cc.Blink.create(1, 5)); //Blink Player sprite
 
         //-------------TEST enemy
-        //put player sprite on the screen
+        //TODO Plug. Temp put enemy on the screen
         for(var i=0; i<5; ++i){
             var e = new waw.Enemy();
             e.setPositionX(Math.round(Math.random()*320));
@@ -138,7 +157,7 @@ waw.MainLayer = cc.Layer.extend({
                 break;
         }
 
-        this.setKeyboardEnabled(false); //or else you can re-run Player movement functions or so
+        //this.setKeyboardEnabled(false); //or else you can re-run Player movement functions or so
 
 
         //NOW we prepare NEXT room to slide from current to the next one.
@@ -156,10 +175,9 @@ waw.MainLayer = cc.Layer.extend({
         nextLayer.init();
         nextScene.addChild(nextLayer);
 
-        //stop all actions
-
-//        cc.Director.getInstance().replaceScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
-        cc.Director.getInstance().replaceScene(nextScene);
+        //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
+        cc.Director.getInstance().replaceScene(transition(0.25, nextScene));  //1st arg = in seconds duration of the transition
+//        cc.Director.getInstance().replaceScene(nextScene);    //Instant transition between rooms
 
     },
     handleCollisions: function () {
@@ -202,24 +220,28 @@ waw.MainLayer = cc.Layer.extend({
             currentPlayerPos.x = 320 - 32;
 //            this.player.alive = false;
             this.removeChild(this.player, true);
+            this.player.setPosition(nextPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
             this.onGotoNextRoom(cc.KEY.left);
             return;
         } else if (nextPos.y < 16) {
             currentPlayerPos.y = 240 - 32;
 //            this.player.alive = false;
             this.removeChild(this.player, true);
+            this.player.setPosition(nextPos);
             this.onGotoNextRoom(cc.KEY.down);
             return;
         } else if (nextPos.x > 320 - 16) {
             currentPlayerPos.x = 32;
 //            this.player.alive = false;
             this.removeChild(this.player, true);
+            this.player.setPosition(nextPos);
             this.onGotoNextRoom(cc.KEY.right);
             return;
         } else if (nextPos.y > 240 - 16) {
             currentPlayerPos.y = 32;
 //            this.player.alive = false;
             this.removeChild(this.player, true);
+            this.player.setPosition(nextPos);
             this.onGotoNextRoom(cc.KEY.up);
             return;
         }

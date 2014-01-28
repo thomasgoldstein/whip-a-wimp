@@ -24,8 +24,8 @@ waw.Enemy = waw.Unit.extend({
             oldPos = pos,
             x = pos.x,
             y = pos.y;
-        
-        if(Math.random()<0.3)
+        //AI plug
+        if(Math.random()<0.5)
         {
             if(Math.random()<0.5)
                 y--;
