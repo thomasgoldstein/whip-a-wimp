@@ -69,9 +69,9 @@ rooms.genLevel = function() {
 			}
 
             //random type of the room obstacles pattern
-            //set chance to 60%
-            if(Math.random() <= 0.6)
-                r.type = Math.floor(Math.random()*6);
+            //set chance to 90%  TODO - put it back to 50
+            if(Math.random() <= 0.9)
+                r.type = Math.floor(Math.random()*11);
             else
                 r.type = 0;
 
@@ -428,6 +428,25 @@ waw.prepareRoomPattern = function(room, units, layer) {
             break;
         case 5:
             //2 vertical lines of obstacles in the room
+            for(var y = 64; y <= 240-48; y += 32) {
+                var x1 = 104+(Math.round(waw.rand()*8-4));
+                var x2 = 320-104+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x1,y), new cc.Size(32,16), new cc.p(x1,y-8));
+                waw.putRoomObstacle(units, layer, new cc.p(x2,y), new cc.Size(32,16), new cc.p(x2,y-8));
+            }
+            break;
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+            //square of obstacles in the room
+            for(var x = 64; x <= 320-64; x += 48) {
+                var y1 = 240/3+(Math.round(waw.rand()*8-4));
+                var y2 = 240-240/3+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x,y1), new cc.Size(32,16), new cc.p(x,y1-8));
+                waw.putRoomObstacle(units, layer, new cc.p(x,y2), new cc.Size(32,16), new cc.p(x,y2-8));
+            }
             for(var y = 64; y <= 240-48; y += 32) {
                 var x1 = 104+(Math.round(waw.rand()*8-4));
                 var x2 = 320-104+(Math.round(waw.rand()*8-4));
