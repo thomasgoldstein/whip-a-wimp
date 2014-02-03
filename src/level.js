@@ -30,9 +30,11 @@ function Room(_name,_x,_y) {
 	this.x = _x;
 	this.y = _y;
 	this.walls = new Walls();
+    this.type = 0; //0 = clean room type
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
+
 }
 
 var rooms = {};
@@ -63,7 +65,16 @@ rooms.genLevel = function() {
 			if(x == 4 && y == 4){ //for TEST mark start Room x4,y4
 				//r.Walls.up = r.Walls.down = r.Walls.left = r.Walls.right = "empty";
 				r.walls.bottom = "start";
+                r.type = 0; //clean room. no obstacles in it
 			}
+
+            //random type of the room obstacles pattern
+            //set chance to 60%
+            if(Math.random() <= 0.6)
+                r.type = Math.floor(Math.random()*6);
+            else
+                r.type = 0;
+
 			//make connection between previous and current rooms
 			if(oldx < x){
                 if(Math.random()<0.2)   //20% chance for a closed door
@@ -143,6 +154,9 @@ rooms.genLevel = function() {
 		}
 		//check for max number of rooms to generate
 	} while(noCycle<15 );
+
+    //start room[4,4] should have no obstacles!
+    rooms[4][4].type = 0;
 };
 
 //Generate MiniMap
@@ -229,32 +243,6 @@ waw.prepareRoomLayer = function(room, units, layer) {
     var background = cc.Sprite.create(s_Background);
     background.setAnchorPoint(0, 0);
     layer.addChild(background, -10);
-
-    //some random debris to PSEUDO random per a room
-    waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
-    for(var x = 0; x < waw.rand()*3+1; x++) {
-        var d = cc.Sprite.create(s_Debris,
-            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
-
-        layer.addChild(d,-9); //on the floor
-        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
-        if(waw.rand()>0.5)
-            continue;
-        d.setRotation(waw.rand()*360);
-        if(waw.rand()>0.5)
-            continue;
-        d.setScale(0.75 + waw.rand()*0.3);
-        //d.runAction(cc.FadeTo.create(5,0.5));
-    }
-    //TODO pool / pit like debris (you cannot step over it)
-    //TODO remove them from there. they'll be in the patterns
-    for(var x = 0; x < waw.rand()*2; x++) {
-        var d = cc.Sprite.create(s_Pit,
-            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
-        layer.addChild(d,-8); //on the floor
-        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
-        units.push(d);
-    }
 
     //add doors
     switch (room.walls.up) {
@@ -361,31 +349,111 @@ waw.prepareRoomLayer = function(room, units, layer) {
 //            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
-
-    //DEBUG! Adding P-random BLOCK sprites to test Z-index
-    //TODO move it to the rooms patterns
-    waw.rand = new Math.seedrandom(room.randomSeedObstacles); //a temp Pseudo random func with set seed
-    for(var y = 32+16; y < 240-16; y += 16 ) {
-        if(waw.rand()>0.3)
-            continue;
-        var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
-        //coords
-        var x = Math.round(20+waw.rand()*280);
-        sprite.setPosition(new cc.p(x, y));
-        layer.addChild(sprite, 250 - y);
-        var wall = new waw.Unit();
-        wall.setContentSize(new cc.Size(32, 16)); //collision box
-        wall.setPosition(cc.p(x,y-8)); //collision box 32x16
-        units.push(wall);
-    }
+    //put obstacles in the room
+    waw.prepareRoomPattern(room, units, layer);
 
     //print room coords X,Y at the upper left corner
-    var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY, "Arial", 10);
+    var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
     layer.addChild(label, 0); //, TAG_LABEL_SPRITE1);
     label.setPosition(cc.p(42, 240-10));
     label.setOpacity(200);
 
 };
+
+//adds obstacles of a room onto existing layer
+waw.prepareRoomPattern = function(room, units, layer) {
+    if(!room) throw "unknown room";
+    if(!units) throw "need a units array to add elements";
+    if(!layer) throw "need a layer to add elements";
+
+    //some random debris to PSEUDO random per a room
+    waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
+    for(var x = 0; x < waw.rand()*2; x++) { //*3+1
+        var d = cc.Sprite.create(s_Debris,
+            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
+
+        layer.addChild(d,-9); //on the floor
+        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
+        if(waw.rand()>0.5)
+            continue;
+        d.setRotation(waw.rand()*360);
+        if(waw.rand()>0.5)
+            continue;
+        d.setScale(0.75 + waw.rand()*0.3);
+        //d.runAction(cc.FadeTo.create(5,0.5));
+    }
+    //TODO remove them from there. they'll be in the patterns
+/*
+    for(var x = 0; x < waw.rand()*2; x++) {
+        var d = cc.Sprite.create(s_Pit,
+            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
+        layer.addChild(d,-8); //on the floor
+        d.setPosition(cc.p(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112)));
+        units.push(d);
+    }
+*/
+
+    //now put some obstacles, according to the room.type
+    waw.rand = new Math.seedrandom(room.randomSeedObstacles); //a temp Pseudo random func with set seed
+    switch(room.type){
+        case 0:
+            //no obstacles
+            break;
+        case 1:
+            //1 obstacle in the middle of the room
+            waw.putRoomObstacle(units, layer, new cc.p(320/2,240/2), new cc.Size(32,16), new cc.p(320/2,240/2-8));
+            break;
+        case 2:
+            //horizontal line of obstacles in the room
+            for(var x = 64; x <= 320-64; x += 48){
+                var y1 = 240/2+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x,y1), new cc.Size(32,16), new cc.p(x,y1-8));
+            }
+            break;
+        case 3:
+            //vertical line of obstacles in the room
+            for(var y = 64; y <= 240-48; y += 32) {
+                var x1 = 320/2+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x1,y), new cc.Size(32,16), new cc.p(x1,y-8));
+            }
+            break;
+        case 4:
+            //2 horizontal lines of obstacles in the room
+            for(var x = 64; x <= 320-64; x += 48) {
+                var y1 = 240/3+(Math.round(waw.rand()*8-4));
+                var y2 = 240-240/3+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x,y1), new cc.Size(32,16), new cc.p(x,y1-8));
+                waw.putRoomObstacle(units, layer, new cc.p(x,y2), new cc.Size(32,16), new cc.p(x,y2-8));
+            }
+            break;
+        case 5:
+            //2 vertical lines of obstacles in the room
+            for(var y = 64; y <= 240-48; y += 32) {
+                var x1 = 104+(Math.round(waw.rand()*8-4));
+                var x2 = 320-104+(Math.round(waw.rand()*8-4));
+                waw.putRoomObstacle(units, layer, new cc.p(x1,y), new cc.Size(32,16), new cc.p(x1,y-8));
+                waw.putRoomObstacle(units, layer, new cc.p(x2,y), new cc.Size(32,16), new cc.p(x2,y-8));
+            }
+            break;
+    }
+
+};
+
+//adds obstacles of a room onto existing layer
+waw.putRoomObstacle = function(units, layer, pos, hitbox, hitboxPos) {
+    if(!units) throw "need a units array to add elements";
+    if(!layer) throw "need a layer to add elements";
+
+    var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
+    //coords in the room
+    sprite.setPosition(pos);
+    layer.addChild(sprite, 250 - pos.y);
+    var wall = new waw.Unit();
+    wall.setContentSize(hitbox); //collision box
+    wall.setPosition(hitboxPos); //collision box 32x16
+    units.push(wall);
+};
+
 
 //init the current labyrinth of rooms;
 rooms.initLevel();
