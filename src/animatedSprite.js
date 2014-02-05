@@ -1,14 +1,12 @@
 "use strict";
 waw.AnimatedSprite = cc.Sprite.extend({
-    animationSequences: null,
-    animationSequencesFlippedX: null,
+    animations: null,
     currentAnimationKey: null,
     ctor: function(spriteFilePath, animData) {
         var me = this;
         me._super();
 
-        me.animationSequences = {};
-        me.animationSequencesFlippedX = {};
+        me.animations = {};
         var allFrames = {};
 
         var texture = cc.TextureCache.getInstance().addImage(spriteFilePath);
@@ -29,17 +27,29 @@ waw.AnimatedSprite = cc.Sprite.extend({
                 frames.push(allFrames[frameKey]);
             });
 
+            var flipXFunc = animData[key].flippedX ?
+                function() { me.setFlippedX(true); } :
+                function() { me.setFlippedX(false); };
+            var flipAction = cc.CallFunc.create(flipXFunc, me);
+
+            var animations = [];
             var anim = cc.Animation.create(frames, animData[key].delay);
-            var action = cc.Animate.create(anim);
-            var seq = !animData[key].mirrorX ? cc.CallFunc.create() : cc.CallFunc.create(this.mirrorAnimationX, this);
-            me.animationSequences[key] = cc.Sequence.create(action, seq);
-            me.animationSequencesFlippedX[key] = animData[key].flippedX === true;
+            var animAction = cc.Animate.create(anim);
+            animations.push(animAction);
+
+            if (animData[key].mirrorX) {
+                var mirrorAction = cc.CallFunc.create(function() { me.setFlippedX(!me.isFlippedX()); }, me);
+                animations.push(mirrorAction);
+            }
+
+            var repeatAction = animations.length === 1 ? animations[0] : cc.Sequence.create(animations);
+            //var repeat = cc.RepeatForever.create(repeatAction); // Does not work, seems to be a Cocos bug (tested with 2.2.2)
+            var repeat = cc.Repeat.create(repeatAction, Number.MAX_VALUE);
+
+            me.animations[key] = cc.Spawn.create(flipAction, repeat);
         }
 
         me.init();
-    },
-    mirrorAnimationX: function() {
-        this.setFlippedX(!this.isFlippedX());
     },
     playAnimation: function(animationKey) {
         if (this.currentAnimationKey === animationKey)
@@ -49,9 +59,6 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
         this.currentAnimationKey = animationKey;
         this.stopAllActions();
-		// TODO: Fix the visual glitch caused by the fact the sprite is redrawn for a split second
-		// between the time we flip it and display the new animation sequence
-        this.setFlippedX(this.animationSequencesFlippedX[this.currentAnimationKey]);
-        this.runAction(cc.RepeatForever.create(this.animationSequences[this.currentAnimationKey]));
+        this.runAction(this.animations[this.currentAnimationKey]);
     }
 });
