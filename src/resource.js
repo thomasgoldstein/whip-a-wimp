@@ -1,6 +1,7 @@
 "use strict";
 var s_Background = "res/Background.fw.png";
 var s_Jesus = "res/Jesus.png";
+var s_Shadow = "res/Shadow.png";
 var s_Block = "res/Block.png";
 var s_DoorUp = "res/DoorUp.fw.png";
 var s_DoorDown = "res/DoorDown.fw.png";
@@ -20,6 +21,7 @@ var g_resources = [
     //image
     {src:s_Background},
     {src:s_Jesus},
+    {src:s_Shadow},
     {src:s_Block},
     {src:s_DoorUp},
     {src:s_DoorDown},

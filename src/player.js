@@ -116,8 +116,13 @@ waw.Player = waw.Unit.extend({
             }
         };
 
+        var shadow = cc.Sprite.create(s_Shadow);
+        shadow.setPosition(0, -22);
+        this.addChild(shadow);
+
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
+
         this.alive = true;
     },
     keyDown: function(e) {
