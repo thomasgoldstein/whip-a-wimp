@@ -24,7 +24,16 @@
         }
     </style>
     <script>
+        var disableAntiAliasing = function () {
+            var ctx = document.getElementById('gameCanvas').getContext("2d");
+            ctx.imageSmoothingEnabled = false;
+            ctx.webkitImageSmoothingEnabled = false;
+            ctx.mozImageSmoothingEnabled = false;
+        };
+        
         window.onload = function(event) {
+            window.onresize = disableAntiAliasing;
+            disableAntiAliasing();
             document.getElementById('gameCanvas').focus();
         }
     </script>
