@@ -8,6 +8,9 @@ var cocos2dApp = cc.Application.extend({
         cc.initDebugSetting();
         cc.setup(this.config['tag']);
         cc.AppController.shareAppController().didFinishLaunchingWithOptions();
+
+        cc.EGLView.getInstance().resizeWithBrowserSize(true);
+        cc.EGLView.getInstance().setDesignResolutionSize(320, 240, cc.RESOLUTION_POLICY.SHOW_ALL);
     },
     applicationDidFinishLaunching:function () {
         if(cc.RenderDoesnotSupport()){

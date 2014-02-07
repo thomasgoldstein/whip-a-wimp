@@ -3,13 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Whip-A-Wimp</title>
-    <meta name="viewport" content="width=320,user-scalable=no"/>
     <meta name="screen-orientation" content="portrait"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="full-screen" content="yes"/>
     <meta name="x5-fullscreen" content="true"/>
     <style>
-        body, canvas, div {
+        body, canvas {
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
@@ -23,52 +22,15 @@
             background: #000;
             overflow: hidden;
         }
-        
-        #Cocos2dGameContainer {
-            width: auto !important;
-            height: auto !important;
-        }
-        
-        #gameCanvas {
-            display: block;
-            margin: 0 auto;
-        }
     </style>
     <script>
-        var resize = function () {
-            var canvas = document.getElementById('gameCanvas'),
-                context = canvas.getContext('2d'),
-                ratioX = canvas.width / canvas.height,
-                width, height, marginTop;
-            
-            if ((window.innerWidth / window.innerHeight) > ratioX) {
-                    height = window.innerHeight;
-                    width = height * ratioX;
-                    marginTop = 0;
-            }
-            else {
-                    var ratioY = 1 / ratioX;
-                    width = window.innerWidth;
-                    height = width * ratioY;
-                    marginTop = (window.innerHeight - height) / 2;
-            }
-            
-            context.canvas.style.width = width + 'px';
-            context.canvas.style.height = height + 'px';
-            context.canvas.style.marginTop = marginTop + 'px';
-        };
-        
         window.onload = function(event) {
-            window.onresize = resize;
-            resize();
             document.getElementById('gameCanvas').focus();
         }
     </script>
 </head>
 <body>
-<div>
-    <canvas id="gameCanvas" width="320" height="240"></canvas>
-</div>
+<canvas id="gameCanvas" width="320" height="240"></canvas>
 <script src="cocos2d.js"></script>
 </body>
 </html>
