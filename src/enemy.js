@@ -1,16 +1,17 @@
 "use strict";
 waw.Enemy = waw.Unit.extend({
     sprite: null,
-    speed: 0,
+    speed: 1.75,
     movement: null,
     direction: null,
     alive: null,
+    state: "idle",
     ctor: function() {
         this._super();
         console.info("Enemy ctor");
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
-        this.speed = 0.75; //??
+//        this.speed = 0.75; //??
 
         this.sprite = cc.Sprite.create(s_EnemyPlain,
             cc.rect(Math.floor(waw.rand()*3)*32, 0, 32, 32));
@@ -28,16 +29,16 @@ waw.Enemy = waw.Unit.extend({
         if(Math.random()<0.5)
         {
             if(Math.random()<0.5)
-                y--;
+                y -= this.speed;
             else
-                y++;
+                y += this.speed;
         }
         if(Math.random()<0.3)
         {
             if(Math.random()<0.5)
-                x--;
+                x -= this.speed;
             else
-                x++;
+                x += this.speed;
         }
        //check collision with obstacles
        if(this.doesCollide(env.units)) {
