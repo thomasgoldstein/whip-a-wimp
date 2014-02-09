@@ -126,21 +126,23 @@ waw.Player = waw.Unit.extend({
         this.alive = true;
     },
     keyDown: function(e) {
-        if(!this.alive)
+        if (!this.alive)
             return;
+
         this.changeKey(e, true);
-        this.updateDirection();
+        this.updateDirection(e);
     },
     keyUp: function(e) {
-        if(!this.alive)
+        if (!this.alive)
             return;
+
         this.changeKey(e, false);
 
         if (this.getState() === "walking")
         {
             // Only update the direction the player is facing if he's still walking,
             // so as to remember the last direction he's been moving toward
-            this.updateDirection();
+            this.updateDirection(e);
         }
     },
     changeKey: function(e, pressed) {
@@ -160,11 +162,26 @@ waw.Player = waw.Unit.extend({
                 break;
         }
     },
-    updateDirection: function() {
-        this.direction.up = this.movement.up;
-        this.direction.down = this.movement.down;
-        this.direction.left = this.movement.left;
-        this.direction.right = this.movement.right;
+    isDirectionKey: function(e) {
+        switch (e)
+        {
+            case cc.KEY.up:
+            case cc.KEY.down:
+            case cc.KEY.left:
+            case cc.KEY.right:
+                return true;
+
+            default:
+                return false;
+        }
+    },
+    updateDirection: function(e) {
+        if (this.isDirectionKey(e)) { 
+            this.direction.up = this.movement.up;
+            this.direction.down = this.movement.down;
+            this.direction.left = this.movement.left;
+            this.direction.right = this.movement.right;
+        }
     },
     getNextPosition: function() {
         var p = this.getPositionF(),
