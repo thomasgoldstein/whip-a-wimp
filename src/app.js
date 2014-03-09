@@ -23,6 +23,7 @@ waw.MainScene = cc.Scene.extend({
 waw.MainLayer = cc.Layer.extend({
     isMouseDown: false,
     player: null,
+    shadow: null,
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
 
@@ -78,20 +79,14 @@ waw.MainLayer = cc.Layer.extend({
 
         //-------------TEST enemy
         //TODO Plug. Temp put enemy on the screen
-        for(var i=0; i<5; ++i){
+        for(var i=0; i<2; ++i){
             var e = new waw.Enemy();
             e.setPositionX(Math.round(Math.random()*(320-80)+40));
             e.setPositionY(Math.round(Math.random()*(240-80)+40));
-            e.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
+            e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
             this.foes.push(e);
         }
-        //anti stuck START POSITION of player check
-       /* while( this.foes[0].doesCollide(this.units)) {
-            currentPlayerPos.x = Math.round(Math.random()*320);
-            currentPlayerPos.y = Math.round(Math.random()*240);
-            this.player.setPosition(currentPlayerPos);
-        }*/
     },
     onEnterTransitionDidFinish: function () {
         console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
@@ -182,14 +177,14 @@ waw.MainLayer = cc.Layer.extend({
     },
     handleCollisions: function () {
         var me = this;
-        var nextPos = this.player.getNextPosition();
-
+        var nextPos = me.player.getNextPosition();
+        var oldPos = me.player.getPosition();
         me.units.forEach(function (unit) {
             var rect = cc.rectIntersection(me.player.collideRect(nextPos), unit.collideRect());
             //TODO check this condition && why not || ?
             if (rect.width > 0 && rect.height > 0) // Collision!
             {
-                var oldPos = me.player.getPosition();
+//                var oldPos = me.player.getPosition();
                 var oldRect = cc.rectIntersection(me.player.collideRect(oldPos), unit.collideRect());
 
                 if (oldRect.height > 0) {
@@ -203,7 +198,9 @@ waw.MainLayer = cc.Layer.extend({
                 }
             }
         });
-
+//        if(oldPos.x == nextPos.x || oldPos.y == nextPos.y ){
+//            me.player.runAction(cc.Blink.create(0.5, 2)); //Blink Foe sprite
+//        }
         return nextPos;
     },
     update: function (dt) {

@@ -1,7 +1,7 @@
 "use strict";
 waw.Enemy = waw.Unit.extend({
     sprite: null,
-    speed: 1.75,
+    speed: 0.56,
     movement: null,
     direction: null,
     alive: null,

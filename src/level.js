@@ -496,11 +496,13 @@ waw.putRoomObstacle = function(units, layer, pos, hitbox, hitboxPos) {
     if(!units) throw "need a units array to add elements";
     if(!layer) throw "need a layer to add elements";
 
-    var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
+    var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64));
     //coords in the room
+    pos.y += 16;
     sprite.setPosition(pos);
-    layer.addChild(sprite, 250 - pos.y);
+    layer.addChild(sprite, 16+ 250 - pos.y);
     var wall = new waw.Unit();
+    hitboxPos.y += 4;
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(hitboxPos); //collision box 32x16
     units.push(wall);
