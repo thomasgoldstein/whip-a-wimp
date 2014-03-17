@@ -185,7 +185,7 @@ waw.initWalls = function(room,units) {
     if(!room) throw "unknown room";
     if(!units) throw "need a units array to add elements";
     var wall;
-    var wallSize = 16; //thickness of the border walls
+    var wallSize = 32; //thickness of the border walls
 
     // Left wall lower
     wall = new waw.Unit();
@@ -240,9 +240,15 @@ waw.prepareRoomLayer = function(room, units, layer) {
     if(!layer) throw "need a layer to add elements";
 
     //add room Background
-    var background = cc.Sprite.create(s_Background);
-    background.setAnchorPoint(0, 0);
-    layer.addChild(background, -10);
+    var floor = cc.Sprite.create(s_Floor);
+    floor.setAnchorPoint(0, 0);
+    layer.addChild(floor, -15);
+    var middleWalls = cc.Sprite.create(s_MiddleWalls);
+    middleWalls.setAnchorPoint(0, 0);
+    layer.addChild(middleWalls, -10);
+    var upperWalls = cc.Sprite.create(s_UpperWalls);
+    upperWalls.setAnchorPoint(0, 0);
+    layer.addChild(upperWalls, 255);
 
     //add doors
     switch (room.walls.up) {
@@ -354,8 +360,8 @@ waw.prepareRoomLayer = function(room, units, layer) {
 
     //print room coords X,Y at the upper left corner
     var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
-    layer.addChild(label, 0); //, TAG_LABEL_SPRITE1);
-    label.setPosition(cc.p(42, 240-10));
+    layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
+    label.setPosition(cc.p(48, 240-10));
     label.setOpacity(200);
 
 };

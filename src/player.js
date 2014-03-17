@@ -10,6 +10,7 @@ waw.Player = waw.Unit.extend({
         console.info("Player ctor");
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
+
         this.speed = 0.75;
         this.movement = {
             left: false,

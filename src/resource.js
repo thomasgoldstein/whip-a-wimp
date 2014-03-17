@@ -1,5 +1,8 @@
 "use strict";
-var s_Background = "res/Background.fw.png";
+//var s_Background = "res/Background.fw.png";
+var s_Floor = "res/Themes/Temple/Floor.fw.png";
+var s_MiddleWalls = "res/Themes/Temple/MiddleWalls.fw.png";
+var s_UpperWalls = "res/Themes/Temple/UpperWalls.fw.png";
 var s_Jesus = "res/Jesus.png";
 var s_Shadow = "res/Shadow.png";
 var s_Block = "res/Block.png";
@@ -19,7 +22,10 @@ var s_EnemyPlain = "res//EnemyPlain.fw.png";
 
 var g_resources = [
     //image
-    {src:s_Background},
+//    {src:s_Background},
+    {src:s_Floor},
+    {src:s_MiddleWalls},
+    {src:s_UpperWalls},
     {src:s_Jesus},
     {src:s_Shadow},
     {src:s_Block},
