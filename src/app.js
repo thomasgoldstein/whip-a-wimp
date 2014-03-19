@@ -206,8 +206,11 @@ waw.MainLayer = cc.Layer.extend({
     update: function (dt) {
 
         for(var i=0; i<this.foes.length; ++i){
-            if(this.foes[i])
-            this.foes[i].update(this); //pass current closure to have access to its Units arr
+            if(this.foes[i]) {
+                this.foes[i].update(this); //pass current closure to have access to its Units arr
+                if(!this.foes[i].condition.alive)
+                    this.foes[i] = null;
+            }
         }
         if (!this.player)
             return;
