@@ -1,5 +1,5 @@
 "use strict";
-//var s_Background = "res/Background.fw.png";
+var s_HitBoxGrid = "res/hbGrid.fw.png";
 var s_Floor = "res/Themes/Temple/Floor.fw.png";
 var s_MiddleWalls = "res/Themes/Temple/MiddleWalls.fw.png";
 var s_UpperWalls = "res/Themes/Temple/UpperWalls.fw.png";
@@ -22,7 +22,7 @@ var s_EnemyPlain = "res//EnemyPlain.fw.png";
 
 var g_resources = [
     //image
-//    {src:s_Background},
+    {src:s_HitBoxGrid},
     {src:s_Floor},
     {src:s_MiddleWalls},
     {src:s_UpperWalls},

@@ -3,6 +3,8 @@
 var currentRoom = null;
 var currentRoomX = 4, currentRoomY = 4; //The start room is 4,4 by default
 var currentPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+//debug vars
+var showHitBoxes = true;
 
 //the Start method
 waw.MainScene = cc.Scene.extend({
@@ -39,7 +41,7 @@ waw.MainLayer = cc.Layer.extend({
         //Initially draw room BG, walls, foes onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
         if (currentRoom) {
-            waw.initWalls(currentRoom, this.units); //init array units with non-destructable walls (8 pieces)
+            waw.initWalls(currentRoom, this.units, this); //init array units with non-destructable walls (8 pieces)
             waw.prepareRoomLayer(currentRoom, this.units, this);
         } else
             throw "this room coords are out of the grid"
@@ -248,3 +250,14 @@ waw.MainLayer = cc.Layer.extend({
         this.player.update(nextPos);
     }
 });
+
+//adds grid sprite to show hit Box
+waw.AddHitBoxSprite = function (unit, layer){
+    if(!showHitBoxes) return;
+    var contentSize = unit.getContentSize();
+    var sprite = cc.Sprite.create(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
+    sprite.setPositionX(unit.getPositionX());
+    sprite.setPositionY(unit.getPositionY());
+    layer.addChild(sprite,300);
+    sprite.runAction(cc.FadeOut.create(10));
+}
