@@ -537,9 +537,9 @@ waw.putRoomObstacle = function(units, layer, pos, hitbox, hitboxPos) {
 
     var sprite = cc.Sprite.create(s_Block,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64));
     //coords in the room
-    pos.y += 16;
+    pos.y += 20;
     sprite.setPosition(pos);
-    layer.addChild(sprite, 16+ 250 - pos.y);
+    layer.addChild(sprite, 20+ 250 - pos.y);
     var wall = new waw.Unit();
     hitboxPos.y += 4;
     wall.setContentSize(hitbox); //collision box
