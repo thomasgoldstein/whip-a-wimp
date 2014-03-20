@@ -57,6 +57,8 @@ rooms.genLevel = function() {
 	var oldy = y;
 	var noCycle = 0;
     var temp = "empty";
+    var maxDy = 36; //+- max vertical shift of left + right doors
+    var maxDx = 90; //+- max horizontal shift of up + down doors
 	do {
 		noCycle++;
 		if(!rooms[y][x]) {
@@ -84,7 +86,7 @@ rooms.genLevel = function() {
                 r.walls.left = rooms[oldy][oldx].walls.right = temp;
                 //TODO in the final ver, make the cance of the shifted door at 30% 1-> 0.3 . Now it is for debugging
                 if(Math.random()<0.3)     //30% - chance of the shifted passage
-                    r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(80- Math.random()*160); // -80 .. 80
+                    r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(maxDy - Math.random()*(maxDy*2)); // -maxDy .. maxDy
             }
 			if(oldx > x){
                 if(Math.random()<0.2)
@@ -93,7 +95,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.right = rooms[oldy][oldx].walls.left = temp;
                 if(Math.random()<0.3)
-                    r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(80- Math.random()*160); // -80 .. 80
+                    r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(maxDy - Math.random()*(maxDy*2)); // // -maxDy .. maxDy
 			}
 			if(oldy < y){
                 if(Math.random()<0.2)
@@ -102,7 +104,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.up = rooms[oldy][oldx].walls.down = temp;
                 if(Math.random()<0.3)
-                    r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(100- Math.random()*200); // -100 .. 100
+                    r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(maxDx - Math.random()*(maxDx*2)); // -maxDx .. maxDx
 			}
 			if(oldy > y){
                 if(Math.random()<0.2)
@@ -111,7 +113,7 @@ rooms.genLevel = function() {
                     temp = "empty";
                 r.walls.down = rooms[oldy][oldx].walls.up = temp;
                 if(Math.random()<0.3)
-                    r.walls.down_d = rooms[oldy][oldx].walls.up_d = Math.round(100- Math.random()*200); // -100 .. 100
+                    r.walls.down_d = rooms[oldy][oldx].walls.up_d = Math.round(maxDx- Math.random()*(maxDx*2)); // -maxDx .. maxDx
 			}
 			rooms[y][x] = r;
 		} else {
@@ -187,17 +189,18 @@ waw.initWalls = function(room, units, layer) {
     if(!layer) throw "need a layer to add elements";
     var wall;
     var wallSize = 32; //thickness of the border walls
+    var wallSize2 = 44; //thickness of the TOP walls
 
     // Left wall lower
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-32));
+    wall.setContentSize(new cc.Size(wallSize, 240-64));
     wall.setPosition(wallSize / 2, 240+room.walls.left_d);
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Left wall lower
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-32));
+    wall.setContentSize(new cc.Size(wallSize, 240-64));
     wall.setPosition(wallSize / 2, 0+   room.walls.left_d);
     units.push(wall);
     //debug - shows hit box over the wall
@@ -205,14 +208,14 @@ waw.initWalls = function(room, units, layer) {
 
     // Right wall upper
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-32));
+    wall.setContentSize(new cc.Size(wallSize, 240-64));
     wall.setPosition(320-wallSize / 2, 240+room.walls.right_d);
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Right wall lower
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-32));
+    wall.setContentSize(new cc.Size(wallSize, 240-64));
     wall.setPosition(320-wallSize / 2, 0+room.walls.right_d);
     units.push(wall);
     //debug - shows hit box over the wall
@@ -220,29 +223,29 @@ waw.initWalls = function(room, units, layer) {
 
     // Top wall. left half
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(0+room.walls.up_d, 240-wallSize/2);
+    wall.setContentSize(new cc.Size(320 - 64, wallSize2));   //fat top wall
+    wall.setPosition(0+room.walls.up_d, 240-wallSize2/2);
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Top wall. right
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
-    wall.setPosition(320+room.walls.up_d, 240-wallSize/2);
+    wall.setContentSize(new cc.Size(320 - 64, wallSize2));
+    wall.setPosition(320+room.walls.up_d, 240-wallSize2/2);
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
 
     // Bottom wall left
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
+    wall.setContentSize(new cc.Size(320 - 64, wallSize));
     wall.setPosition(0+room.walls.down_d, wallSize / 2);
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Bottom wall right
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 32, wallSize));
+    wall.setContentSize(new cc.Size(320 - 64, wallSize));
     wall.setPosition(320+room.walls.down_d, wallSize / 2);
     units.push(wall);
     //debug - shows hit box over the wall
@@ -268,14 +271,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
     layer.addChild(upperWalls, 255);
 
     //add doors
-    switch (room.walls.up) {
+    switch (room.walls.up) {    //FAT upper wall
         case "door":
-            var d = cc.Sprite.create(s_DoorUp);
+            var d = cc.Sprite.create(s_Doors, cc.rect(0,80,80,80)); //closed door
             layer.addChild(d);
-            d.setPosition(cc.p(160+room.walls.up_d,208+16));
+            d.setPosition(cc.p(160+room.walls.up_d,240-48));
             //we set here obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(cc.p(160+room.walls.up_d,240));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -283,14 +286,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
 //            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
-            var d = cc.Sprite.create(s_PassUp);
+            var d = cc.Sprite.create(s_Doors, cc.rect(0,0,80,80));  //open door
             layer.addChild(d);
-            d.setPosition(cc.p(160+room.walls.up_d,208+16));
+            d.setPosition(cc.p(160+room.walls.up_d,240-48));
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(cc.p(160,240));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -300,12 +303,12 @@ waw.prepareRoomLayer = function(room, units, layer) {
     }
     switch (room.walls.right) {
         case "door":
-            var d = cc.Sprite.create(s_DoorRight);
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*2,80,80,80)); //closed door
             layer.addChild(d);
-            d.setPosition(cc.p(320-16,120+room.walls.right_d));
+            d.setPosition(cc.p(320-32,120+room.walls.right_d));
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(320,120+room.walls.right_d));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -313,14 +316,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
 //            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
-            var d = cc.Sprite.create(s_PassRight);
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*2,0,80,80)); //open door
             layer.addChild(d);
-            d.setPosition(cc.p(320-16,120+room.walls.right_d));
+            d.setPosition(cc.p(320-32,120+room.walls.right_d));
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(320,120));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -330,12 +333,12 @@ waw.prepareRoomLayer = function(room, units, layer) {
     }
     switch (room.walls.down) {
         case "door":
-            var d = cc.Sprite.create(s_DoorDown);
-            d.setPosition(cc.p(160+room.walls.down_d,16));
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*3,80,80,80)); //closed door
+            d.setPosition(cc.p(160+room.walls.down_d,32));
             layer.addChild(d);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(160+room.walls.down_d,0));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -343,14 +346,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
 //            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
-            var d = cc.Sprite.create(s_PassDown);
-            d.setPosition(cc.p(160+room.walls.down_d,16));
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*3,0,80,80)); //open door
+            d.setPosition(cc.p(160+room.walls.down_d,32));
             layer.addChild(d);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(160,0));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -360,12 +363,12 @@ waw.prepareRoomLayer = function(room, units, layer) {
     }
     switch (room.walls.left) {
         case "door":
-            var d = cc.Sprite.create(s_DoorLeft);
-            d.setPosition(cc.p(16,120+room.walls.left_d));
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*1,80,80,80)); //closed door
+            d.setPosition(cc.p(32,120+room.walls.left_d));
             layer.addChild(d);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(0,120+room.walls.left_d));
             units.push(wall);
             //debug - shows hit box over the wall
@@ -373,14 +376,14 @@ waw.prepareRoomLayer = function(room, units, layer) {
 //            layer.addChild(wall); //DEBUG! to see obstacle
             break;
         case "empty":
-            var d = cc.Sprite.create(s_PassLeft);
-            d.setPosition(cc.p(16,120+room.walls.left_d));
+            var d = cc.Sprite.create(s_Doors, cc.rect(80*1,0,80,80)); //open door
+            d.setPosition(cc.p(32,120+room.walls.left_d));
             layer.addChild(d);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             var wall = new cc.Sprite.create(s_Empty32x32);
-            wall.setContentSize(new cc.Size(32, 32));
+            wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(0,120));
             units.push(wall);
             //debug - shows hit box over the wall

@@ -259,5 +259,5 @@ waw.AddHitBoxSprite = function (unit, layer){
     sprite.setPositionX(unit.getPositionX());
     sprite.setPositionY(unit.getPositionY());
     layer.addChild(sprite,300);
-    sprite.runAction(cc.FadeOut.create(10));
+    sprite.runAction(cc.FadeOut.create(1)); //remove marks
 }
