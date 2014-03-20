@@ -19,8 +19,6 @@
             'src/animatedSprite.js',
             'src/player.js',
             'src/enemy.js',
-            'src/block.js',
-            'src/movingBlock.js',
             'src/level.js',
             'src/app.js'
         ]
