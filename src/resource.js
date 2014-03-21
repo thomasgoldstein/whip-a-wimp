@@ -1,16 +1,19 @@
 "use strict";
-var s_HitBoxGrid = "res/hbGrid.fw.png";
-var s_Floor = "res/Themes/Temple/Floor.fw.png";
-var s_MiddleWalls = "res/Themes/Temple/MiddleWalls.fw.png";
-var s_UpperWalls = "res/Themes/Temple/UpperWalls.fw.png";
-var s_Doors = "res/Themes/Temple/Doors.fw.png";
-var s_Pillar = "res/Themes/Temple/Pillar.png";
+var themeDir = "res/Themes/Temple/";
+
+var s_Floor = themeDir + "Floor.fw.png";
+var s_MiddleWalls = themeDir + "MiddleWalls.fw.png";
+var s_UpperWalls = themeDir + "UpperWalls.fw.png";
+var s_Doors = themeDir + "Doors.fw.png";
+var s_Pillar = themeDir + "Pillar.png";
 var s_Jesus = "res/Jesus.png";
 var s_Shadow = "res/Shadow.png";
 var s_Empty32x32 = "res/Empty32x32.fw.png";
 var s_Pit = "res/Pit.fw.png";
 var s_Debris = "res/Debris.fw.png";
 var s_EnemyPlain = "res//EnemyPlain.fw.png";
+//gfx for debug
+var s_HitBoxGrid = "res/hbGrid.fw.png";
 
 var g_resources = [
     //image
