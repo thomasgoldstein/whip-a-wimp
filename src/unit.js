@@ -42,7 +42,7 @@ waw.Unit = cc.Node.extend({
             pos = this.getPositionF();
         }
 
-        return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
+        return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
     },
     doesCollide: function (_units) {
         if(!_units) throw "must be an array in the arg";
