@@ -1,6 +1,7 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     sprite: null,
+    shadowSprite: null,
     speed: 0,
     movement: null,
     direction: null,
@@ -116,13 +117,11 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1
             }
         };
-
-        var shadow = cc.Sprite.create(s_Shadow);
-        shadow.setPosition(0, -22);
-        this.addChild(shadow);
-
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
+
+        //create players shadow sprite
+        this.shadowSprite = cc.Sprite.create(s_Shadow);
 
         this.alive = true;
     },
@@ -222,6 +221,9 @@ waw.Player = waw.Unit.extend({
         this.setPosition(pos);
         //Z Index
         this.setZOrder(250- pos.y);
+
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y-8);
     },
     getState: function() {
         var state =

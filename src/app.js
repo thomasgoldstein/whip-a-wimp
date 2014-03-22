@@ -52,6 +52,9 @@ waw.MainLayer = cc.Layer.extend({
         this.player = new waw.Player();
         this.player.setPosition(currentPlayerPos);
         this.addChild(this.player, 250-currentPlayerPos.y);
+        //attach players shadow to layer OVER BG floor (its Z index = -15)
+        this.addChild(this.player.shadowSprite,-14);
+
         //anti stuck START POSITION of player check
         while( this.player.doesCollide(this.units)) {
             currentPlayerPos.x = Math.round(Math.random()*320);
