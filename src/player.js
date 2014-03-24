@@ -223,7 +223,7 @@ waw.Player = waw.Unit.extend({
         this.setZOrder(250- pos.y);
 
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-8);
+        this.shadowSprite.setPosition(pos.x, pos.y-5);
     },
     getState: function() {
         var state =
