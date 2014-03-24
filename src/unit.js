@@ -49,9 +49,14 @@ waw.Unit = cc.Node.extend({
         for (var unit in _units) {
             if(!_units[unit] || _units[unit] == this)    //do not compare with self
                 continue;
-            //console.info(_units[unit]);
-            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
 
+            //TODO this is Better check. but glitches when u enther right room with presset UP
+//            if(cc.rectIntersectsRect(this.collideRect(), _units[unit].collideRect())){
+                //console.log(this.collideRect(), _units[unit].collideRect());
+//                return true;
+//            }
+
+            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
             if (rect.width > 0 && rect.height > 0) // Collision!
                 return true;
         }

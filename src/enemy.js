@@ -1,4 +1,8 @@
 "use strict";
+
+//states: idle walk attack
+//conditions canAttck canWalk feelObstacle seePlayer seeItem
+
 waw.Enemy = waw.Unit.extend({
     sprite: null,
     speed: 1,
@@ -31,7 +35,27 @@ waw.Enemy = waw.Unit.extend({
 
         this.condition.alive = true;
     },
+    getConditions: function(){
+        var conditions = [];
+        getVisualConditions(conditions);
+        getSenseConditions(conditions);
 
+        conditions.push("canWalk"); //always possible
+        return conditions;
+    },
+    getVisualConditions: function(conditions){
+        // might add "seeEnemy" "seeItem" "canAttack"
+        //if(cc.p.dis)
+        //    conditions.push("feelObstacle");
+
+        return;
+    },
+    getSensorsConditions: function(conditions){
+        // might add "feelObstacle"
+        if(this.doesCollide(waw.units))
+            conditions.push("feelObstacle");
+        return;
+    },
     update: function (env) {
         var currentTime = new Date();
         var pos = this.getPosition(),

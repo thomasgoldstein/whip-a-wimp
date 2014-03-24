@@ -126,15 +126,15 @@ waw.Player = waw.Unit.extend({
         this.alive = true;
     },
     keyDown: function(e) {
-        if (!this.alive)
-            return;
+//        if (!this.alive)
+//            return;
 
         this.changeKey(e, true);
         this.updateDirection(e);
     },
     keyUp: function(e) {
-        if (!this.alive)
-            return;
+//        if (!this.alive)
+//            return;
 
         this.changeKey(e, false);
 

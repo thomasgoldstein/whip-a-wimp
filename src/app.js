@@ -56,10 +56,6 @@ waw.MainLayer = cc.Layer.extend({
         waw.player = this.player = new waw.Player();
         this.player.setPosition(currentPlayerPos);
         this.addChild(this.player, 250-currentPlayerPos.y);
-        //attach players shadow to layer OVER BG floor (its Z index = -15)
-        this.addChild(this.player.shadowSprite,-14);
-        waw.shadow = this.player.shadowSprite;
-
         //anti stuck START POSITION of player check
         while( this.player.doesCollide(this.units)) {
             currentPlayerPos.x = Math.round(Math.random()*320);
@@ -84,6 +80,9 @@ waw.MainLayer = cc.Layer.extend({
             this.player.direction.up = false;
         }
         this.player.update(currentPlayerPos);   //to update players sprite facing direction
+        //attach players shadow to layer OVER BG floor (its Z index = -15)
+        this.addChild(this.player.shadowSprite,-14);
+        waw.shadow = this.player.shadowSprite;
 
         this.player.runAction(cc.Blink.create(1, 5)); //Blink Player sprite
 
@@ -215,7 +214,7 @@ waw.MainLayer = cc.Layer.extend({
         return nextPos;
     },
     update: function (dt) {
-
+          //monsters
         for(var i=0; i<this.foes.length; ++i){
             if(this.foes[i]) {
                 this.foes[i].update(this); //pass current closure to have access to its Units arr
@@ -223,8 +222,8 @@ waw.MainLayer = cc.Layer.extend({
                     this.foes[i] = null;
             }
         }
-        if (!this.player)
-            return;
+//        if (!this.player)
+//            return;
         var nextPos = this.handleCollisions();
         currentPlayerPos = nextPos;
         if (nextPos.x < 16) {
@@ -268,5 +267,5 @@ waw.AddHitBoxSprite = function (unit, layer){
     sprite.setPositionX(unit.getPositionX());
     sprite.setPositionY(unit.getPositionY());
     layer.addChild(sprite,300);
-    sprite.runAction(cc.FadeOut.create(1)); //remove marks
+    sprite.runAction(cc.FadeOut.create(2)); //remove marks
 }
