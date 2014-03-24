@@ -35,26 +35,26 @@ waw.Enemy = waw.Unit.extend({
 
         this.condition.alive = true;
     },
-    getConditions: function(){
+    getVisualConditions: function (conditions) {
+        // might add "seeEnemy" "seeItem" "canAttack"
+        //if(cc.p.dis)
+        conditions.push("seeItem");
+
+        return;
+    },
+    getSensorsConditions: function (conditions) {
+        // might add "feelObstacle"
+        if (this.doesCollide(waw.units))
+            conditions.push("feelObstacle");
+        return;
+    },
+    getConditions: function () {
         var conditions = [];
-        getVisualConditions(conditions);
-        getSenseConditions(conditions);
+        this.getVisualConditions(conditions);
+        this.getSensorsConditions(conditions);
 
         conditions.push("canWalk"); //always possible
         return conditions;
-    },
-    getVisualConditions: function(conditions){
-        // might add "seeEnemy" "seeItem" "canAttack"
-        //if(cc.p.dis)
-        //    conditions.push("feelObstacle");
-
-        return;
-    },
-    getSensorsConditions: function(conditions){
-        // might add "feelObstacle"
-        if(this.doesCollide(waw.units))
-            conditions.push("feelObstacle");
-        return;
     },
     update: function (env) {
         var currentTime = new Date();
@@ -62,6 +62,9 @@ waw.Enemy = waw.Unit.extend({
             oldPos = pos,
             x = pos.x,
             y = pos.y;
+
+        var conditions = this.getConditions();
+        debugger;
 
         if (!this.condition.alive) {
             return;
@@ -80,10 +83,10 @@ waw.Enemy = waw.Unit.extend({
 
         this.condition.canMove = !(this.doesCollide(env.units));
 
-        this.label.setString("Mob "+x+"("+this.dx+"),"+y+"("+this.dy+")\n"+this.state+"");
-            //+this.timeToThink);
+        this.label.setString("Mob " + x + "(" + this.dx + ")," + y + "(" + this.dy + ")\n" + this.state + "");
+        //+this.timeToThink);
 
-        if (this.condition.canMove){
+        if (this.condition.canMove) {
             //move position
             this.setPosition(x, y);
             this.setZOrder(250 - y);
@@ -94,7 +97,7 @@ waw.Enemy = waw.Unit.extend({
 
         }
 
-        if( currentTime.getTime()< this.timeToThink) {
+        if (currentTime.getTime() < this.timeToThink) {
             return;
         }
         //TODO
@@ -109,13 +112,13 @@ waw.Enemy = waw.Unit.extend({
                     this.state = "walk";
                 //this.dx = 0;
                 //this.dy = 0;
-                this.timeToThink = currentTime.getTime()+300;
+                this.timeToThink = currentTime.getTime() + 300;
                 return;
                 break;
             case "walk":
-                if (!this.condition.canMove){
+                if (!this.condition.canMove) {
                     this.state = "idle";
-                    this.timeToThink = currentTime.getTime()+3000;
+                    this.timeToThink = currentTime.getTime() + 3000;
                     this.dx = 0;
                     this.dy = 0;
 
@@ -126,16 +129,16 @@ waw.Enemy = waw.Unit.extend({
 
                 //AI plug
 //                if (Math.random() < 0.5) {
-                    if (Math.random() < 0.5)
-                        this.dy = this.speed;
-                    else
-                        this.dy = -this.speed;
+                if (Math.random() < 0.5)
+                    this.dy = this.speed;
+                else
+                    this.dy = -this.speed;
 //                }
 //                if (Math.random() < 0.5) {
-                    if (Math.random() < 0.5)
-                        this.dx = this.speed;
-                    else
-                        this.dx = -this.speed;
+                if (Math.random() < 0.5)
+                    this.dx = this.speed;
+                else
+                    this.dx = -this.speed;
 //                }
                 break;
         }
