@@ -1,15 +1,13 @@
 "use strict";
-//Global vars
-var currentRoom = null;
-var currentRoomX = 4, currentRoomY = 4; //The start room is 4,4 by default
-var currentPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
-//debug vars
-var showHitBoxes = false;
 
 //the Start method
 waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
+
+        //init the current labyrinth of rooms;
+        rooms.initLevel();
+        rooms.genLevel();
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -31,29 +29,36 @@ waw.MainLayer = cc.Layer.extend({
 
     init: function () {
         this._super();
-//        var size = cc.Director.getInstance().getWinSize();
+
+        //var w = cc.Director.getInstance().waw;  //global vars at singleton Director.waw
+        waw.layer = this;
+        waw.units = []; //clear obstacles
+        this.units = waw.units;
+        //this.player = w.player;
+        //this.shadow = w.shadow;
+        //this.foes = w.foes = [];
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
-        this.units = new Array();   //init array
-        this.foes = new Array();
         //Initially draw room BG, walls, foes onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
         if (currentRoom) {
-            waw.initWalls(currentRoom, this.units, this); //init array units with non-destructable walls (8 pieces)
-            waw.prepareRoomLayer(currentRoom, this.units, this);
+            waw.initWalls(currentRoom); //init array units with non-destructable walls (8 pieces)
+            waw.prepareRoomLayer(currentRoom);
         } else
             throw "this room coords are out of the grid"
+        waw.units = this.units;   //init array
         //this.addChild(miniMapLayer);
 
         //console.info("new Player");
         //put player sprite on the screen
-        this.player = new waw.Player();
+        waw.player = this.player = new waw.Player();
         this.player.setPosition(currentPlayerPos);
         this.addChild(this.player, 250-currentPlayerPos.y);
         //attach players shadow to layer OVER BG floor (its Z index = -15)
         this.addChild(this.player.shadowSprite,-14);
+        waw.shadow = this.player.shadowSprite;
 
         //anti stuck START POSITION of player check
         while( this.player.doesCollide(this.units)) {
@@ -92,16 +97,17 @@ waw.MainLayer = cc.Layer.extend({
             this.addChild(e, 6);
             this.foes.push(e);
         }
+        waw.foes = this.foes;
     },
     onEnterTransitionDidFinish: function () {
-        console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
+//        console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
         //put player sprite on the screen
 //        this.player = new waw.Player();
 //        this.player.setPosition(currentPlayerPos);
 //        this.addChild(this.player, 5);
     },
     onExitTransitionDidStart: function () {
-        console.info("onExitTransitionDidStart ROOM: " + currentRoomX + "," + currentRoomY);
+//        console.info("onExitTransitionDidStart ROOM: " + currentRoomX + "," + currentRoomY);
         //put player sprite on the screen
 //        this.player = new waw.Player();
 //        this.player.setPosition(currentPlayerPos);

@@ -1,12 +1,5 @@
 "use strict";
-
 //Level Generator
-//console.log("Init...");
-//console.log(document); //you can log virtually any JavaScript object
-//you can specify the type of message
-//console.debug("debug"); 
-//console.info("info"); 
-//console.warn("warn");
 
 //constructor - Walls in a Room
 function Walls() {
@@ -37,7 +30,6 @@ function Room(_name,_x,_y) {
 
 }
 
-var rooms = {};
 rooms.initLevel = function() {
 	//init level 9x9
 	for(var y = 0; y < 9 ; y++) {
@@ -165,12 +157,12 @@ rooms.genLevel = function() {
 //TODO it doesnt work
 rooms.GenerateMiniMapLayer = function() {
     //bare map
+/*
     var layer;
     layer = new cc.Layer();
     //layer.setContentSize(cc.size(9*3-1,9*3-1));
     var draw = cc.DrawNode.create();
     layer.addChild(draw,10);
-//    nextLayer.init();
 
     for(var y = 0; y < 9 ; y++) {
         for(var x = 0; x < 9; x++) {
@@ -180,13 +172,14 @@ rooms.GenerateMiniMapLayer = function() {
         }
     }
     return layer;
+*/
 };
 
 //init 8 pieces of impassable walls
-waw.initWalls = function(room, units, layer) {
+waw.initWalls = function(room) {
     if(!room) throw "unknown room";
-    if(!units) throw "need a units array to add elements";
-    if(!layer) throw "need a layer to add elements";
+    var units = waw.units;
+    var layer = waw.layer;
     var wall;
     var wallSize = 32; //thickness of the border walls
     var wallSize2 = 44; //thickness of the TOP walls
@@ -253,11 +246,11 @@ waw.initWalls = function(room, units, layer) {
 };
 
 //preparesand adds elements of a room onto existing layer
-waw.prepareRoomLayer = function(room, units, layer) {
+waw.prepareRoomLayer = function(room) {
     //layer.addChild();
     if(!room) throw "unknown room";
-    if(!units) throw "need a units array to add elements";
-    if(!layer) throw "need a layer to add elements";
+    var units = waw.units;
+    var layer = waw.layer;
 
     //add room Background
     var floor = cc.Sprite.create(s_Floor);
@@ -392,7 +385,7 @@ waw.prepareRoomLayer = function(room, units, layer) {
             break;
     }
     //put obstacles in the room
-    waw.prepareRoomPattern(room, units, layer);
+    waw.prepareRoomPattern(room);
 
     //print room coords X,Y at the upper left corner
     var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
@@ -403,10 +396,10 @@ waw.prepareRoomLayer = function(room, units, layer) {
 };
 
 //adds obstacles of a room onto existing layer
-waw.prepareRoomPattern = function(room, units, layer) {
+waw.prepareRoomPattern = function(room) {
     if(!room) throw "unknown room";
-    if(!units) throw "need a units array to add elements";
-    if(!layer) throw "need a layer to add elements";
+    var units = waw.units;
+    var layer = waw.layer;
 
     //some random debris to PSEUDO random per a room
     waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
@@ -425,6 +418,7 @@ waw.prepareRoomPattern = function(room, units, layer) {
         //d.runAction(cc.FadeTo.create(5,0.5));
     }
     //TODO remove them from there. they'll be in the patterns
+    //we do not use "laying on the floor obstacles" now
 /*
     for(var x = 0; x < waw.rand()*2; x++) {
         var d = cc.Sprite.create(s_Pit,
@@ -443,47 +437,47 @@ waw.prepareRoomPattern = function(room, units, layer) {
             break;
         case 1:
             //1 obstacle in the middle of the room
-            waw.putRoomObstacle(units, layer, new cc.p(320/2,240/2), new cc.Size(32,16), new cc.p(320/2,240/2-8));
+            waw.putRoomObstacle(new cc.p(320/2,240/2), new cc.Size(32,16), new cc.p(320/2,240/2-8));
             break;
         case 2:
             //4 obstacles around the middle of the room
-            waw.putRoomObstacle(units, layer, new cc.p(320/3,240/3), new cc.Size(32,16), new cc.p(320/3,240/3-8));
-            waw.putRoomObstacle(units, layer, new cc.p(320/3,240-240/3), new cc.Size(32,16), new cc.p(320/3,240-240/3-8));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/3,240/3), new cc.Size(32,16), new cc.p(320-320/3,240/3-8));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/3,240-240/3), new cc.Size(32,16), new cc.p(320-320/3,240-240/3-8));
+            waw.putRoomObstacle(new cc.p(320/3,240/3), new cc.Size(32,16), new cc.p(320/3,240/3-8));
+            waw.putRoomObstacle(new cc.p(320/3,240-240/3), new cc.Size(32,16), new cc.p(320/3,240-240/3-8));
+            waw.putRoomObstacle(new cc.p(320-320/3,240/3), new cc.Size(32,16), new cc.p(320-320/3,240/3-8));
+            waw.putRoomObstacle(new cc.p(320-320/3,240-240/3), new cc.Size(32,16), new cc.p(320-320/3,240-240/3-8));
             break;
         case 3:
             //4 obstacles wide around the middle of the room
-            waw.putRoomObstacle(units, layer, new cc.p(320/4,240/4+8), new cc.Size(32,16), new cc.p(320/4,240/4-8+8));
-            waw.putRoomObstacle(units, layer, new cc.p(320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320/4,240-240/4-8-16));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/4,240/4+8), new cc.Size(32,16), new cc.p(320-320/4,240/4-8+8));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-8-16));
+            waw.putRoomObstacle(new cc.p(320/4,240/4+8), new cc.Size(32,16), new cc.p(320/4,240/4-8+8));
+            waw.putRoomObstacle(new cc.p(320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320/4,240-240/4-8-16));
+            waw.putRoomObstacle(new cc.p(320-320/4,240/4+8), new cc.Size(32,16), new cc.p(320-320/4,240/4-8+8));
+            waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-8-16));
             break;
         case 4:
             //1 obstacle in the middle of the room
-            waw.putRoomObstacle(units, layer, new cc.p(320/2,240/2), new cc.Size(32,16), new cc.p(320/2,240/2-8));
+            waw.putRoomObstacle(new cc.p(320/2,240/2), new cc.Size(32,16), new cc.p(320/2,240/2-8));
             //4 obstacles wide around the middle of the room
-            waw.putRoomObstacle(units, layer, new cc.p(320/4,240/4+8), new cc.Size(32,16), new cc.p(320/4,240/4-8+8));
-            waw.putRoomObstacle(units, layer, new cc.p(320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320/4,240-240/4-8-16));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/4,240/4+8), new cc.Size(32,16), new cc.p(320-320/4,240/4-8+8));
-            waw.putRoomObstacle(units, layer, new cc.p(320-320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-8-16));
+            waw.putRoomObstacle(new cc.p(320/4,240/4+8), new cc.Size(32,16), new cc.p(320/4,240/4-8+8));
+            waw.putRoomObstacle(new cc.p(320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320/4,240-240/4-8-16));
+            waw.putRoomObstacle(new cc.p(320-320/4,240/4+8), new cc.Size(32,16), new cc.p(320-320/4,240/4-8+8));
+            waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-16), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-8-16));
             break;
         case 5:
             //horizontal line of obstacles in the room
             for(var x = 0; x <= 80; x += 64){
                 var y1 = 240/2+(Math.round(waw.rand()*8-4))-16;
-                waw.putRoomObstacle(units, layer, new cc.p(160+x,y1), new cc.Size(32,16), new cc.p(160+x,y1-8));
+                waw.putRoomObstacle(new cc.p(160+x,y1), new cc.Size(32,16), new cc.p(160+x,y1-8));
                 if(x!=0)
-                    waw.putRoomObstacle(units, layer, new cc.p(160-x,y1), new cc.Size(32,16), new cc.p(160-x,y1-8));
+                    waw.putRoomObstacle(new cc.p(160-x,y1), new cc.Size(32,16), new cc.p(160-x,y1-8));
             }
             break;
         case 6:
             //vertical line of obstacles in the room
             for(var y = 0; y <= 60; y += 48) {
                 var x1 = 320/2+(Math.round(waw.rand()*8-4));
-                waw.putRoomObstacle(units, layer, new cc.p(x1,120+y), new cc.Size(32,16), new cc.p(x1,120+y-8));
+                waw.putRoomObstacle(new cc.p(x1,120+y), new cc.Size(32,16), new cc.p(x1,120+y-8));
                 if(y!=0)
-                    waw.putRoomObstacle(units, layer, new cc.p(x1,120-y), new cc.Size(32,16), new cc.p(x1,120-y-8));
+                    waw.putRoomObstacle(new cc.p(x1,120-y), new cc.Size(32,16), new cc.p(x1,120-y-8));
             }
             break;
     }
@@ -491,9 +485,9 @@ waw.prepareRoomPattern = function(room, units, layer) {
 };
 
 //adds obstacles of a room onto existing layer
-waw.putRoomObstacle = function(units, layer, pos, hitbox, hitboxPos) {
-    if(!units) throw "need a units array to add elements";
-    if(!layer) throw "need a layer to add elements";
+waw.putRoomObstacle = function(pos, hitbox, hitboxPos) {
+    var units = waw.units;
+    var layer = waw.layer;
 
     //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
     var sprite = cc.Sprite.create(s_Pillar,cc.rect(0, 0, 32, 64));
@@ -510,14 +504,3 @@ waw.putRoomObstacle = function(units, layer, pos, hitbox, hitboxPos) {
     //debug
     waw.AddHitBoxSprite(wall, layer);
 };
-
-
-//init the current labyrinth of rooms;
-rooms.initLevel();
-rooms.genLevel();
-
-//console.info("Small Level");
-//rooms.printSLevel();
-//console.info("Big Level");
-//rooms.printLevel();
-//console.log(rooms);
