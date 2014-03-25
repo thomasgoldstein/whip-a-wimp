@@ -16,7 +16,7 @@ waw.Shedule = function(tasks, interrupts) {
         this.interrupts.push(interrupts[j]);
 };
 waw.Shedule.prototype.trace = function () {
-    console.info("trace currTask:" + this.currentTask + " Done:" + this.done);
+//    console.info("trace currTask:" + this.currentTask + " Done:" + this.done);
     for (var i in this.tasks)
         console.log(this.tasks[i]);
     for (var j in this.interrupts)
@@ -25,57 +25,58 @@ waw.Shedule.prototype.trace = function () {
 waw.Shedule.prototype.reset = function () {
     this.currentTask = 0;
     this.done = false;
-    console.info(" reset tasks que");
+//    console.info(" reset tasks que");
 };
 waw.Shedule.prototype.stop = function () {
     this.currentTask = 0;
     this.done = true;
-    console.info(" stop tasks que");
+//    console.info(" stop tasks que");
 };
 waw.Shedule.prototype.addTask = function (f) {
     if (!f) throw "argument should be a function";
     this.tasks.push(f);
-    console.info(" added " + f + " to tasks");
+//    console.info(" added " + f + " to tasks");
 };
 waw.Shedule.prototype.addInterrupt = function (t) {
     if (!t) throw "argument should be a string with interrupt condition name";
     this.interrupts.push(t);
-    console.info(" added " + t + " to interrupts");
+//    console.info(" added " + t + " to interrupts");
 };
 waw.Shedule.prototype.isDone = function (conditions) {
-    console.info(" isDone?");
+//    console.info(" isDone?");
     if (this.done) {
         this.reset();
-        console.info(" all tasks are done");
+//        console.info(" all tasks are done");
         return true;
     }
     for (var i in conditions)
         if (this.interrupts.indexOf(conditions[i]) >= 0) {
             this.reset();
-            console.info(" all tasks are done by right interrupt");
+//            console.info(" all tasks are done by right interrupt");
             return true;
         }
-    console.info(" nope");
+//    console.info(" nope");
     return false;
 };
-waw.Shedule.prototype.update = function () {
-    console.info(" tasks len " + this.tasks.length + ", interrupts len " + this.interrupts.length);
+waw.Shedule.prototype.update = function (env) {
+//    console.info(" tasks len " + this.tasks.length + ", interrupts len " + this.interrupts.length);
+    debugger;
     if (this.done) {
-        console.info(" no update: all tasks are done");
+//        console.info(" no update: all tasks are done");
         return false;
     }
     if (this.tasks.length <= 0) {
-        console.info(" no tasks");
+//        console.info(" no tasks");
         return false;
     }
-    if (this.tasks[this.currentTask]()) {   //if func returns true, delete this from the que
+    if (this.tasks[this.currentTask].apply(env)) {   //if func returns true, delete this from the que
         this.currentTask++;
-        console.info(" que func run with true");
+//        console.info(" que func run with true");
         if (this.currentTask > this.tasks.length - 1)
             this.stop();
         return true;
     }
-    console.info(" que func run with false");
+//    console.info(" que func run with false");
     return false;
 };
 

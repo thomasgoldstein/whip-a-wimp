@@ -34,9 +34,6 @@ waw.MainLayer = cc.Layer.extend({
         waw.layer = this;
         waw.units = []; //clear obstacles
         this.units = waw.units;
-        //this.player = w.player;
-        //this.shadow = w.shadow;
-        //this.foes = w.foes = [];
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
@@ -88,7 +85,7 @@ waw.MainLayer = cc.Layer.extend({
 
         //-------------TEST enemy
         //TODO Plug. Temp put enemy on the screen
-        for(var i=0; i<2; ++i){
+        for(var i=0; i<currentRoom.nMonsters; ++i){
             var e = new waw.Enemy();
             e.setPositionX(Math.round(Math.random()*(320-80)+40));
             e.setPositionY(Math.round(Math.random()*(240-80)+40));
@@ -217,9 +214,9 @@ waw.MainLayer = cc.Layer.extend({
           //monsters
         for(var i=0; i<this.foes.length; ++i){
             if(this.foes[i]) {
-                this.foes[i].update(this); //pass current closure to have access to its Units arr
-                if(!this.foes[i].condition.alive)
-                    this.foes[i] = null;
+                this.foes[i].update(); //pass current closure to have access to its Units arr
+//                if(!this.foes[i].condition.alive)
+//                    this.foes[i] = null;
             }
         }
 //        if (!this.player)

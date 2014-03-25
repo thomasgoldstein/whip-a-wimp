@@ -24,6 +24,7 @@ function Room(_name,_x,_y) {
 	this.y = _y;
 	this.walls = new Walls();
     this.type = 0; //0 = clean room type
+    this.nMonsters = Math.round(Math.random()*5);
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);

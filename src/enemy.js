@@ -3,6 +3,7 @@
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
+
 waw.Enemy = waw.Unit.extend({
     sprite: null,
     speed: 1,
@@ -10,17 +11,28 @@ waw.Enemy = waw.Unit.extend({
     direction: null,
     dx: 1,
     dy: -1,
+    targetX: 160,
+    targetY: 110,
+    safePos: null,
     HP: 3,
     state: "idle",
-    condition: {alive: true, canMove: true},
+    stateShedule: null,
+    conditions: [],
     timeToThink: 0,
     label: null,
+    SHEDULE_IDLE: null,
+    SHEDULE_WALK: null,
     ctor: function () {
         this._super();
-        console.info("Enemy ctor");
+        //console.info("Enemy ctor");
+
+        this.SHEDULE_IDLE = new waw.Shedule([this.initIdle, this.onIdle], ["seeEnemy"]);
+        this.SHEDULE_WALK = new waw.Shedule([this.initWalk, this.onWalk], ["feelObstacle"]);
+
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
-//        this.speed = 0.75; //??
+        this.speed = 1;
+        this.safePos = cc.p(0, 0);
 
         this.sprite = cc.Sprite.create(s_EnemyPlain,
             cc.rect(Math.floor(waw.rand() * 3) * 32, 0, 32, 32));
@@ -33,20 +45,18 @@ waw.Enemy = waw.Unit.extend({
         this.label.setPosition(cc.p(0, -30));
         //label.setOpacity(200);
 
-        this.condition.alive = true;
+        this.state = "idle";
+        this.stateShedule = this.SHEDULE_IDLE;
     },
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
         //if(cc.p.dis)
         conditions.push("seeItem");
-
-        return;
     },
     getSensorsConditions: function (conditions) {
         // might add "feelObstacle"
         if (this.doesCollide(waw.units))
             conditions.push("feelObstacle");
-        return;
     },
     getConditions: function () {
         var conditions = [];
@@ -56,97 +66,124 @@ waw.Enemy = waw.Unit.extend({
         conditions.push("canWalk"); //always possible
         return conditions;
     },
-    update: function (env) {
+    pickAIShedule: function(){
+        switch (this.state) {
+            case "idle":
+                if (Math.random() < 0.7) {
+                    this.state = "idle";
+                    this.stateShedule = this.SHEDULE_IDLE;
+//                    console.log("-idle");
+                } else {
+                    this.state = "walk";
+                    this.stateShedule = this.SHEDULE_WALK;
+//                    console.log("-walk");
+                }
+                break;
+            case "walk":
+                if (Math.random() < 0.3) {
+                    this.state = "idle";
+                    this.stateShedule = this.SHEDULE_IDLE;
+//                    console.log("-idle");
+                } else {
+                    this.state = "walk";
+                    this.stateShedule = this.SHEDULE_WALK;
+//                    console.log("-walk");
+                }
+                break;
+            default:
+                this.state = "idle";
+                this.stateShedule = this.SHEDULE_IDLE;
+//                console.log("-DEFLT-idle");
+        }
+    },
+    update: function () {
         var currentTime = new Date();
+
+        var pos = this.getPosition(),
+            x = pos.x,
+            y = pos.y;
+
+        this.conditions = this.getConditions();
+//        debugger;
+
+        if (this.stateShedule.isDone()) {
+            this.pickAIShedule();
+        }
+        this.stateShedule.update(this); //we pass 'this' to make anon funcs in shedule see current monsters vars
+
+        this.label.setString("" + x + "->" + this.targetX + ")," + y + "->" + this.targetY + ")\n" + this.state + "");
+    },
+    initIdle: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 500 + Math.random() * 500;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        if (this.safePos.y != 0) {
+            x = this.safePos.x;
+            y = this.safePos.y;
+        } else {
+            var pos = this.getPosition();
+            x = pos.x;
+            y = pos.y;
+        }
+        this.setPosition(x, y);
+        this.setZOrder(250 - y);
+        return true;
+    },
+    onIdle: function () {
+        var currentTime = new Date();
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
+    initWalk: function () {
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 1500 + Math.random() * 500;
+        if (this.targetX == 0 || this.targetY == 0) {
+            //random point to go
+            this.targetX = Math.round(80 + Math.random() * 160);
+            this.targetY = Math.round(80 + Math.random() * 80);
+        }
+        return true;
+    },
+    onWalk: function () {
+        var currentTime = new Date();
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+
         var pos = this.getPosition(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
 
-        var conditions = this.getConditions();
-        debugger;
-
-        if (!this.condition.alive) {
-            return;
-        }
-        //check
-        if (this.HP <= 0) {
-
-            this.condition.alive = false;
-            //add die anim
-            return;
-        }
+        this.oldPos = pos;
 
         //try to move unit
-        y += this.dy;
-        x += this.dx;
+        if (this.targetX < x)
+            x -= this.speed;
+        else if (this.targetX > x)
+            x += this.speed;
+        if (this.targetY < y)
+            y -= this.speed;
+        else if (this.targetY > y)
+            y += this.speed;
 
-        this.condition.canMove = !(this.doesCollide(env.units));
+        this.setPosition(x, y);
+        this.setZOrder(250 - y);
 
-        this.label.setString("Mob " + x + "(" + this.dx + ")," + y + "(" + this.dy + ")\n" + this.state + "");
-        //+this.timeToThink);
-
-        if (this.condition.canMove) {
-            //move position
-            this.setPosition(x, y);
-            this.setZOrder(250 - y);
-        } else {
-            pos = oldPos;
-            this.setPosition(pos.x, pos.y);
-            this.setZOrder(250 - pos.y);
-
+        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
+            return true; //get to the target x,y
         }
-
-        if (currentTime.getTime() < this.timeToThink) {
-            return;
-        }
-        //TODO
-        //set time, when you "think" next time
-        //this.timeToThink = currentTime.getTime()+3000;
-
-        //if(this.doesCollide(this.playe))
-
-        switch (this.state) {
-            case "idle":
-                if (Math.random() < 0.5)
-                    this.state = "walk";
-                //this.dx = 0;
-                //this.dy = 0;
-                this.timeToThink = currentTime.getTime() + 300;
-                return;
-                break;
-            case "walk":
-                if (!this.condition.canMove) {
-                    this.state = "idle";
-                    this.timeToThink = currentTime.getTime() + 3000;
-                    this.dx = 0;
-                    this.dy = 0;
-
-                    this.runAction(cc.Blink.create(1, 2)); //Blink Foe sprite
-                    //this.HP -= 1;
-                    //return;
-                }
-
-                //AI plug
-//                if (Math.random() < 0.5) {
-                if (Math.random() < 0.5)
-                    this.dy = this.speed;
-                else
-                    this.dy = -this.speed;
-//                }
-//                if (Math.random() < 0.5) {
-                if (Math.random() < 0.5)
-                    this.dx = this.speed;
-                else
-                    this.dx = -this.speed;
-//                }
-                break;
-        }
-        //     this.setPosition(oldPos);
-        //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
-        //TODO 1.make enemy not stuck 2.check collision with other foes
-        //Z Index
-
+        return false;
     }
+
+    //     this.setPosition(oldPos);
+    //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
+    //TODO 1.make enemy not stuck 2.check collision with other foes
+    //Z Index
 })
 ;
