@@ -120,6 +120,11 @@ waw.Player = waw.Unit.extend({
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
 
+        //print room coords X,Y at the upper left corner
+        this.label = cc.LabelTTF.create("Player", "System", 9);
+        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
+        this.label.setPosition(cc.p(0, -34));
+
         //create players shadow sprite
         this.shadowSprite = cc.Sprite.create(s_Shadow);
 
@@ -224,6 +229,8 @@ waw.Player = waw.Unit.extend({
 
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y-5);
+
+        this.label.setString("P " + pos.x + "," + pos.y + "");
     },
     getState: function() {
         var state =

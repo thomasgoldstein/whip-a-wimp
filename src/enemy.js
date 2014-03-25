@@ -19,7 +19,6 @@ waw.Enemy = waw.Unit.extend({
     stateShedule: null,
     conditions: [],
     timeToThink: 0,
-    label: null,
     SHEDULE_IDLE: null,
     SHEDULE_WALK: null,
     ctor: function () {
@@ -51,7 +50,7 @@ waw.Enemy = waw.Unit.extend({
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
         //if(cc.p.dis)
-        conditions.push("seeItem");
+//        conditions.push("seeItem");
     },
     getSensorsConditions: function (conditions) {
         // might add "feelObstacle"
@@ -116,7 +115,7 @@ waw.Enemy = waw.Unit.extend({
     initIdle: function () {
         var currentTime = new Date();
         //stop
-        this.timeToThink = currentTime.getTime() + 500 + Math.random() * 500;
+        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 50;
         this.targetX = this.targetY = 0;
         var x, y;
 
@@ -141,11 +140,11 @@ waw.Enemy = waw.Unit.extend({
     },
     initWalk: function () {
         var currentTime = new Date();
-        this.timeToThink = currentTime.getTime() + 1500 + Math.random() * 500;
+        this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;
         if (this.targetX == 0 || this.targetY == 0) {
             //random point to go
-            this.targetX = Math.round(80 + Math.random() * 160);
-            this.targetY = Math.round(80 + Math.random() * 80);
+            this.targetX = Math.round(50 + Math.random() * 220);
+            this.targetY = Math.round(50 + Math.random() * 130);
         }
         return true;
     },

@@ -87,9 +87,9 @@ waw.MainLayer = cc.Layer.extend({
         //TODO Plug. Temp put enemy on the screen
         for(var i=0; i<currentRoom.nMonsters; ++i){
             var e = new waw.Enemy();
-            e.setPositionX(Math.round(Math.random()*(320-80)+40));
-            e.setPositionY(Math.round(Math.random()*(240-80)+40));
-            e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
+            e.setPositionX(Math.round(50 + Math.random() * 220));
+            e.setPositionY(Math.round(50 + Math.random() * 130));
+            //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
             this.foes.push(e);
         }

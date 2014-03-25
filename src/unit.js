@@ -1,6 +1,7 @@
 "use strict";
 waw.Unit = cc.Node.extend({
     _positionF: null,
+    label: null,
     ctor: function() {
         this._super();
         this._positionF = cc._pConst(0, 0);
