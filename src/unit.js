@@ -1,6 +1,7 @@
 "use strict";
 waw.Unit = cc.Node.extend({
     _positionF: null,
+    shadowSprite: null,
     label: null,
     ctor: function() {
         this._super();

@@ -23,7 +23,7 @@ waw.MainScene = cc.Scene.extend({
 waw.MainLayer = cc.Layer.extend({
     isMouseDown: false,
     player: null,
-    shadow: null,
+    //shadow: null,
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
 
@@ -79,7 +79,6 @@ waw.MainLayer = cc.Layer.extend({
         this.player.update(currentPlayerPos);   //to update players sprite facing direction
         //attach players shadow to layer OVER BG floor (its Z index = -15)
         this.addChild(this.player.shadowSprite,-14);
-        waw.shadow = this.player.shadowSprite;
 
         this.player.runAction(cc.Blink.create(1, 5)); //Blink Player sprite
 
@@ -91,6 +90,10 @@ waw.MainLayer = cc.Layer.extend({
             e.setPositionY(Math.round(50 + Math.random() * 130));
             //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
+
+            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
+            this.addChild(e.shadowSprite,-14);
+
             this.foes.push(e);
         }
         waw.foes = this.foes;

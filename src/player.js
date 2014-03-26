@@ -1,7 +1,6 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     sprite: null,
-    shadowSprite: null,
     speed: 0,
     movement: null,
     direction: null,

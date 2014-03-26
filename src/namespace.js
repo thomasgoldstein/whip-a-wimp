@@ -6,7 +6,6 @@
 var waw = {
     layer: null,    //main layer to attach units / sprites, etc
     player: null,   //player unit obj
-    shadow: null,   //player's shadow sprite obj
     units: [],      //obstacles
     foes: []        //enemy units
 };

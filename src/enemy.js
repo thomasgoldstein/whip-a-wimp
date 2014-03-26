@@ -38,6 +38,9 @@ waw.Enemy = waw.Unit.extend({
 
         this.addChild(this.sprite);
 
+        //create monsters shadow sprite
+        this.shadowSprite = cc.Sprite.create(s_Shadow);
+
         //add debug text info under a mob
         if(showDebugInfo) {
             this.label = cc.LabelTTF.create("Mob", "System", 9);
@@ -132,6 +135,8 @@ waw.Enemy = waw.Unit.extend({
         }
         this.setPosition(x, y);
         this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
         return true;
     },
     onIdle: function () {
@@ -176,6 +181,8 @@ waw.Enemy = waw.Unit.extend({
 
         this.setPosition(x, y);
         this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
