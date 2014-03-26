@@ -234,7 +234,7 @@ waw.MainLayer = cc.Layer.extend({
             this.onGotoNextRoom(cc.KEY.left);
             return;
         } else if (nextPos.y < 16) {
-            currentPlayerPos.y = 240 - 32;
+            currentPlayerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
 //            this.player.alive = false;
             this.removeChild(this.player, true);
             this.player.setPosition(nextPos);
@@ -247,7 +247,7 @@ waw.MainLayer = cc.Layer.extend({
             this.player.setPosition(nextPos);
             this.onGotoNextRoom(cc.KEY.right);
             return;
-        } else if (nextPos.y > 240 - 16) {
+        } else if (nextPos.y > 240 - 32) {  //upper wall is 16pix taller
             currentPlayerPos.y = 32;
 //            this.player.alive = false;
             this.removeChild(this.player, true);
