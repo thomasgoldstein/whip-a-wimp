@@ -478,9 +478,9 @@ waw.prepareRoomPattern = function(room) {
             //vertical line of obstacles in the room
             for(var y = 0; y <= 60; y += 48) {
                 var x1 = 320/2+(Math.round(waw.rand()*8-4));
-                waw.putRoomObstacle(new cc.p(x1,120+y), new cc.Size(32,16), new cc.p(x1,120+y-8));
+                waw.putRoomObstacle(new cc.p(x1,114+y), new cc.Size(32,16), new cc.p(x1,114+y-8));
                 if(y!=0)
-                    waw.putRoomObstacle(new cc.p(x1,120-y), new cc.Size(32,16), new cc.p(x1,120-y-8));
+                    waw.putRoomObstacle(new cc.p(x1,114-y), new cc.Size(32,16), new cc.p(x1,114-y-8));
             }
             break;
     }
@@ -499,7 +499,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos) {
     sprite.setPosition(pos);
     layer.addChild(sprite, 20+ 250 - pos.y);
     var wall = new waw.Unit();
-    hitboxPos.y += 4;
+    hitboxPos.y += 8;   //4
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(hitboxPos); //collision box 32x16
     units.push(wall);

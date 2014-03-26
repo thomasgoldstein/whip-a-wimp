@@ -230,7 +230,7 @@ waw.Player = waw.Unit.extend({
         this.setZOrder(250- pos.y);
 
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-5);
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if(showDebugInfo && this.label)
             this.label.setString("P " + pos.x + "," + pos.y + "");
