@@ -38,11 +38,13 @@ waw.Enemy = waw.Unit.extend({
 
         this.addChild(this.sprite);
 
-        //print room coords X,Y at the upper left corner
-        this.label = cc.LabelTTF.create("Mob", "System", 9);
-        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-        this.label.setPosition(cc.p(0, -30));
-        //label.setOpacity(200);
+        //add debug text info under a mob
+        if(showDebugInfo) {
+            this.label = cc.LabelTTF.create("Mob", "System", 9);
+            this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
+            this.label.setPosition(cc.p(0, -30));
+            //label.setOpacity(200);
+        }
 
         this.state = "idle";
         this.stateShedule = this.SHEDULE_IDLE;
@@ -110,7 +112,8 @@ waw.Enemy = waw.Unit.extend({
         }
         this.stateShedule.update(this); //we pass 'this' to make anon funcs in shedule see current monsters vars
 
-        this.label.setString("" + x + "->" + this.targetX + ")," + y + "->" + this.targetY + ")\n" + this.state + "");
+        if(showDebugInfo && this.label)
+            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
     },
     initIdle: function () {
         var currentTime = new Date();

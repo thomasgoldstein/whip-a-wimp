@@ -8,7 +8,7 @@ waw.Player = waw.Unit.extend({
     alive: null,    //if not, then disable all the player functions that might cause changing rooms / score / etc
     ctor: function() {
         this._super();
-        console.info("Player ctor");
+//        console.info("Player ctor");
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
 
@@ -120,10 +120,12 @@ waw.Player = waw.Unit.extend({
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
 
-        //print room coords X,Y at the upper left corner
-        this.label = cc.LabelTTF.create("Player", "System", 9);
-        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-        this.label.setPosition(cc.p(0, -34));
+        //add debug text info under the player
+        if(showDebugInfo) {
+            this.label = cc.LabelTTF.create("Player", "System", 9);
+            this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
+            this.label.setPosition(cc.p(0, -34));
+        }
 
         //create players shadow sprite
         this.shadowSprite = cc.Sprite.create(s_Shadow);
@@ -230,7 +232,8 @@ waw.Player = waw.Unit.extend({
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y-5);
 
-        this.label.setString("P " + pos.x + "," + pos.y + "");
+        if(showDebugInfo && this.label)
+            this.label.setString("P " + pos.x + "," + pos.y + "");
     },
     getState: function() {
         var state =

@@ -16,6 +16,7 @@
             'src/namespace.js',
             'src/seedrandom.js',
             'src/aiShedule.js',
+            'src/menus.js',
             'src/unit.js',
             'src/animatedSprite.js',
             'src/player.js',

@@ -20,5 +20,5 @@ var rooms = {};
 //console.log(cc.Director.getInstance().waw);
 
 //debug vars
-var showHitBoxes = true;
+var showDebugInfo = false;
 

@@ -94,6 +94,9 @@ waw.MainLayer = cc.Layer.extend({
             this.foes.push(e);
         }
         waw.foes = this.foes;
+
+        //Debug menu
+        waw.MenuDebug(this);
     },
     onEnterTransitionDidFinish: function () {
 //        console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
@@ -258,11 +261,11 @@ waw.MainLayer = cc.Layer.extend({
 
 //adds grid sprite to show hit Box
 waw.AddHitBoxSprite = function (unit, layer){
-    if(!showHitBoxes) return;
+    if(!showDebugInfo) return;
     var contentSize = unit.getContentSize();
     var sprite = cc.Sprite.create(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
     sprite.setPositionX(unit.getPositionX());
     sprite.setPositionY(unit.getPositionY());
     layer.addChild(sprite,300);
-    sprite.runAction(cc.FadeOut.create(2)); //remove marks
+    sprite.runAction(cc.FadeOut.create(10)); //remove marks
 }

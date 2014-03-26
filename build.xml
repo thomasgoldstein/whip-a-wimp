@@ -185,6 +185,7 @@
                 <file name="src/namespace.js"/>
                 <file name="src/aiShedule.js"/>
                 <file name="src/seedrandom.js"/>
+                <file name="src/menus.js"/>
                 <file name="src/unit.js"/>
                 <file name="src/animatedSprite.js"/>
                 <file name="src/player.js"/>

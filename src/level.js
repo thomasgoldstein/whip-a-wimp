@@ -389,10 +389,12 @@ waw.prepareRoomLayer = function(room) {
     waw.prepareRoomPattern(room);
 
     //print room coords X,Y at the upper left corner
-    var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
-    layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
-    label.setPosition(cc.p(48, 240-10));
-    label.setOpacity(200);
+    if(showDebugInfo) {
+        var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
+        layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
+        label.setPosition(cc.p(48, 240-10));
+        label.setOpacity(200);
+    }
 
 };
 
