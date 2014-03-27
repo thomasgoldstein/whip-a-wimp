@@ -29,7 +29,7 @@ waw.MainLayer = cc.Layer.extend({
 
     init: function () {
         this._super();
-
+        console.info("init layer", currentRoomX, currentRoomY);
         //var w = cc.Director.getInstance().waw;  //global vars at singleton Director.waw
         waw.layer = this;
         waw.units = []; //clear obstacles
@@ -48,33 +48,12 @@ waw.MainLayer = cc.Layer.extend({
         waw.units = this.units;   //init array
         //this.addChild(miniMapLayer);
 
-        //console.info("new Player");
-        //put player sprite on the screen
-        //TODO!!! no cr
-
-
-
-        //-------------TEST enemy
-        //TODO Plug. Temp put enemy on the screen
-        for(var i=0; i<currentRoom.nMonsters; ++i){
-            var e = new waw.Enemy();
-            e.setPositionX(Math.round(50 + Math.random() * 220));
-            e.setPositionY(Math.round(50 + Math.random() * 130));
-            //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
-            this.addChild(e, 6);
-
-            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
-            this.addChild(e.shadowSprite,-14);
-
-            this.foes.push(e);
-        }
-        waw.foes = this.foes;
-
         //Debug menu
         waw.MenuDebug(this);
     },
     onEnterTransitionDidFinish: function () {
-//        console.info("onEnterTransitionDidFinish ROOM: " + currentRoomX + "," + currentRoomY);
+        this._super();
+        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
 
 //        waw.player.setPosition(currentPlayerPos);
 //        this.addChild(waw.player, 250-currentPlayerPos.y);
@@ -106,7 +85,7 @@ waw.MainLayer = cc.Layer.extend({
         //TODO
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-currentPlayerPos.y);
-        waw.player.runAction(cc.Blink.create(0.5, 3)); //Blink Player sprite
+        //waw.player.runAction(cc.Blink.create(0.5, 3)); //Blink Player sprite
 
         waw.player.movement.down =
             waw.player.movement.up =
@@ -115,12 +94,50 @@ waw.MainLayer = cc.Layer.extend({
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
     },
+    onEnter: function () {
+        this._super();
+        console.info("onEnter ROOM",currentRoomX,currentRoomY);
+        //put enemy on the layer
+        this.foes = [];
+        //TODO Plug. Temp put enemy on the screen
+        for(var i=0; i<currentRoom.nMonsters; ++i){
+            var e = new waw.Enemy();
+            e.setPositionX(Math.round(50 + Math.random() * 220));
+            e.setPositionY(Math.round(50 + Math.random() * 130));
+            e.setZOrder(250 - e.getPositionY());
+            e.setScale(0.1);
+            e.runAction(cc.ScaleTo.create(0.5, 1));
+            //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
+            this.addChild(e, 6);
+
+            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
+            this.addChild(e.shadowSprite,-14);
+            e.shadowSprite.setScale(0.1);
+            e.shadowSprite.runAction(cc.ScaleTo.create(0.5, 1));
+            e.shadowSprite.setPositionX(e.getPositionX());
+            e.shadowSprite.setPositionY(e.getPositionY()-5);
+            this.foes.push(e);
+        }
+        waw.foes = this.foes;
+
+    },
     onExitTransitionDidStart: function () {
-//        console.info("onExitTransitionDidStart ROOM: " + currentRoomX + "," + currentRoomY);
+        this._super();
+        console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
         this.setKeyboardEnabled(false);
 //        this.unscheduleUpdate();    //disable update:
         //this.removeAllActions();
         this.removeChild(waw.player.shadowSprite);
+
+        for(var i=0; i<waw.foes.length; i++) {
+//            this.removeChild(waw.foes[i]);
+//            waw.foes[i].unscheduleUpdate();
+//            waw.foes[i].unscheduleAllCallbacks();
+            waw.foes[i] = null;
+        }
+        this.foes = [];
+        waw.foes = [];
+        this.units = [];
     },
 
     onKeyDown: function (e) {
@@ -184,11 +201,6 @@ waw.MainLayer = cc.Layer.extend({
         nextLayer.init();
         nextScene.addChild(nextLayer);
 
-        for(var i=0; i<waw.foes.length; ++i){
-            var e = waw.foes[i];
-            e.unscheduleUpdate();
-            e.unscheduleAllCallbacks();
-        }
         waw.player.unscheduleUpdate();
         this.unscheduleUpdate();
         //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
