@@ -184,8 +184,16 @@ waw.MainLayer = cc.Layer.extend({
         nextLayer.init();
         nextScene.addChild(nextLayer);
 
+        for(var i=0; i<waw.foes.length; ++i){
+            var e = waw.foes[i];
+            e.unscheduleUpdate();
+            e.unscheduleAllCallbacks();
+        }
+        waw.player.unscheduleUpdate();
+        this.unscheduleUpdate();
         //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
-        cc.Director.getInstance().replaceScene(transition(0.25, nextScene));  //1st arg = in seconds duration of the transition
+        cc.Director.getInstance().replaceScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        //0.25
 //        cc.Director.getInstance().replaceScene(nextScene);    //Instant transition between rooms
         //TODO doesnt appear
         //nextLayer.addChild(waw.player);
