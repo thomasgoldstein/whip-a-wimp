@@ -79,24 +79,32 @@ waw.MainLayer = cc.Layer.extend({
         } else {
             waw.player.direction.down = true;  //at room center, or other player pos
             waw.player.direction.up = false;
-        }*/
+        }
         waw.player.update(currentPlayerPos);   //to update players sprite facing direction
-        //attach players shadow to layer OVER BG floor (its Z index = -15)
-        //TODO
-        this.addChild(waw.player.shadowSprite,-14);
-        this.addChild(waw.player,250-currentPlayerPos.y);
-        //waw.player.runAction(cc.Blink.create(0.5, 3)); //Blink Player sprite
-
+*/
+        //TODO fix freez of the player anim
         waw.player.movement.down =
             waw.player.movement.up =
                 waw.player.movement.left =
                     waw.player.movement.right = false;
+
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
     },
     onEnter: function () {
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
+
+        waw.player.update(currentPlayerPos);   //to update players sprite facing direction
+        //attach players shadow to layer OVER BG floor (its Z index = -15)
+        //TODO
+        this.addChild(waw.player.shadowSprite,-14);
+        this.addChild(waw.player,250-currentPlayerPos.y);
+        waw.player.setScale(0.8);
+        waw.player.runAction(cc.ScaleTo.create(0.25, 1));
+//        waw.player.runAction(cc.Blink.create(0.5, 3)); //Blink Player sprite
+
+
         //put enemy on the layer
         this.foes = [];
         //TODO Plug. Temp put enemy on the screen
