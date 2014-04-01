@@ -19,15 +19,16 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-    SCHEDULE_IDLE: null,
-    SCHEDULE_WALK: null,
+//    SCHEDULE_IDLE: null,
+//    SCHEDULE_WALK: null,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
 
         this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
-        this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle"]);
-        this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle"]);
+        this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);
+        this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle","seeEnemy"]);
+        this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
 
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
@@ -56,6 +57,11 @@ waw.Enemy = waw.Unit.extend({
         // might add "seeEnemy" "seeItem" "canAttack"
         //if(cc.p.dis)
 //        conditions.push("seeItem");
+        var pPos = waw.player.getPositionF();
+        var pos = this.getPositionF();
+        if (cc.pDistanceSQ(pPos, pos) < 1000) {
+            conditions.push("seeEnemy");
+        }
     },
     getSensorsConditions: function (conditions) {
         // might add "feelObstacle"
@@ -73,6 +79,11 @@ waw.Enemy = waw.Unit.extend({
     pickAISchedule: function () {
         switch (this.state) {
             case "idle":
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    break;
+                }
                 if (Math.random() < 0.7) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
@@ -89,6 +100,11 @@ waw.Enemy = waw.Unit.extend({
                 }
                 break;
             case "walk":
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    break;
+                }
                 if (Math.random() < 0.3) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
@@ -100,6 +116,11 @@ waw.Enemy = waw.Unit.extend({
                 }
                 break;
             case "bounce":
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    break;
+                }
                 if (Math.random() < 0.3) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
@@ -109,6 +130,16 @@ waw.Enemy = waw.Unit.extend({
                     this.stateSchedule = this.SCHEDULE_BOUNCE;
 //                    console.log("-walk");
                 }
+                break;
+            case "follow":
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
                 break;
             default:
                 this.state = "idle";
@@ -131,13 +162,19 @@ waw.Enemy = waw.Unit.extend({
         }
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
-        if(showDebugInfo && this.label)
-            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
+        if(showDebugInfo && this.label) {
+//            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
+//            this.label.setString(""+this.state + "");
+
+            var pPos = waw.player.getPositionF();
+            var pos = this.getPositionF();
+            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
+        }
     },
     initIdle: function () {
         var currentTime = new Date();
         //stop
-        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 50;
+        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 500;
         this.targetX = this.targetY = 0;
         var x, y;
 
@@ -270,11 +307,54 @@ waw.Enemy = waw.Unit.extend({
             return true; //get to the target x,y
         }
         return false;
-    }
+    },
+    initFollowEnemy: function () {
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 3500 + Math.random() * 2500;
+        var pos = waw.player.getPositionF();
+        this.targetX = pos.x;
+        this.targetY = pos.y;
+        this.dx = 0;
+        this.dy = 0;
+        return true;
+    },
+    onFollowEnemy: function () {
+        var currentTime = new Date();
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
 
-    //     this.setPosition(oldPos);
-    //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
+        var pos = this.getPositionF(),
+            oldPos = pos,
+            x = pos.x,
+            y = pos.y;
+
+        this.oldPos = pos;
+
+        var d = cc.Director.getInstance();
+        var fps = d.getAnimationInterval();
+        var speed = this.speed * fps * 10;
+
+        //try to move unit
+        if (this.targetX < x)
+            x -= speed;
+        else if (this.targetX > x)
+            x += speed;
+        if (this.targetY < y)
+            y -= speed;
+        else if (this.targetY > y)
+            y += speed;
+
+        this.setPosition(x, y);
+        this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y-0);
+
+        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
+            return true; //get to the target x,y
+        }
+        return false;
+    }   //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
     //TODO 1.make enemy not stuck 2.check collision with other foes
-    //Z Index
 })
 ;
