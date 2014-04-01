@@ -30,7 +30,7 @@ waw.Enemy = waw.Unit.extend({
 
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
-        this.speed = 1;
+        this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
         this.sprite = cc.Sprite.create(s_EnemyPlain,
@@ -48,7 +48,6 @@ waw.Enemy = waw.Unit.extend({
             this.label.setPosition(cc.p(0, -30));
             //label.setOpacity(200);
         }
-
         this.state = "idle";
         this.stateSchedule = this.SCHEDULE_IDLE;
     },
@@ -103,7 +102,7 @@ waw.Enemy = waw.Unit.extend({
     update: function () {
         var currentTime = new Date();
 
-        var pos = this.getPosition(),
+        var pos = this.getPositionF(),
             x = pos.x,
             y = pos.y;
 
@@ -129,7 +128,7 @@ waw.Enemy = waw.Unit.extend({
             x = this.safePos.x;
             y = this.safePos.y;
         } else {
-            var pos = this.getPosition();
+            var pos = this.getPositionF();
             x = pos.x;
             y = pos.y;
         }
@@ -171,22 +170,26 @@ waw.Enemy = waw.Unit.extend({
             return true;
         }
 
-        var pos = this.getPosition(),
+        var pos = this.getPositionF(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
 
         this.oldPos = pos;
 
+        var d = cc.Director.getInstance();
+        var fps = d.getAnimationInterval();
+        var speed = this.speed * fps * 10;
+
         //try to move unit
         if (this.targetX < x)
-            x -= this.speed;
+            x -= speed;
         else if (this.targetX > x)
-            x += this.speed;
+            x += speed;
         if (this.targetY < y)
-            y -= this.speed;
+            y -= speed;
         else if (this.targetY > y)
-            y += this.speed;
+            y += speed;
 
         this.setPosition(x, y);
         this.setZOrder(250 - y);
