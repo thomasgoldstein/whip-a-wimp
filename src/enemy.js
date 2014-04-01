@@ -9,24 +9,24 @@ waw.Enemy = waw.Unit.extend({
     speed: 1,
     movement: null,
     direction: null,
-    dx: 1,
-    dy: -1,
+//    dx: 1,
+//    dy: -1,
     targetX: 160,
     targetY: 110,
     safePos: null,
-    HP: 3,
+//    HP: 3,
     state: "idle",
-    stateShedule: null,
+    stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-    SHEDULE_IDLE: null,
-    SHEDULE_WALK: null,
+    SCHEDULE_IDLE: null,
+    SCHEDULE_WALK: null,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
 
-        this.SHEDULE_IDLE = new waw.Shedule([this.initIdle, this.onIdle], ["seeEnemy"]);
-        this.SHEDULE_WALK = new waw.Shedule([this.initWalk, this.onWalk], ["feelObstacle"]);
+        this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
+        this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle"]);
 
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
@@ -50,7 +50,7 @@ waw.Enemy = waw.Unit.extend({
         }
 
         this.state = "idle";
-        this.stateShedule = this.SHEDULE_IDLE;
+        this.stateSchedule = this.SCHEDULE_IDLE;
     },
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
@@ -70,33 +70,33 @@ waw.Enemy = waw.Unit.extend({
         conditions.push("canWalk"); //always possible
         return conditions;
     },
-    pickAIShedule: function(){
+    pickAISchedule: function(){
         switch (this.state) {
             case "idle":
                 if (Math.random() < 0.7) {
                     this.state = "idle";
-                    this.stateShedule = this.SHEDULE_IDLE;
+                    this.stateSchedule = this.SCHEDULE_IDLE;
 //                    console.log("-idle");
                 } else {
                     this.state = "walk";
-                    this.stateShedule = this.SHEDULE_WALK;
+                    this.stateSchedule = this.SCHEDULE_WALK;
 //                    console.log("-walk");
                 }
                 break;
             case "walk":
                 if (Math.random() < 0.3) {
                     this.state = "idle";
-                    this.stateShedule = this.SHEDULE_IDLE;
+                    this.stateSchedule = this.SCHEDULE_IDLE;
 //                    console.log("-idle");
                 } else {
                     this.state = "walk";
-                    this.stateShedule = this.SHEDULE_WALK;
+                    this.stateSchedule = this.SCHEDULE_WALK;
 //                    console.log("-walk");
                 }
                 break;
             default:
                 this.state = "idle";
-                this.stateShedule = this.SHEDULE_IDLE;
+                this.stateSchedule = this.SCHEDULE_IDLE;
 //                console.log("-DEFLT-idle");
         }
     },
@@ -110,10 +110,10 @@ waw.Enemy = waw.Unit.extend({
         this.conditions = this.getConditions();
 //        debugger;
 
-        if (this.stateShedule.isDone()) {
-            this.pickAIShedule();
+        if (this.stateSchedule.isDone()) {
+            this.pickAISchedule();
         }
-        this.stateShedule.update(this); //we pass 'this' to make anon funcs in shedule see current monsters vars
+        this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
         if(showDebugInfo && this.label)
             this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
@@ -146,13 +146,22 @@ waw.Enemy = waw.Unit.extend({
         }
         return false;
     },
+    toSafeXCoord: function (x) {
+        return (x<50 ? 50 : (x>270 ? 270 : x));
+    },
+    toSafeYCoord: function (y) {
+        return (y<50 ? 50 : (y>180 ? 180 : y));
+    },
     initWalk: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;
         if (this.targetX == 0 || this.targetY == 0) {
             //random point to go
-            this.targetX = Math.round(50 + Math.random() * 220);
-            this.targetY = Math.round(50 + Math.random() * 130);
+            this.targetX = this.toSafeXCoord( Math.round(50 + Math.random() * 220) );
+            this.targetY = this.toSafeYCoord( Math.round(50 + Math.random() * 130) );
+        } else {
+            this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
+            this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
         return true;
     },

@@ -3,7 +3,7 @@
 // create an obj that keeps some functions que and try to run them while
 // previous function returns true. then u delete it from the que and run the next one
 
-waw.Shedule = function(tasks, interrupts) {
+waw.Schedule = function(tasks, interrupts) {
     this.tasks = [];
     this.interrupts = [];
     this.currentTask = 0;
@@ -15,34 +15,34 @@ waw.Shedule = function(tasks, interrupts) {
     for (var j in interrupts)
         this.interrupts.push(interrupts[j]);
 };
-waw.Shedule.prototype.trace = function () {
+waw.Schedule.prototype.trace = function () {
 //    console.info("trace currTask:" + this.currentTask + " Done:" + this.done);
     for (var i in this.tasks)
         console.log(this.tasks[i]);
     for (var j in this.interrupts)
         console.log(this.interrupts[j]);
 };
-waw.Shedule.prototype.reset = function () {
+waw.Schedule.prototype.reset = function () {
     this.currentTask = 0;
     this.done = false;
 //    console.info(" reset tasks que");
 };
-waw.Shedule.prototype.stop = function () {
+waw.Schedule.prototype.stop = function () {
     this.currentTask = 0;
     this.done = true;
 //    console.info(" stop tasks que");
 };
-waw.Shedule.prototype.addTask = function (f) {
+waw.Schedule.prototype.addTask = function (f) {
     if (!f) throw "argument should be a function";
     this.tasks.push(f);
 //    console.info(" added " + f + " to tasks");
 };
-waw.Shedule.prototype.addInterrupt = function (t) {
+waw.Schedule.prototype.addInterrupt = function (t) {
     if (!t) throw "argument should be a string with interrupt condition name";
     this.interrupts.push(t);
 //    console.info(" added " + t + " to interrupts");
 };
-waw.Shedule.prototype.isDone = function (conditions) {
+waw.Schedule.prototype.isDone = function (conditions) {
 //    console.info(" isDone?");
     if (this.done) {
         this.reset();
@@ -58,9 +58,8 @@ waw.Shedule.prototype.isDone = function (conditions) {
 //    console.info(" nope");
     return false;
 };
-waw.Shedule.prototype.update = function (env) {
+waw.Schedule.prototype.update = function (env) {
 //    console.info(" tasks len " + this.tasks.length + ", interrupts len " + this.interrupts.length);
-    debugger;
     if (this.done) {
 //        console.info(" no update: all tasks are done");
         return false;
@@ -100,7 +99,7 @@ var my_tasks = [function () {
     }];
 var my_interrupts = ["nope", "idle", "run", "died", "seeEnemy"];
 
-var q = new Shedule(my_tasks, my_interrupts);
+var q = new Schedule(my_tasks, my_interrupts);
 console.info(q);
 q.trace();
 
