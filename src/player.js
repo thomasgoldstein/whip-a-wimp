@@ -1,6 +1,5 @@
 "use strict";
 waw.Player = waw.Unit.extend({
-//    sprite: null,
     speed: 0.75,
     movement: {
         left: false,
@@ -17,25 +16,11 @@ waw.Player = waw.Unit.extend({
     //alive: null,    //if not, then disable all the player functions that might cause changing rooms / score / etc
     ctor: function() {
         this._super();
-//        console.info("Player ctor");
+        console.info("Player ctor");
         this.setContentSize(16, 16);
         this.setAnchorPoint(0, -1);
 
-/*
-        this.speed = 0.75;
-        this.movement = {
-            left: false,
-            right: false,
-            up: false,
-            down: false
-        };
-        this.direction = {
-            left: false,
-            right: false,
-            up: false,
-            down: true
-        };
-*/
+        //this.debugCross.setAnchorPoint(0, -1);
 
         var animData =
         {
@@ -237,9 +222,13 @@ waw.Player = waw.Unit.extend({
 
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y-6);
-        //TODO fix as players shadow
-        if(showDebugInfo && this.label)
-            this.label.setString("P " + pos.x + "," + pos.y + "");
+
+        if(showDebugInfo && this.label) {
+            var pos2 = new cc.p();
+            pos2 = this.getAnchorPoint();
+
+            this.label.setString("" + pos.x + "," + pos.y + "\n" + pos2.x + "," + pos2.y + "");
+        }
     },
     getState: function() {
         var state =

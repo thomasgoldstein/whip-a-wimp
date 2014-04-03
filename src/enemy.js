@@ -176,7 +176,7 @@ waw.Enemy = waw.Unit.extend({
             var pPos = waw.player.getPositionF();
             var pos = this.getPositionF();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(""+this.state + " "+ Math.round(pos.x)+","+Math.round(pos.y) );
+            this.label.setString(""+this.state + " "+ Math.round(pos.x)+","+Math.round(pos.y)+" dxy "+this.dx+" "+this.dy );
         }
     },
     initIdle: function () {
@@ -202,6 +202,7 @@ waw.Enemy = waw.Unit.extend({
     },
     onIdle: function () {
         var currentTime = new Date();
+        this.dx = this.dy = 0;
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
@@ -268,11 +269,15 @@ waw.Enemy = waw.Unit.extend({
         this.timeToThink = currentTime.getTime() + 2500 + Math.random() * 5500;
         if (this.dx == 0 || this.dy == 0) {
             //random way to bounce
-            this.dx = Math.round(1 - Math.random()*2);
-            this.dy = Math.round(1 - Math.random()*2);
+            do {
+                this.dx = Math.round(1 - Math.random()*2);
+                this.dy = Math.round(1 - Math.random()*2);
+            } while (this.dx == 0 && this.dy == 0);
         } else {
-            this.dx = -this.dx;
-            this.dy = -this.dy;
+            if(Math.random()<0.5)
+                this.dx = -this.dx;
+            if(Math.random()<0.5)
+                this.dy = -this.dy;
         }
         return true;
     },
@@ -296,7 +301,7 @@ waw.Enemy = waw.Unit.extend({
         //try to move unit
             x += this.dx*speed;
             y += this.dy*speed;
-
+        // || this.conditions.indexOf("feelObstacle")>=0
         if(x<50 || x>270) {
             this.dx = -this.dx;
 //            x = oldPos.x;

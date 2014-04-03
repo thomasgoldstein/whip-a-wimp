@@ -7,7 +7,8 @@ var waw = {
     layer: null,    //main layer to attach units / sprites, etc
     player: null,   //player unit obj
     units: [],      //obstacles
-    foes: []        //enemy units
+    foes: [],        //enemy units
+    hitBoxField: [], // [320][240] of passable/not of the current level
 };
 
 //Global vars
