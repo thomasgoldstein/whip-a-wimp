@@ -4,6 +4,15 @@ waw.MenuDebug = function (layer) {
         "res/Menus/CloseSelected.png",
         function () {
             showDebugInfo = !showDebugInfo;
+            waw.player.label.setVisible(showDebugInfo);
+            waw.player.debugCross.setVisible(showDebugInfo);
+            for(var i in waw.foes){
+                waw.foes[i].label.setVisible(showDebugInfo);
+                waw.foes[i].debugCross.setVisible(showDebugInfo);
+            }
+            for(var i in waw.units){
+                waw.units[i].debugCross.setVisible(showDebugInfo);
+            }
         }, layer);
     debugOnOffItem.setAnchorPoint(0.5, 0.5);
 

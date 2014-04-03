@@ -296,11 +296,13 @@ waw.MainLayer = cc.Layer.extend({
 
 //adds grid sprite to show hit Box
 waw.AddHitBoxSprite = function (unit, layer){
-    if(!showDebugInfo) return;
+    //if(!showDebugInfo) return;
     var contentSize = unit.getContentSize();
     var sprite = cc.Sprite.create(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
     sprite.setPositionX(unit.getPositionX());
     sprite.setPositionY(unit.getPositionY());
     layer.addChild(sprite,300);
-    sprite.runAction(cc.FadeOut.create(10)); //remove marks
+    unit.debugCross = sprite;
+    unit.debugCross.setVisible(showDebugInfo);
+//    sprite.runAction(cc.FadeOut.create(10)); //remove marks
 }

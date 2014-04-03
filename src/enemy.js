@@ -44,12 +44,12 @@ waw.Enemy = waw.Unit.extend({
         this.shadowSprite = cc.Sprite.create(s_Shadow);
 
         //add debug text info under a mob
-        if(showDebugInfo) {
+//        if(showDebugInfo) {
             this.label = cc.LabelTTF.create("Mob", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
             this.label.setPosition(cc.p(0, -30));
-            //label.setOpacity(200);
-        }
+            this.label.setVisible(showDebugInfo);
+//        }
         this.state = "idle";
         this.stateSchedule = this.SCHEDULE_IDLE;
     },
@@ -59,8 +59,12 @@ waw.Enemy = waw.Unit.extend({
 //        conditions.push("seeItem");
         var pPos = waw.player.getPositionF();
         var pos = this.getPositionF();
-        if (cc.pDistanceSQ(pPos, pos) < 1000) {
+        if (cc.pDistanceSQ(pPos, pos) < 2000) {
             conditions.push("seeEnemy");
+            if (cc.pDistanceSQ(pPos, pos) < 500) {
+                conditions.push("canAttack");
+            }
+
         }
     },
     getSensorsConditions: function (conditions) {
@@ -82,6 +86,7 @@ waw.Enemy = waw.Unit.extend({
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
                     break;
                 }
                 if (Math.random() < 0.7) {
@@ -103,6 +108,7 @@ waw.Enemy = waw.Unit.extend({
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
                     break;
                 }
                 if (Math.random() < 0.3) {
@@ -119,6 +125,7 @@ waw.Enemy = waw.Unit.extend({
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
                     break;
                 }
                 if (Math.random() < 0.3) {
@@ -168,7 +175,8 @@ waw.Enemy = waw.Unit.extend({
 
             var pPos = waw.player.getPositionF();
             var pos = this.getPositionF();
-            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
+//            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
+            this.label.setString(""+this.state + " "+ Math.round(pos.x)+","+Math.round(pos.y) );
         }
     },
     initIdle: function () {

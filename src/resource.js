@@ -14,6 +14,7 @@ var s_Debris = "res/Debris.fw.png";
 var s_EnemyPlain = "res//EnemyPlain.fw.png";
 //gfx for debug
 var s_HitBoxGrid = "res/hbGrid.fw.png";
+var s_DebugCross = "res/dbCross.fw.png";
 
 var g_resources = [
     //image
@@ -28,7 +29,8 @@ var g_resources = [
     {src:s_Empty32x32},
     {src:s_Pit},
     {src:s_Debris},
-    {src:s_EnemyPlain}
+    {src:s_EnemyPlain},
+    {src:s_DebugCross},
 
     //plist
 

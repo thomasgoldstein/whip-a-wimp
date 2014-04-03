@@ -3,9 +3,15 @@ waw.Unit = cc.Node.extend({
     _positionF: null,
     shadowSprite: null,
     label: null,
+    debugCross: null,
     ctor: function() {
         this._super();
         this._positionF = cc._pConst(0, 0);
+
+        this.debugCross = cc.Sprite.create(s_DebugCross);
+        this.debugCross.setPosition(cc.p(0, 0));
+        this.addChild(this.debugCross,25);
+        this.debugCross.setVisible(showDebugInfo);
     },
     // Override setPosition to update _positionF
     setPosition: function (newPosOrxValue, yValue) {

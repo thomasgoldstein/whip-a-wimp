@@ -132,11 +132,12 @@ waw.Player = waw.Unit.extend({
         this.addChild(this.sprite);
 
         //add debug text info under the player
-        if(showDebugInfo) {
+//        if(showDebugInfo) {
             this.label = cc.LabelTTF.create("Player", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
             this.label.setPosition(cc.p(0, -34));
-        }
+            this.label.setVisible(showDebugInfo);
+//        }
 
         //create players shadow sprite
         this.shadowSprite = cc.Sprite.create(s_Shadow);
