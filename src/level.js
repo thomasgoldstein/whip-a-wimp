@@ -23,6 +23,7 @@ function Room(_name,_x,_y) {
 	this.x = _x;
 	this.y = _y;
 	this.walls = new Walls();
+    this.visited = false;
     this.type = 0; //0 = clean room type
     this.nMonsters = Math.round(Math.random()*5);
 // Random Seed to generate the same lists of decorative elements
@@ -156,7 +157,9 @@ rooms.genLevel = function() {
 
 //Generate Mini Map Layer
 waw.GenerateMiniMap = function() {
-    var layer = cc.LayerColor.create(cc.c4b(255, 128, 0, 128), 39, 39);
+    var color = null;
+//    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
+    var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 39, 39);   //dark BG
     var draw = cc.DrawNode.create();
     layer.addChild(draw);
 
@@ -164,17 +167,21 @@ waw.GenerateMiniMap = function() {
         for(var x = 0; x < 9; x++) {
             var r = rooms[y][x];
             if(r) {	//is it a Room
+                if(r.visited)
+                    color = cc.c4f( 1,1,1, 0.5);
+                else
+                    color = cc.c4f( 0.2,0.2,0.2, 0.5);
                 //4 passages
                 if(r.walls.up != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 2), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 1.5), 0.5, color );
                 if(r.walls.right != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 +2, (8-y)*4+3.5), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5 +1.5, (8-y)*4+3.5), 0.5, color );
                 if(r.walls.down != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 2), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 1.5), 0.5, color );
                 if(r.walls.left != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 -2, (8-y)*4+3.5), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5 -1.5, (8-y)*4+3.5), 0.5, color );
                 //the room
-                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, cc.c4f( 50,50,50, 1) );
+                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, color );
                 //Draw yellow dot for player
                 if(currentRoomX == x && currentRoomY == y)
                     draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1, cc.c4f( 25,0,0, 1) );
