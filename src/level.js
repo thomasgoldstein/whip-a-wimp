@@ -156,18 +156,15 @@ rooms.genLevel = function() {
 
 //Generate Mini Map Layer
 waw.GenerateMiniMap = function() {
-    //bare map
-    //var layer = waw.layer;
     var layer = cc.LayerColor.create(cc.c4b(255, 128, 0, 128), 39, 39);
-    //layer.setContentSize(cc.size(9*3-1,9*3-1));
     var draw = cc.DrawNode.create();
     layer.addChild(draw);
-    //draw.setPosition(0,0);
 
     for(var y = 0; y < 9 ; y++) {
         for(var x = 0; x < 9; x++) {
             var r = rooms[y][x];
             if(r) {	//is it a Room
+                //4 passages
                 if(r.walls.up != "wall")
                     draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 2), 0.5, cc.c4f( 50,50,50, 1) );
                 if(r.walls.right != "wall")
@@ -176,7 +173,11 @@ waw.GenerateMiniMap = function() {
                     draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 2), 0.5, cc.c4f( 50,50,50, 1) );
                 if(r.walls.left != "wall")
                     draw.drawDot( cc.p(x*4+3.5 -2, (8-y)*4+3.5), 0.5, cc.c4f( 50,50,50, 1) );
-                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, (currentRoomX != x || currentRoomY != y )? cc.c4f( 50,50,50, 1) : cc.c4f( 50,0,0, 1) );
+                //the room
+                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, cc.c4f( 50,50,50, 1) );
+                //Draw yellow dot for player
+                if(currentRoomX == x && currentRoomY == y)
+                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1, cc.c4f( 25,0,0, 1) );
             }
         }
     }
