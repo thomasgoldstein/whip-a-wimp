@@ -46,7 +46,12 @@ waw.MainLayer = cc.Layer.extend({
         } else
             throw "this room coords are out of the grid"
         waw.units = this.units;   //init array
-        //this.addChild(miniMapLayer);
+
+
+        var miniMap = waw.GenerateMiniMap();
+        this.addChild(miniMap, 400);
+        miniMap.setPosition(48,48);
+
 
         //Debug menu
         waw.MenuDebug(this);
@@ -55,33 +60,6 @@ waw.MainLayer = cc.Layer.extend({
         this._super();
         console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
 
-//        waw.player.setPosition(currentPlayerPos);
-//        this.addChild(waw.player, 250-currentPlayerPos.y);
-        //anti stuck START POSITION of player check
-/*        while( waw.player.doesCollide(this.units)) {
-            currentPlayerPos.x = Math.round(Math.random()*320);
-            currentPlayerPos.y = Math.round(Math.random()*240);
-            waw.player.setPosition(currentPlayerPos);
-        }
-        //guess player sprite facing on spawn
-        if (waw.player.getPositionX() < 40) {
-            waw.player.direction.left = false;
-            waw.player.direction.right = true;
-        } else if (waw.player.getPositionY() < 40) {
-            waw.player.direction.down = false;
-            waw.player.direction.up = true;
-        } else if (waw.player.getPositionX() > 320 - 40) {
-            waw.player.direction.left = true;
-            waw.player.direction.right = false;
-        } else if (waw.player.getPositionY() > 240 - 40) {
-            waw.player.direction.down = true;
-            waw.player.direction.up = false;
-        } else {
-            waw.player.direction.down = true;  //at room center, or other player pos
-            waw.player.direction.up = false;
-        }
-        waw.player.update(currentPlayerPos);   //to update players sprite facing direction
-*/
         //TODO fix freez of the player anim
         waw.player.movement.down =
             waw.player.movement.up =
