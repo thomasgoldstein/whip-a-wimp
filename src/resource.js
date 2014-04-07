@@ -12,6 +12,7 @@ var s_Empty32x32 = "res/Empty32x32.fw.png";
 var s_Pit = "res/Pit.fw.png";
 var s_Debris = "res/Debris.fw.png";
 var s_EnemyPlain = "res//EnemyPlain.fw.png";
+var s_Map = "res//Map.fw.png";
 //gfx for debug
 var s_HitBoxGrid = "res/hbGrid.fw.png";
 var s_DebugCross = "res/dbCross.fw.png";
@@ -30,6 +31,7 @@ var g_resources = [
     {src:s_Pit},
     {src:s_Debris},
     {src:s_EnemyPlain},
+    {src:s_Map},
     {src:s_DebugCross},
 
     //plist
