@@ -157,6 +157,56 @@ rooms.genLevel = function() {
 
 //Generate Mini Map Layer
 waw.GenerateMiniMap = function() {
+    var visited = null;
+    var m = null;
+    var r,w;
+//    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
+    var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 45, 45);   //dark BG
+    var draw = cc.DrawNode.create();
+    layer.addChild(draw);
+
+    for(var y = 0; y < 9 ; y++) {
+        for(var x = 0; x < 9; x++) {
+            w = 0; //walls-doors counter
+            r = rooms[y][x];
+            if(r) {	//is it a Room
+                //4 passages
+                if(r.walls.up == "wall")
+                    w |= 1;
+                if(r.walls.right == "wall")
+                    w |= 2;
+                if(r.walls.down == "wall")
+                    w |= 4;
+                if(r.walls.left == "wall")
+                    w |= 8;
+                //the room
+                m = cc.Sprite.create(s_Map,
+                    cc.rect(w * 6, 0, 6, 6));
+                m.setOpacity(r.visited ? 255 : 63);
+                draw.addChild(m);
+                m.setPositionX(x*5+3);
+                m.setPositionY((8-y)*5+2);
+                if(currentRoomX == x && currentRoomY == y){
+                    m.setScale(2);
+                    m.runAction(cc.ScaleTo.create(3, 1));
+                    m.runAction(cc.Blink.create(3, 9)); //Blink sprite
+                    //red dot - plrs pos
+                    m = cc.Sprite.create(s_Map,
+                        cc.rect(0, 12, 6, 6));
+                    draw.addChild(m);
+                    m.setPositionX(x*5+3);
+                    m.setPositionY((8-y)*5+2);
+                    m.setOpacity(127);
+
+                }
+            }
+        }
+    }
+    return layer;
+};
+
+/*//old Vectory style
+waw.GenerateMiniMapV = function() {
     var color = null;
 //    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
     var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 39, 39);   //dark BG
@@ -189,7 +239,7 @@ waw.GenerateMiniMap = function() {
         }
     }
     return layer;
-};
+};*/
 
 //init 8 pieces of impassable walls
 waw.initWalls = function(room) {
