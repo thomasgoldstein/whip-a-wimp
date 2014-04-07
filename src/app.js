@@ -49,6 +49,7 @@ waw.MainLayer = cc.Layer.extend({
 
 
         var room = rooms[currentRoomY][currentRoomX];
+        room.visited = true;
         var miniMap = waw.GenerateMiniMap();
         this.addChild(miniMap, 400);
         if(room.walls.up_d > 0) //if the upper door is shifted to right, then put mini-map to left
@@ -71,6 +72,8 @@ waw.MainLayer = cc.Layer.extend({
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
+//        this.setAnchorPoint(0,0);
+//        this.setPosition(0,0);
     },
     onEnter: function () {
         this._super();

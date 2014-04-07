@@ -23,6 +23,7 @@ function Room(_name,_x,_y) {
 	this.x = _x;
 	this.y = _y;
 	this.walls = new Walls();
+    this.visited = false;
     this.type = 0; //0 = clean room type
     this.nMonsters = Math.round(Math.random()*5);
 // Random Seed to generate the same lists of decorative elements
@@ -156,7 +157,9 @@ rooms.genLevel = function() {
 
 //Generate Mini Map Layer
 waw.GenerateMiniMap = function() {
-    var layer = cc.LayerColor.create(cc.c4b(255, 128, 0, 128), 39, 39);
+    var color = null;
+//    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
+    var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 39, 39);   //dark BG
     var draw = cc.DrawNode.create();
     layer.addChild(draw);
 
@@ -164,17 +167,21 @@ waw.GenerateMiniMap = function() {
         for(var x = 0; x < 9; x++) {
             var r = rooms[y][x];
             if(r) {	//is it a Room
+                if(r.visited)
+                    color = cc.c4f( 1,1,1, 0.5);
+                else
+                    color = cc.c4f( 0.2,0.2,0.2, 0.5);
                 //4 passages
                 if(r.walls.up != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 2), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 1.5), 0.5, color );
                 if(r.walls.right != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 +2, (8-y)*4+3.5), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5 +1.5, (8-y)*4+3.5), 0.5, color );
                 if(r.walls.down != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 2), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 1.5), 0.5, color );
                 if(r.walls.left != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 -2, (8-y)*4+3.5), 0.5, cc.c4f( 50,50,50, 1) );
+                    draw.drawDot( cc.p(x*4+3.5 -1.5, (8-y)*4+3.5), 0.5, color );
                 //the room
-                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, cc.c4f( 50,50,50, 1) );
+                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, color );
                 //Draw yellow dot for player
                 if(currentRoomX == x && currentRoomY == y)
                     draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1, cc.c4f( 25,0,0, 1) );
@@ -264,10 +271,10 @@ waw.prepareRoomLayer = function(room) {
     //add room Background
     var floor = cc.Sprite.create(s_Floor);
     floor.setAnchorPoint(0, 0);
-    layer.addChild(floor, -15);
+    layer.addChild(floor, -20); //Z index the lowest one
     var middleWalls = cc.Sprite.create(s_MiddleWalls);
     middleWalls.setAnchorPoint(0, 0);
-    layer.addChild(middleWalls, -10);
+    layer.addChild(middleWalls, -19);
     var upperWalls = cc.Sprite.create(s_UpperWalls);
     upperWalls.setAnchorPoint(0, 0);
     layer.addChild(upperWalls, 255);
@@ -276,7 +283,7 @@ waw.prepareRoomLayer = function(room) {
     switch (room.walls.up) {    //FAT upper wall
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(0,80,80,80)); //closed door
-            layer.addChild(d);
+            layer.addChild(d,-18);
             d.setPosition(cc.p(160+room.walls.up_d,240-48));
             //we set here obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
@@ -289,7 +296,7 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(0,0,80,80));  //open door
-            layer.addChild(d);
+            layer.addChild(d,-18);
             d.setPosition(cc.p(160+room.walls.up_d,240-48));
             break;
         case "wall":
@@ -306,7 +313,7 @@ waw.prepareRoomLayer = function(room) {
     switch (room.walls.right) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*2,80,80,80)); //closed door
-            layer.addChild(d);
+            layer.addChild(d,-18);
             d.setPosition(cc.p(320-32,120+room.walls.right_d));
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
@@ -319,7 +326,7 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*2,0,80,80)); //open door
-            layer.addChild(d);
+            layer.addChild(d,-18);
             d.setPosition(cc.p(320-32,120+room.walls.right_d));
             break;
         case "wall":
@@ -337,7 +344,7 @@ waw.prepareRoomLayer = function(room) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*3,80,80,80)); //closed door
             d.setPosition(cc.p(160+room.walls.down_d,32));
-            layer.addChild(d);
+            layer.addChild(d,-18);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
@@ -350,7 +357,7 @@ waw.prepareRoomLayer = function(room) {
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*3,0,80,80)); //open door
             d.setPosition(cc.p(160+room.walls.down_d,32));
-            layer.addChild(d);
+            layer.addChild(d,-18);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
@@ -367,7 +374,7 @@ waw.prepareRoomLayer = function(room) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*1,80,80,80)); //closed door
             d.setPosition(cc.p(32,120+room.walls.left_d));
-            layer.addChild(d);
+            layer.addChild(d,-18);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
@@ -380,7 +387,7 @@ waw.prepareRoomLayer = function(room) {
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*1,0,80,80)); //open door
             d.setPosition(cc.p(32,120+room.walls.left_d));
-            layer.addChild(d);
+            layer.addChild(d,-18);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
