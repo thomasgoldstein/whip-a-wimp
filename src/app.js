@@ -72,6 +72,8 @@ waw.MainLayer = cc.Layer.extend({
 
         this.setKeyboardEnabled(true);
         this.scheduleUpdate();
+//        this.setAnchorPoint(0,0);
+//        this.setPosition(0,0);
     },
     onEnter: function () {
         this._super();
