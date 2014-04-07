@@ -188,8 +188,8 @@ waw.GenerateMiniMap = function() {
                 m.setPositionY((8-y)*5+2);
                 if(currentRoomX == x && currentRoomY == y){
                     m.setScale(2);
-                    m.runAction(cc.ScaleTo.create(3, 1));
-                    m.runAction(cc.Blink.create(3, 9)); //Blink sprite
+                    m.runAction(cc.ScaleTo.create(2, 1));
+                    m.runAction(cc.Blink.create(1, 2)); //Blink sprite
                     //red dot - plrs pos
                     m = cc.Sprite.create(s_Map,
                         cc.rect(0, 12, 6, 6));
