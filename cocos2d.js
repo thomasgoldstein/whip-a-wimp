@@ -14,7 +14,7 @@
         appFiles:[
             'src/resource.js',
             'src/namespace.js',
-            'src/seedRandom.js',
+            'src/seedrandom.js',
             'src/aiSchedule.js',
             'src/menus.js',
             'src/unit.js',
