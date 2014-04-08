@@ -57,6 +57,18 @@ waw.MainLayer = cc.Layer.extend({
         else
             miniMap.setPosition(320-33-40,240-48);  //mm to the right
 
+        //Controls buttons
+        var circle = cc.Sprite.create(s_TouchControls,
+            cc.rect(0, 0, 48, 48));
+        var buttons = cc.Sprite.create(s_TouchControls,
+            cc.rect(48, 0, 48, 48));
+        circle.setPosition(24,24);
+        buttons.setPosition(320-24,24);
+        this.addChild(circle, 400);
+        this.addChild(buttons, 400);
+        circle.runAction(cc.FadeIn.create(1, 2));
+        buttons.runAction(cc.FadeIn.create(1, 2));
+
         //Debug menu
         waw.MenuDebug(this);
     },
@@ -71,6 +83,7 @@ waw.MainLayer = cc.Layer.extend({
                     waw.player.movement.right = false;
 
         this.setKeyboardEnabled(true);
+        this.setTouchEnabled(true);
         this.scheduleUpdate();
 //        this.setAnchorPoint(0,0);
 //        this.setPosition(0,0);
@@ -117,6 +130,7 @@ waw.MainLayer = cc.Layer.extend({
         this._super();
         console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
         this.setKeyboardEnabled(false);
+        this.setTouchEnabled(false);
 //        this.unscheduleUpdate();    //disable update:
         //this.removeAllActions();
         this.removeChild(waw.player.shadowSprite);
@@ -131,7 +145,51 @@ waw.MainLayer = cc.Layer.extend({
         waw.foes = [];
         this.units = [];
     },
-
+    onTouchesBegan: function(touch, event){
+        console.log(touch, event);
+        var pos = touch[0].getLocation();
+        if(pos.x>50 || pos.y >50)
+            return;
+        if(pos.x<16) {
+            waw.player.keyUp(cc.KEY.right);
+            waw.player.keyDown(cc.KEY.left);
+        }
+        else if(pos.x>50-16) {
+            waw.player.keyUp(cc.KEY.left);
+            waw.player.keyDown(cc.KEY.right);
+        }
+        if(pos.y<16) {
+            waw.player.keyUp(cc.KEY.up);
+            waw.player.keyDown(cc.KEY.down);
+        }
+        else if(pos.y>50-16) {
+            waw.player.keyUp(cc.KEY.down);
+            waw.player.keyDown(cc.KEY.up);
+        }
+    },
+    onTouchesEnded: function(touch, event){
+        console.log(touch, event);
+        var pos = touch[0].getLocation();
+        if(pos.x>50 || pos.y >50) {
+            waw.player.keyUp(cc.KEY.left);
+            waw.player.keyUp(cc.KEY.right);
+            waw.player.keyUp(cc.KEY.down);
+            waw.player.keyUp(cc.KEY.up);
+            return;
+        }
+        if(pos.x<16) {
+            waw.player.keyUp(cc.KEY.left);
+        }
+        else if(pos.x>50-16) {
+            waw.player.keyUp(cc.KEY.right);
+        }
+        if(pos.y<16) {
+            waw.player.keyUp(cc.KEY.down);
+        }
+        else if(pos.y>50-16) {
+            waw.player.keyUp(cc.KEY.up);
+        }
+    },
     onKeyDown: function (e) {
         //if (waw.player)
             waw.player.keyDown(e);

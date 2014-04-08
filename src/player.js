@@ -129,6 +129,12 @@ waw.Player = waw.Unit.extend({
 
         //this.alive = true;
     },
+/*    onTouchBegan: function(touch, event) {
+        console.log(touch, event);
+    },
+    onTouchEnd: function(touch, event) {
+        console.log(touch, event);
+    },*/
     keyDown: function(e) {
         this.changeKey(e, true);
         this.updateDirection(e);

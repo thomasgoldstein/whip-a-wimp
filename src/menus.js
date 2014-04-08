@@ -19,5 +19,5 @@ waw.MenuDebug = function (layer) {
     var menu = cc.Menu.create(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(320 - 22, 8);
+    debugOnOffItem.setPosition(22, 239-8);
 };
