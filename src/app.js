@@ -73,7 +73,7 @@ waw.MainLayer = cc.Layer.extend({
         waw.MenuDebug(this);
     },
     onEnter: function () {
-        var m,e;
+        var m, e,pos;
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
@@ -95,16 +95,18 @@ waw.MainLayer = cc.Layer.extend({
             m = currentRoom.mobs[i];
             //TODO choose m.mobType
             e = new waw.Enemy();
-            e.setPositionX(e.toSafeXCoord(m.x));
-            e.setPositionY(e.toSafeYCoord(m.y));
+            pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
+            e.setPosition(pos);
             m.mob = e; //to get some params of the mob later, when u exit the room
-            e.setZOrder(250 - m.y);
+            e.setZOrder(250 - pos.y);
             e.setScale(0.1);
             e.runAction(cc.ScaleTo.create(0.5, 1));
             //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite,-14);
+            //position shadow
+            e.shadowSprite.setPosition(pos.x, pos.y-0);
             this.foes.push(e);
         }
         waw.foes = this.foes;
