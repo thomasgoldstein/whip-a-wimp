@@ -72,23 +72,8 @@ waw.MainLayer = cc.Layer.extend({
         //Debug menu
         waw.MenuDebug(this);
     },
-    onEnterTransitionDidFinish: function () {
-        this._super();
-        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
-
-        //TODO fix freez of the player anim
-        waw.player.movement.down =
-            waw.player.movement.up =
-                waw.player.movement.left =
-                    waw.player.movement.right = false;
-
-        this.setKeyboardEnabled(true);
-        this.setTouchEnabled(true);
-        this.scheduleUpdate();
-//        this.setAnchorPoint(0,0);
-//        this.setPosition(0,0);
-    },
     onEnter: function () {
+        var m,e;
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
@@ -105,28 +90,43 @@ waw.MainLayer = cc.Layer.extend({
         //put enemy on the layer
         this.foes = [];
         //TODO Plug. Temp put enemy on the screen
-        for(var i=0; i<currentRoom.nMonsters; ++i){
-            var e = new waw.Enemy();
-            e.setPositionX(Math.round(50 + Math.random() * 220));
-            e.setPositionY(Math.round(50 + Math.random() * 130));
-            e.setZOrder(250 - e.getPositionY());
+//        debugger;
+        for(var i=0; i<currentRoom.mobs.length; i++){
+            m = currentRoom.mobs[i];
+            //TODO choose m.mobType
+            e = new waw.Enemy();
+            e.setPositionX(e.toSafeXCoord(m.x));
+            e.setPositionY(e.toSafeYCoord(m.y));
+            m.mob = e; //to get some params of the mob later, when u exit the room
+            e.setZOrder(250 - m.y);
             e.setScale(0.1);
             e.runAction(cc.ScaleTo.create(0.5, 1));
             //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
-
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite,-14);
-            e.shadowSprite.setScale(0.1);
-            e.shadowSprite.runAction(cc.ScaleTo.create(0.5, 1));
-            e.shadowSprite.setPositionX(e.getPositionX());
-            e.shadowSprite.setPositionY(e.getPositionY()-5);
             this.foes.push(e);
         }
         waw.foes = this.foes;
 
     },
+    onEnterTransitionDidFinish: function () {
+        this._super();
+//        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
+
+        //TODO fix freez of the player anim
+        waw.player.movement.down =
+            waw.player.movement.up =
+                waw.player.movement.left =
+                    waw.player.movement.right = false;
+
+        this.setKeyboardEnabled(true);
+        this.setTouchEnabled(true);
+        this.scheduleUpdate();
+    },
     onExitTransitionDidStart: function () {
+        var m,pos,mf;
+//        debugger;
         this._super();
         console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
         this.setKeyboardEnabled(false);
@@ -134,6 +134,18 @@ waw.MainLayer = cc.Layer.extend({
 //        this.unscheduleUpdate();    //disable update:
         //this.removeAllActions();
         this.removeChild(waw.player.shadowSprite);
+
+        for(var i=0; i<currentRoom.mobs.length; i++) {
+            m = currentRoom.mobs[i];
+            if(!m)
+                continue;
+            if(!m.mob)      //TODO why it might be NULL ? cant find the prob
+                continue;
+            pos = m.mob.getPositionF();
+            m.x = pos.x;
+            m.y = pos.y;
+            m.mob = null;
+        }
 
         for(var i=0; i<waw.foes.length; i++) {
 //            this.removeChild(waw.foes[i]);
@@ -144,9 +156,10 @@ waw.MainLayer = cc.Layer.extend({
         this.foes = [];
         waw.foes = [];
         this.units = [];
+        this.cleanup();
     },
     onTouchesBegan: function(touch, event){
-        console.log(touch, event);
+//        console.log(touch, event);
         var pos = touch[0].getLocation();
         if(pos.x>50 || pos.y >50)
             return;
@@ -168,7 +181,7 @@ waw.MainLayer = cc.Layer.extend({
         }
     },
     onTouchesEnded: function(touch, event){
-        console.log(touch, event);
+//        console.log(touch, event);
         var pos = touch[0].getLocation();
         if(pos.x>50 || pos.y >50) {
             waw.player.keyUp(cc.KEY.left);

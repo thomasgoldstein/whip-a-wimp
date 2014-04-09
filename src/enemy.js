@@ -208,12 +208,6 @@ waw.Enemy = waw.Unit.extend({
         }
         return false;
     },
-    toSafeXCoord: function (x) {
-        return (x<50 ? 50 : (x>270 ? 270 : x));
-    },
-    toSafeYCoord: function (y) {
-        return (y<50 ? 50 : (y>180 ? 180 : y));
-    },
     initWalk: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;

@@ -42,31 +42,37 @@ waw.Unit = cc.Node.extend({
     getPositionF: function() {
         return this._positionF;
     },
+    toSafeXCoord: function (x) {
+        return (x<50 ? 50 : (x>270 ? 270 : x));
+    },
+    toSafeYCoord: function (y) {
+        return (y<50 ? 50 : (y>180 ? 180 : y));
+    },
     collideRect: function(pos) {
         var s = this.getContentSize();
 
-        if (pos === undefined)
-        {
+        //if (pos === undefined)
+        if (!pos)
             pos = this.getPositionF();
-        }
 
-        return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
+        //return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
+        return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
     },
     doesCollide: function (_units) {
         if(!_units) throw "must be an array in the arg";
         for (var unit in _units) {
-            if(!_units[unit] || _units[unit] == this)    //do not compare with self
+            if(!_units[unit] || _units[unit] === this)    //do not compare with self
                 continue;
 
             //TODO this is Better check. but glitches when u enther right room with presset UP
-//            if(cc.rectIntersectsRect(this.collideRect(), _units[unit].collideRect())){
+            if(cc.rectIntersectsRect(this.collideRect(), _units[unit].collideRect())){
                 //console.log(this.collideRect(), _units[unit].collideRect());
-//                return true;
-//            }
-
-            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
-            if (rect.width > 0 && rect.height > 0) // Collision!
                 return true;
+            }
+
+/*            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
+            if (rect.width > 0 && rect.height > 0) // Collision!
+                return true;*/
         }
         return false;
     }

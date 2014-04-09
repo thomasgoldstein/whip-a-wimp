@@ -25,7 +25,8 @@ function Room(_name,_x,_y) {
 	this.walls = new Walls();
     this.visited = false;
     this.type = 0; //0 = clean room type
-    this.nMonsters = Math.round(Math.random()*5);
+    this.mobs = waw.generateMobs();
+
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
@@ -571,4 +572,19 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos) {
 
     //debug
     waw.AddHitBoxSprite(wall, layer);
+};
+
+//initially generate mobs into the room
+waw.generateMobs = function(){
+    var mobs = [];
+    var n = Math.round(Math.random()*5);
+    var m = null;
+    for(var i=0; i<n; ++i){
+        m = {x:160, y:110, mobType:-1, mob:null};
+        m.mobType = Math.random()*100; //TODO replace temp mob TYPE with real
+        m.x = Math.round(50 + Math.random() * 220);
+        m.y = Math.round(50 + Math.random() * 130);
+        mobs.push(m);
+    }
+    return mobs;
 };
