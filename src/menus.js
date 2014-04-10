@@ -1,8 +1,7 @@
 waw.MenuDebug = function (layer) {
-    var menu;
-    var debugOnOffItem = cc.MenuItemImage.create(
-        "res/Menus/CloseNormal.png",
-        "res/Menus/CloseSelected.png",
+    var menu,labelDebug;
+    labelDebug = cc.LabelTTF.create("HitBox", "System", 10);
+    var debugOnOffItem = cc.MenuItemLabel.create(labelDebug,
         function () {
             showDebugInfo = !showDebugInfo;
             waw.player.label.setVisible(showDebugInfo);
@@ -15,17 +14,15 @@ waw.MenuDebug = function (layer) {
                 waw.units[i].debugCross.setVisible(showDebugInfo);
             }
         }, layer);
-    debugOnOffItem.setAnchorPoint(0.5, 0.5);
-
+    //debugOnOffItem.setAnchorPoint(0.5, 0.5);
     menu = cc.Menu.create(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(22, 239-8);
+    debugOnOffItem.setPosition(16, 239-7-38);
 
 //---
-    var debugAux = cc.MenuItemImage.create(
-        "res/Menus/CloseNormal.png",
-        "res/Menus/CloseSelected.png",
+    labelDebug = cc.LabelTTF.create("Doors", "System", 10);
+    var debugAux = cc.MenuItemLabel.create(labelDebug,
         function () {
             for (var i = 0; i< waw.units.length; i++) {
                 switch(waw.units[i].getTag()){
@@ -76,11 +73,10 @@ waw.MenuDebug = function (layer) {
             }
         }, layer
     );
-    debugAux.setAnchorPoint(0.5, 0.5);
-
+//    debugAux.setAnchorPoint(0.5, 0.5);
     menu = cc.Menu.create(debugAux);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugAux.setPosition(22, 239-8-16);
+    debugAux.setPosition(16, 239-7-48);
 
 };
