@@ -57,17 +57,23 @@ waw.MainLayer = cc.Layer.extend({
         else
             miniMap.setPosition(320-33-40,240-48);  //mm to the right
 
-        //Controls buttons
-        var circle = cc.Sprite.create(s_TouchControls,
-            cc.rect(0, 0, 48, 48));
-        var buttons = cc.Sprite.create(s_TouchControls,
-            cc.rect(48, 0, 48, 48));
-        circle.setPosition(24,24);
-        buttons.setPosition(320-24,24);
-        this.addChild(circle, 400);
-        this.addChild(buttons, 400);
-        circle.runAction(cc.FadeIn.create(1, 2));
-        buttons.runAction(cc.FadeIn.create(1, 2));
+//        else if ('mouse' in sys.capabilities)
+//            this.setMouseEnabled(true);
+        if ('touches' in sys.capabilities) {
+//            this.setTouchEnabled(true);
+
+            //Controls buttons
+            var circle = cc.Sprite.create(s_TouchControls,
+                cc.rect(0, 0, 48, 48));
+            var buttons = cc.Sprite.create(s_TouchControls,
+                cc.rect(48, 0, 48, 48));
+            circle.setPosition(24, 24);
+            buttons.setPosition(320 - 24, 24);
+            this.addChild(circle, 400);
+            this.addChild(buttons, 400);
+            circle.runAction(cc.FadeIn.create(1, 2));
+            buttons.runAction(cc.FadeIn.create(1, 2));
+        }
 
         //Debug menu
         waw.MenuDebug(this);
@@ -123,7 +129,8 @@ waw.MainLayer = cc.Layer.extend({
                     waw.player.movement.right = false;
 
         this.setKeyboardEnabled(true);
-        this.setTouchEnabled(true);
+        if ('touches' in sys.capabilities)
+            this.setTouchEnabled(true);
         this.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
@@ -184,6 +191,8 @@ waw.MainLayer = cc.Layer.extend({
     },
     onTouchesEnded: function(touch, event){
 //        console.log(touch, event);
+        if(!touch[0])
+            return;
         var pos = touch[0].getLocation();
         if(pos.x>50 || pos.y >50) {
             waw.player.keyUp(cc.KEY.left);
