@@ -5,6 +5,10 @@ var TAG_UP_DOOR = 200+0;
 var TAG_RIGHT_DOOR = 200+1;
 var TAG_DOWN_DOOR = 200+2;
 var TAG_LEFT_DOOR = 200+3;
+var TAG_UP_DOORD = 200+4;
+var TAG_RIGHT_DOORD = 200+5;
+var TAG_DOWN_DOORD = 200+6;
+var TAG_LEFT_DOORD = 200+7;
 
 //constructor - Walls in a Room
 function Walls() {
@@ -345,10 +349,10 @@ waw.prepareRoomLayer = function(room) {
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(cc.p(160+room.walls.up_d,240));
-            wall.setTag(TAG_UP_DOOR);
+            wall.setTag(TAG_UP_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer, TAG_UP_DOOR);
+            waw.AddHitBoxSprite(wall, layer, TAG_UP_DOORD);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(0,0,80,80));  //open door
@@ -374,10 +378,10 @@ waw.prepareRoomLayer = function(room) {
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(320,120+room.walls.right_d));
-            wall.setTag(TAG_RIGHT_DOOR);
+            wall.setTag(TAG_RIGHT_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOOR);
+            waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOORD);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*2,0,80,80)); //open door
@@ -403,10 +407,10 @@ waw.prepareRoomLayer = function(room) {
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(160+room.walls.down_d,0));
-            wall.setTag(TAG_DOWN_DOOR);
+            wall.setTag(TAG_DOWN_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOOR);
+            waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOORD);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*3,0,80,80)); //open door
@@ -432,10 +436,10 @@ waw.prepareRoomLayer = function(room) {
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(0,120+room.walls.left_d));
-            wall.setTag(TAG_LEFT_DOOR);
+            wall.setTag(TAG_LEFT_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOOR);
+            waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOORD);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*1,0,80,80)); //open door

@@ -26,19 +26,23 @@ waw.MenuDebug = function (layer) {
         function () {
             for (var i = 0; i< waw.units.length; i++) {
                 switch(waw.units[i].getTag()){
-                    case TAG_UP_DOOR:
+                    case TAG_UP_DOORD:
+//                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
                         break;
-                    case TAG_RIGHT_DOOR:
+                    case TAG_RIGHT_DOORD:
+//                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
                         break;
-                    case TAG_DOWN_DOOR:
+                    case TAG_DOWN_DOORD:
+//                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
                         break;
-                    case TAG_LEFT_DOOR:
+                    case TAG_LEFT_DOORD:
+//                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
                         break;
@@ -50,23 +54,44 @@ waw.MenuDebug = function (layer) {
                 switch (node.getTag()) {
                     case TAG_UP_DOOR:
                         node.setTextureRect(cc.rect(0,0,80,80));
+                        node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_RIGHT_DOOR:
                         node.setTextureRect(cc.rect(80*2,0,80,80));
+                        node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_DOWN_DOOR:
                         node.setTextureRect(cc.rect(80*3,0,80,80));
+                        node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_LEFT_DOOR:
                         node.setTextureRect(cc.rect(80*1,0,80,80));
+                        node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
+                        break;
+                    //remove this aux debug+hitbox sprites
+                    case TAG_UP_DOORD:
+                        layer.removeChild(node);
+                        i--;
+                        break;
+                    case TAG_RIGHT_DOORD:
+                        layer.removeChild(node);
+                        i--;
+                        break;
+                    case TAG_DOWN_DOORD:
+                        layer.removeChild(node);
+                        i--;
+                        break;
+                    case TAG_LEFT_DOORD:
+                        layer.removeChild(node);
+                        i--;
                         break;
 
                 }
