@@ -321,13 +321,14 @@ waw.prepareRoomLayer = function(room) {
 
     //add room Background
     var floor = cc.Sprite.create(s_Floor);
-    floor.setAnchorPoint(0, 0);
-    layer.addChild(floor, -20); //Z index the lowest one
     var middleWalls = cc.Sprite.create(s_MiddleWalls);
-    middleWalls.setAnchorPoint(0, 0);
-    layer.addChild(middleWalls, -19);
     var upperWalls = cc.Sprite.create(s_UpperWalls);
-    upperWalls.setAnchorPoint(0, 0);
+    layer.ignoreAnchorPointForPosition(true);
+    floor.ignoreAnchorPointForPosition(true);
+    middleWalls.ignoreAnchorPointForPosition(true);
+    upperWalls.ignoreAnchorPointForPosition(true);
+    layer.addChild(floor, -20); //Z index the lowest one
+    layer.addChild(middleWalls, -19);
     layer.addChild(upperWalls, 255);
 
     //add doors
