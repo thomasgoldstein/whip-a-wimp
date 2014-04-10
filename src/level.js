@@ -1,6 +1,11 @@
 "use strict";
 //Level Generator
 
+var TAG_UP_DOOR = 200+0;
+var TAG_RIGHT_DOOR = 200+1;
+var TAG_DOWN_DOOR = 200+2;
+var TAG_LEFT_DOOR = 200+3;
+
 //constructor - Walls in a Room
 function Walls() {
 	this.up = "wall";   //wall type
@@ -314,7 +319,6 @@ waw.initWalls = function(room) {
 
 //preparesand adds elements of a room onto existing layer
 waw.prepareRoomLayer = function(room) {
-    //layer.addChild();
     if(!room) throw "unknown room";
     var units = waw.units;
     var layer = waw.layer;
@@ -335,16 +339,16 @@ waw.prepareRoomLayer = function(room) {
     switch (room.walls.up) {    //FAT upper wall
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(0,80,80,80)); //closed door
-            layer.addChild(d,-18);
+            layer.addChild(d,-18, TAG_UP_DOOR);
             d.setPosition(cc.p(160+room.walls.up_d,240-48));
             //we set here obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(cc.p(160+room.walls.up_d,240));
+            wall.setTag(TAG_UP_DOOR);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
+            waw.AddHitBoxSprite(wall, layer, TAG_UP_DOOR);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(0,0,80,80));  //open door
@@ -359,22 +363,21 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.right) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*2,80,80,80)); //closed door
-            layer.addChild(d,-18);
+            layer.addChild(d,-18,TAG_RIGHT_DOOR);
             d.setPosition(cc.p(320-32,120+room.walls.right_d));
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(320,120+room.walls.right_d));
+            wall.setTag(TAG_RIGHT_DOOR);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
+            waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOOR);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*2,0,80,80)); //open door
@@ -389,22 +392,21 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.down) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*3,80,80,80)); //closed door
             d.setPosition(cc.p(160+room.walls.down_d,32));
-            layer.addChild(d,-18);
+            layer.addChild(d,-18, TAG_DOWN_DOOR);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(160+room.walls.down_d,0));
+            wall.setTag(TAG_DOWN_DOOR);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
+            waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOOR);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*3,0,80,80)); //open door
@@ -419,22 +421,21 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     switch (room.walls.left) {
         case "door":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*1,80,80,80)); //closed door
             d.setPosition(cc.p(32,120+room.walls.left_d));
-            layer.addChild(d,-18);
+            layer.addChild(d,-18, TAG_LEFT_DOOR);
             // obstacle
             var wall = new cc.Sprite.create(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(cc.p(0,120+room.walls.left_d));
+            wall.setTag(TAG_LEFT_DOOR);
             units.push(wall);
             //debug - shows hit box over the wall
-            waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
+            waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOOR);
             break;
         case "empty":
             var d = cc.Sprite.create(s_Doors, cc.rect(80*1,0,80,80)); //open door
@@ -449,7 +450,6 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
-//            layer.addChild(wall); //DEBUG! to see obstacle
             break;
     }
     //put obstacles in the room
@@ -459,7 +459,7 @@ waw.prepareRoomLayer = function(room) {
     if(showDebugInfo) {
         var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
-        label.setPosition(cc.p(48, 240-10));
+        label.setPosition(cc.p(80, 240-10));
         label.setOpacity(200);
     }
 
