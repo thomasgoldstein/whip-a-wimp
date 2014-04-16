@@ -1,6 +1,6 @@
 "use strict";
 waw.Player = waw.Unit.extend({
-    speed: 0.75,
+    speed: 4,
     movement: {
         left: false,
         right: false,
@@ -189,9 +189,12 @@ waw.Player = waw.Unit.extend({
     },
     getNextPosition: function() {
         var p = this.getPositionF(),
-            speed = this.speed,
             x = p.x,
             y = p.y;
+
+        var d = cc.Director.getInstance();
+        var fps = d.getAnimationInterval();
+        var speed = this.speed * fps * 10;
 
         if ((this.movement.left || this.movement.right) &&
             (this.movement.up || this.movement.down)) {
