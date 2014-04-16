@@ -60,5 +60,10 @@ waw.AnimatedSprite = cc.Sprite.extend({
         this.currentAnimationKey = animationKey;
         this.stopAllActions();
         this.runAction(this.animations[this.currentAnimationKey]);
+    },
+    onEnter: function () {
+        this._super();
+        this.stopAllActions();
+        this.runAction(this.animations[this.currentAnimationKey]);
     }
 });
