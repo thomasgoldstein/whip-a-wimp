@@ -20,7 +20,9 @@
             'src/unit.js',
             'src/animatedSprite.js',
             'src/player.js',
-            'src/enemy.js',
+            'src/mobs/enemy.js',
+            'src/mobs/mobRandomBouncer.js',
+            'src/mobs/mobRandomWalker.js',
             'src/level.js',
             'src/app.js'
         ]

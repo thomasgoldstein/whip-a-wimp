@@ -189,7 +189,9 @@
                 <file name="src/unit.js"/>
                 <file name="src/animatedSprite.js"/>
                 <file name="src/player.js"/>
-                <file name="src/enemy.js"/>
+                <file name="src/mobs/enemy.js"/>
+                <file name="src/mobs/mobRandomBouncer.js"/>
+                <file name="src/mobs/mobRandomWalker.js"/>
                 <file name="src/level.js"/>
                 <file name="src/app.js"/>
                 <file name="main.js"/>
