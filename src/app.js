@@ -287,16 +287,17 @@ waw.MainLayer = cc.Layer.extend({
 
     },
     handleCollisions: function () {
-        var me = this;
         var nextPos = waw.player.getNextPosition();
         var oldPos = waw.player.getPosition();
-        me.units.forEach(function (unit) {
-            var rect = cc.rectIntersection(waw.player.collideRect(nextPos), unit.collideRect());
+        var nextCollideRect = waw.player.collideRect(nextPos);
+        this.units.forEach(function (unit) {
+            var unitRect = unit.collideRect();
+            var rect = cc.rectIntersection(nextCollideRect, unitRect);
             //TODO check this condition && why not || ?
             if (rect.width > 0 && rect.height > 0) // Collision!
             {
 //                var oldPos = waw.player.getPosition();
-                var oldRect = cc.rectIntersection(waw.player.collideRect(oldPos), unit.collideRect());
+                var oldRect = cc.rectIntersection(waw.player.collideRect(oldPos), unitRect);
 
                 if (oldRect.height > 0) {
                     // Block the player horizontally
