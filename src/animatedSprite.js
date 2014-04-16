@@ -44,7 +44,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
             var repeatAction = animations.length === 1 ? animations[0] : cc.Sequence.create(animations);
             //var repeat = cc.RepeatForever.create(repeatAction); // Does not work, seems to be a Cocos bug (tested with 2.2.2)
-            var repeat = cc.Repeat.create(repeatAction, Number.MAX_VALUE);
+            var repeat = cc.Repeat.create(repeatAction, 9000000);   //Number.MAX_VALUE doesn't work
 
             me.animations[key] = cc.Spawn.create(flipAction, repeat);
         }
