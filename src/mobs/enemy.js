@@ -36,7 +36,7 @@ waw.Enemy = waw.Unit.extend({
         this.safePos = cc.p(0, 0);
 
         this.sprite = cc.Sprite.create(s_EnemyPlain,
-            cc.rect(Math.floor(waw.rand() * 3) * 32, 0, 32, 32));
+            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
         this.addChild(this.sprite);
 
