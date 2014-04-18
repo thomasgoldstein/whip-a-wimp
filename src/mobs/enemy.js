@@ -35,8 +35,59 @@ waw.Enemy = waw.Unit.extend({
         this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
-        this.sprite = cc.Sprite.create(s_EnemyPlain,
-            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
+        var animData =
+        {
+            "down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.3
+            },
+            "down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.3,
+                flippedX: true
+            },
+            "up_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.3
+            },
+            "up_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.3,
+                flippedX: true
+            }
+        };
+        this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
+        this.sprite.playAnimation(this.calcAnimationFrame(0,0));
+//        this.sprite = cc.Sprite.create(s_EnemyPlain,
+//            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
         this.addChild(this.sprite);
 
@@ -52,6 +103,16 @@ waw.Enemy = waw.Unit.extend({
 //        }
         this.state = "idle";
         this.stateSchedule = this.SCHEDULE_IDLE;
+    },
+    calcAnimationFrame: function(x,y){
+        var t="";
+        if(Math.round(y)>0)
+            t = "up_";
+        else
+            t = "down_";
+        if(Math.round(x)<0)
+             return t+"left";
+        return t+"right";
     },
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
@@ -219,6 +280,8 @@ waw.Enemy = waw.Unit.extend({
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
+        var pos = this.getPositionF();
+        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - pos.x,this.targetY - pos.y));
         return true;
     },
     onWalk: function () {
@@ -238,6 +301,7 @@ waw.Enemy = waw.Unit.extend({
         var fps = d.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
+//        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - x,this.targetY - y));
         //try to move unit
         if (this.targetX < x)
             x -= speed;
@@ -273,6 +337,7 @@ waw.Enemy = waw.Unit.extend({
             if(Math.random()<0.5)
                 this.dy = -this.dy;
         }
+        this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
         return true;
     },
     onBounce: function () {
@@ -298,10 +363,12 @@ waw.Enemy = waw.Unit.extend({
         // || this.conditions.indexOf("feelObstacle")>=0
         if(x<50 || x>270) {
             this.dx = -this.dx;
+            this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
 //            x = oldPos.x;
         }
         if(y<40 || y>180) {
             this.dy = -this.dy;
+            this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
 //            y = oldPos.y;
         }
 
@@ -319,10 +386,12 @@ waw.Enemy = waw.Unit.extend({
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 3500 + Math.random() * 2500;
         var pos = waw.player.getPositionF();
+        var pos2 = this.getPositionF();
         this.targetX = pos.x;
         this.targetY = pos.y;
         this.dx = 0;
         this.dy = 0;
+        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - pos2.x,this.targetY - pos2.y));
         return true;
     },
     onFollowEnemy: function () {
