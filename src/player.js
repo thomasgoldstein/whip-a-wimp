@@ -120,7 +120,7 @@ waw.Player = waw.Unit.extend({
 //        if(showDebugInfo) {
             this.label = cc.LabelTTF.create("Player", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-            this.label.setPosition(cc.p(0, -34));
+            this.label.setPosition(0, -34);
             this.label.setVisible(showDebugInfo);
 //        }
 
@@ -233,9 +233,8 @@ waw.Player = waw.Unit.extend({
         this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if(showDebugInfo && this.label) {
-            var pos2 = new cc.p();
+            //var pos2 = new cc.p();
             pos2 = this.getAnchorPoint();
-
             this.label.setString("" + pos.x + "," + pos.y + "\n" + pos2.x + "," + pos2.y + "");
         }
     },

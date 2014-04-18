@@ -47,7 +47,7 @@ waw.Enemy = waw.Unit.extend({
 //        if(showDebugInfo) {
             this.label = cc.LabelTTF.create("Mob", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-            this.label.setPosition(cc.p(0, -30));
+            this.label.setPosition(0, -30);
             this.label.setVisible(showDebugInfo);
 //        }
         this.state = "idle";
