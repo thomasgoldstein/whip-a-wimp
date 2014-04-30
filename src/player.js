@@ -115,6 +115,7 @@ waw.Player = waw.Unit.extend({
         };
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
+        this.debugCross.setPosition(0, -24);
 
         //add debug text info under the player
 //        if(showDebugInfo) {
@@ -234,8 +235,8 @@ waw.Player = waw.Unit.extend({
 
         if(showDebugInfo && this.label) {
             //var pos2 = new cc.p();
-            pos2 = this.getAnchorPoint();
-            this.label.setString("" + pos.x + "," + pos.y + "\n" + pos2.x + "," + pos2.y + "");
+            var pos2 = this.getAnchorPoint();
+            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + pos2.x.toFixed(2) + "," + pos2.y.toFixed(2));
         }
     },
     getState: function() {

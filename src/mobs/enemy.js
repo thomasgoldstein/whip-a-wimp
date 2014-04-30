@@ -89,10 +89,13 @@ waw.Enemy = waw.Unit.extend({
 //        this.sprite = cc.Sprite.create(s_EnemyPlain,
 //            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
+        this.sprite.setPosition(0,-8); //pig 48x48
         this.addChild(this.sprite);
+        this.debugCross.setPosition(0,-24);
 
         //create monsters shadow sprite
         this.shadowSprite = cc.Sprite.create(s_Shadow);
+        this.shadowSprite.setScale(1.4);
 
         //add debug text info under a mob
 //        if(showDebugInfo) {
@@ -106,6 +109,10 @@ waw.Enemy = waw.Unit.extend({
     },
     calcAnimationFrame: function(x,y){
         var t="";
+        if(Math.round(x) == 0){
+            //when it moves vertically, make its left-right direction random
+            x = 0.5 - Math.random();
+        }
         if(Math.round(y)>0)
             t = "up_";
         else
@@ -237,7 +244,7 @@ waw.Enemy = waw.Unit.extend({
             var pPos = waw.player.getPositionF();
             var pos = this.getPositionF();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(""+this.state + " "+ Math.round(pos.x)+","+Math.round(pos.y)+" dxy "+this.dx+" "+this.dy );
+            this.label.setString(""+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );
         }
     },
     initIdle: function () {
@@ -258,7 +265,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y-1);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y+2);
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
         return true;
     },
     onIdle: function () {
@@ -315,7 +322,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-0);
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
@@ -375,7 +382,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-0);
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
@@ -424,7 +431,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-0);
+        this.shadowSprite.setPosition(pos.x, pos.y-6);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
