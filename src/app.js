@@ -5,6 +5,9 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
+	audioEngine.setMusicVolume(0.5);
+        audioEngine.playMusic(bgm_Level1, true);
+
         //init the current labyrinth of rooms;
         rooms.initLevel();
         rooms.genLevel();

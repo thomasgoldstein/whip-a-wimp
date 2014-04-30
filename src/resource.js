@@ -11,9 +11,11 @@ var s_Shadow = "res/Shadow.png";
 var s_Empty32x32 = "res/Empty32x32.fw.png";
 var s_Pit = "res/Pit.fw.png";
 var s_Debris = "res/Debris.fw.png";
-var s_EnemyPlain = "res//EnemyPlain.fw.png";
-var s_Map = "res//Map.fw.png";
-var s_TouchControls = "res//TouchControls.fw.png";
+var s_EnemyPlain = "res/EnemyPlain.fw.png";
+var s_Map = "res/Map.fw.png";
+var s_TouchControls = "res/TouchControls.fw.png";
+//music
+var bgm_Level1 = "res/Music/ingame01.mp3";
 //gfx for debug
 var s_HitBoxGrid = "res/hbGrid.fw.png";
 var s_DebugCross = "res/dbCross.fw.png";
@@ -43,6 +45,7 @@ var g_resources = [
     //tmx
 
     //bgm
+    {src:bgm_Level1},
 
     //effect
 ];
