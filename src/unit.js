@@ -1,14 +1,15 @@
 "use strict";
 waw.Unit = cc.Node.extend({
-    _positionF: null,
+    _positionF: {x:0,y:0},
     shadowSprite: null,
     label: null,
     debugCross: null,
     ctor: function() {
         this._super();
-        this._positionF = cc._pConst(0, 0);
+        //this._positionF = cc.p(0, 0);
+        //this.setPosition(0,0);
 
-        this.debugCross = cc.Sprite.create(s_DebugCross);
+        this.debugCross = new cc.Sprite(s_DebugCross);
         //this.debugCross.setPosition(0, 0);
         this.addChild(this.debugCross,25);
         this.debugCross.setVisible(showDebugInfo);

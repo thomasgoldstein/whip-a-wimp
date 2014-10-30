@@ -9,7 +9,7 @@ waw.AnimatedSprite = cc.Sprite.extend({
         me.animations = {};
         var allFrames = {};
 
-        var texture = cc.TextureCache.getInstance().addImage(spriteFilePath);
+        var texture = cc.textureCache.addImage(spriteFilePath);
 
         for (var key in animData) {
             var frames = [];
@@ -33,8 +33,8 @@ waw.AnimatedSprite = cc.Sprite.extend({
             var flipAction = cc.CallFunc.create(flipXFunc, me);
 
             var animations = [];
-            var anim = cc.Animation.create(frames, animData[key].delay);
-            var animAction = cc.Animate.create(anim);
+            var anim = new cc.Animation(frames, animData[key].delay);
+            var animAction = new cc.Animate(anim);
             animations.push(animAction);
 
             if (animData[key].mirrorX) {
@@ -44,9 +44,9 @@ waw.AnimatedSprite = cc.Sprite.extend({
 
             var repeatAction = animations.length === 1 ? animations[0] : cc.Sequence.create(animations);
             //var repeat = cc.RepeatForever.create(repeatAction); // Does not work, seems to be a Cocos bug (tested with 2.2.2)
-            var repeat = cc.Repeat.create(repeatAction, 9000000);   //Number.MAX_VALUE doesn't work
+            var repeat = new cc.Repeat(repeatAction, 9000000);   //Number.MAX_VALUE doesn't work
 
-            me.animations[key] = cc.Spawn.create(flipAction, repeat);
+            me.animations[key] = new cc.Spawn(flipAction, repeat);
         }
 
         me.init();

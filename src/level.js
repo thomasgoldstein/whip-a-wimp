@@ -170,9 +170,9 @@ waw.GenerateMiniMap = function() {
     var visited = null;
     var m = null;
     var r,w;
-//    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
-    var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 45, 45);   //dark BG
-    var draw = cc.DrawNode.create();
+//    var layer = new cc.Layer(39, 39);    //transparent BG of mini-map
+    var layer = new cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
+    var draw = new cc.DrawNode();
     layer.addChild(draw);
 
     for(var y = 0; y < 9 ; y++) {
@@ -190,7 +190,7 @@ waw.GenerateMiniMap = function() {
                 if(r.walls.left == "wall")
                     w |= 8;
                 //the room
-                m = cc.Sprite.create(s_Map,
+                m = new cc.Sprite(s_Map,
                     cc.rect(w * 6, 0, 6, 6));
                 m.setOpacity(r.visited ? 255 : 63);
                 draw.addChild(m);
@@ -198,10 +198,10 @@ waw.GenerateMiniMap = function() {
                 m.setPositionY((8-y)*5+2);
                 if(currentRoomX == x && currentRoomY == y){
                     m.setScale(2);
-                    m.runAction(cc.ScaleTo.create(2, 1));
-                    m.runAction(cc.Blink.create(1, 2)); //Blink sprite
-                    //red dot - plrs pos
-                    m = cc.Sprite.create(s_Map,
+                    m.runAction(new cc.ScaleTo(2, 1));
+                    m.runAction(new cc.Blink(1, 2)); //Blink sprite
+                    //red dot - players pos
+                    m = new cc.Sprite(s_Map,
                         cc.rect(0, 12, 6, 6));
                     draw.addChild(m);
                     m.setPositionX(x*5+3);
@@ -215,7 +215,7 @@ waw.GenerateMiniMap = function() {
     return layer;
 };
 
-/*//old Vectory style
+/*//old Vectors style
 waw.GenerateMiniMapV = function() {
     var color = null;
 //    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
@@ -328,13 +328,13 @@ waw.prepareRoomLayer = function(room) {
     var layer = waw.layer;
 
     //add room Background
-    var floor = cc.Sprite.create(s_Floor);
-    var middleWalls = cc.Sprite.create(s_MiddleWalls);
-    var upperWalls = cc.Sprite.create(s_UpperWalls);
-    layer.ignoreAnchorPointForPosition(true);
-    floor.ignoreAnchorPointForPosition(true);
-    middleWalls.ignoreAnchorPointForPosition(true);
-    upperWalls.ignoreAnchorPointForPosition(true);
+    var floor = new cc.Sprite(s_Floor);
+    var middleWalls = new cc.Sprite(s_MiddleWalls);
+    var upperWalls = new cc.Sprite(s_UpperWalls);
+    layer.ignoreAnchor = true;
+    floor.ignoreAnchor = true;
+    middleWalls.ignoreAnchor = true;
+    upperWalls.ignoreAnchor = true;
     layer.addChild(floor, -20); //Z index the lowest one
     layer.addChild(middleWalls, -19);
     layer.addChild(upperWalls, 255);
@@ -342,11 +342,11 @@ waw.prepareRoomLayer = function(room) {
     //add doors
     switch (room.walls.up) {    //FAT upper wall
         case "door":
-            var d = cc.Sprite.create(s_Doors, cc.rect(0,80,80,80)); //closed door
+            var d = new cc.Sprite(s_Doors, cc.rect(0,80,80,80)); //closed door
             layer.addChild(d,-18, TAG_UP_DOOR);
             d.setPosition(160+room.walls.up_d,240-48);
             //we set here obstacle
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(160+room.walls.up_d,240);
             wall.setTag(TAG_UP_DOORD);
@@ -355,13 +355,13 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_UP_DOORD);
             break;
         case "empty":
-            var d = cc.Sprite.create(s_Doors, cc.rect(0,0,80,80));  //open door
+            var d = new cc.Sprite(s_Doors, cc.rect(0,0,80,80));  //open door
             layer.addChild(d,-18);
             d.setPosition(160+room.walls.up_d,240-48);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(160,240);
             units.push(wall);
@@ -371,11 +371,11 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.right) {
         case "door":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*2,80,80,80)); //closed door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*2,80,80,80)); //closed door
             layer.addChild(d,-18,TAG_RIGHT_DOOR);
             d.setPosition(320-32,120+room.walls.right_d);
             // obstacle
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120+room.walls.right_d);
             wall.setTag(TAG_RIGHT_DOORD);
@@ -384,13 +384,13 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOORD);
             break;
         case "empty":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*2,0,80,80)); //open door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*2,0,80,80)); //open door
             layer.addChild(d,-18);
             d.setPosition(320-32,120+room.walls.right_d);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120);
             units.push(wall);
@@ -400,11 +400,11 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.down) {
         case "door":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*3,80,80,80)); //closed door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*3,80,80,80)); //closed door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18, TAG_DOWN_DOOR);
             // obstacle
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160+room.walls.down_d,0);
             wall.setTag(TAG_DOWN_DOORD);
@@ -413,13 +413,13 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOORD);
             break;
         case "empty":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*3,0,80,80)); //open door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*3,0,80,80)); //open door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160,0);
             units.push(wall);
@@ -429,11 +429,11 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.left) {
         case "door":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*1,80,80,80)); //closed door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*1,80,80,80)); //closed door
             d.setPosition(32,120+room.walls.left_d);
             layer.addChild(d,-18, TAG_LEFT_DOOR);
             // obstacle
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120+room.walls.left_d);
             wall.setTag(TAG_LEFT_DOORD);
@@ -442,13 +442,13 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOORD);
             break;
         case "empty":
-            var d = cc.Sprite.create(s_Doors, cc.rect(80*1,0,80,80)); //open door
+            var d = new cc.Sprite(s_Doors, cc.rect(80*1,0,80,80)); //open door
             d.setPosition(32,120+room.walls.left_d);
             layer.addChild(d,-18);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            var wall = new cc.Sprite.create(s_Empty32x32);
+            var wall = new cc.Sprite(s_Empty32x32);
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120);
             units.push(wall);
@@ -461,7 +461,7 @@ waw.prepareRoomLayer = function(room) {
 
     //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
-        var label = cc.LabelTTF.create("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
+        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
         label.setPosition(80, 240-10);
         label.setOpacity(200);
@@ -478,7 +478,7 @@ waw.prepareRoomPattern = function(room) {
     //some random debris to PSEUDO random per a room
     waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
     for(var x = 0; x < waw.rand()*2; x++) { //*3+1
-        var d = cc.Sprite.create(s_Debris,
+        var d = new cc.Sprite(s_Debris,
             cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
 
         layer.addChild(d,-9); //on the floor
@@ -549,9 +549,9 @@ waw.prepareRoomPattern = function(room) {
             //vertical line of obstacles in the room
             for(var y = 0; y <= 60; y += 48) {
                 var x1 = 320/2+(Math.round(waw.rand()*8-4));
-                waw.putRoomObstacle(new cc.p(x1,114+y), new cc.Size(32,16), new cc.p(x1,114+y-8));
+                waw.putRoomObstacle(cc.p(x1,114+y), cc.Size(32,16), cc.p(x1,114+y-8));
                 if(y!=0)
-                    waw.putRoomObstacle(new cc.p(x1,114-y), new cc.Size(32,16), new cc.p(x1,114-y-8));
+                    waw.putRoomObstacle(cc.p(x1,114-y), cc.Size(32,16), cc.p(x1,114-y-8));
             }
             break;
     }
@@ -564,7 +564,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos) {
     var layer = waw.layer;
 
     //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
-    var sprite = cc.Sprite.create(s_Pillar,cc.rect(0, 0, 32, 64));
+    var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
     //coords in the room
     pos.y += 20;
     sprite.setPosition(pos);

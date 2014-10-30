@@ -1,7 +1,7 @@
 waw.MenuDebug = function (layer) {
     var menu,labelDebug;
-    labelDebug = cc.LabelTTF.create("Spawn", "System", 10);
-    var debugOnOffItem = cc.MenuItemLabel.create(labelDebug,
+    labelDebug = new cc.LabelTTF("Spawn", "System", 12);
+    var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
             switch(Math.round(Math.random()*1)){
@@ -18,8 +18,8 @@ waw.MenuDebug = function (layer) {
             e.setPosition(pos);
             e.setZOrder(250 - pos.y);
             e.setScale(0.1);
-            e.runAction(cc.ScaleTo.create(0.5, 1));
-            //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
+            e.runAction(new cc.ScaleTo(0.5, 1));
+            //e.runAction(new cc.Blink(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite, -14);
@@ -29,13 +29,13 @@ waw.MenuDebug = function (layer) {
 
         }, layer);
     //debugOnOffItem.setAnchorPoint(0.5, 0.5);
-    menu = cc.Menu.create(debugOnOffItem);
+    menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugOnOffItem.setPosition(16, 239-28);
 
-    labelDebug = cc.LabelTTF.create("HitBox", "System", 10);
-    var debugOnOffItem = cc.MenuItemLabel.create(labelDebug,
+    labelDebug = new cc.LabelTTF("HitBox", "System", 10);
+    var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
             showDebugInfo = !showDebugInfo;
             waw.player.label.setVisible(showDebugInfo);
@@ -49,14 +49,32 @@ waw.MenuDebug = function (layer) {
             }
         }, layer);
     //debugOnOffItem.setAnchorPoint(0.5, 0.5);
-    menu = cc.Menu.create(debugOnOffItem);
+    menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugOnOffItem.setPosition(16, 239-7-38);
 
 //---
-    labelDebug = cc.LabelTTF.create("Doors", "System", 10);
-    var debugAux = cc.MenuItemLabel.create(labelDebug,
+    labelDebug = new cc.LabelTTF("Off Music", "System", 10);
+    var debugMusicOnOff = new cc.MenuItemLabel(labelDebug,
+        function () {
+//            if(audioEngine.isMusicPlaying){
+//                audioEngine.pauseMusic();
+                audioEngine.stopMusic();
+//            } else {
+//                audioEngine.resumeMusic();
+//                audioEngine.playMusic(bgm_Level1, true);
+//            }
+        }, layer
+    );
+    menu = new cc.Menu(debugMusicOnOff);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugMusicOnOff.setPosition(16, 239-7-48);
+
+//---
+    labelDebug = new cc.LabelTTF("Doors", "System", 10);
+    var debugAux = new cc.MenuItemLabel(labelDebug,
         function () {
             for (var i = 0; i< waw.units.length; i++) {
                 switch(waw.units[i].getTag()){
@@ -133,9 +151,9 @@ waw.MenuDebug = function (layer) {
         }, layer
     );
 //    debugAux.setAnchorPoint(0.5, 0.5);
-    menu = cc.Menu.create(debugAux);
+    menu = new cc.Menu(debugAux);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugAux.setPosition(16, 239-7-48);
+    debugAux.setPosition(16, 239-7-58);
 
 };
