@@ -45,7 +45,7 @@ var g_resources = [
     //tmx
 
     //bgm
-    {src:bgm_Level1},
+    //{src:bgm_Level1},
 
     //effect
 ];
