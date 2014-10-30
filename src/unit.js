@@ -1,6 +1,6 @@
 "use strict";
 waw.Unit = cc.Node.extend({
-    _positionF: {x:0,y:0},
+    //_positionF: {x:0,y:0},
     shadowSprite: null,
     label: null,
     debugCross: null,
@@ -15,6 +15,7 @@ waw.Unit = cc.Node.extend({
         this.debugCross.setVisible(showDebugInfo);
     },
     // Override setPosition to update _positionF
+  /*
     setPosition: function (newPosOrxValue, yValue) {
         if (arguments.length === 2) {
             this._positionF._x = newPosOrxValue;
@@ -43,6 +44,7 @@ waw.Unit = cc.Node.extend({
     getPositionF: function() {
         return this._positionF;
     },
+*/
     toSafeXCoord: function (x) {
         return (x<50 ? 50 : (x>270 ? 270 : x));
     },
