@@ -5,8 +5,8 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-	audioEngine.setMusicVolume(0.5);
-        audioEngine.playMusic(bgm_Level1, true);
+	//audioEngine.setMusicVolume(0.5);
+     //   audioEngine.playMusic(bgm_Level1, true);
 
         //init the current labyrinth of rooms;
         rooms.initLevel();
@@ -62,23 +62,24 @@ waw.MainLayer = cc.Layer.extend({
 
 //        else if ('mouse' in sys.capabilities)
 //            this.setMouseEnabled(true);
-        if ('touches' in sys.capabilities) {
+        if (cc.sys.capabilities.hasOwnProperty('touches')){
 //            this.setTouchEnabled(true);
 
             //Controls buttons
-            var circle = cc.Sprite.create(s_TouchControls,
+            var circle = new cc.Sprite(s_TouchControls,
                 cc.rect(0, 0, 48, 48));
-            var buttons = cc.Sprite.create(s_TouchControls,
+            var buttons = new cc.Sprite(s_TouchControls,
                 cc.rect(48, 0, 48, 48));
             circle.setPosition(24, 24);
             buttons.setPosition(320 - 24, 24);
             this.addChild(circle, 400);
             this.addChild(buttons, 400);
-            circle.runAction(cc.FadeIn.create(1, 2));
-            buttons.runAction(cc.FadeIn.create(1, 2));
+            circle.runAction(cc.FadeIn(1, 2));
+            buttons.runAction(cc.FadeIn(1, 2));
         }
 
         //Debug menu
+        //TODO
         waw.MenuDebug(this);
     },
     onEnter: function () {
@@ -86,21 +87,21 @@ waw.MainLayer = cc.Layer.extend({
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
+        //TODO
         waw.player.update(currentPlayerPos);   //to update players sprite facing direction
         //attach players shadow to layer OVER BG floor (its Z index = -15)
         //TODO
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-currentPlayerPos.y);
-        waw.player.setScale(0.8);
-        waw.player.runAction(cc.ScaleTo.create(0.25, 1));
-//        waw.player.runAction(cc.Blink.create(0.5, 3)); //Blink Player sprite
+        //waw.player.setScale(0.8);
+        //waw.player.runAction(new cc.ScaleTo(0.25, 1));
+        //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
 
 
         //put enemy on the layer
         this.foes = [];
         //TODO Plug. Temp put enemy on the screen
-//        debugger;
-        for(var i=0; i<currentRoom.mobs.length; i++){
+/*        for(var i=0; i<currentRoom.mobs.length; i++){
             m = currentRoom.mobs[i];
             //TODO choose m.mobType
             e = new waw.Enemy();
@@ -117,7 +118,7 @@ waw.MainLayer = cc.Layer.extend({
             //position shadow
             e.shadowSprite.setPosition(pos.x, pos.y-0);
             this.foes.push(e);
-        }
+        }*/
         waw.foes = this.foes;
 
     },
@@ -126,15 +127,15 @@ waw.MainLayer = cc.Layer.extend({
 //        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
 
         //TODO fix freez of the player anim
-        waw.player.movement.down =
+/*        waw.player.movement.down =
             waw.player.movement.up =
                 waw.player.movement.left =
-                    waw.player.movement.right = false;
+                    waw.player.movement.right = false;*/
 
-        this.setKeyboardEnabled(true);
+/*        this.setKeyboardEnabled(true);
         if ('touches' in sys.capabilities)
             this.setTouchEnabled(true);
-        this.scheduleUpdate();
+        this.scheduleUpdate();*/
     },
     onExitTransitionDidStart: function () {
         var m,pos,mf;
@@ -365,15 +366,15 @@ waw.MainLayer = cc.Layer.extend({
 });
 
 //adds grid sprite to show hit Box
-waw.AddHitBoxSprite = function (unit, layer, tag){
+waw.AddHitBoxSprite = function (unit, layer, tag_){
     //if(!showDebugInfo) return;
-    var tag = tag | 0;
+    var tag = tag_ | 0;
     var contentSize = unit.getContentSize();
-    var sprite = cc.Sprite.create(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
+    var sprite = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
     sprite.setPositionX(unit.getPositionX());
     sprite.setPositionY(unit.getPositionY());
     layer.addChild(sprite,300, tag);
     unit.debugCross = sprite;
     unit.debugCross.setVisible(showDebugInfo);
 //    sprite.runAction(cc.FadeOut.create(10)); //remove marks
-}
+};

@@ -23,5 +23,4 @@ var rooms = {};
 var showDebugInfo = false;
 
 //instance of the audio
-var audioEngine = cc.AudioEngine.getInstance();
-
+//var audioEngine = cc.AudioEngine.getInstance();

@@ -225,9 +225,9 @@ waw.Enemy = waw.Unit.extend({
     update: function () {
         var currentTime = new Date();
 
-        var pos = this.getPositionF(),
-            x = pos.x,
-            y = pos.y;
+//        var pos = this.getPositionF(),
+//            x = pos.x,
+//            y = pos.y;
 
         this.conditions = this.getConditions();
 //        debugger;
