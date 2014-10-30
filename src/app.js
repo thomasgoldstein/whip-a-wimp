@@ -369,12 +369,11 @@ waw.MainLayer = cc.Layer.extend({
 waw.AddHitBoxSprite = function (unit, layer, tag_){
     //if(!showDebugInfo) return;
     var tag = tag_ | 0;
-    var contentSize = unit.getContentSize();
-    var sprite = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, contentSize.width, contentSize.height));
-    sprite.setPositionX(unit.getPositionX());
-    sprite.setPositionY(unit.getPositionY());
-    layer.addChild(sprite,300, tag);
-    unit.debugCross = sprite;
+    //var contentSize = unit.getContentSize();
+    unit.debugCross = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
+    layer.addChild(unit.debugCross, 300, tag);
+    unit.debugCross.x = unit.x;
+    unit.debugCross.y = unit.y;
     unit.debugCross.setVisible(showDebugInfo);
 //    sprite.runAction(cc.FadeOut.create(10)); //remove marks
 };

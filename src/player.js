@@ -119,14 +119,14 @@ waw.Player = waw.Unit.extend({
 
         //add debug text info under the player
 //        if(showDebugInfo) {
-            this.label = cc.LabelTTF.create("Player", "System", 9);
+            this.label = new cc.LabelTTF("Player", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
             this.label.setPosition(0, -34);
             this.label.setVisible(showDebugInfo);
 //        }
 
         //create players shadow sprite
-        this.shadowSprite = cc.Sprite.create(s_Shadow);
+        this.shadowSprite = new cc.Sprite(s_Shadow);
 
         //this.alive = true;
     },
