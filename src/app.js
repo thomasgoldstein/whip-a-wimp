@@ -123,7 +123,7 @@ waw.MainLayer = cc.Layer.extend({
             m.mob = e; //to get some params of the mob later, when u exit the room
             e.setZOrder(250 - pos.y);
             e.setScale(0.1);
-            e.runAction(cc.ScaleTo.create(0.5, 1));
+            e.runAction(new cc.ScaleTo(0.5, 1));
             //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
@@ -245,7 +245,7 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY - 1][currentRoomX];
                 if (room) {
                     currentRoomY -= 1;
-                    transition = cc.TransitionSlideInB; //effect - scrolls one scene out
+                    transition = cc.TransitionSlideInT; //effect - scrolls one scene out
                 } else
                     return;
                 break;
@@ -253,7 +253,7 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY + 1][currentRoomX];
                 if (room) {
                     currentRoomY += 1;
-                    transition = cc.TransitionSlideInT;
+                    transition = cc.TransitionSlideInB;
                 } else
                     return;
                 break;
@@ -288,8 +288,9 @@ waw.MainLayer = cc.Layer.extend({
         nextScene.addChild(nextLayer);
 
         //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
-        //cc.director.runScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
-        cc.director.runScene(nextScene);  //1st arg = in seconds duration of the transition
+        //cc.director.runScene(new cc.TransitionProgressRadialCW(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        cc.director.runScene(new transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        //cc.director.runScene(nextScene);  //1st arg = in seconds duration of the transition
         //0.25
 //        cc.director.replaceScene(nextScene);    //Instant transition between rooms
         //TODO doesnt appear
