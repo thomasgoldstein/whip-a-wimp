@@ -13,6 +13,7 @@ waw.MainScene = cc.Scene.extend({
         rooms.genLevel();
 
         waw.player = new waw.Player();
+        waw.player.setPosition(startPlayerPos);
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -39,7 +40,7 @@ waw.MainLayer = cc.Layer.extend({
         this.units = waw.units;
 
         //this.setKeyboardEnabled(true);
-        //this.scheduleUpdate();
+        this.scheduleUpdate();
 
         //Initially draw room BG, walls, foes onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
@@ -92,35 +93,23 @@ waw.MainLayer = cc.Layer.extend({
         //TODO
         waw.MenuDebug(this);
     },
-/*    onKeyDown: function (e) {
-        //if (waw.player)
-        waw.player.keyDown(e);
-    },
-    onKeyUp: function (e) {
-        //if (waw.player)
-        waw.player.keyUp(e);
-    },*/
-    /*     was debug function.
-     now pass it cc.KEY.up, down, left, right to go to the room     */
     onEnter: function () {
         var m, e,pos;
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
         //TODO
-
         waw.player.update();   //to update players sprite facing direction
 
         //attach players shadow to layer OVER BG floor (its Z index = -15)
         //TODO
         this.addChild(waw.player.shadowSprite,-14);
-        this.addChild(waw.player,250-currentPlayerPos.y);
+        this.addChild(waw.player,250-waw.player.y);
         //waw.player.setScale(0.8);
         //waw.player.runAction(new cc.ScaleTo(0.25, 1));
         //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
 
-        waw.player.setPosition(currentPlayerPos);   //to update players sprite facing direction
-
+        //waw.player.setPosition(waw.player.getPosition());   //to update players sprite facing direction
 
         //put enemy on the layer
         this.foes = [];
@@ -165,8 +154,8 @@ waw.MainLayer = cc.Layer.extend({
         var m,pos,mf;
         this._super();
         console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
-        this.setKeyboardEnabled(false);
-        this.setTouchEnabled(false);
+        //this.setKeyboardEnabled(false);
+        //this.setTouchEnabled(false);
 //        this.unscheduleUpdate();    //disable update:
         //this.removeAllActions();
         this.removeChild(waw.player.shadowSprite);
@@ -177,7 +166,7 @@ waw.MainLayer = cc.Layer.extend({
                 continue;
             if(!m.mob)      //TODO why it might be NULL ? cant find the prob
                 continue;
-            pos = m.mob.getPositionF();
+            pos = m.mob.getPosition();
             m.x = pos.x;
             m.y = pos.y;
             m.mob = null;
@@ -241,8 +230,14 @@ waw.MainLayer = cc.Layer.extend({
             waw.player.keyUp(cc.KEY.up);
         }
     },
-    onGotoNextRoom: function (e) {
+    onGotoNextRoom: function (e, playerPos) {
 //	    console.info("Goto next room");
+        //set player coords for the next room
+        this.removeChild(waw.player, true);
+        waw.player.setPosition(playerPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
+        waw.player.unscheduleUpdate();
+        this.unscheduleUpdate();
+
         var room = null;
         var transition = cc.TransitionProgressRadialCW;   //transition for teleporting
         switch (e) {
@@ -292,10 +287,9 @@ waw.MainLayer = cc.Layer.extend({
         nextLayer.init();
         nextScene.addChild(nextLayer);
 
-        waw.player.unscheduleUpdate();
-        this.unscheduleUpdate();
         //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
-        cc.director.replaceScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        //cc.director.runScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        cc.director.runScene(nextScene);  //1st arg = in seconds duration of the transition
         //0.25
 //        cc.director.replaceScene(nextScene);    //Instant transition between rooms
         //TODO doesnt appear
@@ -312,8 +306,31 @@ waw.MainLayer = cc.Layer.extend({
 //                    this.foes[i] = null;
             }
         }
-//        if (!waw.player)
-//            return;
+        //go to another room?
+        var playerPos = waw.player.getPosition();
+        //debugger;
+
+        if (playerPos.x < 16) {
+            playerPos.x = 320 - 32;
+            this.onGotoNextRoom(cc.KEY.left, playerPos);
+            return;
+
+        } else if (playerPos.y < 16) {
+            playerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
+            this.onGotoNextRoom(cc.KEY.down, playerPos);
+            return;
+
+        } else if (playerPos.x > 320 - 16) {
+            playerPos.x = 32;
+            this.onGotoNextRoom(cc.KEY.right, playerPos);
+            return;
+
+        } else if (playerPos.y > 240 - 32) {  //upper wall is 16pix taller
+            playerPos.y = 32;
+            this.onGotoNextRoom(cc.KEY.up, playerPos);
+            return;
+        }
+//        waw.player.update(nextPos);
     }
 });
 

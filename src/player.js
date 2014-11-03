@@ -1,6 +1,6 @@
 "use strict";
 waw.Player = waw.Unit.extend({
-    speed: 4,
+    speed: 6,
     movement: {
         left: false,
         right: false,
@@ -183,47 +183,14 @@ waw.Player = waw.Unit.extend({
     update: function(pos_) {
         //debugger;
         //var pos = {x:100,y:100};
-        var pos = this.getPosition();
+        //var pos = this.getPosition();
         var animKey = this.getState() + "_" + this.getDirection();
         this.sprite.playAnimation(animKey);
         //this.sprite.playAnimation("walking_down");
 
-        var nextPos = this.handleCollisions();
-/*
-         currentPlayerPos = nextPos;
-        if (nextPos.x < 16) {
-            currentPlayerPos.x = 320 - 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
-            this.onGotoNextRoom(cc.KEY.left);
-            return;
-        } else if (nextPos.y < 16) {
-            currentPlayerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.down);
-            return;
-        } else if (nextPos.x > 320 - 16) {
-            currentPlayerPos.x = 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.right);
-            return;
-        } else if (nextPos.y > 240 - 32) {  //upper wall is 16pix taller
-            currentPlayerPos.y = 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.up);
-            return;
-        }
-*/
-//        waw.player.update(nextPos);
+        var pos = this.handleCollisions();
 
-        pos = nextPos;
+        //pos = nextPos;
 
         this.setPosition(pos);
         //Z Index
@@ -241,6 +208,7 @@ waw.Player = waw.Unit.extend({
     handleCollisions: function () {
         var nextPos = this.getNextPosition();
         var oldPos = this.getPosition();
+        var oldCollideRect = this.collideRect(oldPos);
         var nextCollideRect = this.collideRect(nextPos);
         waw.units.forEach(function (unit) {
             var unitRect = unit.collideRect();
@@ -249,7 +217,7 @@ waw.Player = waw.Unit.extend({
             if (rect.width > 0 && rect.height > 0) // Collision!
             {
 //                var oldPos = waw.player.getPosition();
-                var oldRect = cc.rectIntersection(waw.player.collideRect(oldPos), unitRect);
+                var oldRect = cc.rectIntersection(oldCollideRect , unitRect);
 
                 if (oldRect.height > 0) {
                     // Block the player horizontally
@@ -276,6 +244,7 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.down] ? "walking" : "standing";
         return state;
     },
+    //TODO: fix "always face down"
     getDirection: function() {
         var dir =
             waw.KEYS[cc.KEY.left] ? "left" :

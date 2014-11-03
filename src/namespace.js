@@ -16,7 +16,7 @@ waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[c
 //Global vars
 var currentRoom = null;
 var currentRoomX = 4, currentRoomY = 4; //The start room is 4,4 by default
-var currentPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
 var rooms = {};
 
 //console.log(cc.Director.getInstance().waw);
