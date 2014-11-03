@@ -558,9 +558,9 @@ waw.prepareRoomPattern = function(room) {
             //vertical line of obstacles in the room
             for(var y = 0; y <= 60; y += 48) {
                 var x1 = 320/2+(Math.round(waw.rand()*8-4));
-                waw.putRoomObstacle(cc.p(x1,114+y), cc.Size(32,16), cc.p(x1,114+y-8));
+                waw.putRoomObstacle(new cc.p(x1,114+y), new cc.Size(32,16), new cc.p(x1,114+y-8));
                 if(y!=0)
-                    waw.putRoomObstacle(cc.p(x1,114-y), cc.Size(32,16), cc.p(x1,114-y-8));
+                    waw.putRoomObstacle(new cc.p(x1,114-y), new cc.Size(32,16), new cc.p(x1,114-y-8));
             }
             break;
     }
