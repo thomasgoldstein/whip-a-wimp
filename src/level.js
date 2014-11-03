@@ -366,7 +366,6 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            //wall = new cc.Sprite(s_Empty32x32);
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(160,240);
@@ -396,7 +395,6 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            //wall = new cc.Sprite(s_Empty32x32);
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120);
@@ -426,7 +424,6 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            //wall = new cc.Sprite(s_Empty32x32);
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160,0);
@@ -456,7 +453,6 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            //wall = new cc.Sprite(s_Empty32x32);
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120);
@@ -470,7 +466,7 @@ waw.prepareRoomLayer = function(room) {
 
     //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
-        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 10);
+        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
         label.setPosition(80, 240-10);
         label.setOpacity(200);
