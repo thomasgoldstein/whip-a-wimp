@@ -33,7 +33,7 @@ waw.MainLayer = cc.Layer.extend({
     init: function () {
         this._super();
         console.info("init layer", currentRoomX, currentRoomY);
-        //var w = cc.Director.getInstance().waw;  //global vars at singleton Director.waw
+        //var w = cc.director.waw;
         waw.layer = this;
         waw.units = []; //clear obstacles
         this.units = waw.units;
@@ -77,18 +77,40 @@ waw.MainLayer = cc.Layer.extend({
             circle.runAction(cc.FadeIn(1, 2));
             buttons.runAction(cc.FadeIn(1, 2));
         }
+        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+            cc.eventManager.addListener({
+                event: cc.EventListener.KEYBOARD,
+                onKeyPressed:function (key, event) {
+                    waw.KEYS[key] = true;
+                },
+                onKeyReleased:function (key, event) {
+                    waw.KEYS[key] = false;
+                }
+            }, this);
 
         //Debug menu
         //TODO
         waw.MenuDebug(this);
     },
+/*    onKeyDown: function (e) {
+        //if (waw.player)
+        waw.player.keyDown(e);
+    },
+    onKeyUp: function (e) {
+        //if (waw.player)
+        waw.player.keyUp(e);
+    },*/
+    /*     was debug function.
+     now pass it cc.KEY.up, down, left, right to go to the room     */
     onEnter: function () {
         var m, e,pos;
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
         //TODO
-        waw.player.update(currentPlayerPos);   //to update players sprite facing direction
+
+        waw.player.update();   //to update players sprite facing direction
+
         //attach players shadow to layer OVER BG floor (its Z index = -15)
         //TODO
         this.addChild(waw.player.shadowSprite,-14);
@@ -96,6 +118,8 @@ waw.MainLayer = cc.Layer.extend({
         //waw.player.setScale(0.8);
         //waw.player.runAction(new cc.ScaleTo(0.25, 1));
         //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
+
+        waw.player.setPosition(currentPlayerPos);   //to update players sprite facing direction
 
 
         //put enemy on the layer
@@ -120,7 +144,6 @@ waw.MainLayer = cc.Layer.extend({
             this.foes.push(e);
         }*/
         waw.foes = this.foes;
-
     },
     onEnterTransitionDidFinish: function () {
         this._super();
@@ -136,10 +159,10 @@ waw.MainLayer = cc.Layer.extend({
         if ('touches' in sys.capabilities)
             this.setTouchEnabled(true);
         this.scheduleUpdate();*/
+        waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
         var m,pos,mf;
-//        debugger;
         this._super();
         console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
         this.setKeyboardEnabled(false);
@@ -218,26 +241,16 @@ waw.MainLayer = cc.Layer.extend({
             waw.player.keyUp(cc.KEY.up);
         }
     },
-    onKeyDown: function (e) {
-        //if (waw.player)
-            waw.player.keyDown(e);
-    },
-    onKeyUp: function (e) {
-        //if (waw.player)
-            waw.player.keyUp(e);
-    },
-    /*     was debug function.
-     now pass it cc.KEY.up, down, leftm right to go to the room     */
     onGotoNextRoom: function (e) {
 //	    console.info("Goto next room");
         var room = null;
-        var transition = cc.TransitionProgressRadialCW.create;   //transition for teleporting
+        var transition = cc.TransitionProgressRadialCW;   //transition for teleporting
         switch (e) {
             case cc.KEY.up:
                 room = rooms[currentRoomY - 1][currentRoomX];
                 if (room) {
                     currentRoomY -= 1;
-                    transition = cc.TransitionSlideInB.create; //effect - scrolls one scene out
+                    transition = cc.TransitionSlideInB; //effect - scrolls one scene out
                 } else
                     return;
                 break;
@@ -245,7 +258,7 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY + 1][currentRoomX];
                 if (room) {
                     currentRoomY += 1;
-                    transition = cc.TransitionSlideInT.create;
+                    transition = cc.TransitionSlideInT;
                 } else
                     return;
                 break;
@@ -253,7 +266,7 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY][currentRoomX - 1];
                 if (room) {
                     currentRoomX -= 1;
-                    transition = cc.TransitionSlideInL.create;
+                    transition = cc.TransitionSlideInL;
                 } else
                     return;
                 break;
@@ -261,7 +274,7 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY][currentRoomX + 1];
                 if (room) {
                     currentRoomX += 1;
-                    transition = cc.TransitionSlideInR.create;
+                    transition = cc.TransitionSlideInR;
                 } else
                     return;
                 break;
@@ -274,7 +287,7 @@ waw.MainLayer = cc.Layer.extend({
 
         currentRoom = room; //??? remove later
         //create new scene to put a layer of the next room into it. To use DIRECTOR to use transitions between scenes
-        var nextScene = cc.Scene.create();
+        var nextScene = new cc.Scene();
         var nextLayer = new waw.MainLayer();
         nextLayer.init();
         nextScene.addChild(nextLayer);
@@ -282,42 +295,13 @@ waw.MainLayer = cc.Layer.extend({
         waw.player.unscheduleUpdate();
         this.unscheduleUpdate();
         //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
-        cc.Director.getInstance().replaceScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
+        cc.director.replaceScene(transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
         //0.25
-//        cc.Director.getInstance().replaceScene(nextScene);    //Instant transition between rooms
+//        cc.director.replaceScene(nextScene);    //Instant transition between rooms
         //TODO doesnt appear
         //nextLayer.addChild(waw.player);
         //nextLayer.addChild(waw.player.shadowSprite,-14);
 
-    },
-    handleCollisions: function () {
-        var nextPos = waw.player.getNextPosition();
-        var oldPos = waw.player.getPosition();
-        var nextCollideRect = waw.player.collideRect(nextPos);
-        this.units.forEach(function (unit) {
-            var unitRect = unit.collideRect();
-            var rect = cc.rectIntersection(nextCollideRect, unitRect);
-            //TODO check this condition && why not || ?
-            if (rect.width > 0 && rect.height > 0) // Collision!
-            {
-//                var oldPos = waw.player.getPosition();
-                var oldRect = cc.rectIntersection(waw.player.collideRect(oldPos), unitRect);
-
-                if (oldRect.height > 0) {
-                    // Block the player horizontally
-                    nextPos.x = oldPos.x;
-                }
-
-                if (oldRect.width > 0) {
-                    // Block the player vertically
-                    nextPos.y = oldPos.y;
-                }
-            }
-        });
-//        if(oldPos.x == nextPos.x || oldPos.y == nextPos.y ){
-//            waw.player.runAction(cc.Blink.create(0.5, 2)); //Blink Foe sprite
-//        }
-        return nextPos;
     },
     update: function (dt) {
           //monsters
@@ -330,38 +314,6 @@ waw.MainLayer = cc.Layer.extend({
         }
 //        if (!waw.player)
 //            return;
-        var nextPos = this.handleCollisions();
-        currentPlayerPos = nextPos;
-        if (nextPos.x < 16) {
-            currentPlayerPos.x = 320 - 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
-            this.onGotoNextRoom(cc.KEY.left);
-            return;
-        } else if (nextPos.y < 16) {
-            currentPlayerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.down);
-            return;
-        } else if (nextPos.x > 320 - 16) {
-            currentPlayerPos.x = 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.right);
-            return;
-        } else if (nextPos.y > 240 - 32) {  //upper wall is 16pix taller
-            currentPlayerPos.y = 32;
-//            waw.player.alive = false;
-            this.removeChild(waw.player, true);
-            waw.player.setPosition(nextPos);
-            this.onGotoNextRoom(cc.KEY.up);
-            return;
-        }
-        waw.player.update(nextPos);
     }
 });
 

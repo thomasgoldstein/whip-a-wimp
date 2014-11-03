@@ -130,55 +130,14 @@ waw.Player = waw.Unit.extend({
 
         //this.alive = true;
     },
-/*    onTouchBegan: function(touch, event) {
-        console.log(touch, event);
-    },
-    onTouchEnd: function(touch, event) {
-        console.log(touch, event);
-    },*/
-    keyDown: function(e) {
-        this.changeKey(e, true);
-        this.updateDirection(e);
-    },
-    keyUp: function(e) {
-        this.changeKey(e, false);
-
-        if (this.getState() === "walking")
-        {
-            // Only update the direction the player is facing if he's still walking,
-            // so as to remember the last direction he's been moving toward
-            this.updateDirection(e);
+/*    isDirectionKey: function(e) {
+        if (waw.KEYS[cc.KEY.up]
+            || waw.KEYS[cc.KEY.down]
+            || waw.KEYS[cc.KEY.left]
+            || waw.KEYS[cc.KEY.right]) {
+            return true;
         }
-    },
-    changeKey: function(e, pressed) {
-        switch (e)
-        {
-            case cc.KEY.up:
-                this.movement.up = pressed;
-                break;
-            case cc.KEY.down:
-                this.movement.down = pressed;
-                break;
-            case cc.KEY.left:
-                this.movement.left = pressed;
-                break;
-            case cc.KEY.right:
-                this.movement.right = pressed;
-                break;
-        }
-    },
-    isDirectionKey: function(e) {
-        switch (e)
-        {
-            case cc.KEY.up:
-            case cc.KEY.down:
-            case cc.KEY.left:
-            case cc.KEY.right:
-                return true;
-
-            default:
-                return false;
-        }
+        return false;
     },
     updateDirection: function(e) {
         if (this.isDirectionKey(e)) { 
@@ -187,44 +146,84 @@ waw.Player = waw.Unit.extend({
             this.direction.left = this.movement.left;
             this.direction.right = this.movement.right;
         }
-    },
+    },*/
     getNextPosition: function() {
-        var p = this.getPositionF(),
-            x = p.x,
-            y = p.y;
+        var //p = this.getPositionF(),
+            x = this.x,
+            y = this.y;
 
-        var d = cc.Director.getInstance();
-        var fps = d.getAnimationInterval();
+        var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
-        if ((this.movement.left || this.movement.right) &&
-            (this.movement.up || this.movement.down)) {
+        if ((waw.KEYS[cc.KEY.left] || waw.KEYS[cc.KEY.right]) &&
+            (waw.KEYS[cc.KEY.up] || waw.KEYS[cc.KEY.down])) {
             speed *= (2 / 3);
         }
 
-        if (this.movement.left)
+        if (waw.KEYS[cc.KEY.left])
         {
             x -= speed;
         }
-        else if (this.movement.right)
+        else if (waw.KEYS[cc.KEY.right])
         {
             x += speed;
         }
 
-        if (this.movement.up)
+        if (waw.KEYS[cc.KEY.up])
         {
             y += speed;
         }
-        else if (this.movement.down)
+        else if (waw.KEYS[cc.KEY.down])
         {
             y -= speed;
         }
 
         return cc.p(x, y);
     },
-    update: function(pos) {
+    update: function(pos_) {
+        //debugger;
+        //var pos = {x:100,y:100};
+        var pos = this.getPosition();
         var animKey = this.getState() + "_" + this.getDirection();
         this.sprite.playAnimation(animKey);
+        //this.sprite.playAnimation("walking_down");
+
+        var nextPos = this.handleCollisions();
+/*
+         currentPlayerPos = nextPos;
+        if (nextPos.x < 16) {
+            currentPlayerPos.x = 320 - 32;
+//            waw.player.alive = false;
+            this.removeChild(waw.player, true);
+            waw.player.setPosition(nextPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
+            this.onGotoNextRoom(cc.KEY.left);
+            return;
+        } else if (nextPos.y < 16) {
+            currentPlayerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
+//            waw.player.alive = false;
+            this.removeChild(waw.player, true);
+            waw.player.setPosition(nextPos);
+            this.onGotoNextRoom(cc.KEY.down);
+            return;
+        } else if (nextPos.x > 320 - 16) {
+            currentPlayerPos.x = 32;
+//            waw.player.alive = false;
+            this.removeChild(waw.player, true);
+            waw.player.setPosition(nextPos);
+            this.onGotoNextRoom(cc.KEY.right);
+            return;
+        } else if (nextPos.y > 240 - 32) {  //upper wall is 16pix taller
+            currentPlayerPos.y = 32;
+//            waw.player.alive = false;
+            this.removeChild(waw.player, true);
+            waw.player.setPosition(nextPos);
+            this.onGotoNextRoom(cc.KEY.up);
+            return;
+        }
+*/
+//        waw.player.update(nextPos);
+
+        pos = nextPos;
 
         this.setPosition(pos);
         //Z Index
@@ -239,21 +238,49 @@ waw.Player = waw.Unit.extend({
             this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + pos2.x.toFixed(2) + "," + pos2.y.toFixed(2));
         }
     },
+    handleCollisions: function () {
+        var nextPos = this.getNextPosition();
+        var oldPos = this.getPosition();
+        var nextCollideRect = this.collideRect(nextPos);
+        waw.units.forEach(function (unit) {
+            var unitRect = unit.collideRect();
+            var rect = cc.rectIntersection(nextCollideRect, unitRect);
+            //TODO check this condition && why not || ?
+            if (rect.width > 0 && rect.height > 0) // Collision!
+            {
+//                var oldPos = waw.player.getPosition();
+                var oldRect = cc.rectIntersection(waw.player.collideRect(oldPos), unitRect);
+
+                if (oldRect.height > 0) {
+                    // Block the player horizontally
+                    nextPos.x = oldPos.x;
+                }
+
+                if (oldRect.width > 0) {
+                    // Block the player vertically
+                    nextPos.y = oldPos.y;
+                }
+            }
+        });
+//        if(oldPos.x == nextPos.x || oldPos.y == nextPos.y ){
+//            waw.player.runAction(cc.Blink.create(0.5, 2)); //Blink Foe sprite
+//        }
+        return nextPos;
+    },
+
     getState: function() {
         var state =
-            this.movement.left ||
-            this.movement.right ||
-            this.movement.up ||
-            this.movement.down ? "walking" : "standing";
-
+            waw.KEYS[cc.KEY.left] ||
+            waw.KEYS[cc.KEY.right] ||
+            waw.KEYS[cc.KEY.up] ||
+            waw.KEYS[cc.KEY.down] ? "walking" : "standing";
         return state;
     },
     getDirection: function() {
         var dir =
-            this.direction.left ? "left" :
-            this.direction.right ? "right" :
-            this.direction.up ? "up" : "down";
-
+            waw.KEYS[cc.KEY.left] ? "left" :
+                waw.KEYS[cc.KEY.right] ? "right" :
+                    waw.KEYS[cc.KEY.up] ? "up" : "down";
         return dir;
     }
 });
