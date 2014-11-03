@@ -114,7 +114,7 @@ waw.MainLayer = cc.Layer.extend({
         //put enemy on the layer
         this.foes = [];
         //TODO Plug. Temp put enemy on the screen
-/*        for(var i=0; i<currentRoom.mobs.length; i++){
+        for(var i=0; i<currentRoom.mobs.length; i++){
             m = currentRoom.mobs[i];
             //TODO choose m.mobType
             e = new waw.Enemy();
@@ -131,7 +131,7 @@ waw.MainLayer = cc.Layer.extend({
             //position shadow
             e.shadowSprite.setPosition(pos.x, pos.y-0);
             this.foes.push(e);
-        }*/
+        }
         waw.foes = this.foes;
     },
     onEnterTransitionDidFinish: function () {

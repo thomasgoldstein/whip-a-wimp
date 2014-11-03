@@ -125,8 +125,8 @@ waw.Enemy = waw.Unit.extend({
         // might add "seeEnemy" "seeItem" "canAttack"
         //if(cc.p.dis)
 //        conditions.push("seeItem");
-        var pPos = waw.player.getPositionF();
-        var pos = this.getPositionF();
+        var pPos = waw.player.getPosition();
+        var pos = this.getPosition();
         if (cc.pDistanceSQ(pPos, pos) < 2000) {
             conditions.push("seeEnemy");
             if (cc.pDistanceSQ(pPos, pos) < 500) {
@@ -225,7 +225,7 @@ waw.Enemy = waw.Unit.extend({
     update: function () {
         var currentTime = new Date();
 
-//        var pos = this.getPositionF(),
+//        var pos = this.getPosition(),
 //            x = pos.x,
 //            y = pos.y;
 
@@ -241,8 +241,8 @@ waw.Enemy = waw.Unit.extend({
 //            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
 //            this.label.setString(""+this.state + "");
 
-            var pPos = waw.player.getPositionF();
-            var pos = this.getPositionF();
+            var pPos = waw.player.getPosition();
+            var pos = this.getPosition();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
             this.label.setString(""+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );
         }
@@ -258,7 +258,7 @@ waw.Enemy = waw.Unit.extend({
             x = this.safePos.x;
             y = this.safePos.y;
         } else {
-            var pos = this.getPositionF();
+            var pos = this.getPosition();
             x = pos.x;
             y = pos.y;
         }
@@ -287,7 +287,7 @@ waw.Enemy = waw.Unit.extend({
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
-        var pos = this.getPositionF();
+        var pos = this.getPosition();
         this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - pos.x,this.targetY - pos.y));
         return true;
     },
@@ -297,15 +297,14 @@ waw.Enemy = waw.Unit.extend({
             return true;
         }
 
-        var pos = this.getPositionF(),
+        var pos = this.getPosition(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
 
         this.oldPos = pos;
 
-        var d = cc.Director.getInstance();
-        var fps = d.getAnimationInterval();
+        var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
 //        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - x,this.targetY - y));
@@ -353,15 +352,14 @@ waw.Enemy = waw.Unit.extend({
             return true;
         }
 
-        var pos = this.getPositionF(),
+        var pos = this.getPosition(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
 
         this.oldPos = pos;
 
-        var d = cc.Director.getInstance();
-        var fps = d.getAnimationInterval();
+        var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
         //try to move unit
@@ -392,8 +390,8 @@ waw.Enemy = waw.Unit.extend({
     initFollowEnemy: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 3500 + Math.random() * 2500;
-        var pos = waw.player.getPositionF();
-        var pos2 = this.getPositionF();
+        var pos = waw.player.getPosition();
+        var pos2 = this.getPosition();
         this.targetX = pos.x;
         this.targetY = pos.y;
         this.dx = 0;
@@ -407,15 +405,14 @@ waw.Enemy = waw.Unit.extend({
             return true;
         }
 
-        var pos = this.getPositionF(),
+        var pos = this.getPosition(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
 
         this.oldPos = pos;
 
-        var d = cc.Director.getInstance();
-        var fps = d.getAnimationInterval();
+        var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
         //try to move unit
