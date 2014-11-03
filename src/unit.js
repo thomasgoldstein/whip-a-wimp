@@ -56,7 +56,8 @@ waw.Unit = cc.Node.extend({
 
         //if (pos === undefined)
         if (!pos)
-            pos = this.getPositionF();
+            pos = this.getPosition();
+            //pos = this.getPositionF();
 
         return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
 //        return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
@@ -83,9 +84,10 @@ waw.Unit = cc.Node.extend({
     }
 });
 
+//TODO do we really need it?
 //we add it to prototype to use common sprites as our waw.unit to check their collisions
 cc.Sprite.prototype.collideRect = function() {
-    var s = this.getContentSize();
-    var pos = this.getPosition();
-    return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
+    //var s = this.getContentSize();
+    //var pos = this.getPosition();
+    return cc.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
 };
