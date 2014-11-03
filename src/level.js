@@ -351,7 +351,7 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d,-18, TAG_UP_DOOR);
             d.setPosition(160+room.walls.up_d,240-48);
             //we set here obstacle
-            wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(160+room.walls.up_d,240);
             wall.setTag(TAG_UP_DOORD);
@@ -366,7 +366,8 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            wall = new cc.Sprite(s_Empty32x32);
+            //wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(88, 88));
             wall.setPosition(160,240);
             units.push(wall);
@@ -380,7 +381,7 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d,-18,TAG_RIGHT_DOOR);
             d.setPosition(320-32,120+room.walls.right_d);
             // obstacle
-            wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120+room.walls.right_d);
             wall.setTag(TAG_RIGHT_DOORD);
@@ -395,7 +396,8 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            wall = new cc.Sprite(s_Empty32x32);
+            //wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120);
             units.push(wall);
@@ -409,7 +411,7 @@ waw.prepareRoomLayer = function(room) {
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18, TAG_DOWN_DOOR);
             // obstacle
-            wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160+room.walls.down_d,0);
             wall.setTag(TAG_DOWN_DOORD);
@@ -424,7 +426,8 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            wall = new cc.Sprite(s_Empty32x32);
+            //wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160,0);
             units.push(wall);
@@ -438,7 +441,7 @@ waw.prepareRoomLayer = function(room) {
             d.setPosition(32,120+room.walls.left_d);
             layer.addChild(d,-18, TAG_LEFT_DOOR);
             // obstacle
-            wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120+room.walls.left_d);
             wall.setTag(TAG_LEFT_DOORD);
@@ -453,7 +456,8 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
-            wall = new cc.Sprite(s_Empty32x32);
+            //wall = new cc.Sprite(s_Empty32x32);
+            wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120);
             units.push(wall);
