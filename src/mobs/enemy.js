@@ -13,6 +13,8 @@ waw.Enemy = waw.Unit.extend({
     dy: -1,
     targetX: 160,
     targetY: 110,
+    shadowYoffset: 4,
+    spriteYoffset: -4,
     safePos: null,
 //    HP: 3,
     state: "idle",
@@ -89,7 +91,7 @@ waw.Enemy = waw.Unit.extend({
 //        this.sprite = cc.Sprite.create(s_EnemyPlain,
 //            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
-        //this.sprite.setPosition(0,-8); //pig 48x48
+        this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite);
         //this.debugCross.setPosition(0,-24);
@@ -269,7 +271,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y-1);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-6);
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         return true;
     },
     onIdle: function () {
@@ -325,7 +327,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-6);
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
@@ -384,7 +386,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-6);
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
@@ -432,7 +434,7 @@ waw.Enemy = waw.Unit.extend({
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-6);
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
 
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
             return true; //get to the target x,y
