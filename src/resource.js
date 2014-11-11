@@ -17,8 +17,9 @@ var s_TouchControls = "res/TouchControls.fw.png";
 //music
 var bgm_Level1 = "res/Music/ingame01.mp3";
 //gfx for debug
-var s_HitBoxGrid = "res/hbGrid.fw.png";
-var s_DebugCross = "res/dbCross.fw.png";
+var s_HitBoxGrid = "res/DBG/hbGrid.fw.png";
+var s_HitBoxGridBlue = "res/DBG/hbGridBlue.fw.png";
+var s_DebugCross = "res/DBG/dbCross.fw.png";
 
 var g_resources = [
     //image
