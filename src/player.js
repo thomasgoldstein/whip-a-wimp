@@ -18,7 +18,8 @@ waw.Player = waw.Unit.extend({
         this._super();
         console.info("Player ctor");
         this.setContentSize(16, 16);
-        this.setAnchorPoint(0, -1);
+        //this.setAnchorPoint(0, -1);
+        //this.setAnchorPoint(0.5, 0);
 
         //this.debugCross.setAnchorPoint(0, -1);
 
@@ -115,18 +116,20 @@ waw.Player = waw.Unit.extend({
         };
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
-        this.debugCross.setPosition(0, -24);
+        this.sprite.setAnchorPoint(0.5, 0);
+        //this.debugCross.setPosition(0, -24);
 
         //add debug text info under the player
 //        if(showDebugInfo) {
             this.label = new cc.LabelTTF("Player", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-            this.label.setPosition(0, -34);
+            this.label.setPosition(0, -4);
             this.label.setVisible(showDebugInfo);
 //        }
 
         //create players shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow);
+        this.shadowSprite.setAnchorPoint(0.5 , 0.5);
 
         //this.alive = true;
     },
@@ -197,12 +200,17 @@ waw.Player = waw.Unit.extend({
         this.setZOrder(250- pos.y);
 
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y-6);
+        //this.shadowSprite.setPosition(pos.x, pos.y-6);
+        this.shadowSprite.setPosition(pos.x, pos.y+0);
 
         if(showDebugInfo && this.label) {
             //var pos2 = new cc.p();
-            var pos2 = this.getAnchorPoint();
-            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + pos2.x.toFixed(2) + "," + pos2.y.toFixed(2));
+            //var pos2 = this.getAnchorPoint();
+            //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + pos2.x.toFixed(2) + "," + pos2.y.toFixed(2));
+            //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.width.toFixed(2) + "," + this.height.toFixed(2));
+            var gr = this.getBoundingBoxToWorld();
+
+            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
         }
     },
     handleCollisions: function () {

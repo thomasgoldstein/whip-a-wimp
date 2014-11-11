@@ -31,7 +31,7 @@ waw.Enemy = waw.Unit.extend({
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
 
         this.setContentSize(16, 16);
-        this.setAnchorPoint(0, -1);
+        //this.setAnchorPoint(0.5, 0);
         this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
@@ -89,17 +89,20 @@ waw.Enemy = waw.Unit.extend({
 //        this.sprite = cc.Sprite.create(s_EnemyPlain,
 //            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
-        this.sprite.setPosition(0,-8); //pig 48x48
+        //this.sprite.setPosition(0,-8); //pig 48x48
+        this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite);
-        this.debugCross.setPosition(0,-24);
+        //this.debugCross.setPosition(0,-24);
+        this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = cc.Sprite.create(s_Shadow);
+        this.shadowSprite = new cc.Sprite(s_Shadow);
         this.shadowSprite.setScale(1.4);
+        this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
         //add debug text info under a mob
 //        if(showDebugInfo) {
-            this.label = cc.LabelTTF.create("Mob", "System", 9);
+            this.label = new cc.LabelTTF("Mob", "System", 9);
             this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
             this.label.setPosition(0, -30);
             this.label.setVisible(showDebugInfo);
@@ -110,6 +113,7 @@ waw.Enemy = waw.Unit.extend({
     calcAnimationFrame: function(x,y){
         var t="";
         if(Math.round(x) == 0){
+            //TODO it doesnt work
             //when it moves vertically, make its left-right direction random
             x = 0.5 - Math.random();
         }
@@ -241,7 +245,7 @@ waw.Enemy = waw.Unit.extend({
 //            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
 //            this.label.setString(""+this.state + "");
 
-            var pPos = waw.player.getPosition();
+            //var pPos = waw.player.getPosition();
             var pos = this.getPosition();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
             this.label.setString(""+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );

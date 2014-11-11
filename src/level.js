@@ -257,69 +257,91 @@ waw.initWalls = function(room) {
     var units = waw.units;
     var layer = waw.layer;
     var wall;
-    var wallSize = 32; //thickness of the border walls
-    var wallSize2 = 44; //thickness of the TOP walls
+
+
+    var wp = {
+        wallSize: 32, //thickness of the border walls
+        wallSize2: 48, //thickness of the TOP walls
+        verticalWall_upY: 240/2+64/2,
+        verticalWall_downY: -240/2 + 64/2,
+        horizontalWall_leftX: -240/2 + 64/2,
+        horizontalWall_rightX: -240/2 + 64/2,
+    };
 
     // Left wall upper
     wall = new waw.Unit();
-    wall.width = wallSize;
+    wall.setAnchorPoint(0.5, 0);
+    wall.width = wp.wallSize;
     wall.height = 240-64;
-    wall.x = wallSize / 2;
-    wall.y = 240+room.walls.left_d;
+    wall.x = wp.wallSize / 2;
+    wall.y = wp.verticalWall_upY + room.walls.left_d;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Left wall lower
     wall = new waw.Unit();
-    wall.width = wallSize;
+    wall.setAnchorPoint(0.5, 0);
+    wall.width = wp.wallSize;
     wall.height = 240-64;
-    wall.x = wallSize / 2;
-    wall.y = 0 + room.walls.left_d;
+    wall.x = wp.wallSize / 2;
+    wall.y = wp.verticalWall_downY + room.walls.left_d;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
 
     // Right wall upper
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-64));
-    wall.setPosition(320-wallSize / 2, 240+room.walls.right_d);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(wp.wallSize, 240-64));
+    wall.x = 320-wp.wallSize / 2;
+    wall.y = wp.verticalWall_upY + room.walls.right_d;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Right wall lower
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(wallSize, 240-64));
-    wall.setPosition(320-wallSize / 2, 0+room.walls.right_d);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(wp.wallSize, 240-64));
+    wall.x = 320-wp.wallSize / 2;
+    wall.y = wp.verticalWall_downY + room.walls.right_d;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
 
     // Top wall. left half
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 64, wallSize2));   //fat top wall
-    wall.setPosition(0+room.walls.up_d, 240-wallSize2/2);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize2));   //fat top wall
+    wall.x = 0+room.walls.up_d;
+    wall.y = 240 - 24 - wp.wallSize2/2;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Top wall. right
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 64, wallSize2));
-    wall.setPosition(320+room.walls.up_d, 240-wallSize2/2);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize2));
+    wall.x = 320 + room.walls.up_d;
+    wall.y = 240 - 24 - wp.wallSize2/2;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
 
     // Bottom wall left
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 64, wallSize));
-    wall.setPosition(0+room.walls.down_d, wallSize / 2);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize));
+    wall.x = 0 + room.walls.down_d;
+    wall.y = 0;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Bottom wall right
     wall = new waw.Unit();
-    wall.setContentSize(new cc.Size(320 - 64, wallSize));
-    wall.setPosition(320+room.walls.down_d, wallSize / 2);
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize));
+    wall.x = 320 + room.walls.down_d;
+    wall.y = 0;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
@@ -348,12 +370,14 @@ waw.prepareRoomLayer = function(room) {
     switch (room.walls.up) {    //FAT upper wall
         case "door":
             d = new cc.Sprite(s_Doors, cc.rect(0,80,80,80)); //closed door
+            d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_UP_DOOR);
-            d.setPosition(160+room.walls.up_d,240-48);
+            d.setPosition(160+room.walls.up_d,240-88);
             //we set here obstacle
             wall = new waw.Unit();
-            wall.setContentSize(new cc.Size(88, 88));
-            wall.setPosition(160+room.walls.up_d,240);
+            wall.setContentSize(new cc.Size(80, 80));
+            wall.setAnchorPoint(0.5, 0);
+            wall.setPosition(160+room.walls.up_d,240-48);
             wall.setTag(TAG_UP_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
@@ -361,14 +385,16 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "empty":
             d = new cc.Sprite(s_Doors, cc.rect(0,0,80,80));  //open door
+            d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
-            d.setPosition(160+room.walls.up_d,240-48);
+            d.setPosition(160+room.walls.up_d,240-88);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
-            wall.setContentSize(new cc.Size(88, 88));
-            wall.setPosition(160,240);
+            wall.setAnchorPoint(0.5, 0);
+            wall.setContentSize(new cc.Size(80, 80));
+            wall.setPosition(160,240-48);
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
@@ -378,11 +404,13 @@ waw.prepareRoomLayer = function(room) {
         case "door":
             d = new cc.Sprite(s_Doors, cc.rect(80*2,80,80,80)); //closed door
             layer.addChild(d,-18,TAG_RIGHT_DOOR);
-            d.setPosition(320-32,120+room.walls.right_d);
+            d.setPosition(320-32,120-40+room.walls.right_d);
+            d.setAnchorPoint(0.5, 0);
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(320,120+room.walls.right_d);
+            wall.setPosition(320,120-32+room.walls.right_d);
+            wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_RIGHT_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
@@ -391,13 +419,14 @@ waw.prepareRoomLayer = function(room) {
         case "empty":
             d = new cc.Sprite(s_Doors, cc.rect(80*2,0,80,80)); //open door
             layer.addChild(d,-18);
-            d.setPosition(320-32,120+room.walls.right_d);
+            d.setPosition(320-32,120-40+room.walls.right_d);
+            d.setAnchorPoint(0.5, 0);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(320,120);
+            wall.setPosition(320,120-32);
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
@@ -411,7 +440,7 @@ waw.prepareRoomLayer = function(room) {
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(160+room.walls.down_d,0);
+            wall.setPosition(160+room.walls.down_d,0-32);
             wall.setTag(TAG_DOWN_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
@@ -426,7 +455,7 @@ waw.prepareRoomLayer = function(room) {
             //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(160,0);
+            wall.setPosition(160,0-32);
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
@@ -435,12 +464,14 @@ waw.prepareRoomLayer = function(room) {
     switch (room.walls.left) {
         case "door":
             d = new cc.Sprite(s_Doors, cc.rect(80*1,80,80,80)); //closed door
-            d.setPosition(32,120+room.walls.left_d);
+            d.setPosition(32,120-40+room.walls.left_d);
+            d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_LEFT_DOOR);
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(0,120+room.walls.left_d);
+            wall.setPosition(0,120-32+room.walls.left_d);
+            wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_LEFT_DOORD);
             units.push(wall);
             //debug - shows hit box over the wall
@@ -448,14 +479,16 @@ waw.prepareRoomLayer = function(room) {
             break;
         case "empty":
             d = new cc.Sprite(s_Doors, cc.rect(80*1,0,80,80)); //open door
-            d.setPosition(32,120+room.walls.left_d);
+            d.setPosition(32,120-40+room.walls.left_d);
+            d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
-            wall.setPosition(0,120);
+            wall.setPosition(0,120-32);
+            wall.setAnchorPoint(0.5, 0);
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer);
@@ -563,27 +596,6 @@ waw.prepareRoomPattern = function(room) {
 
 };
 
-//adds obstacles of a room onto existing layer
-waw.putRoomObstacle = function(pos, hitbox, hitboxPos) {
-    var units = waw.units;
-    var layer = waw.layer;
-
-    //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
-    var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
-    //coords in the room
-    pos.y += 20;
-    sprite.setPosition(pos);
-    layer.addChild(sprite, 20+ 250 - pos.y);
-    var wall = new waw.Unit();
-    hitboxPos.y += 8;   //4
-    wall.setContentSize(hitbox); //collision box
-    wall.setPosition(hitboxPos); //collision box 32x16
-    units.push(wall);
-
-    //debug
-    waw.AddHitBoxSprite(wall, layer);
-};
-
 //initially generate mobs into the room
 waw.generateMobs = function(){
     var mobs = [];
@@ -597,4 +609,49 @@ waw.generateMobs = function(){
         mobs.push(m);
     }
     return mobs;
+};
+
+//adds grid sprite to show hit Box
+waw.AddHitBoxSprite = function (unit, layer, tag_) {
+    //if(!showDebugInfo) return;
+    var tag = tag_ | 0;
+    //var contentSize = unit.getContentSize();
+    if(unit.width < 100 && unit.height < 100)
+        unit.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
+    else
+        unit.debugCross = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
+    unit.debugCross.setAnchorPoint(0.5, 0);
+    unit.debugCross.x = unit.x;
+    unit.debugCross.y = unit.y;
+    layer.addChild(unit.debugCross, 300, tag);
+    unit.debugCross.setVisible(showDebugInfo);
+
+    console.info("U ",unit.x, unit.y, unit.width, unit.height);
+    //console.info("HB",unit.debugCross.x, unit.debugCross.y, unit.debugCross.width, unit.debugCross.height);
+//    sprite.runAction(cc.FadeOut.create(10)); //remove marks
+};
+
+//adds Pillars obstacles of a room onto existing layer
+waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
+    var units = waw.units;
+    var layer = waw.layer;
+
+    //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
+    var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
+    //coords in the room
+    //pos.y += 20;
+    //pos.y -= 0;
+    sprite.setPosition(pos);
+    //if(!isAnchoredToBottom)
+    sprite.setAnchorPoint(0.5, 0);
+    //layer.addChild(sprite, 20+ 250 - pos.y);
+    layer.addChild(sprite, pos.y);
+    var wall = new waw.Unit();
+    //hitboxPos.y += 8;   //4
+    wall.setContentSize(hitbox); //collision box
+    wall.setPosition(hitboxPos); //collision box 32x16
+    units.push(wall);
+
+    //debug
+    waw.AddHitBoxSprite(wall, layer);
 };

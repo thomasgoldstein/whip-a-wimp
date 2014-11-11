@@ -8,8 +8,10 @@ waw.Unit = cc.Node.extend({
         this._super();
         //this._positionF = cc.p(0, 0);
         //this.setPosition(0,0);
-
-        this.debugCross = new cc.Sprite(s_DebugCross);
+        if(this.width <= 0 )
+            this.setContentSize(16,16);
+        this.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
+        this.debugCross.setAnchorPoint(0.5, 0);
         //this.debugCross.setPosition(0, 0);
         this.addChild(this.debugCross,25);
         this.debugCross.setVisible(showDebugInfo);
@@ -51,16 +53,19 @@ waw.Unit = cc.Node.extend({
     toSafeYCoord: function (y) {
         return (y<50 ? 50 : (y>180 ? 180 : y));
     },
-    collideRect: function(pos) {
+    collideRectOld: function(pos) {
+        //TODO Delete this method
         var s = this.getContentSize();
-
         //if (pos === undefined)
         if (!pos)
             pos = this.getPosition();
-            //pos = this.getPositionF();
-
+        //pos = this.getPositionF();
         return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
-//        return cc.rect(pos.x - s.width / 2, pos.y - s.height / 2, s.width, s.height);
+    },
+    collideRect: function(pos) {
+        if (!pos)
+            pos = this.getPosition();
+        return cc.rect(pos.x - this.width / 2, pos.y , this.width, this.height);
     },
     doesCollide: function (_units) {
         if(!_units) throw "must be an array in the arg";
@@ -73,12 +78,6 @@ waw.Unit = cc.Node.extend({
                 //console.log(this.collideRect(), _units[unit].collideRect());
                 return true;
             }
-
-/*
-            var rect = cc.rectIntersection(this.collideRect(), _units[unit].collideRect());
-            if (rect.width > 0 && rect.height > 0) // Collision!
-                return true;
-*/
         }
         return false;
     }
@@ -86,8 +85,9 @@ waw.Unit = cc.Node.extend({
 
 //TODO do we really need it?
 //we add it to prototype to use common sprites as our waw.unit to check their collisions
+/*
 cc.Sprite.prototype.collideRect = function() {
     //var s = this.getContentSize();
     //var pos = this.getPosition();
     return cc.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-};
+};*/
