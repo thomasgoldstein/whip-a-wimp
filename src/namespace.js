@@ -11,7 +11,7 @@ var waw = {
     hitBoxField: [], // [320][240] of passable/not of the current level
     KEYS: [], // list of pressed keys. bool
 };
-waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[cc.KEY.right] = false;
+//waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[cc.KEY.right] = false;
 
 //Global vars
 var currentRoom = null;

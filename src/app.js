@@ -27,7 +27,6 @@ waw.MainScene = cc.Scene.extend({
 //this layer exists on every Room
 //it contains all keyboard stuff
 waw.MainLayer = cc.Layer.extend({
-//    isMouseDown: false,
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
 
@@ -39,7 +38,6 @@ waw.MainLayer = cc.Layer.extend({
         waw.units = []; //clear obstacles
         this.units = waw.units;
 
-        //this.setKeyboardEnabled(true);
         this.scheduleUpdate();
 
         //Initially draw room BG, walls, foes onto layer
@@ -61,9 +59,7 @@ waw.MainLayer = cc.Layer.extend({
         else
             miniMap.setPosition(320-33-40,240-48);  //mm to the right
 
-//        else if ('mouse' in sys.capabilities)
-//            this.setMouseEnabled(true);
-        if (cc.sys.capabilities.hasOwnProperty('touches')){
+/*        if (cc.sys.capabilities.hasOwnProperty('touches')){
 //            this.setTouchEnabled(true);
 
             //Controls buttons
@@ -77,7 +73,7 @@ waw.MainLayer = cc.Layer.extend({
             this.addChild(buttons, 400);
             circle.runAction(cc.FadeIn(1, 2));
             buttons.runAction(cc.FadeIn(1, 2));
-        }
+        }*/
         if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
@@ -156,7 +152,7 @@ waw.MainLayer = cc.Layer.extend({
         console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
         //this.setKeyboardEnabled(false);
         //this.setTouchEnabled(false);
-//        this.unscheduleUpdate();    //disable update:
+        //this.unscheduleUpdate();    //disable update:
         //this.removeAllActions();
         this.removeChild(waw.player.shadowSprite);
 
@@ -185,7 +181,7 @@ waw.MainLayer = cc.Layer.extend({
     },
     onTouchesBegan: function(touch, event){
 //        console.log(touch, event);
-        var pos = touch[0].getLocation();
+/*        var pos = touch[0].getLocation();
         if(pos.x>50 || pos.y >50)
             return;
         if(pos.x<16) {
@@ -203,11 +199,11 @@ waw.MainLayer = cc.Layer.extend({
         else if(pos.y>50-16) {
             waw.player.keyUp(cc.KEY.down);
             waw.player.keyDown(cc.KEY.up);
-        }
+        }*/
     },
     onTouchesEnded: function(touch, event){
 //        console.log(touch, event);
-        if(!touch[0])
+/*        if(!touch[0])
             return;
         var pos = touch[0].getLocation();
         if(pos.x>50 || pos.y >50) {
@@ -228,7 +224,7 @@ waw.MainLayer = cc.Layer.extend({
         }
         else if(pos.y>50-16) {
             waw.player.keyUp(cc.KEY.up);
-        }
+        }*/
     },
     onGotoNextRoom: function (e, playerPos) {
 //	    console.info("Goto next room");
@@ -334,16 +330,3 @@ waw.MainLayer = cc.Layer.extend({
 //        waw.player.update(nextPos);
     }
 });
-
-//adds grid sprite to show hit Box
-waw.AddHitBoxSprite = function (unit, layer, tag_){
-    //if(!showDebugInfo) return;
-    var tag = tag_ | 0;
-    //var contentSize = unit.getContentSize();
-    unit.debugCross = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
-    layer.addChild(unit.debugCross, 300, tag);
-    unit.debugCross.x = unit.x;
-    unit.debugCross.y = unit.y;
-    unit.debugCross.setVisible(showDebugInfo);
-//    sprite.runAction(cc.FadeOut.create(10)); //remove marks
-};
