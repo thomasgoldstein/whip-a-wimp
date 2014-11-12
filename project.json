@@ -21,6 +21,9 @@
         "src/mobs/enemy.js",
         "src/mobs/mobRandomBouncer.js",
         "src/mobs/mobRandomWalker.js",
+        "src/mobs/mobTrader.js",
+        "src/mobs/mobPigWalker.js",
+        "src/mobs/mobPigBouncer.js",
         "src/app.js"
         ]
 

@@ -5,7 +5,7 @@
 waw.MobRandomBouncer = waw.Enemy.extend({
         ctor: function () {
             this._super();
-            console.info("MobBouncer ctor");
+            console.info("MobRandomBouncer ctor");
             /*
              this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
              this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);
@@ -17,7 +17,7 @@ waw.MobRandomBouncer = waw.Enemy.extend({
             //this.sprite = cc.Sprite.create(s_EnemyPlain,
             //    cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
-            this.addChild(this.sprite);
+            //this.addChild(this.sprite);
         },
         pickAISchedule: function () {
             switch (this.state) {

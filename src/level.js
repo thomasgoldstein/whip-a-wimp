@@ -603,9 +603,13 @@ waw.generateMobs = function(){
     var mobs = [];
     var n = Math.round(Math.random()*5);
     var m = null;
+
+    var pickMobType = ["PigWalker", "PigBouncer", "Trader"];
+
     for(var i=0; i<n; ++i){
         m = {x:160, y:110, mobType:-1, mob:null};
-        m.mobType = Math.random()*100; //TODO replace temp mob TYPE with real
+        //m.mobType = Math.random()*100; //TODO replace temp mob TYPE with real
+        m.mobType = pickMobType[ Math.round(Math.random()*2)]; //TODO replace temp mob TYPE with real
         m.x = Math.round(50 + Math.random() * 220);
         m.y = Math.round(50 + Math.random() * 130);
         mobs.push(m);

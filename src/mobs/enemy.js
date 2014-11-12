@@ -5,6 +5,7 @@
 
 
 waw.Enemy = waw.Unit.extend({
+    mobType: "unknown",
     sprite: null,
     speed: 1,
     movement: null,
@@ -37,6 +38,7 @@ waw.Enemy = waw.Unit.extend({
         this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
+/*
         var animData =
         {
             "down_right":
@@ -88,27 +90,24 @@ waw.Enemy = waw.Unit.extend({
         };
         this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
         this.sprite.playAnimation(this.calcAnimationFrame(0,0));
-//        this.sprite = cc.Sprite.create(s_EnemyPlain,
-//            cc.rect(Math.floor(waw.rand() * 3) * 49, 0, 48, 48));
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite);
-        //this.debugCross.setPosition(0,-24);
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow);
         this.shadowSprite.setScale(1.4);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
+*/
 
         //add debug text info under a mob
-//        if(showDebugInfo) {
-            this.label = new cc.LabelTTF("Mob", "System", 9);
-            this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-            this.label.setPosition(0, -30);
-            this.label.setVisible(showDebugInfo);
-//        }
+        this.label = new cc.LabelTTF("Mob", "System", 9);
+        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
+        this.label.setPosition(0, -16);
+        this.label.setVisible(showDebugInfo);
+
         this.state = "idle";
         this.stateSchedule = this.SCHEDULE_IDLE;
     },
@@ -250,7 +249,7 @@ waw.Enemy = waw.Unit.extend({
             //var pPos = waw.player.getPosition();
             var pos = this.getPosition();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(""+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );
+            this.label.setString(this.mobType+"-"+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );
         }
     },
     initIdle: function () {

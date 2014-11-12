@@ -8,7 +8,7 @@ waw.Unit = cc.Node.extend({
         this._super();
         //this._positionF = cc.p(0, 0);
         //this.setPosition(0,0);
-        if(this.width <= 0 )
+        if(this.width <= 0 )    //TODO it's a dumb plug
             this.setContentSize(16,16);
         this.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
         this.debugCross.setAnchorPoint(0.5, 0);
