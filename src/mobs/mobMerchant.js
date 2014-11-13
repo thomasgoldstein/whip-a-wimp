@@ -3,15 +3,15 @@
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
-waw.MobTrader = waw.MobRandomBouncer.extend({
-    mobType: "Trader",
-    shadowYoffset: 4,
-    spriteYoffset: -4,
+waw.MobMerchant = waw.MobRandomBouncer.extend({
+    mobType: "Merchant",
+    shadowYoffset: 0,
+    spriteYoffset: 0,
     state: "idle",
     
     ctor: function () {
         this._super();
-        console.info("MobTrader ctor");
+        console.info("MobMerchant ctor");
 
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0.5, 0);
@@ -24,50 +24,50 @@ waw.MobTrader = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(0+33*0, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48),
+                        cc.rect(0+33*2, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48)
                     ],
-                delay: 0.3
+                delay: 0.5
             },
             "down_left":
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(0+33*0, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48),
+                        cc.rect(0+33*2, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48)
                     ],
-                delay: 0.3,
+                delay: 0.5,
                 flippedX: true
             },
             "up_right":
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(0+33*0, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48),
+                        cc.rect(0+33*2, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48)
                     ],
-                delay: 0.3
+                delay: 0.5
             },
             "up_left":
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(0+33*0, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48),
+                        cc.rect(0+33*2, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48)
                     ],
-                delay: 0.3,
+                delay: 0.5,
                 flippedX: true
             }
         };
-        this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
+        this.sprite = new waw.AnimatedSprite(s_Merchant, animData);
         this.sprite.playAnimation(this.calcAnimationFrame(0,0));
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
@@ -77,7 +77,7 @@ waw.MobTrader = waw.MobRandomBouncer.extend({
 
         //create monsters shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow);
-        this.shadowSprite.setScale(1.4);
+        //this.shadowSprite.setScale(1.4);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     calcAnimationFrame: function(x,y){

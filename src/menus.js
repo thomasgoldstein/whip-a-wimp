@@ -14,7 +14,7 @@ waw.MenuDebug = function (layer) {
                     var e = new waw.MobRandomBouncer();
                     break;
                 case 2:
-                    var e = new waw.MobTrader();
+                    var e = new waw.MobMerchant();
                     break;
             }
             var m = {x: 100, y: 110};

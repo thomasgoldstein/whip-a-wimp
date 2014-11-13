@@ -6,6 +6,7 @@ var s_MiddleWalls = themeDir + "MiddleWalls.fw.png";
 var s_UpperWalls = themeDir + "UpperWalls.fw.png";
 var s_Doors = themeDir + "Doors.fw.png";
 var s_Pillar = themeDir + "Pillar.png";
+var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
 var s_Shadow = "res/Shadow.png";
 var s_Empty32x32 = "res/Empty32x32.fw.png";
