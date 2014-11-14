@@ -601,7 +601,7 @@ waw.prepareRoomPattern = function(room) {
 //initially generate mobs into the room
 waw.generateMobs = function(){
     var mobs = [];
-    var n = Math.round(Math.random()*5);
+    var n = Math.round(Math.random()*2);    //max mobs in the room
     var m = null;
 
     var pickMobType = ["PigWalker", "PigBouncer", "Trader"];
