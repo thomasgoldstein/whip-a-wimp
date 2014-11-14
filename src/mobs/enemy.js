@@ -267,7 +267,7 @@ waw.Enemy = waw.Unit.extend({
             x = pos.x;
             y = pos.y;
         }
-        this.setPosition(x, y-1);
+        this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
         this.setZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
@@ -301,34 +301,59 @@ waw.Enemy = waw.Unit.extend({
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
-
-        var pos = this.getPosition(),
-            oldPos = pos,
-            x = pos.x,
-            y = pos.y;
-
-        this.oldPos = pos;
+        var oldPos = this.getPosition(),
+            x = this.x,
+            y = this.y;
+        //var oldCollideRect = this.collideRect(oldPos);
 
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
-//        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - x,this.targetY - y));
+        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - x,this.targetY - y));
+
         //try to move unit
         if (this.targetX < x)
             x -= speed;
         else if (this.targetX > x)
             x += speed;
+        var nextCollideRect = {x: x, y: y, width: this.width, height: this.height};
+        waw.units.forEach(function (unit) {
+            var unitRect = unit.collideRect();
+            var rect = cc.rectIntersection(nextCollideRect, unitRect);
+            //TODO check this condition && why not || ?
+            if (rect.width > 0 && rect.height > 0) // Collision!
+            {
+                if (rect.height > 0) {
+                    nextCollideRect.x = oldPos.x;
+                    //console.log("bam x");
+                }
+            }
+        });
+
         if (this.targetY < y)
             y -= speed;
         else if (this.targetY > y)
             y += speed;
-
-        this.setPosition(x, y);
-        this.setZOrder(250 - y);
+        nextCollideRect.y = y;
+        waw.units.forEach(function (unit) {
+            var unitRect = unit.collideRect();
+            var rect = cc.rectIntersection(nextCollideRect, unitRect);
+            //TODO check this condition && why not || ?
+            if (rect.width > 0 && rect.height > 0) // Collision!
+            {
+                if (rect.width > 0) {
+                    nextCollideRect.y = oldPos.y;
+                    //console.log("bam y");
+                }
+            }
+        });
+//
+        this.setPosition(nextCollideRect.x, nextCollideRect.y);
+        this.setZOrder(250 - this.y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        this.shadowSprite.setPosition(this.x, this.y + this.shadowYoffset);
 
-        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
+        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), oldPos) < 32) {
             return true; //get to the target x,y
         }
         return false;
