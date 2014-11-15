@@ -11,7 +11,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     
     ctor: function () {
         this._super();
-        console.info("MobPigWalker ctor");
+        //console.info("MobPigWalker ctor");
 
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0.5, 0);

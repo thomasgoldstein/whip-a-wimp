@@ -5,7 +5,7 @@
 waw.MobRandomBouncer = waw.Enemy.extend({
         ctor: function () {
             this._super();
-            console.info("MobRandomBouncer ctor");
+            //console.info("MobRandomBouncer ctor");
             /*
              this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
              this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);

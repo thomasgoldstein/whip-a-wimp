@@ -11,7 +11,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
     
     ctor: function () {
         this._super();
-        console.info("MobMerchant ctor");
+        //console.info("MobMerchant ctor");
 
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0.5, 0);
@@ -29,7 +29,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                         cc.rect(0+33*2, 0, 32, 48),
                         cc.rect(0+33*1, 0, 32, 48)
                     ],
-                delay: 0.5
+                delay: 0.3
             },
             "down_left":
             {
@@ -40,7 +40,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                         cc.rect(0+33*2, 0, 32, 48),
                         cc.rect(0+33*1, 0, 32, 48)
                     ],
-                delay: 0.5,
+                delay: 0.3,
                 flippedX: true
             },
             "up_right":
@@ -52,7 +52,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                         cc.rect(0+33*2, 0+49*1, 32, 48),
                         cc.rect(0+33*1, 0+49*1, 32, 48)
                     ],
-                delay: 0.5
+                delay: 0.3
             },
             "up_left":
             {
@@ -63,7 +63,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                         cc.rect(0+33*2, 0+49*1, 32, 48),
                         cc.rect(0+33*1, 0+49*1, 32, 48)
                     ],
-                delay: 0.5,
+                delay: 0.3,
                 flippedX: true
             }
         };

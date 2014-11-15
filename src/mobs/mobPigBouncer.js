@@ -11,7 +11,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
     
     ctor: function () {
         this._super();
-        console.info("MobPigBouncer ctor");
+        //console.info("MobPigBouncer ctor");
 
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0.5, 0);
