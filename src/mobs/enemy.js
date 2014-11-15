@@ -325,7 +325,6 @@ waw.Enemy = waw.Unit.extend({
             {
                 if (rect.height > 0) {
                     nextCollideRect.x = oldPos.x;
-                    //console.log("bam x");
                 }
             }
         });
@@ -343,7 +342,6 @@ waw.Enemy = waw.Unit.extend({
             {
                 if (rect.width > 0) {
                     nextCollideRect.y = oldPos.y;
-                    //console.log("bam y");
                 }
             }
         });
@@ -387,24 +385,34 @@ waw.Enemy = waw.Unit.extend({
             x = pos.x,
             y = pos.y;
 
-        this.oldPos = pos;
+        //this.oldPos = pos;
 
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
         //try to move unit
-            x += this.dx*speed;
-            y += this.dy*speed;
-        // || this.conditions.indexOf("feelObstacle")>=0
-        if(x<50 || x>270) {
+        x += this.dx*speed;
+        this.x = x;
+
+        if(x<50 || x>270 || this.doesCollide(waw.units)) {
             this.dx = -this.dx;
             this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
-//            x = oldPos.x;
+            x = this.x = oldPos.x;
+            y = this.y = oldPos.y;
+            //delete this.conditions[this.conditions.indexOf("feelObstacle")];
+            //this.getSensorsConditions(this.conditions);
+            this.conditions.push("feelObstacle");
         }
-        if(y<40 || y>180) {
+
+        y += this.dy*speed;
+        this.y = y;
+        if(y<40 || y>180 || this.doesCollide(waw.units)) {
             this.dy = -this.dy;
             this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
-//            y = oldPos.y;
+            y = this.y = oldPos.y;
+            x = this.x = oldPos.x;
+            //delete this.conditions[this.conditions.indexOf("feelObstacle")];
+            this.conditions.push("feelObstacle");
         }
 
         this.setPosition(x, y);
