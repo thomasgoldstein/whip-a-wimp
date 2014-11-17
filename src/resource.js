@@ -6,6 +6,7 @@ var s_MiddleWalls = themeDir + "MiddleWalls.fw.png";
 var s_UpperWalls = themeDir + "UpperWalls.fw.png";
 var s_Doors = themeDir + "Doors.fw.png";
 var s_Pillar = themeDir + "Pillar.png";
+var s_Items = themeDir + "Items.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
 var s_Shadow = "res/Shadow.png";
@@ -32,7 +33,8 @@ var g_resources = [
     {src:s_Jesus},
     {src:s_Shadow},
     {src:s_Pillar},
-    {src:s_Empty32x32},
+    {src:s_Items},
+    {src:s_Merchant},
     {src:s_Pit},
     {src:s_Debris},
     {src:s_EnemyPlain},

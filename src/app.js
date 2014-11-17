@@ -15,6 +15,9 @@ waw.MainScene = cc.Scene.extend({
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
 
+        waw.item = new waw.Item();
+        waw.item .setPosition(startPlayerPos);
+
         //TODO add menu
         var layer = new waw.MainLayer();
         layer.init();
@@ -106,6 +109,10 @@ waw.MainLayer = cc.Layer.extend({
         //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
 
         //waw.player.setPosition(waw.player.getPosition());   //to update players sprite facing direction
+
+        //put items on the layer
+        this.addChild(waw.item.shadowSprite,-14);
+        this.addChild(waw.item,250-waw.item.y);
 
         //put enemy on the layer
         this.foes = [];
