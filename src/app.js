@@ -1,5 +1,30 @@
 "use strict";
 
+if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+    cc.eventManager.addListener({
+        event: cc.EventListener.KEYBOARD,
+        onKeyPressed: function (key, event) {
+            waw.KEYS[key] = true;
+            switch (key) {   //clean opposite arrows pressed status
+                case cc.KEY.up:
+                    waw.KEYS[cc.KEY.down] = false;
+                    break;
+                case cc.KEY.down:
+                    waw.KEYS[cc.KEY.up] = false;
+                    break;
+                case cc.KEY.left:
+                    waw.KEYS[cc.KEY.right] = false;
+                    break;
+                case cc.KEY.right:
+                    waw.KEYS[cc.KEY.left] = false;
+                    break;
+            }
+        },
+        onKeyReleased: function (key, event) {
+            waw.KEYS[key] = false;
+        }
+    }, 1);
+
 //the Start method
 waw.MainScene = cc.Scene.extend({
     onEnter: function () {
@@ -14,9 +39,6 @@ waw.MainScene = cc.Scene.extend({
 
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
-
-        waw.item = new waw.Item();
-        waw.item .setPosition(startPlayerPos);
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -50,7 +72,7 @@ waw.MainLayer = cc.Layer.extend({
             waw.prepareRoomLayer(currentRoom);
         } else
             throw "this room coords are out of the grid"
-        waw.units = this.units;   //init array
+        //waw.units = this.units;   //init array
 
 
         var room = rooms[currentRoomY][currentRoomX];
@@ -77,23 +99,37 @@ waw.MainLayer = cc.Layer.extend({
             circle.runAction(cc.FadeIn(1, 2));
             buttons.runAction(cc.FadeIn(1, 2));
         }*/
-        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+/*        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
                 onKeyPressed:function (key, event) {
                     waw.KEYS[key] = true;
+                    switch (key){   //clean opposite arrows pressed status
+                        case cc.KEY.up:
+                            waw.KEYS[cc.KEY.down] = false;
+                            break;
+                        case cc.KEY.down:
+                            waw.KEYS[cc.KEY.up] = false;
+                            break;
+                        case cc.KEY.left:
+                            waw.KEYS[cc.KEY.right] = false;
+                            break;
+                        case cc.KEY.right:
+                            waw.KEYS[cc.KEY.left] = false;
+                            break;
+                    }
                 },
                 onKeyReleased:function (key, event) {
                     waw.KEYS[key] = false;
                 }
-            }, this);
+            }, this);*/
 
         //Debug menu
         //TODO
         waw.MenuDebug(this);
     },
     onEnter: function () {
-        var m, e,pos;
+        var i, m, e, pos;
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
@@ -107,18 +143,35 @@ waw.MainLayer = cc.Layer.extend({
         //waw.player.setScale(0.8);
         //waw.player.runAction(new cc.ScaleTo(0.25, 1));
         //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
-
         //waw.player.setPosition(waw.player.getPosition());   //to update players sprite facing direction
 
         //put items on the layer
-        this.addChild(waw.item.shadowSprite,-14);
-        this.addChild(waw.item,250-waw.item.y);
+        this.items = [];
+        for(var n=0; n<currentRoom.items.length; n++){
+            i = currentRoom.items[n];
+            //TODO choose i.itemType
+            if(i.itemType !== "unknown"){
+                var item = new waw.Item();
+            } else {
+                var item = new waw.Item();
+            }
+            item.setPosition(i.x, i.y);
+            //m.mob = e; //to get some params of the mob later, when u exit the room
+            //e.setZOrder(250 - pos.y);
+            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
+            this.addChild(item,250-i.y);
+            this.addChild(item.shadowSprite,-14);
+            //position shadow
+            item.shadowSprite.setPosition(i.x, i.y-0);
+            this.items.push(item);
+        }
+        waw.items = this.items;
 
         //put enemy on the layer
         this.foes = [];
         //TODO Plug. Temp put enemy on the screen
-        for(var i=0; i<currentRoom.mobs.length; i++){
-            m = currentRoom.mobs[i];
+        for(var n=0; n<currentRoom.mobs.length; n++){
+            m = currentRoom.mobs[n];
             //TODO choose m.mobType
             //e = new waw.Enemy();
             if(m.mobType === "PigWalker"){
@@ -134,7 +187,7 @@ waw.MainLayer = cc.Layer.extend({
             e.setScale(0.1);
             e.runAction(new cc.ScaleTo(0.5, 1));
             //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
-            this.addChild(e, 6);
+            this.addChild(e, 250 - pos.y);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite,-14);
             //position shadow

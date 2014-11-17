@@ -1,7 +1,7 @@
 "use strict";
 
 waw.Item = waw.Unit.extend({
-    itemType: "unknown",
+    itemType: "key",
     sprite: null,
     speed: 1,
     movement: null,
@@ -32,7 +32,6 @@ waw.Item = waw.Unit.extend({
         this.shadowSprite.setScale(0.5);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
-
         //add debug text info under a mob
         this.label = new cc.LabelTTF("Item", "System", 9);
         this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
@@ -46,7 +45,7 @@ waw.Item = waw.Unit.extend({
         if(showDebugInfo && this.label) {
             var pos = this.getPosition();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(this.itemType+"-"+pos.x.toFixed(2)+","+pos.y.toFixed(2) );
+            this.label.setString(this.itemType+":"+pos.x.toFixed(2)+","+pos.y.toFixed(2) );
         }
         //console.info("item..up");
     },

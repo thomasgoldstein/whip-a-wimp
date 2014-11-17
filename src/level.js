@@ -35,11 +35,11 @@ function Room(_name,_x,_y) {
     this.visited = false;
     this.type = 0; //0 = clean room type
     this.mobs = waw.generateMobs();
+    this.items = waw.generateItems();
 
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
-
 }
 
 rooms.initLevel = function() {
@@ -615,6 +615,24 @@ waw.generateMobs = function(){
         mobs.push(m);
     }
     return mobs;
+};
+
+//initially generate items in the room
+waw.generateItems = function(){
+    var items = [];
+    var n = Math.round(Math.random()*5);    //max items in the room
+    var item = null;
+
+    var pickItemType = ["key", "coin", "gem", "unknown"];
+
+    for(var i=0; i<n; ++i){
+        item = {x:160, y:110, mobType:-1, mob:null};
+        item.itemType = pickItemType[ Math.round(Math.random()*2)]; //TODO replace temp item TYPE with real
+        item.x = Math.round(50 + Math.random() * 220);
+        item.y = Math.round(50 + Math.random() * 130);
+        items.push(item);
+    }
+    return items;
 };
 
 //adds grid sprite to show hit Box

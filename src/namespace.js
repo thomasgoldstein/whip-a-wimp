@@ -8,6 +8,7 @@ var waw = {
     player: null,   //player unit obj
     units: [],      //obstacles
     foes: [],        //enemy units
+    items: [],        //items
     hitBoxField: [], // [320][240] of passable/not of the current level
     KEYS: [], // list of pressed keys. bool
 };

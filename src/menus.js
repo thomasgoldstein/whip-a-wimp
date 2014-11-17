@@ -4,14 +4,14 @@ waw.MenuDebug = function (layer) {
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
-//            switch(Math.round(Math.random()*1)){
-            switch(2){
+            switch(Math.round(Math.random()*2)){
+            //switch(0){
                 case 0:
                 default:
-                    var e = new waw.MobRandomWalker();
+                    var e = new waw.MobPigBouncer();
                     break;
                 case 1:
-                    var e = new waw.MobRandomBouncer();
+                    var e = new waw.MobPigWalker();
                     break;
                 case 2:
                     var e = new waw.MobMerchant();
@@ -51,6 +51,9 @@ waw.MenuDebug = function (layer) {
             for(var i in waw.units){
                 waw.units[i].debugCross.setVisible(showDebugInfo);
             }
+            for(var i in waw.items){
+                waw.items[i].debugCross.setVisible(showDebugInfo);
+            }
         }, layer);
     //debugOnOffItem.setAnchorPoint(0.5, 0.5);
     menu = new cc.Menu(debugOnOffItem);
@@ -59,7 +62,7 @@ waw.MenuDebug = function (layer) {
     debugOnOffItem.setPosition(16, 239-7-38);
 
 //---
-    labelDebug = new cc.LabelTTF("Off Music", "System", 10);
+    labelDebug = new cc.LabelTTF("Music Off", "System", 10);
     var debugMusicOnOff = new cc.MenuItemLabel(labelDebug,
         function () {
 //            if(audioEngine.isMusicPlaying){
