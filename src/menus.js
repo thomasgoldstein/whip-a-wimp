@@ -67,7 +67,7 @@ waw.MenuDebug = function (layer) {
         function () {
 //            if(audioEngine.isMusicPlaying){
 //                audioEngine.pauseMusic();
-                audioEngine.stopMusic();
+                cc.audioEngine.stopMusic();
 //            } else {
 //                audioEngine.resumeMusic();
 //                audioEngine.playMusic(bgm_Level1, true);
