@@ -54,6 +54,7 @@ waw.MainScene = cc.Scene.extend({
 waw.MainLayer = cc.Layer.extend({
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
+    topLabel: null, //Hi Score, Keys,etc
 
     init: function () {
         this._super();
@@ -62,8 +63,6 @@ waw.MainLayer = cc.Layer.extend({
         waw.layer = this;
         waw.units = []; //clear obstacles
         this.units = waw.units;
-
-        this.scheduleUpdate();
 
         //Initially draw room BG, walls, foes onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
@@ -84,21 +83,28 @@ waw.MainLayer = cc.Layer.extend({
         else
             miniMap.setPosition(320-33-40,240-48);  //mm to the right
 
-/*        if (cc.sys.capabilities.hasOwnProperty('touches')){
-//            this.setTouchEnabled(true);
+        //HI-SCORE, keys
+        this.topLabel = new cc.LabelTTF("Hi-SCORE: 000000  KEYS: 0", "System", 8);
+        this.topLabel.setAnchorPoint(0,1);
+        this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
+        this.topLabel .setPosition(16, 240-1);
 
-            //Controls buttons
-            var circle = new cc.Sprite(s_TouchControls,
-                cc.rect(0, 0, 48, 48));
-            var buttons = new cc.Sprite(s_TouchControls,
-                cc.rect(48, 0, 48, 48));
-            circle.setPosition(24, 24);
-            buttons.setPosition(320 - 24, 24);
-            this.addChild(circle, 400);
-            this.addChild(buttons, 400);
-            circle.runAction(cc.FadeIn(1, 2));
-            buttons.runAction(cc.FadeIn(1, 2));
-        }*/
+
+        /*        if (cc.sys.capabilities.hasOwnProperty('touches')){
+        //            this.setTouchEnabled(true);
+
+                    //Controls buttons
+                    var circle = new cc.Sprite(s_TouchControls,
+                        cc.rect(0, 0, 48, 48));
+                    var buttons = new cc.Sprite(s_TouchControls,
+                        cc.rect(48, 0, 48, 48));
+                    circle.setPosition(24, 24);
+                    buttons.setPosition(320 - 24, 24);
+                    this.addChild(circle, 400);
+                    this.addChild(buttons, 400);
+                    circle.runAction(cc.FadeIn(1, 2));
+                    buttons.runAction(cc.FadeIn(1, 2));
+                }*/
 /*        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             cc.eventManager.addListener({
                 event: cc.EventListener.KEYBOARD,
@@ -124,6 +130,7 @@ waw.MainLayer = cc.Layer.extend({
                 }
             }, this);*/
 
+        this.scheduleUpdate();
         //Debug menu
         //TODO
         waw.MenuDebug(this);
@@ -149,6 +156,8 @@ waw.MainLayer = cc.Layer.extend({
         this.items = [];
         for(var n=0; n<currentRoom.items.length; n++){
             i = currentRoom.items[n];
+            if(i === null)
+                continue;   //skip just deleted item (we replace deleted items with null)
             //TODO choose i.itemType
             if(i.itemType !== "unknown"){
                 var item = new waw.Item();
@@ -361,7 +370,10 @@ waw.MainLayer = cc.Layer.extend({
 
     },
     update: function (dt) {
-          //monsters
+        //score-keys TODO: not update every frame
+        this.topLabel.setString("HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" KEYS:"+waw.keys );
+
+        //monsters
         for(var i=0; i<this.foes.length; ++i){
             if(this.foes[i]) {
                 this.foes[i].update(); //pass current closure to have access to its Units arr
