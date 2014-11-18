@@ -11,6 +11,16 @@ var waw = {
     items: [],        //items
     hitBoxField: [], // [320][240] of passable/not of the current level
     KEYS: [], // list of pressed keys. bool
+    score: 0,
+    hiScore: 100,
+    keys: 0,
+    coins: 0,
+    gems: 0,
+    addScore: function(n) {
+        this.score += n;
+        if(this.score > this.hiScore )
+            this.hiScore = this.score;
+    }
 };
 //waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[cc.KEY.right] = false;
 
