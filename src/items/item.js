@@ -40,7 +40,28 @@ waw.Item = waw.Unit.extend({
 
         this.scheduleUpdate();
     },
+    cleanUp: function() {
+        var i;
+        this.unschedule();
+        this.getParent().removeChild(this.shadowSprite, true);  //remove shadow
+        this.getParent().removeChild(this, true);   //remove item object+sprite
+        for(i=0; i< waw.items.length; i++){ //remove from current items array
+            if(waw.items[i] === this) {
+                waw.items[i] = null;
+                currentRoom.items[i] = null;
+                break;
+            }
+        }
+    },
     update: function () {
+        //check conditions
+        var pPos = waw.player.getPosition();
+        var pos = this.getPosition();
+        if (cc.pDistanceSQ(pPos, pos) < 300) {
+                waw.addScore(100);
+                waw.keys += 1;
+                this.cleanUp();
+        }
 
         if(showDebugInfo && this.label) {
             var pos = this.getPosition();
