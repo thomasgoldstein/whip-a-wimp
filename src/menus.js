@@ -89,21 +89,29 @@ waw.MenuDebug = function (layer) {
 //                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
+                        rooms[currentRoomY][currentRoomX].walls.up = "empty";
+                        rooms[currentRoomY-1][currentRoomX].walls.down = "empty";
                         break;
                     case TAG_RIGHT_DOORD:
 //                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
+                        rooms[currentRoomY][currentRoomX].walls.right = "empty";
+                        rooms[currentRoomY][currentRoomX+1].walls.left = "empty";
                         break;
                     case TAG_DOWN_DOORD:
 //                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
+                        rooms[currentRoomY][currentRoomX].walls.down = "empty";
+                        rooms[currentRoomY+1][currentRoomX].walls.up = "empty";
                         break;
                     case TAG_LEFT_DOORD:
 //                        layer.removeChild(waw.units[i]);
                         waw.units.splice(i,1);
                         i--;
+                        rooms[currentRoomY][currentRoomX].walls.left = "empty";
+                        rooms[currentRoomY][currentRoomX-1].walls.right = "empty";
                         break;
                 }
             }
