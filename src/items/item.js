@@ -20,7 +20,8 @@ waw.Item = waw.Unit.extend({
         //this.speed = 1+Math.random()*2;
         //this.safePos = cc.p(0, 0);
 
-        this.sprite = new cc.Sprite(s_Items, cc.rect(0,0,16,16));
+        //this.sprite = new cc.Sprite(s_Items, cc.rect(0,0,16,16));
+        this.sprite = new cc.Sprite(s_Items, cc.rect(17*Math.round(Math.random()*5),0,16,16));
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -32,7 +33,7 @@ waw.Item = waw.Unit.extend({
         this.shadowSprite.setScale(0.5);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
-        //add debug text info under a mob
+        //add debug text info under an item
         this.label = new cc.LabelTTF("Item", "System", 9);
         this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
         this.label.setPosition(0, -16);
@@ -57,7 +58,7 @@ waw.Item = waw.Unit.extend({
         //check conditions
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
-        if (cc.pDistanceSQ(pPos, pos) < 300) {
+        if (cc.pDistanceSQ(pPos, pos) < 150) {
                 waw.addScore(100);
                 waw.keys += 1;
                 this.cleanUp();
@@ -80,7 +81,7 @@ waw.Item = waw.Unit.extend({
         //player touchs item on the floor (do we need it?)
     },
     onDestroy: function () {
-        //what if the item has beeb destroyed by some forCe
+        //what if the item has been destroyed by some forCe
     }
 })
 ;
