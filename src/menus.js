@@ -52,7 +52,10 @@ waw.MenuDebug = function (layer) {
                 waw.units[i].debugCross.setVisible(showDebugInfo);
             }
             for(var i in waw.items){
+                if(!waw.items[i])
+                    continue;
                 waw.items[i].debugCross.setVisible(showDebugInfo);
+                waw.items[i].label.setVisible(showDebugInfo);
             }
         }, layer);
     //debugOnOffItem.setAnchorPoint(0.5, 0.5);
