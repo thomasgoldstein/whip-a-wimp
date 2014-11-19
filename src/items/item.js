@@ -14,19 +14,15 @@ waw.Item = waw.Unit.extend({
     spriteYoffset: 0,
     ctor: function () {
         this._super();
-        console.info("Item ctor");
+        //console.info("Item ctor");
 
         this.setContentSize(8, 8);
-        //this.speed = 1+Math.random()*2;
-        //this.safePos = cc.p(0, 0);
-
         //this.sprite = new cc.Sprite(s_Items, cc.rect(0,0,16,16));
         this.sprite = new cc.Sprite(s_Items, cc.rect(17*Math.round(Math.random()*5),0,16,16));
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
-        this.addChild(this.sprite);
-        this.debugCross.setAnchorPoint(0.5, 0);
+        this.addChild(this.sprite, 0, TAG_SPRITE);
 
         //create shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow);
@@ -35,17 +31,35 @@ waw.Item = waw.Unit.extend({
 
         //add debug text info under an item
         this.label = new cc.LabelTTF("Item", "System", 9);
-        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-        this.label.setPosition(0, -16);
+        this.addChild(this.label, 299, TAG_LABELSPRITE);
+        this.label.setPosition(0, -8);
         this.label.setVisible(showDebugInfo);
 
         this.scheduleUpdate();
     },
     cleanUp: function() {
         var i;
-        this.unschedule();
-        this.getParent().removeChild(this.shadowSprite, true);  //remove shadow
-        this.getParent().removeChild(this, true);   //remove item object+sprite
+        this.unscheduleUpdate();
+
+        this.setZOrder(300); //make item over player
+        this.getParent().removeChild(this.sprite);   //remove item sprite
+        this.sprite.runAction(new cc.Sequence(
+            new cc.Spawn(
+                new cc.FadeOut(0.3),
+                new cc.MoveBy(0.3, 0, 24),
+                new cc.ScaleTo(0.3, 0.5)
+            ),
+            new cc.RemoveSelf()
+        ));
+        //this.getParent().removeChild(this.shadowSprite);  //remove shadow
+        this.shadowSprite.runAction(new cc.Sequence(
+            new cc.Spawn(
+                new cc.FadeOut(0.2),
+                new cc.ScaleTo(0.2, 0.1)
+            ),
+            new cc.RemoveSelf()
+        ));
+
         for(i=0; i< waw.items.length; i++){ //remove from current items array
             if(waw.items[i] === this) {
                 waw.items[i] = null;
@@ -53,26 +67,40 @@ waw.Item = waw.Unit.extend({
                 break;
             }
         }
+        //this.removeChild(this.debugCross);
+        //this.removeChild(this.label);
     },
     update: function () {
         //check conditions
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
-        if (cc.pDistanceSQ(pPos, pos) < 150) {
-                waw.addScore(100);
-                waw.keys += 1;
+        if (cc.pDistanceSQ(pPos, pos) < 200) {
+                this.onTake();
                 this.cleanUp();
         }
-
         if(showDebugInfo && this.label) {
-            var pos = this.getPosition();
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(this.itemType+":"+pos.x.toFixed(2)+","+pos.y.toFixed(2) );
+            this.label.setString(this.itemType); //+":"+pos.x.toFixed(2)+","+pos.y.toFixed(2) );
         }
-        //console.info("item..up");
     },
     onTake: function () {
         //player takes item
+        switch(this.itemType){
+            case "key":
+                waw.keys += 1;
+                waw.addScore(10);
+                break;
+            case "gem":
+                waw.gems += 1;
+                waw.addScore(50);
+                break;
+            case "coin":
+                waw.coins += 1;
+                waw.addScore(100);
+                break;
+            default:
+                waw.addScore(1);    //WTF?
+        }
     },
     onUse: function () {
         //player uses item
