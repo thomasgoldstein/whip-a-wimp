@@ -13,7 +13,7 @@ waw.Unit = cc.Node.extend({
         this.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
         this.debugCross.setAnchorPoint(0.5, 0);
         //this.debugCross.setPosition(0, 0);
-        this.addChild(this.debugCross,25);
+        this.addChild(this.debugCross, 25, TAG_HITBOXSPRITE);
         this.debugCross.setVisible(showDebugInfo);
     },
     // Override setPosition to update _positionF

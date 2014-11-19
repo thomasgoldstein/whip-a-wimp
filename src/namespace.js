@@ -35,5 +35,10 @@ var rooms = {};
 //debug vars
 var showDebugInfo = false;
 
+var TAG_SPRITE = 100+0;
+var TAG_SHADOWSPRITE = 100+1;
+var TAG_HITBOXSPRITE = 100+2;
+var TAG_LABELSPRITE = 100+3;
+
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();
