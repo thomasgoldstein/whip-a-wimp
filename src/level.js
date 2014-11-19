@@ -667,6 +667,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     sprite.setPosition(pos);
     //if(!isAnchoredToBottom)
     sprite.setAnchorPoint(0.5, 0);
+    sprite.skewX = -3 + Math.round(6*Math.random());
     //layer.addChild(sprite, 20+ 250 - pos.y);
     layer.addChild(sprite, 250 - pos.y);
     var wall = new waw.Unit();
