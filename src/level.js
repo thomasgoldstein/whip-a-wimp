@@ -258,7 +258,6 @@ waw.initWalls = function(room) {
     var layer = waw.layer;
     var wall;
 
-
     var wp = {
         wallSize: 32, //thickness of the border walls
         wallSize2: 48, //thickness of the TOP walls
@@ -505,6 +504,86 @@ waw.prepareRoomLayer = function(room) {
         label.setOpacity(200);
     }
 
+};
+
+waw.openDoor = function (doorTag, layer) {
+    for (var i = 0; i < waw.units.length; i++) {
+        if (waw.units[i].getTag() === doorTag+4) {
+            //make 'empty' passages for next room gen calls
+            switch (doorTag+4) {
+                case TAG_UP_DOORD:
+                    waw.units.splice(i, 1);
+                    i--;
+                    rooms[currentRoomY][currentRoomX].walls.up =
+                    rooms[currentRoomY - 1][currentRoomX].walls.down = "empty";
+                    break;
+                case TAG_RIGHT_DOORD:
+                    waw.units.splice(i, 1);
+                    i--;
+                    rooms[currentRoomY][currentRoomX].walls.right =
+                    rooms[currentRoomY][currentRoomX + 1].walls.left = "empty";
+                    break;
+                case TAG_DOWN_DOORD:
+                    waw.units.splice(i, 1);
+                    i--;
+                    rooms[currentRoomY][currentRoomX].walls.down =
+                    rooms[currentRoomY + 1][currentRoomX].walls.up = "empty";
+                    break;
+                case TAG_LEFT_DOORD:
+                    waw.units.splice(i, 1);
+                    i--;
+                    rooms[currentRoomY][currentRoomX].walls.left =
+                    rooms[currentRoomY][currentRoomX - 1].walls.right = "empty";
+                    break;
+            }
+        }
+    }
+    var allSprites = layer.getChildren();
+    for (var i = 0; i < allSprites.length; i++) {
+        var node = allSprites[i];
+        if (node.getTag() === doorTag) {
+            switch (doorTag) {
+                case TAG_UP_DOOR:
+                    node.setTextureRect(cc.rect(0, 0, 80, 80));
+                    node.setTag(0);
+                    break;
+                case TAG_RIGHT_DOOR:
+                    node.setTextureRect(cc.rect(80 * 2, 0, 80, 80));
+                    node.setTag(0);
+                    break;
+                case TAG_DOWN_DOOR:
+                    node.setTextureRect(cc.rect(80 * 3, 0, 80, 80));
+                    node.setTag(0);
+                    break;
+                case TAG_LEFT_DOOR:
+                    node.setTextureRect(cc.rect(80 * 1, 0, 80, 80));
+                    node.setTag(0);
+                    break;
+            }
+        }
+        //we need 2 tags _DOOR and _DOORD that's why -4
+        if (node.getTag() === (doorTag+4)) {
+                //remove this aux debug+hitbox sprites
+            switch (doorTag+4) {
+                case TAG_UP_DOORD:
+                    layer.removeChild(node);
+                    i--;
+                    break;
+                case TAG_RIGHT_DOORD:
+                    layer.removeChild(node);
+                    i--;
+                    break;
+                case TAG_DOWN_DOORD:
+                    layer.removeChild(node);
+                    i--;
+                    break;
+                case TAG_LEFT_DOORD:
+                    layer.removeChild(node);
+                    i--;
+                    break;
+            }
+        }
+    }
 };
 
 //adds obstacles of a room onto existing layer
