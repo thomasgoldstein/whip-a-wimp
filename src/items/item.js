@@ -12,14 +12,24 @@ waw.Item = waw.Unit.extend({
     targetY: 110,
     shadowYoffset: 0,
     spriteYoffset: 0,
-    ctor: function () {
+    ctor: function (itemT) {
         this._super();
-        //console.info("Item ctor");
-
+        //console.info("Item ctor "+itemT);
+        this.itemType = itemT;
         this.setContentSize(8, 8);
-        //this.sprite = new cc.Sprite(s_Items, cc.rect(0,0,16,16));
-        this.sprite = new cc.Sprite(s_Items, cc.rect(17*Math.round(Math.random()*5),0,16,16));
-
+        switch(this.itemType){
+            case "key":
+                this.sprite = new cc.Sprite(s_Items, cc.rect(0,0,16,16));
+                break;
+            case "coin":
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17*1,0,16,16));
+                break;
+            case "gem":
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17*2,0,16,16));
+                break;
+            default:
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17*(3+Math.round(Math.random()*3)),0,16,16));
+        }
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite, 0, TAG_SPRITE);
