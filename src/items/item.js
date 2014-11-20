@@ -1,7 +1,7 @@
 "use strict";
 
 waw.Item = waw.Unit.extend({
-    itemType: "key",
+    itemType: "unknown",
     sprite: null,
     speed: 1,
     movement: null,
@@ -28,7 +28,7 @@ waw.Item = waw.Unit.extend({
                 this.sprite = new cc.Sprite(s_Items, cc.rect(17*2,0,16,16));
                 break;
             default:
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17*(3+Math.round(Math.random()*3)),0,16,16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17*(3+Math.round(Math.random()*2)),0,16,16));
         }
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);

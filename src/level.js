@@ -34,8 +34,10 @@ function Room(_name,_x,_y) {
 	this.walls = new Walls();
     this.visited = false;
     this.type = 0; //0 = clean room type
-    this.mobs = waw.generateMobs();
-    this.items = waw.generateItems();
+    //this.mobs = waw.generateMobs();
+    //this.items = waw.generateItems();
+    this.mobs = [];
+    this.items = [];
 
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
@@ -80,6 +82,10 @@ rooms.genLevel = function() {
                 r.type = Math.floor(Math.random()*7);
             else
                 r.type = 0;
+            //gen spawn coords for items
+            r.items = waw.generateItems(r.type);
+            //gen spawn coords for mobs
+            r.mobs = waw.generateMobs(r.type);
 
 			//make connection between previous and current rooms
 			if(oldx < x){
@@ -163,6 +169,70 @@ rooms.genLevel = function() {
 
     //start room[4,4] should have no obstacles!
     rooms[4][4].type = 0;
+};
+
+waw.GetRoomItemsSpawnCoords = function (roomType) {
+    var a = [];
+    if(roomType>1)
+        roomType = 1;   //TODO remove. this is debug
+    switch (roomType) {
+        case 0:
+            //no obstacles
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 220), y: y});
+            }
+            break;
+        case 1:
+            //1 obstacle in the middle of the room
+            //waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
+            a.push({x: 50 + Math.round(Math.random() * 60), y: 50 + Math.round(Math.random() * 40)});
+            a.push({x: 50 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
+            a.push({x: 210 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
+            a.push({x: 210 + Math.round(Math.random() * 60), y: 50 + Math.round(Math.random() * 40)});
+            break;
+        case 2:
+            //4 obstacles around the middle of the room
+            //waw.putRoomObstacle(new cc.p(320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320/3,240/3+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320/3,240-240/3-12+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240/3+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240-240/3-12+hitboxOffsetY));
+            break;
+        case 3:
+            //4 obstacles wide around the middle of the room
+            //waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            break;
+        case 4:
+            //1 obstacle in the middle of the room
+            //waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
+            //4 obstacles wide around the middle of the room
+            //waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
+            //waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            break;
+        case 5:
+            //horizontal line of obstacles in the room
+            //for(var x = 0; x <= 80; x += 64){
+            //    var y1 = 240/2+(Math.round(waw.rand()*8-4))-16;
+            //    waw.putRoomObstacle(new cc.p(160+x,y1+offsetY), new cc.Size(32,16), new cc.p(160+x,y1+hitboxOffsetY));
+            //    if(x!=0)
+            //        waw.putRoomObstacle(new cc.p(160-x,y1+offsetY), new cc.Size(32,16), new cc.p(160-x,y1+hitboxOffsetY));
+            //}
+            break;
+        case 6:
+            //vertical line of obstacles in the room
+            //for(var y = 0; y <= 60; y += 48) {
+            //    var x1 = 320/2+(Math.round(waw.rand()*8-4));
+            //    waw.putRoomObstacle(new cc.p(x1,114+y+offsetY), new cc.Size(32,16), new cc.p(x1,114+y+hitboxOffsetY));
+            //    if(y!=0)
+            //        waw.putRoomObstacle(new cc.p(x1,114-y+offsetY), new cc.Size(32,16), new cc.p(x1,114-y+hitboxOffsetY));
+            //}
+            break;
+    }
+    return a;
 };
 
 //Generate Mini Map Layer
@@ -686,7 +756,7 @@ waw.generateMobs = function(){
     var pickMobType = ["PigWalker", "PigBouncer", "Trader"];
 
     for(var i=0; i<n; ++i){
-        m = {x:160, y:110, mobType:-1, mob:null};
+        m = {x:160, y:110, mobType:"unknown", mob:null};
         //m.mobType = Math.random()*100; //TODO replace temp mob TYPE with real
         m.mobType = pickMobType[ Math.round(Math.random()*2)]; //TODO replace temp mob TYPE with real
         m.x = Math.round(50 + Math.random() * 220);
@@ -697,18 +767,32 @@ waw.generateMobs = function(){
 };
 
 //initially generate items in the room
-waw.generateItems = function(){
+waw.generateItems = function(roomType){
     var items = [];
     var n = Math.round(Math.random()*5);    //max items in the room
     var item = null;
 
     var pickItemType = ["key", "coin", "gem", "unknown"];
-
+    var itemCoord = waw.GetRoomItemsSpawnCoords(roomType);
+    var cr;
+    //debugger;
+    if(n>itemCoord.length)
+        n = itemCoord.length;
     for(var i=0; i<n; ++i){
-        item = {x:160, y:110, mobType:-1, mob:null};
-        item.itemType = pickItemType[ Math.round(Math.random()*2)]; //TODO replace temp item TYPE with real
-        item.x = Math.round(50 + Math.random() * 220);
-        item.y = Math.round(50 + Math.random() * 130);
+        item = {x:160, y:110, itemType:"unknown"};
+        item.itemType = pickItemType[ Math.round(Math.random()*(pickItemType.length-1))]; //TODO replace temp item TYPE with real
+
+        cr =  Math.round(Math.random()*(itemCoord.length-1)); //pic
+        //console.log(n, cr, itemCoord[cr].x, itemCoord.length);
+        item.x = itemCoord[cr].x;
+        item.y = itemCoord[cr].y;
+        //debugger;
+
+        //itemCoord =
+            itemCoord.splice(cr,1);
+        //debugger;
+        //item.x = Math.round(50 + Math.random() * 220);
+        //item.y = Math.round(50 + Math.random() * 130);
         items.push(item);
     }
     return items;

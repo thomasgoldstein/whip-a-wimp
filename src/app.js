@@ -160,8 +160,9 @@ waw.MainLayer = cc.Layer.extend({
             if(i === null)
                 continue;   //skip just deleted item (we replace deleted items with null)
             //TODO choose i.itemType
-            if(i.itemType !== "unknown")
-                var item = new waw.Item(i.itemType);
+            //console.log(i.itemType, i.x, i.y);
+            //if(i.itemType != "unknown")
+            var item = new waw.Item(i.itemType);
             item.setPosition(i.x, i.y);
             //m.mob = e; //to get some params of the mob later, when u exit the room
             //e.setZOrder(250 - pos.y);
