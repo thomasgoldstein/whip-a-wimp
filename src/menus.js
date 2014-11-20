@@ -1,11 +1,11 @@
 waw.MenuDebug = function (layer) {
-    var menu,labelDebug;
+    var menu, labelDebug;
     labelDebug = new cc.LabelTTF("Spawn", "System", 12);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
-            switch(Math.round(Math.random()*2)){
-            //switch(0){
+            switch (Math.round(Math.random() * 2)) {
+                //switch(0){
                 case 0:
                 default:
                     var e = new waw.MobPigBouncer();
@@ -36,7 +36,7 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16, 239-28);
+    debugOnOffItem.setPosition(16, 239 - 28);
 
     labelDebug = new cc.LabelTTF("HitBox", "System", 10);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
@@ -44,15 +44,15 @@ waw.MenuDebug = function (layer) {
             showDebugInfo = !showDebugInfo;
             waw.player.label.setVisible(showDebugInfo);
             waw.player.debugCross.setVisible(showDebugInfo);
-            for(var i in waw.foes){
+            for (var i in waw.foes) {
                 waw.foes[i].label.setVisible(showDebugInfo);
                 waw.foes[i].debugCross.setVisible(showDebugInfo);
             }
-            for(var i in waw.units){
+            for (var i in waw.units) {
                 waw.units[i].debugCross.setVisible(showDebugInfo);
             }
-            for(var i in waw.items){
-                if(!waw.items[i])
+            for (var i in waw.items) {
+                if (!waw.items[i])
                     continue;
                 waw.items[i].debugCross.setVisible(showDebugInfo);
                 waw.items[i].label.setVisible(showDebugInfo);
@@ -62,7 +62,7 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16, 239-7-38);
+    debugOnOffItem.setPosition(16, 239 - 7 - 38);
 
 //---
     labelDebug = new cc.LabelTTF("Music Off", "System", 10);
@@ -70,7 +70,7 @@ waw.MenuDebug = function (layer) {
         function () {
 //            if(audioEngine.isMusicPlaying){
 //                audioEngine.pauseMusic();
-                cc.audioEngine.stopMusic();
+            cc.audioEngine.stopMusic();
 //            } else {
 //                audioEngine.resumeMusic();
 //                audioEngine.playMusic(bgm_Level1, true);
@@ -80,41 +80,41 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugMusicOnOff);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugMusicOnOff.setPosition(16, 239-7-48);
+    debugMusicOnOff.setPosition(16, 239 - 7 - 48);
 
 //---
     labelDebug = new cc.LabelTTF("Doors", "System", 10);
     var debugAux = new cc.MenuItemLabel(labelDebug,
         function () {
-            for (var i = 0; i< waw.units.length; i++) {
-                switch(waw.units[i].getTag()){
+            for (var i = 0; i < waw.units.length; i++) {
+                switch (waw.units[i].getTag()) {
                     case TAG_UP_DOORD:
 //                        layer.removeChild(waw.units[i]);
-                        waw.units.splice(i,1);
+                        waw.units.splice(i, 1);
                         i--;
                         rooms[currentRoomY][currentRoomX].walls.up = "empty";
-                        rooms[currentRoomY-1][currentRoomX].walls.down = "empty";
+                        rooms[currentRoomY - 1][currentRoomX].walls.down = "empty";
                         break;
                     case TAG_RIGHT_DOORD:
 //                        layer.removeChild(waw.units[i]);
-                        waw.units.splice(i,1);
+                        waw.units.splice(i, 1);
                         i--;
                         rooms[currentRoomY][currentRoomX].walls.right = "empty";
-                        rooms[currentRoomY][currentRoomX+1].walls.left = "empty";
+                        rooms[currentRoomY][currentRoomX + 1].walls.left = "empty";
                         break;
                     case TAG_DOWN_DOORD:
 //                        layer.removeChild(waw.units[i]);
-                        waw.units.splice(i,1);
+                        waw.units.splice(i, 1);
                         i--;
                         rooms[currentRoomY][currentRoomX].walls.down = "empty";
-                        rooms[currentRoomY+1][currentRoomX].walls.up = "empty";
+                        rooms[currentRoomY + 1][currentRoomX].walls.up = "empty";
                         break;
                     case TAG_LEFT_DOORD:
 //                        layer.removeChild(waw.units[i]);
-                        waw.units.splice(i,1);
+                        waw.units.splice(i, 1);
                         i--;
                         rooms[currentRoomY][currentRoomX].walls.left = "empty";
-                        rooms[currentRoomY][currentRoomX-1].walls.right = "empty";
+                        rooms[currentRoomY][currentRoomX - 1].walls.right = "empty";
                         break;
                 }
             }
@@ -123,25 +123,25 @@ waw.MenuDebug = function (layer) {
                 var node = allSprites[i];
                 switch (node.getTag()) {
                     case TAG_UP_DOOR:
-                        node.setTextureRect(cc.rect(0,0,80,80));
+                        node.setTextureRect(cc.rect(0, 0, 80, 80));
                         node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_RIGHT_DOOR:
-                        node.setTextureRect(cc.rect(80*2,0,80,80));
+                        node.setTextureRect(cc.rect(80 * 2, 0, 80, 80));
                         node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_DOWN_DOOR:
-                        node.setTextureRect(cc.rect(80*3,0,80,80));
+                        node.setTextureRect(cc.rect(80 * 3, 0, 80, 80));
                         node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
                         break;
                     case TAG_LEFT_DOOR:
-                        node.setTextureRect(cc.rect(80*1,0,80,80));
+                        node.setTextureRect(cc.rect(80 * 1, 0, 80, 80));
                         node.setTag(0);
 //                        this.removeChild(node);
 //                        i--;
@@ -172,6 +172,19 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugAux);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugAux.setPosition(16, 239-7-58);
+    debugAux.setPosition(16, 239 - 7 - 58);
 
+
+    labelDebug = new cc.LabelTTF("Doors N", "System", 10);
+    var debugDoors = new cc.MenuItemLabel(labelDebug,
+        function () {
+            waw.openDoor(TAG_DOWN_DOOR, layer);
+            waw.openDoor(TAG_UP_DOOR, layer);
+            waw.openDoor(TAG_LEFT_DOOR, layer);
+            waw.openDoor(TAG_RIGHT_DOOR, layer);
+        }, layer);
+    menu = new cc.Menu(debugDoors);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugDoors.setPosition(16, 160);
 };
