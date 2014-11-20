@@ -55,6 +55,7 @@ waw.MainLayer = cc.Layer.extend({
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
     topLabel: null, //Hi Score, Keys,etc
+    topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
 
     init: function () {
         this._super();
@@ -84,7 +85,7 @@ waw.MainLayer = cc.Layer.extend({
             miniMap.setPosition(320-33-40,240-48);  //mm to the right
 
         //HI-SCORE, keys
-        this.topLabel = new cc.LabelTTF("Hi-SCORE: 000000  KEYS: 0", "System", 8);
+        this.topLabel = new cc.LabelTTF(this.topLabelString, "System", 10);
         this.topLabel.setAnchorPoint(0,1);
         this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
         this.topLabel .setPosition(16, 240-1);
@@ -159,11 +160,8 @@ waw.MainLayer = cc.Layer.extend({
             if(i === null)
                 continue;   //skip just deleted item (we replace deleted items with null)
             //TODO choose i.itemType
-            if(i.itemType !== "unknown"){
-                var item = new waw.Item();
-            } else {
-                var item = new waw.Item();
-            }
+            if(i.itemType !== "unknown")
+                var item = new waw.Item(i.itemType);
             item.setPosition(i.x, i.y);
             //m.mob = e; //to get some params of the mob later, when u exit the room
             //e.setZOrder(250 - pos.y);
@@ -371,7 +369,9 @@ waw.MainLayer = cc.Layer.extend({
     },
     update: function (dt) {
         //score-keys TODO: not update every frame
-        this.topLabel.setString("HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" KEYS:"+waw.keys );
+        var s = "HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" Keys:"+waw.keys+" Coins:"+waw.coins+" Gems:"+waw.gems;
+        if (s != this.topLabelString)
+            this.topLabel.setString(this.topLabelString = s);
 
         //monsters
         for(var i=0; i<this.foes.length; ++i){
