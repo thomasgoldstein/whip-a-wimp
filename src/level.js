@@ -173,8 +173,8 @@ rooms.genLevel = function() {
 
 waw.GetRoomItemsSpawnCoords = function (roomType) {
     var a = [];
-    if(roomType>1)
-        roomType = 1;   //TODO remove. this is debug
+    //if(roomType>1)
+    //    roomType = 1;   //TODO remove. this is debug
     switch (roomType) {
         case 0:
             //no obstacles
@@ -184,7 +184,6 @@ waw.GetRoomItemsSpawnCoords = function (roomType) {
             break;
         case 1:
             //1 obstacle in the middle of the room
-            //waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
             a.push({x: 50 + Math.round(Math.random() * 60), y: 50 + Math.round(Math.random() * 40)});
             a.push({x: 50 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
             a.push({x: 210 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
@@ -192,44 +191,43 @@ waw.GetRoomItemsSpawnCoords = function (roomType) {
             break;
         case 2:
             //4 obstacles around the middle of the room
-            //waw.putRoomObstacle(new cc.p(320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320/3,240/3+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320/3,240-240/3-12+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240/3+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240-240/3-12+hitboxOffsetY));
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 30), y: y});
+                a.push({x: 145 + Math.round(Math.random() * 30), y: y});
+                a.push({x: 240 + Math.round(Math.random() * 30), y: y});
+            }
             break;
         case 3:
             //4 obstacles wide around the middle of the room
-            //waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            //TODO ajdust
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 40 + Math.round(Math.random() * 20), y: y});
+                a.push({x: 110 + Math.round(Math.random() * 100), y: y});
+                a.push({x: 260 + Math.round(Math.random() * 20), y: y});
+            }
             break;
         case 4:
             //1 obstacle in the middle of the room
-            //waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
             //4 obstacles wide around the middle of the room
-            //waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
-            //waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            a.push({x: 40 + Math.round(Math.random() * 20), y: 40 + Math.round(Math.random() * 20)});
+            a.push({x: 40 + Math.round(Math.random() * 20), y: 170 + Math.round(Math.random() * 20)});
+            a.push({x: 260 + Math.round(Math.random() * 20), y: 170 + Math.round(Math.random() * 20)});
+            a.push({x: 260 + Math.round(Math.random() * 20), y: 40 + Math.round(Math.random() * 20)});
+            a.push({x: 140 + Math.round(Math.random() * 40), y: 60 + Math.round(Math.random() * 30)});
             break;
         case 5:
             //horizontal line of obstacles in the room
-            //for(var x = 0; x <= 80; x += 64){
-            //    var y1 = 240/2+(Math.round(waw.rand()*8-4))-16;
-            //    waw.putRoomObstacle(new cc.p(160+x,y1+offsetY), new cc.Size(32,16), new cc.p(160+x,y1+hitboxOffsetY));
-            //    if(x!=0)
-            //        waw.putRoomObstacle(new cc.p(160-x,y1+offsetY), new cc.Size(32,16), new cc.p(160-x,y1+hitboxOffsetY));
-            //}
+            for (var x = 58; x < 280; x += 40) {
+                a.push({x: x, y: 45 + Math.round(Math.random() * 40)});
+                a.push({x: x, y: 145 + Math.round(Math.random() * 35)});
+            }
             break;
         case 6:
             //vertical line of obstacles in the room
-            //for(var y = 0; y <= 60; y += 48) {
-            //    var x1 = 320/2+(Math.round(waw.rand()*8-4));
-            //    waw.putRoomObstacle(new cc.p(x1,114+y+offsetY), new cc.Size(32,16), new cc.p(x1,114+y+hitboxOffsetY));
-            //    if(y!=0)
-            //        waw.putRoomObstacle(new cc.p(x1,114-y+offsetY), new cc.Size(32,16), new cc.p(x1,114-y+hitboxOffsetY));
-            //}
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 60), y: y});
+                a.push({x: 210 + Math.round(Math.random() * 60), y: y});
+            }
             break;
     }
     return a;
@@ -570,7 +568,8 @@ waw.prepareRoomLayer = function(room) {
     if(showDebugInfo) {
         var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
-        label.setPosition(80, 240-10);
+        label.setAnchorPoint(0,1);
+        label.setPosition(20, 230);
         label.setOpacity(200);
     }
 
@@ -769,7 +768,7 @@ waw.generateMobs = function(){
 //initially generate items in the room
 waw.generateItems = function(roomType){
     var items = [];
-    var n = Math.round(Math.random()*5);    //max items in the room
+    var n = Math.round(Math.random()*5);    //TODO max items in the room
     var item = null;
 
     var pickItemType = ["key", "coin", "gem", "unknown"];
