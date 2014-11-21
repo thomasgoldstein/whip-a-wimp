@@ -4,6 +4,7 @@ waw.Unit = cc.Node.extend({
     shadowSprite: null,
     label: null,
     debugCross: null,
+    direction: "down",
     ctor: function() {
         this._super();
         //this._positionF = cc.p(0, 0);

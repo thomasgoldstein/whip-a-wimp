@@ -1,22 +1,22 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     speed: 6,
-    movement: {
+    /*movement: {
         left: false,
         right: false,
         up: false,
         down: false
-    },
-    direction: {
+    },*/
+    /*direction: {
         left: false,
         right: false,
         up: false,
         down: true
-    },
+    },*/
     //alive: null,    //if not, then disable all the player functions that might cause changing rooms / score / etc
     ctor: function() {
         this._super();
-        console.info("Player ctor");
+        //console.info("Player ctor");
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0, -1);
         //this.setAnchorPoint(0.5, 0);
@@ -183,40 +183,41 @@ waw.Player = waw.Unit.extend({
 
         return cc.p(x, y);
     },
+    calcDirection: function (dx, dy) {
+        if (dx < 0)
+            this.direction = "left";
+        else if (dx > 0)
+            this.direction = "right";
+        else if (dy > 0)
+            this.direction = "up";
+        else if (dy < 0)
+            this.direction = "down";
+    },
     update: function(pos_) {
-        //debugger;
-        //var pos = {x:100,y:100};
-        //var pos = this.getPosition();
-        var animKey = this.getState() + "_" + this.getDirection();
-        this.sprite.playAnimation(animKey);
-        //this.sprite.playAnimation("walking_down");
-
+        //var curPos = this.getPosition();
         var pos = this.handleCollisions();
 
-        //pos = nextPos;
+        this.calcDirection(pos.x - this.x, pos.y - this.y);
 
         this.setPosition(pos);
         //Z Index
         this.setZOrder(250- pos.y);
 
+        var animKey = this.getState() + "_" + this.getDirection();
+        this.sprite.playAnimation(animKey);
+
         //position shadow
-        //this.shadowSprite.setPosition(pos.x, pos.y-6);
         this.shadowSprite.setPosition(pos.x, pos.y+0);
 
         if(showDebugInfo && this.label) {
-            //var pos2 = new cc.p();
-            //var pos2 = this.getAnchorPoint();
-            //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + pos2.x.toFixed(2) + "," + pos2.y.toFixed(2));
-            //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.width.toFixed(2) + "," + this.height.toFixed(2));
-            var gr = this.getBoundingBoxToWorld();
-
-            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
+            //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
+            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.getDirection());
         }
     },
     handleCollisions: function () {
         var nextPos = this.getNextPosition();
-        var oldPos = this.getPosition();
-        var oldCollideRect = this.collideRect(oldPos);
+        var curPos = this.getPosition();
+        var curCollideRect = this.collideRect(curPos);
         var nextCollideRect = this.collideRect(nextPos);
         waw.units.forEach(function (unit) {
             var unitRect = unit.collideRect();
@@ -225,16 +226,16 @@ waw.Player = waw.Unit.extend({
             if (rect.width > 0 && rect.height > 0) // Collision!
             {
 //                var oldPos = waw.player.getPosition();
-                var oldRect = cc.rectIntersection(oldCollideRect , unitRect);
+                var oldRect = cc.rectIntersection(curCollideRect , unitRect);
 
                 if (oldRect.height > 0) {
                     // Block the player horizontally
-                    nextPos.x = oldPos.x;
+                    nextPos.x = curPos.x;
                 }
 
                 if (oldRect.width > 0) {
                     // Block the player vertically
-                    nextPos.y = oldPos.y;
+                    nextPos.y = curPos.y;
                 }
             }
         });
@@ -254,10 +255,13 @@ waw.Player = waw.Unit.extend({
     },
     //TODO: fix "always face down"
     getDirection: function() {
+/*
         var dir =
             waw.KEYS[cc.KEY.left] ? "left" :
                 waw.KEYS[cc.KEY.right] ? "right" :
                     waw.KEYS[cc.KEY.up] ? "up" : "down";
         return dir;
+*/
+        return this.direction;
     }
 });
