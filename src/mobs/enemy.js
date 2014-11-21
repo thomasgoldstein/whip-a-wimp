@@ -3,27 +3,22 @@
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
-
 waw.Enemy = waw.Unit.extend({
     mobType: "unknown",
     sprite: null,
     speed: 1,
-    movement: null,
-    direction: null,
     dx: 1,
     dy: -1,
     targetX: 160,
     targetY: 110,
     shadowYoffset: 4,
     spriteYoffset: -4,
-    safePos: null,
+    safePos: null,  //TODO revise? why for
 //    HP: 3,
     state: "idle",
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-//    SCHEDULE_IDLE: null,
-//    SCHEDULE_WALK: null,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
@@ -243,13 +238,7 @@ waw.Enemy = waw.Unit.extend({
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
         if(showDebugInfo && this.label) {
-//            this.label.setString("" + x + "->" + this.targetX + "," + y + "->" + this.targetY + "\n" + this.state + "");
-//            this.label.setString(""+this.state + "");
-
-            //var pPos = waw.player.getPosition();
-            var pos = this.getPosition();
-//            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(this.mobType+"-"+pos.x.toFixed(2)+","+pos.y.toFixed(2)+"\n "+this.state+" "+this.dx.toFixed(2)+","+this.dy.toFixed(2) );
+            this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
         }
     },
     initIdle: function () {
