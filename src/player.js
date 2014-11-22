@@ -112,7 +112,55 @@ waw.Player = waw.Unit.extend({
                     cc.rect(0, 96, 32, 48)
                 ],
                 delay: 0.1
+            },
+            "punching_up":
+            {
+                frameRects:
+                    [
+                        cc.rect(0, 192, 32, 48),
+                        cc.rect(32, 192, 32, 48),
+                        cc.rect(32, 192, 32, 48),
+                        cc.rect(0, 48, 32, 48)
+                    ],
+                delay: 0.2,
+                mirrorX: true
+            },
+            "punching_down":
+            {
+                frameRects:
+                    [
+                        cc.rect(0, 288, 32, 48),
+                        cc.rect(32, 288, 32, 48),
+                        cc.rect(32, 288, 32, 48),
+                        cc.rect(0, 0, 32, 48)
+                    ],
+                delay: 0.2,
+                mirrorX: true
+            },
+            "punching_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(0, 240, 32, 48),
+                        cc.rect(32, 240, 32, 48),
+                        cc.rect(32, 240, 32, 48),
+                        cc.rect(0, 96, 32, 48)
+                    ],
+                delay: 0.2,
+                flippedX: true
+            },
+            "punching_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(0, 240, 32, 48),
+                        cc.rect(32, 240, 32, 48),
+                        cc.rect(32, 240, 32, 48),
+                        cc.rect(0, 96, 32, 48)
+                    ],
+                delay: 0.2
             }
+
         };
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
@@ -194,6 +242,12 @@ waw.Player = waw.Unit.extend({
             this.direction = "down";
     },
     update: function(pos_) {
+        //punching
+/*        if(waw.KEYS[cc.KEY.space]){
+            this.state = "punching";
+            console.log("space");
+        }*/
+
         //var curPos = this.getPosition();
         var pos = this.handleCollisions();
 
@@ -250,7 +304,8 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.left] ||
             waw.KEYS[cc.KEY.right] ||
             waw.KEYS[cc.KEY.up] ||
-            waw.KEYS[cc.KEY.down] ? "walking" : "standing";
+            waw.KEYS[cc.KEY.down] ? "walking" :
+                waw.KEYS[cc.KEY.space] ? "punching" : "standing";
         return state;
     },
     //TODO: fix "always face down"
