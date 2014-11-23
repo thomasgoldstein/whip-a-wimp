@@ -7,6 +7,7 @@ var s_UpperWalls = themeDir + "UpperWalls.fw.png";
 var s_Doors = themeDir + "Doors.fw.png";
 var s_Pillar = themeDir + "Pillar.png";
 var s_Items = themeDir + "Items.png";
+var s_Whip = "res/Whip.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
 var s_Shadow = "res/Shadow.png";
@@ -21,7 +22,7 @@ var bgm_Level1 = "res/Music/ingame01.mp3";
 //gfx for debug
 var s_HitBoxGrid = "res/DBG/hbGrid.fw.png";
 var s_HitBoxGridBlue = "res/DBG/hbGridBlue.fw.png";
-var s_DebugCross = "res/DBG/dbCross.fw.png";
+//var s_DebugCross = "res/DBG/dbCross.fw.png";
 
 var g_resources = [
     //image
@@ -34,13 +35,14 @@ var g_resources = [
     {src:s_Shadow},
     {src:s_Pillar},
     {src:s_Items},
+    {src:s_Whip},
     {src:s_Merchant},
     {src:s_Pit},
     {src:s_Debris},
     {src:s_EnemyPlain},
     {src:s_Map},
     {src:s_TouchControls},
-    {src:s_DebugCross},
+    //{src:s_DebugCross},
 
     //plist
 

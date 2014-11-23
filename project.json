@@ -19,6 +19,7 @@
         "src/menus.js",
         "src/player.js",
         "src/items/item.js",
+        "src/items/whip.js",
         "src/mobs/enemy.js",
         "src/mobs/mobRandomBouncer.js",
         "src/mobs/mobRandomWalker.js",

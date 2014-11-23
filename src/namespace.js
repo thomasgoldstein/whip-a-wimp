@@ -40,5 +40,7 @@ var TAG_SHADOWSPRITE = 100+1;
 var TAG_HITBOXSPRITE = 100+2;
 var TAG_LABELSPRITE = 100+3;
 
+var TAG_WHIP = 120+0;
+
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();

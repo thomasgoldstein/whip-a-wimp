@@ -174,7 +174,6 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugAux.setPosition(16, 239 - 7 - 58);
 
-
     labelDebug = new cc.LabelTTF("Doors N", "System", 10);
     var debugDoors = new cc.MenuItemLabel(labelDebug,
         function () {
@@ -187,4 +186,15 @@ waw.MenuDebug = function (layer) {
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugDoors.setPosition(16, 160);
+
+
+    labelDebug = new cc.LabelTTF("Whip", "System", 10);
+    var debugWhip = new cc.MenuItemLabel(labelDebug,
+        function () {
+            waw.whip.init();
+        }, layer);
+    menu = new cc.Menu(debugWhip);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugWhip.setPosition(16, 150);
 };

@@ -7,8 +7,7 @@ waw.Unit = cc.Node.extend({
     direction: "down",
     ctor: function() {
         this._super();
-        //this._positionF = cc.p(0, 0);
-        //this.setPosition(0,0);
+
         if(this.width <= 0 )    //TODO it's a dumb plug
             this.setContentSize(16,16);
         this.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
@@ -54,15 +53,6 @@ waw.Unit = cc.Node.extend({
     toSafeYCoord: function (y) {
         return (y<50 ? 50 : (y>180 ? 180 : y));
     },
-    collideRectOld: function(pos) {
-        //TODO Delete this method
-        var s = this.getContentSize();
-        //if (pos === undefined)
-        if (!pos)
-            pos = this.getPosition();
-        //pos = this.getPositionF();
-        return cc.rect(Math.round(pos.x - s.width / 2), Math.round(pos.y - s.height / 2), s.width, s.height);
-    },
     collideRect: function(pos) {
         if (!pos)
             pos = this.getPosition();
@@ -83,12 +73,3 @@ waw.Unit = cc.Node.extend({
         return false;
     }
 });
-
-//TODO do we really need it?
-//we add it to prototype to use common sprites as our waw.unit to check their collisions
-/*
-cc.Sprite.prototype.collideRect = function() {
-    //var s = this.getContentSize();
-    //var pos = this.getPosition();
-    return cc.rect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-};*/

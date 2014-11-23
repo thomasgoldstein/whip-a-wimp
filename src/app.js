@@ -40,6 +40,9 @@ waw.MainScene = cc.Scene.extend({
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
 
+        waw.whip = new waw.Whip();
+        waw.whip.setPosition(startPlayerPos);
+
         //TODO add menu
         var layer = new waw.MainLayer();
         layer.init();
@@ -148,6 +151,9 @@ waw.MainLayer = cc.Layer.extend({
         //TODO
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-waw.player.y);
+
+        this.addChild(waw.whip,251-waw.player.y);
+
         //waw.player.setScale(0.8);
         //waw.player.runAction(new cc.ScaleTo(0.25, 1));
         //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
