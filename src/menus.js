@@ -188,13 +188,42 @@ waw.MenuDebug = function (layer) {
     debugDoors.setPosition(16, 160);
 
 
+    var a = [];
+    a.push({rotation: -15, rotation2: 6, step: 1});
+    a.push({rotation: -20, rotation2: 5, step: 1});
+    a.push({rotation: -35, rotation2: 4, step: 1});
+    a.push({rotation: -50, rotation2: 6, step: 2});
+    a.push({rotation: -75, rotation2: 6, step: 3});
     labelDebug = new cc.LabelTTF("Whip", "System", 10);
     var debugWhip = new cc.MenuItemLabel(labelDebug,
         function () {
-            waw.whip.init();
+            //waw.whip.init();
+            //if(Math.random()<0.5)
+                //waw.whip.setAllTo(-150, 150, 1);
+            //else
+            //    waw.whip.setAllTo(150, 180, 1);
+                waw.whip.setTo(a);
+                waw.whip.rotation = -90;
         }, layer);
     menu = new cc.Menu(debugWhip);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugWhip.setPosition(16, 150);
+
+    var a2 = [];
+    a2.push({rotation: 2, rotation2: 6, step: 1});
+    a2.push({rotation: 3, rotation2: 5, step: 1});
+    a2.push({rotation: 7, rotation2: 4, step: 1});
+    a2.push({rotation: 10, rotation2: 6, step: 1});
+    a2.push({rotation: 15, rotation2: 6, step: 1});
+    labelDebug = new cc.LabelTTF("Whip2", "System", 10);
+    var debugWhip2 = new cc.MenuItemLabel(labelDebug,
+        function () {
+            waw.whip.setTo(a2);
+            waw.whip.rotation = -90;
+        }, layer);
+    menu = new cc.Menu(debugWhip2);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugWhip2.setPosition(16, 140);
 };
