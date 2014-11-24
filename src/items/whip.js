@@ -14,6 +14,35 @@ waw.Whip = waw.Unit.extend({
     spriteYoffset: 0,
     chainLength: 5,
     chain: [],
+
+    WHIP_HIT1: [
+        {rotation: 2, rotation2: 3, step: 10},
+        {rotation: 3, rotation2: 4, step: 15},
+        {rotation: 8, rotation2: 8, step: 20},
+        {rotation: 10, rotation2: 11, step: 25},
+        {rotation: 15, rotation2: 16, step: 30}
+    ],
+    WHIP_HIT2: [
+        {rotation: -2, rotation2: 3, step: 10},
+        {rotation: -3, rotation2: 4, step: 15},
+        {rotation: -8, rotation2: 8, step: 20},
+        {rotation: -10, rotation2: 11, step: 25},
+        {rotation: -15, rotation2: 16, step: 30}
+    ],
+    WHIP_BACK1: [
+        {rotation: -115, rotation2: 6, step: 5},
+        {rotation: -30, rotation2: 5, step: 10},
+        {rotation: -35, rotation2: 4, step: 15},
+        {rotation: -50, rotation2: 6, step: 20},
+        {rotation: -75, rotation2: 6, step: 25}
+    ],
+    WHIP_BACK2: [
+        {rotation: 115, rotation2: 6, step: 5},
+        {rotation: 30, rotation2: 5, step: 10},
+        {rotation: 35, rotation2: 4, step: 15},
+        {rotation: 50, rotation2: 6, step: 20},
+        {rotation: 75, rotation2: 6, step: 25}
+    ],
     ctor: function (itemT) {
         this._super();
 
@@ -22,11 +51,17 @@ waw.Whip = waw.Unit.extend({
         //this.setContentSize(8, 8);
 
         var chainBase = this;
-        for(var i=0; i<this.chainLength; i++) {
-            var sprite = new cc.Sprite(s_Whip, cc.rect(0, 0, 7, 15));
+        var sprite;
+        for (var i = 0; i < this.chainLength; i++) {
+            if (i === 0)
+                sprite = new cc.Sprite(s_Whip, cc.rect(0, 0, 7, 15));
+            else if (i >= this.chainLength - 1)
+                sprite = new cc.Sprite(s_Whip, cc.rect(0, 16 * 2, 7, 15));
+            else
+                sprite = new cc.Sprite(s_Whip, cc.rect(0, 16 * 1, 7, 15));
             //sprite.setAnchorPoint(0.5, 0);
-            if(i>0)
-                sprite.setPosition(3.5,1);
+            if (i > 0)
+                sprite.setPosition(3.5, 1);
             sprite.setAnchorPoint(0.5, 1);
             chainBase.addChild(sprite, 0, TAG_WHIP);
             chainBase = sprite;
@@ -63,6 +98,16 @@ waw.Whip = waw.Unit.extend({
             this.chain.push(a[i]);
         }
     },
+    setInstantlyTo: function (a) {
+        this.chain = [];
+        var chainBase = this;
+        for (var i = 0; i < this.chainLength; i++) {
+            this.chain.push(a[i]);
+            var sprite = chainBase.getChildByTag(TAG_WHIP);
+            sprite.rotation = this.chain[i].rotation;
+            chainBase = sprite;
+        }
+    },
     update: function () {
         var chainBase = this;
         var r = 0;
@@ -77,19 +122,19 @@ waw.Whip = waw.Unit.extend({
                 chainBase = sprite;
             }
         /*for(var i=0; i<this.chainLength; i++) {
-            var sprite = chainBase.getChildByTag(TAG_WHIP);
-            r = sprite.rotation + sprite.getParent().rotation;
-            if(r>360)
-                r -= 360;
-            else if(r<0)
-                r += 360;
-            if(r > 180)
-                sprite.rotation -= (1 - i * 0.2 * this.chainLength);
-            else if(r < 180)
-                sprite.rotation += (1 - i * 0.2 * this.chainLength);
-            chainBase = sprite;
-        }
-        */
+         var sprite = chainBase.getChildByTag(TAG_WHIP);
+         r = sprite.rotation + sprite.getParent().rotation;
+         if(r>360)
+         r -= 360;
+         else if(r<0)
+         r += 360;
+         if(r > 180)
+         sprite.rotation -= (1 - i * 0.2 * this.chainLength);
+         else if(r < 180)
+         sprite.rotation += (1 - i * 0.2 * this.chainLength);
+         chainBase = sprite;
+         }
+         */
         //if(this.rotation > 180)
         //    this.rotation -= 1;
         //else if(this.rotation < 180)

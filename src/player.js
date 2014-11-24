@@ -95,7 +95,7 @@ waw.Player = waw.Unit.extend({
                     cc.rect(32, 96, 32, 48),
                     cc.rect(0, 96, 32, 48)
                 ],
-                delay: 0.1,
+                delay: 0.2,
                 flippedX: true
             },
             "walking_right":
@@ -122,7 +122,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(32, 192, 32, 48),
                         cc.rect(0, 48, 32, 48)
                     ],
-                delay: 0.2,
+                delay: 0.1,
                 mirrorX: true
             },
             "punching_down":
@@ -134,7 +134,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(32, 288, 32, 48),
                         cc.rect(0, 0, 32, 48)
                     ],
-                delay: 0.2,
+                delay: 0.1,
                 mirrorX: true
             },
             "punching_left":
@@ -146,7 +146,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(32, 240, 32, 48),
                         cc.rect(0, 96, 32, 48)
                     ],
-                delay: 0.2,
+                delay: 0.1,
                 flippedX: true
             },
             "punching_right":
@@ -158,7 +158,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(32, 240, 32, 48),
                         cc.rect(0, 96, 32, 48)
                     ],
-                delay: 0.2
+                delay: 0.1
             }
 
         };
@@ -306,17 +306,62 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.up] ||
             waw.KEYS[cc.KEY.down] ? "walking" :
                 waw.KEYS[cc.KEY.space] ? "punching" : "standing";
+        //if(waw.KEYS[cc.KEY.space])
+
+        if(state === "punching" && !waw.whip.visible) {
+            waw.whip.visible = true;
+            switch(this.direction){
+                case "down":
+                    waw.whip.setTo(waw.whip.WHIP_HIT1);
+                    waw.whip.rotation = 0;
+                    waw.whip.zIndex = 10;
+                    break;
+                case "right":
+                    waw.whip.setTo(waw.whip.WHIP_HIT1);
+                    waw.whip.rotation = -90;
+                    waw.whip.zIndex = 10;
+                    break;
+                case "up":
+                    waw.whip.setTo(waw.whip.WHIP_HIT1);
+                    waw.whip.rotation = 180;
+                    waw.whip.zIndex = -10;
+                    break;
+                case "left":
+                    waw.whip.setTo(waw.whip.WHIP_HIT2);
+                    waw.whip.rotation = 90;
+                    waw.whip.zIndex = -10;
+                    break;
+            }
+        }
+        if(state !== "punching" && waw.whip.visible) {
+            waw.whip.visible = false;
+            switch(this.direction){
+                case "down":
+                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                    waw.whip.rotation = 180;
+                    waw.whip.zIndex = 10;
+                    break;
+                case "right":
+                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                    waw.whip.rotation = 90;
+                    waw.whip.zIndex = 10;
+                    break;
+                case "up":
+                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                    waw.whip.rotation = 0;
+                    waw.whip.zIndex = -10;
+                    break;
+                case "left":
+                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
+                    waw.whip.rotation = -90;
+                    waw.whip.zIndex = -10;
+                    break;
+            }
+
+        }
         return state;
     },
-    //TODO: fix "always face down"
     getDirection: function() {
-/*
-        var dir =
-            waw.KEYS[cc.KEY.left] ? "left" :
-                waw.KEYS[cc.KEY.right] ? "right" :
-                    waw.KEYS[cc.KEY.up] ? "up" : "down";
-        return dir;
-*/
         return this.direction;
     }
 });

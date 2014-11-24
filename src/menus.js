@@ -203,7 +203,7 @@ waw.MenuDebug = function (layer) {
             //else
             //    waw.whip.setAllTo(150, 180, 1);
                 waw.whip.setTo(a);
-                waw.whip.rotation = -90;
+                waw.whip.rotation = -190;
         }, layer);
     menu = new cc.Menu(debugWhip);
     menu.setPosition(0, 0);
