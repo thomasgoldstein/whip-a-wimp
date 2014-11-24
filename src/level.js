@@ -577,9 +577,9 @@ waw.prepareRoomLayer = function(room) {
 
 waw.openDoor = function (doorTag, layer) {
     for (var i = 0; i < waw.units.length; i++) {
-        if (waw.units[i].getTag() === doorTag+4) {
+        if (waw.units[i].getTag() === doorTag) {
             //make 'empty' passages for next room gen calls
-            switch (doorTag+4) {
+            switch (doorTag) {
                 case TAG_UP_DOORD:
                     waw.units.splice(i, 1);
                     i--;
@@ -610,8 +610,8 @@ waw.openDoor = function (doorTag, layer) {
     var allSprites = layer.getChildren();
     for (var i = 0; i < allSprites.length; i++) {
         var node = allSprites[i];
-        if (node.getTag() === doorTag) {
-            switch (doorTag) {
+        if (node.getTag() === doorTag-4) {
+            switch (doorTag-4) {
                 case TAG_UP_DOOR:
                     node.setTextureRect(cc.rect(0, 0, 80, 80));
                     node.setTag(0);
@@ -631,9 +631,9 @@ waw.openDoor = function (doorTag, layer) {
             }
         }
         //we need 2 tags _DOOR and _DOORD that's why -4
-        if (node.getTag() === (doorTag+4)) {
+        if (node.getTag() === doorTag) {
                 //remove this aux debug+hitbox sprites
-            switch (doorTag+4) {
+            switch (doorTag) {
                 case TAG_UP_DOORD:
                     layer.removeChild(node);
                     i--;
@@ -837,6 +837,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     wall.setAnchorPoint(0.5, 0);
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(hitboxPos); //collision box 32x16
+    wall.setTag(TAG_PILLAR);
     units.push(wall);
 
     //debug
