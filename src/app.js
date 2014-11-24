@@ -155,6 +155,7 @@ waw.MainLayer = cc.Layer.extend({
         //this.addChild(waw.whip,251-waw.player.y);
         waw.player.addChild(waw.whip,10);
         waw.whip.setPosition(0,16);
+        waw.whip.init();
 
         //waw.player.setScale(0.8);
         //waw.player.runAction(new cc.ScaleTo(0.25, 1));

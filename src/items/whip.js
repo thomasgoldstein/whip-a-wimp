@@ -68,7 +68,6 @@ waw.Whip = waw.Unit.extend({
         }
 
         this.init();
-        this.scheduleUpdate();
     },
     init: function () {
         var chainBase = this;
@@ -84,6 +83,7 @@ waw.Whip = waw.Unit.extend({
             }
             chainBase = sprite;
         }
+        this.scheduleUpdate();
     },
     setAllTo: function (rot, rot2) {
         var a = [];
