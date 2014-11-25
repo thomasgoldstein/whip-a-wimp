@@ -835,6 +835,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     var wall = new waw.Unit();
     //hitboxPos.y += 8;   //4
     wall.setAnchorPoint(0.5, 0);
+    wall.sprite = sprite; //just a ref to put ACTIONS on the pillar spr
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(hitboxPos); //collision box 32x16
     wall.setTag(TAG_PILLAR);
