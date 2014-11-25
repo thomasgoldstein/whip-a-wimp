@@ -369,7 +369,7 @@ waw.Player = waw.Unit.extend({
     },
     shakePillar: function (unit) {
         //TODO move it to another file
-        console.log("shake pillar");
+        //console.log("shake pillar");
         var r = Math.random() * 3 + 2;
         if (Math.random() < 0.5)
             r = -r;
@@ -377,9 +377,8 @@ waw.Player = waw.Unit.extend({
             cc.sequence(
                 cc.skewBy(0.3, -r, 0),
                 cc.skewBy(0.3, r, 0)
-            ) //.easing(cc.easeElasticInOut(1))
+            )
         );
-        //    cc.skewBy(1, 1.0, -5).easing(cc.easeElasticInOut(2)))
     },
     interactWithUnit: function (unit) {
         var t = unit.getTag();
@@ -400,29 +399,24 @@ waw.Player = waw.Unit.extend({
     },
     doCheckAction: function () {
         var currentTime = new Date();
-        var t, x = this.x, y = this.y;
-
+        //var t, x = this.x-16, y = this.y- 8;
         if (!waw.KEYS[cc.KEY.space] || currentTime.getTime() < this.timeToThink)
             return;
         //cool down time 1 sec
         this.timeToThink = currentTime.getTime() + 1000;
 
+        var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
+
         for (var i = 0; i < waw.units.length; i++) {
             var unit = waw.units[i];
             //console.log(unit.getTag());
             var unitRect = unit.collideRect();
-            if (cc.rectContainsPoint(unitRect, new cc.Point(x + 16, y))) {
+            if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
                 this.interactWithUnit(unit);
             }
-            if (cc.rectContainsPoint(unitRect, new cc.Point(x - 16, y))) {
+            /*if (cc.rectContainsPoint(unitRect, new cc.Point(x + 16, y))) {
                 this.interactWithUnit(unit);
-            }
-            if (cc.rectContainsPoint(unitRect, new cc.Point(x, y + 24))) {
-                this.interactWithUnit(unit);
-            }
-            if (cc.rectContainsPoint(unitRect, new cc.Point(x, y - 8))) {
-                this.interactWithUnit(unit);
-            }
+            }*/
         }
     }
 });
