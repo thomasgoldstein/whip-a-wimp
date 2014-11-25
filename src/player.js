@@ -367,10 +367,36 @@ waw.Player = waw.Unit.extend({
     getDirection: function() {
         return this.direction;
     },
-    shakePillar: function(unit){
+    shakePillar: function (unit) {
         //TODO move it to another file
         console.log("shake pillar");
-        unit.runAction(cc.sequence(cc.scaleTo(0.5, 1.2), cc.scaleTo(0.5, 1.2)));
+        var r = Math.random() * 3 + 2;
+        if (Math.random() < 0.5)
+            r = -r;
+        unit.sprite.runAction(
+            cc.sequence(
+                cc.skewBy(0.3, -r, 0),
+                cc.skewBy(0.3, r, 0)
+            ) //.easing(cc.easeElasticInOut(1))
+        );
+        //    cc.skewBy(1, 1.0, -5).easing(cc.easeElasticInOut(2)))
+    },
+    interactWithUnit: function (unit) {
+        var t = unit.getTag();
+        switch(t) {
+            case TAG_PILLAR:
+                this.shakePillar(unit);
+                break;
+            case TAG_DOWN_DOORD:
+            case TAG_UP_DOORD:
+            case TAG_LEFT_DOORD:
+            case TAG_RIGHT_DOORD:
+                waw.openDoor(t, this.getParent());
+                break;
+            default:
+                if(t>0)
+                   console.log("Wrong Unit Tag 4interaction: "+t);
+        }
     },
     doCheckAction: function () {
         var currentTime = new Date();
@@ -381,39 +407,21 @@ waw.Player = waw.Unit.extend({
         //cool down time 1 sec
         this.timeToThink = currentTime.getTime() + 1000;
 
-        //console.log(this.x, this.y);
         for (var i = 0; i < waw.units.length; i++) {
             var unit = waw.units[i];
             //console.log(unit.getTag());
             var unitRect = unit.collideRect();
             if (cc.rectContainsPoint(unitRect, new cc.Point(x + 16, y))) {
-                t = unit.getTag();
-                //TODO Pillars effects?
-                if(t === TAG_PILLAR)
-                    this.shakePillar(unit);
-                else {
-                    waw.openDoor(t, this.getParent());
-                    console.log("open right door");
-                    return;
-                }
+                this.interactWithUnit(unit);
             }
             if (cc.rectContainsPoint(unitRect, new cc.Point(x - 16, y))) {
-                t = unit.getTag();
-                waw.openDoor(t, this.getParent());
-                console.log("open left door");
-                return;
+                this.interactWithUnit(unit);
             }
             if (cc.rectContainsPoint(unitRect, new cc.Point(x, y + 24))) {
-                t = unit.getTag();
-                waw.openDoor(t, this.getParent());
-                console.log("open up door");
-                return;
+                this.interactWithUnit(unit);
             }
             if (cc.rectContainsPoint(unitRect, new cc.Point(x, y - 8))) {
-                t = unit.getTag();
-                waw.openDoor(t, this.getParent());
-                console.log("open down door");
-                return;
+                this.interactWithUnit(unit);
             }
         }
     }
