@@ -121,47 +121,5 @@ waw.Whip = waw.Unit.extend({
                     sprite.rotation -= this.chain[i].step;
                 chainBase = sprite;
             }
-        /*for(var i=0; i<this.chainLength; i++) {
-         var sprite = chainBase.getChildByTag(TAG_WHIP);
-         r = sprite.rotation + sprite.getParent().rotation;
-         if(r>360)
-         r -= 360;
-         else if(r<0)
-         r += 360;
-         if(r > 180)
-         sprite.rotation -= (1 - i * 0.2 * this.chainLength);
-         else if(r < 180)
-         sprite.rotation += (1 - i * 0.2 * this.chainLength);
-         chainBase = sprite;
-         }
-         */
-        //if(this.rotation > 180)
-        //    this.rotation -= 1;
-        //else if(this.rotation < 180)
-        //    this.rotation += 1;
-        ////check conditions
-        //var pPos = waw.player.getPosition();
-        //var pos = this.getPosition();
-        //if (cc.pDistanceSQ(pPos, pos) < 200) {
-        //        this.onTake();
-        //        this.init();
-        //}
-    },
-    update2: function () {
-        var chainBase = this;
-        var r = 0;
-        for (var i = 0; i < this.chainLength; i++) {
-            var sprite = chainBase.getChildByTag(TAG_WHIP);
-            r = sprite.rotation + sprite.getParent().rotation;
-            if (r > 360)
-                r -= 360;
-            else if (r < 0)
-                r += 360;
-            if (r > 180)
-                sprite.rotation -= (1 - i * 0.2 * this.chainLength);
-            else if (r < 180)
-                sprite.rotation += (1 - i * 0.2 * this.chainLength);
-            chainBase = sprite;
-        }
     }
 });

@@ -62,7 +62,7 @@ waw.MainLayer = cc.Layer.extend({
 
     init: function () {
         this._super();
-        console.info("init layer", currentRoomX, currentRoomY);
+        //console.info("init layer", currentRoomX, currentRoomY);
         //var w = cc.director.waw;
         waw.layer = this;
         waw.units = []; //clear obstacles
@@ -216,27 +216,13 @@ waw.MainLayer = cc.Layer.extend({
     onEnterTransitionDidFinish: function () {
         this._super();
 //        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
-
-        //TODO fix freez of the player anim
-/*        waw.player.movement.down =
-            waw.player.movement.up =
-                waw.player.movement.left =
-                    waw.player.movement.right = false;*/
-
-/*        this.setKeyboardEnabled(true);
-        if ('touches' in sys.capabilities)
-            this.setTouchEnabled(true);
-        this.scheduleUpdate();*/
         waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
         var m,pos,mf;
         this._super();
-        console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
-        //this.setKeyboardEnabled(false);
-        //this.setTouchEnabled(false);
-        //this.unscheduleUpdate();    //disable update:
-        //this.removeAllActions();
+        //console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
+
         this.removeChild(waw.player.shadowSprite);
 
         for(var i=0; i<currentRoom.mobs.length; i++) {
@@ -252,9 +238,6 @@ waw.MainLayer = cc.Layer.extend({
         }
 
         for(var i=0; i<waw.foes.length; i++) {
-//            this.removeChild(waw.foes[i]);
-//            waw.foes[i].unscheduleUpdate();
-//            waw.foes[i].unscheduleAllCallbacks();
             waw.foes[i] = null;
         }
         this.foes = [];
@@ -310,7 +293,6 @@ waw.MainLayer = cc.Layer.extend({
         }*/
     },
     onGotoNextRoom: function (e, playerPos) {
-//	    console.info("Goto next room");
         //set player coords for the next room
         this.removeChild(waw.player, true);
         waw.player.setPosition(playerPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
@@ -318,7 +300,7 @@ waw.MainLayer = cc.Layer.extend({
         this.unscheduleUpdate();
 
         var room = null;
-        var transition = cc.TransitionProgressRadialCW;   //transition for teleporting
+        var transition = cc.TransitionProgressRadialCW;   //transition for teleporting (never used)
         switch (e) {
             case cc.KEY.up:
                 room = rooms[currentRoomY - 1][currentRoomX];
@@ -355,30 +337,19 @@ waw.MainLayer = cc.Layer.extend({
         }
 
         //NOW we prepare NEXT room to slide from current to the next one.
-        //so we have to remove player from the current room
-        //this.removeChild(waw.player);
-        //this.removeChild(waw.player, false);
 
-        currentRoom = room; //??? remove later
+        currentRoom = room; //TODO remove later?
         //create new scene to put a layer of the next room into it. To use DIRECTOR to use transitions between scenes
         var nextScene = new cc.Scene();
         var nextLayer = new waw.MainLayer();
         nextLayer.init();
         nextScene.addChild(nextLayer);
 
-        //TODO Change 0.25 sec to 0.5, when the room transition glitch is fixed
-        //cc.director.runScene(new cc.TransitionProgressRadialCW(0.5, nextScene));  //1st arg = in seconds duration of the transition
         cc.director.runScene(new transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
-        //cc.director.runScene(nextScene);  //1st arg = in seconds duration of the transition
-        //0.25
 //        cc.director.replaceScene(nextScene);    //Instant transition between rooms
-        //TODO doesnt appear
-        //nextLayer.addChild(waw.player);
-        //nextLayer.addChild(waw.player.shadowSprite,-14);
-
     },
     update: function (dt) {
-        //score-keys TODO: not update every frame
+        //score-keys TODO: do not update every frame
         var s = "HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" Keys:"+waw.keys+" Coins:"+waw.coins+" Gems:"+waw.gems;
         if (s != this.topLabelString)
             this.topLabel.setString(this.topLabelString = s);
@@ -393,7 +364,6 @@ waw.MainLayer = cc.Layer.extend({
         }
         //go to another room?
         var playerPos = waw.player.getPosition();
-        //debugger;
 
         if (playerPos.x < 16) {
             playerPos.x = 320 - 32;
@@ -415,6 +385,5 @@ waw.MainLayer = cc.Layer.extend({
             this.onGotoNextRoom(cc.KEY.up, playerPos);
             return;
         }
-//        waw.player.update(nextPos);
     }
 });
