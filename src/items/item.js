@@ -35,8 +35,7 @@ waw.Item = waw.Unit.extend({
         this.addChild(this.sprite, 0, TAG_SPRITE);
 
         //create shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow);
-        this.shadowSprite.setScale(0.5);
+        this.shadowSprite = new cc.Sprite(s_Shadow12x6);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
         //add debug text info under an item

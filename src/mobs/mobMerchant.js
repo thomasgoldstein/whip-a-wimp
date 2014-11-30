@@ -76,8 +76,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow);
-        //this.shadowSprite.setScale(1.4);
+        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     calcAnimationFrame: function(x,y){

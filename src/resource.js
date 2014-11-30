@@ -10,7 +10,9 @@ var s_Items = themeDir + "Items.png";
 var s_Whip = "res/Whip.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
-var s_Shadow = "res/Shadow.png";
+var s_Shadow12x6 = "res/Shadow12x6.png";
+var s_Shadow24x12 = "res/Shadow24x12.png";
+var s_Shadow32x16 = "res/Shadow32x16.png";
 var s_Empty32x32 = "res/Empty32x32.fw.png";
 var s_Pit = "res/Pit.fw.png";
 var s_Debris = "res/Debris.fw.png";
@@ -32,7 +34,9 @@ var g_resources = [
     {src:s_UpperWalls},
     {src:s_Doors},
     {src:s_Jesus},
-    {src:s_Shadow},
+    {src:s_Shadow12x6},
+    {src:s_Shadow24x12},
+    {src:s_Shadow32x16},
     {src:s_Pillar},
     {src:s_Items},
     {src:s_Whip},
