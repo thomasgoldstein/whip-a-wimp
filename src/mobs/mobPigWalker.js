@@ -63,7 +63,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                 flippedX: true
             }
         };
-        this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
+        this.sprite = new waw.AnimatedSprite(s_Pig, animData);
         this.sprite.playAnimation(this.calcAnimationFrame(0,0));
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
