@@ -260,6 +260,8 @@ waw.Enemy = waw.Unit.extend({
         this.setZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        //TODO it doesnt slow
+        this.sprite.playAnimation(this.calcAnimationFrame(0, 0));
         return true;
     },
     onIdle: function () {
@@ -281,8 +283,7 @@ waw.Enemy = waw.Unit.extend({
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
-        var pos = this.getPosition();
-        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - pos.x,this.targetY - pos.y));
+        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - this.x,this.targetY - this.y));
         return true;
     },
     onWalk: function () {
@@ -417,13 +418,11 @@ waw.Enemy = waw.Unit.extend({
     initFollowEnemy: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 3500 + Math.random() * 2500;
-        var pos = waw.player.getPosition();
-        var pos2 = this.getPosition();
-        this.targetX = pos.x;
-        this.targetY = pos.y;
+        this.targetX = waw.player.x;
+        this.targetY = waw.player.y;
         this.dx = 0;
         this.dy = 0;
-        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - pos2.x,this.targetY - pos2.y));
+        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - this.x,this.targetY - this.y));
         return true;
     },
     onFollowEnemy: function () {
@@ -433,11 +432,8 @@ waw.Enemy = waw.Unit.extend({
         }
 
         var pos = this.getPosition(),
-            oldPos = pos,
             x = pos.x,
             y = pos.y;
-
-        this.oldPos = pos;
 
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;

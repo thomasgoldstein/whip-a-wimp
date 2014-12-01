@@ -29,7 +29,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.3
+                delay: 0.2
             },
             "down_left":
             {
@@ -40,7 +40,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.3,
+                delay: 0.2,
                 flippedX: true
             },
             "up_right":
@@ -52,7 +52,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.3
+                delay: 0.2
             },
             "up_left":
             {
@@ -63,9 +63,56 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.3,
+                delay: 0.2,
+                flippedX: true
+            },
+            "stay_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.4
+            },
+            "stay_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.4,
+                flippedX: true
+            },
+            "stay_up_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.4
+            },
+            "stay_up_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.4,
                 flippedX: true
             }
+
         };
         this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
         this.sprite.playAnimation(this.calcAnimationFrame(0,0));
@@ -82,15 +129,18 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
     },
     calcAnimationFrame: function(x,y){
         var t="";
-        if(Math.round(x) == 0){
+        if(x == y == 0) {
+            t = "stay_";
+        }
+        if(Math.round(x) === 0){
             //TODO it doesnt work
             //when it moves vertically, make its left-right direction random
             x = 0.5 - Math.random();
         }
         if(Math.round(y)>0)
-            t = "up_";
+            t += "up_";
         else
-            t = "down_";
+            t += "down_";
         if(Math.round(x)<0)
              return t+"left";
         return t+"right";
