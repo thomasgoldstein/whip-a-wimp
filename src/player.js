@@ -177,7 +177,7 @@ waw.Player = waw.Unit.extend({
 //        }
 
         //create players shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow);
+        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5 , 0.5);
 
         //this.alive = true;

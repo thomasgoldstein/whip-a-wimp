@@ -123,8 +123,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow);
-        this.shadowSprite.setScale(1.4);
+        this.shadowSprite = new cc.Sprite(s_Shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     calcAnimationFrame: function(x,y){

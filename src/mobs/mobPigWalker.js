@@ -76,7 +76,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow);
+        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setScale(1.4);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
