@@ -29,73 +29,8 @@ waw.Enemy = waw.Unit.extend({
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
 
         this.setContentSize(16, 16);
-        //this.setAnchorPoint(0.5, 0);
         this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
-
-/*
-        var animData =
-        {
-            "down_right":
-            {
-                frameRects:
-                    [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
-                    ],
-                delay: 0.3
-            },
-            "down_left":
-            {
-                frameRects:
-                    [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
-                    ],
-                delay: 0.3,
-                flippedX: true
-            },
-            "up_right":
-            {
-                frameRects:
-                    [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
-                    ],
-                delay: 0.3
-            },
-            "up_left":
-            {
-                frameRects:
-                    [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
-                    ],
-                delay: 0.3,
-                flippedX: true
-            }
-        };
-        this.sprite = new waw.AnimatedSprite(s_EnemyPlain, animData);
-        this.sprite.playAnimation(this.calcAnimationFrame(0,0));
-
-        this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
-        this.sprite.setAnchorPoint(0.5, 0);
-        this.addChild(this.sprite);
-        this.debugCross.setAnchorPoint(0.5, 0);
-
-        //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
-        this.shadowSprite.setScale(1.4);
-        this.shadowSprite.setAnchorPoint(0.5, 0.5);
-*/
 
         //add debug text info under a mob
         this.label = new cc.LabelTTF("Mob", "System", 9);
@@ -124,7 +59,7 @@ waw.Enemy = waw.Unit.extend({
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
         //if(cc.p.dis)
-//        conditions.push("seeItem");
+        //conditions.push("seeItem");
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
         if (cc.pDistanceSQ(pPos, pos) < 2000) {
@@ -160,16 +95,12 @@ waw.Enemy = waw.Unit.extend({
                 if (Math.random() < 0.7) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
-//                    console.log("-idle");
                 } else if (Math.random() < 0.3) {
                     this.state = "bounce";
                     this.stateSchedule = this.SCHEDULE_BOUNCE;
-//                    console.log("-idle");
-
                 } else {
                     this.state = "walk";
                     this.stateSchedule = this.SCHEDULE_WALK;
-//                    console.log("-walk");
                 }
                 break;
             case "walk":
@@ -182,11 +113,9 @@ waw.Enemy = waw.Unit.extend({
                 if (Math.random() < 0.3) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
-//                    console.log("-idle");
                 } else {
                     this.state = "walk";
                     this.stateSchedule = this.SCHEDULE_WALK;
-//                    console.log("-walk");
                 }
                 break;
             case "bounce":
@@ -199,11 +128,9 @@ waw.Enemy = waw.Unit.extend({
                 if (Math.random() < 0.3) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
-//                    console.log("-idle");
                 } else {
                     this.state = "bounce";
                     this.stateSchedule = this.SCHEDULE_BOUNCE;
-//                    console.log("-walk");
                 }
                 break;
             case "follow":
@@ -219,18 +146,11 @@ waw.Enemy = waw.Unit.extend({
             default:
                 this.state = "idle";
                 this.stateSchedule = this.SCHEDULE_IDLE;
-//                console.log("-DEFLT-idle");
         }
     },
     update: function () {
         var currentTime = new Date();
-
-//        var pos = this.getPosition(),
-//            x = pos.x,
-//            y = pos.y;
-
         this.conditions = this.getConditions();
-//        debugger;
 
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();
@@ -294,7 +214,6 @@ waw.Enemy = waw.Unit.extend({
         var oldPos = this.getPosition(),
             x = this.x,
             y = this.y;
-        //var oldCollideRect = this.collideRect(oldPos);
 
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
@@ -369,14 +288,10 @@ waw.Enemy = waw.Unit.extend({
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
-
         var pos = this.getPosition(),
             oldPos = pos,
             x = pos.x,
             y = pos.y;
-
-        //this.oldPos = pos;
-
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
@@ -389,8 +304,6 @@ waw.Enemy = waw.Unit.extend({
             this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
             x = this.x = oldPos.x;
             y = this.y = oldPos.y;
-            //delete this.conditions[this.conditions.indexOf("feelObstacle")];
-            //this.getSensorsConditions(this.conditions);
             this.conditions.push("feelObstacle");
         }
 
@@ -401,7 +314,6 @@ waw.Enemy = waw.Unit.extend({
             this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
             y = this.y = oldPos.y;
             x = this.x = oldPos.x;
-            //delete this.conditions[this.conditions.indexOf("feelObstacle")];
             this.conditions.push("feelObstacle");
         }
 
@@ -430,11 +342,9 @@ waw.Enemy = waw.Unit.extend({
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
-
         var pos = this.getPosition(),
             x = pos.x,
             y = pos.y;
-
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
@@ -459,5 +369,4 @@ waw.Enemy = waw.Unit.extend({
         return false;
     }   //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
     //TODO 1.make enemy not stuck 2.check collision with other foes
-})
-;
+});

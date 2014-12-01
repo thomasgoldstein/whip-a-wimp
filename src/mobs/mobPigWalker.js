@@ -1,5 +1,4 @@
 "use strict";
-
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
@@ -8,13 +7,10 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     shadowYoffset: 4,
     spriteYoffset: -4,
     state: "idle",
-    
     ctor: function () {
         this._super();
         //console.info("MobPigWalker ctor");
-
         this.setContentSize(16, 16);
-        //this.setAnchorPoint(0.5, 0);
         this.speed = 1+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
@@ -97,9 +93,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     },
     update: function () {
         var currentTime = new Date();
-
         this.conditions = this.getConditions();
-
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();
         }
