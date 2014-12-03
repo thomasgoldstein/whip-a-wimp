@@ -667,7 +667,7 @@ waw.prepareRoomPattern = function(room) {
         var d = new cc.Sprite(s_Debris,
             cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
 
-        layer.addChild(d,-9); //on the floor
+        layer.addChild(d,-15); //on the floor (lower than players/mobs shadows)
         d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
         if(waw.rand()>0.5)
             continue;
