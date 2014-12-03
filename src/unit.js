@@ -4,6 +4,7 @@ waw.Unit = cc.Node.extend({
     label: null,
     debugCross: null,
     direction: "down",
+    state: "idle",
     ctor: function() {
         this._super();
         if(this.width <= 0 )    //default size for a unit
@@ -29,7 +30,7 @@ waw.Unit = cc.Node.extend({
         for (var unit in _units) {
             if(!_units[unit] || _units[unit] === this)    //do not compare with self
                 continue;
-            //TODO this is Better check. but glitches when u enther right room with presset UP
+            //TODO this is Better check. but glitches when u enter right room with pressed UP
             if(cc.rectIntersectsRect(this.collideRect(), _units[unit].collideRect())){
                 return true;
             }

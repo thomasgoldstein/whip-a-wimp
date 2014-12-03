@@ -16,7 +16,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
 
         var animData =
         {
-            "down_right":
+            "walk_down_right":
             {
                 frameRects:
                     [
@@ -25,9 +25,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.3
+                delay: 0.2
             },
-            "down_left":
+            "walk_down_left":
             {
                 frameRects:
                     [
@@ -36,10 +36,10 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.3,
+                delay: 0.2,
                 flippedX: true
             },
-            "up_right":
+            "walk_up_right":
             {
                 frameRects:
                     [
@@ -48,9 +48,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.3
+                delay: 0.2
             },
-            "up_left":
+            "walk_up_left":
             {
                 frameRects:
                     [
@@ -59,12 +59,68 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.3,
+                delay: 0.2,
+                flippedX: true
+            },
+            "idle_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.5
+            },
+            "idle_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48),
+                        cc.rect(1+49*1, 1, 48, 48)
+                    ],
+                delay: 0.5,
+                flippedX: true
+            },
+            "idle_up_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.5
+            },
+            "idle_up_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48),
+                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                    ],
+                delay: 0.5,
                 flippedX: true
             }
         };
+        animData["follow_up_left"] = animData["walk_up_left"];
+        animData["follow_up_right"] = animData["walk_up_right"];
+        animData["follow_down_left"] = animData["walk_down_left"];
+        animData["follow_down_right"] = animData["walk_down_right"];
+        animData["bounce_up_left"] = animData["walk_up_left"];
+        animData["bounce_up_right"] = animData["walk_up_right"];
+        animData["bounce_down_left"] = animData["walk_down_left"];
+        animData["bounce_down_right"] = animData["walk_down_right"];
+
         this.sprite = new waw.AnimatedSprite(s_Pig, animData);
-        this.sprite.playAnimation(this.calcAnimationFrame(0,0));
+        this.calcDirection(0,0);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -76,21 +132,6 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         this.shadowSprite.setScale(1.4);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
-    calcAnimationFrame: function(x,y){
-        var t="";
-        if(Math.round(x) == 0){
-            //TODO it doesnt work
-            //when it moves vertically, make its left-right direction random
-            x = 0.5 - Math.random();
-        }
-        if(Math.round(y)>0)
-            t = "up_";
-        else
-            t = "down_";
-        if(Math.round(x)<0)
-             return t+"left";
-        return t+"right";
-    },
     update: function () {
         var currentTime = new Date();
         this.conditions = this.getConditions();
@@ -100,7 +141,8 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
         if(showDebugInfo && this.label) {
-            this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
+            this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
+            "\n"+this.mobType+" "+this.state+"_"+this.direction );
         }
     }
 })

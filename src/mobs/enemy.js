@@ -15,7 +15,7 @@ waw.Enemy = waw.Unit.extend({
     spriteYoffset: -4,
     safePos: null,  //TODO revise? why for
 //    HP: 3,
-    state: "idle",
+//    state: "idle",
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
@@ -39,22 +39,25 @@ waw.Enemy = waw.Unit.extend({
         this.label.setVisible(showDebugInfo);
 
         this.state = "idle";
+        this.calcDirection(0, 0);
         this.stateSchedule = this.SCHEDULE_IDLE;
     },
-    calcAnimationFrame: function(x,y){
+    calcDirection: function(dx, dy){
         var t="";
-        if(Math.round(x) == 0){
-            //TODO it doesnt work
-            //when it moves vertically, make its left-right direction random
-            x = 0.5 - Math.random();
-        }
-        if(Math.round(y)>0)
+        if(dy>0)
             t = "up_";
         else
             t = "down_";
-        if(Math.round(x)<0)
-             return t+"left";
-        return t+"right";
+        if(Math.round(dx) == 0){
+            //TODO it doesnt work
+            //when it moves vertically, make its left-right direction random
+            dx = 0.5 - Math.random();
+        }
+        if(dx<0)
+             t += "left";
+        else
+             t += "right";
+        this.direction = t;
     },
     getVisualConditions: function (conditions) {
         // might add "seeEnemy" "seeItem" "canAttack"
@@ -181,7 +184,8 @@ waw.Enemy = waw.Unit.extend({
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         //TODO it doesnt slow
-        this.sprite.playAnimation(this.calcAnimationFrame(0, 0));
+        //this.direction
+        this.sprite.playAnimation(this.state+"_"+this.direction);
         return true;
     },
     onIdle: function () {
@@ -203,7 +207,8 @@ waw.Enemy = waw.Unit.extend({
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
-        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - this.x,this.targetY - this.y));
+        this.calcDirection(this.targetX - this.x,this.targetY - this.y);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
         return true;
     },
     onWalk: function () {
@@ -218,7 +223,8 @@ waw.Enemy = waw.Unit.extend({
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
-        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - x,this.targetY - y));
+        //this.calcDirection(this.targetX - x,this.targetY - y);
+        //this.sprite.playAnimation(this.state+"_"+this.direction);
 
         //try to move unit
         if (this.targetX < x)
@@ -280,7 +286,8 @@ waw.Enemy = waw.Unit.extend({
             if(Math.random()<0.5)
                 this.dy = -this.dy;
         }
-        this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
+        this.calcDirection(this.dx, this.dy);
+        this.sprite.playAnimation(this.state + "_" + this.direction);
         return true;
     },
     onBounce: function () {
@@ -301,7 +308,8 @@ waw.Enemy = waw.Unit.extend({
 
         if(x<50 || x>270 || this.doesCollide(waw.units)) {
             this.dx = -this.dx;
-            this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
+            this.calcDirection(this.dx, this.dy);
+            this.sprite.playAnimation(this.state+"_"+this.direction);
             x = this.x = oldPos.x;
             y = this.y = oldPos.y;
             this.conditions.push("feelObstacle");
@@ -311,7 +319,8 @@ waw.Enemy = waw.Unit.extend({
         this.y = y;
         if(y<40 || y>180 || this.doesCollide(waw.units)) {
             this.dy = -this.dy;
-            this.sprite.playAnimation(this.calcAnimationFrame(this.dx, this.dy));
+            this.calcDirection(this.dx, this.dy);
+            this.sprite.playAnimation(this.state+"_"+this.direction);
             y = this.y = oldPos.y;
             x = this.x = oldPos.x;
             this.conditions.push("feelObstacle");
@@ -334,7 +343,8 @@ waw.Enemy = waw.Unit.extend({
         this.targetY = waw.player.y;
         this.dx = 0;
         this.dy = 0;
-        this.sprite.playAnimation(this.calcAnimationFrame(this.targetX - this.x,this.targetY - this.y));
+        this.calcDirection(this.targetX - this.x,this.targetY - this.y);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
         return true;
     },
     onFollowEnemy: function () {

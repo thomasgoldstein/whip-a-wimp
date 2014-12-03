@@ -20,7 +20,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
 
         var animData =
         {
-            "down_right":
+            "walk_down_right":
             {
                 frameRects:
                     [
@@ -31,7 +31,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                     ],
                 delay: 0.2
             },
-            "down_left":
+            "walk_down_left":
             {
                 frameRects:
                     [
@@ -43,7 +43,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                 delay: 0.2,
                 flippedX: true
             },
-            "up_right":
+            "walk_up_right":
             {
                 frameRects:
                     [
@@ -54,7 +54,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                     ],
                 delay: 0.2
             },
-            "up_left":
+            "walk_up_left":
             {
                 frameRects:
                     [
@@ -66,7 +66,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                 delay: 0.2,
                 flippedX: true
             },
-            "stay_down_right":
+            "idle_down_right":
             {
                 frameRects:
                     [
@@ -75,9 +75,9 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.4
+                delay: 0.5
             },
-            "stay_down_left":
+            "idle_down_left":
             {
                 frameRects:
                     [
@@ -86,10 +86,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1, 48, 48),
                         cc.rect(1+49*1, 1, 48, 48)
                     ],
-                delay: 0.4,
+                delay: 0.5,
                 flippedX: true
             },
-            "stay_up_right":
+            "idle_up_right":
             {
                 frameRects:
                     [
@@ -98,9 +98,9 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.4
+                delay: 0.5
             },
-            "stay_up_left":
+            "idle_up_left":
             {
                 frameRects:
                     [
@@ -109,13 +109,22 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                         cc.rect(1+49*2, 1+49*1, 48, 48),
                         cc.rect(1+49*1, 1+49*1, 48, 48)
                     ],
-                delay: 0.4,
+                delay: 0.5,
                 flippedX: true
             }
-
         };
+        animData["follow_up_left"] = animData["walk_up_left"];
+        animData["follow_up_right"] = animData["walk_up_right"];
+        animData["follow_down_left"] = animData["walk_down_left"];
+        animData["follow_down_right"] = animData["walk_down_right"];
+        animData["bounce_up_left"] = animData["walk_up_left"];
+        animData["bounce_up_right"] = animData["walk_up_right"];
+        animData["bounce_down_left"] = animData["walk_down_left"];
+        animData["bounce_down_right"] = animData["walk_down_right"];
+
         this.sprite = new waw.AnimatedSprite(s_Pig, animData);
-        this.sprite.playAnimation(this.calcAnimationFrame(0,0));
+        this.calcDirection(0,0);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -125,24 +134,6 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
         //create monsters shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
-    },
-    calcAnimationFrame: function(x,y){
-        var t="";
-        if(x == y == 0) {
-            t = "stay_";
-        }
-        if(Math.round(x) === 0){
-            //TODO it doesnt work
-            //when it moves vertically, make its left-right direction random
-            x = 0.5 - Math.random();
-        }
-        if(Math.round(y)>0)
-            t += "up_";
-        else
-            t += "down_";
-        if(Math.round(x)<0)
-             return t+"left";
-        return t+"right";
     },
     update: function () {
         var currentTime = new Date();
@@ -155,7 +146,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
         if(showDebugInfo && this.label) {
-            this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
+            this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
+            "\n"+this.mobType+" "+this.state+"_"+this.direction );
         }
     }
 })
