@@ -2,27 +2,10 @@
 waw.Player = waw.Unit.extend({
     speed: 6,
     timeToThink: 0,
-    /*movement: {
-        left: false,
-        right: false,
-        up: false,
-        down: false
-    },*/
-    /*direction: {
-        left: false,
-        right: false,
-        up: false,
-        down: true
-    },*/
-    //alive: null,    //if not, then disable all the player functions that might cause changing rooms / score / etc
     ctor: function() {
         this._super();
         //console.info("Player ctor");
         this.setContentSize(16, 16);
-        //this.setAnchorPoint(0, -1);
-        //this.setAnchorPoint(0.5, 0);
-
-        //this.debugCross.setAnchorPoint(0, -1);
 
         var animData =
         {
@@ -166,7 +149,6 @@ waw.Player = waw.Unit.extend({
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
         this.sprite.setAnchorPoint(0.5, 0);
-        //this.debugCross.setPosition(0, -24);
 
         //add debug text info under the player
 //        if(showDebugInfo) {
@@ -182,23 +164,6 @@ waw.Player = waw.Unit.extend({
 
         //this.alive = true;
     },
-/*    isDirectionKey: function(e) {
-        if (waw.KEYS[cc.KEY.up]
-            || waw.KEYS[cc.KEY.down]
-            || waw.KEYS[cc.KEY.left]
-            || waw.KEYS[cc.KEY.right]) {
-            return true;
-        }
-        return false;
-    },
-    updateDirection: function(e) {
-        if (this.isDirectionKey(e)) { 
-            this.direction.up = this.movement.up;
-            this.direction.down = this.movement.down;
-            this.direction.left = this.movement.left;
-            this.direction.right = this.movement.right;
-        }
-    },*/
     getNextPosition: function() {
         var //p = this.getPositionF(),
             x = this.x,
@@ -258,7 +223,7 @@ waw.Player = waw.Unit.extend({
         //Z Index
         this.setZOrder(250- pos.y);
 
-        var animKey = this.getState() + "_" + this.getDirection();
+        var animKey = this.getState() + "_" + this.direction;
         this.sprite.playAnimation(animKey);
 
         //position shadow
@@ -268,7 +233,7 @@ waw.Player = waw.Unit.extend({
 
         if(showDebugInfo && this.label) {
             //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
-            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.getDirection());
+            this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.direction);
         }
     },
     handleCollisions: function () {
@@ -363,9 +328,6 @@ waw.Player = waw.Unit.extend({
 
         }
         return state;
-    },
-    getDirection: function() {
-        return this.direction;
     },
     shakePillar: function (unit) {
         //TODO move it to another file
