@@ -171,7 +171,7 @@ rooms.genLevel = function() {
     rooms[4][4].type = 0;
 };
 
-waw.GetRoomItemsSpawnCoords = function (roomType) {
+waw.GetRoomSpawnCoords = function (roomType) {
     var a = [];
     //if(roomType>1)
     //    roomType = 1;   //TODO remove. this is debug
@@ -699,68 +699,70 @@ waw.prepareRoomPattern = function(room) {
             break;
         case 1:
             //1 obstacle in the middle of the room
-            waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/2,240/2+offsetY), new cc.Size(32,16), new cc.Point(320/2,240/2+hitboxOffsetY));
             break;
         case 2:
             //4 obstacles around the middle of the room
-            waw.putRoomObstacle(new cc.p(320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320/3,240/3+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320/3,240-240/3-12+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/3,240/3+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240/3+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.p(320-320/3,240-240/3-12+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/3,240/3+offsetY), new cc.Size(32,16), new cc.Point(320/3,240/3+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.Point(320/3,240-240/3-12+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/3,240/3+offsetY), new cc.Size(32,16), new cc.Point(320-320/3,240/3+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/3,240-240/3-12+offsetY), new cc.Size(32,16), new cc.Point(320-320/3,240-240/3-12+hitboxOffsetY));
             break;
         case 3:
             //4 obstacles wide around the middle of the room
-            waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.Point(320/4,240/4+8+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.Point(320/4,240-240/4-20+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.Point(320-320/4,240/4+8+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.Point(320-320/4,240-240/4-20+hitboxOffsetY));
             break;
         case 4:
             //1 obstacle in the middle of the room
-            waw.putRoomObstacle(new cc.p(320/2,240/2+offsetY), new cc.Size(32,16), new cc.p(320/2,240/2+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/2,240/2+offsetY), new cc.Size(32,16), new cc.Point(320/2,240/2+hitboxOffsetY));
             //4 obstacles wide around the middle of the room
-            waw.putRoomObstacle(new cc.p(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320/4,240/4+8+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320/4,240-240/4-20+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240/4+8+hitboxOffsetY));
-            waw.putRoomObstacle(new cc.p(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.p(320-320/4,240-240/4-20+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.Point(320/4,240/4+8+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.Point(320/4,240-240/4-20+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/4,240/4+8+offsetY), new cc.Size(32,16), new cc.Point(320-320/4,240/4+8+hitboxOffsetY));
+            waw.putRoomObstacle(new cc.Point(320-320/4,240-240/4-20+offsetY), new cc.Size(32,16), new cc.Point(320-320/4,240-240/4-20+hitboxOffsetY));
             break;
         case 5:
             //horizontal line of obstacles in the room
             for(var x = 0; x <= 80; x += 64){
                 var y1 = 240/2+(Math.round(waw.rand()*8-4))-16;
-                waw.putRoomObstacle(new cc.p(160+x,y1+offsetY), new cc.Size(32,16), new cc.p(160+x,y1+hitboxOffsetY));
+                waw.putRoomObstacle(new cc.Point(160+x,y1+offsetY), new cc.Size(32,16), new cc.Point(160+x,y1+hitboxOffsetY));
                 if(x!=0)
-                    waw.putRoomObstacle(new cc.p(160-x,y1+offsetY), new cc.Size(32,16), new cc.p(160-x,y1+hitboxOffsetY));
+                    waw.putRoomObstacle(new cc.Point(160-x,y1+offsetY), new cc.Size(32,16), new cc.Point(160-x,y1+hitboxOffsetY));
             }
             break;
         case 6:
             //vertical line of obstacles in the room
             for(var y = 0; y <= 60; y += 48) {
                 var x1 = 320/2+(Math.round(waw.rand()*8-4));
-                waw.putRoomObstacle(new cc.p(x1,114+y+offsetY), new cc.Size(32,16), new cc.p(x1,114+y+hitboxOffsetY));
+                waw.putRoomObstacle(new cc.Point(x1,114+y+offsetY), new cc.Size(32,16), new cc.Point(x1,114+y+hitboxOffsetY));
                 if(y!=0)
-                    waw.putRoomObstacle(new cc.p(x1,114-y+offsetY), new cc.Size(32,16), new cc.p(x1,114-y+hitboxOffsetY));
+                    waw.putRoomObstacle(new cc.Point(x1,114-y+offsetY), new cc.Size(32,16), new cc.Point(x1,114-y+hitboxOffsetY));
             }
             break;
     }
-
 };
 
-//initially generate mobs into the room
-waw.generateMobs = function(){
+//initially generate mobs in the room
+waw.generateMobs = function(roomType){
     var mobs = [];
-    var n = Math.round(Math.random()*2);    //max mobs in the room
-    var m = null;
-
-    var pickMobType = ["PigWalker", "PigBouncer", "Trader"];
-
+    var n = Math.round(Math.random()*5);    //max mobs in the room
+    var mob = null;
+    var pickMobType = ["PigWalker", "PigBouncer", "Merchant"];
+    var mobCoord = waw.GetRoomSpawnCoords(roomType);
+    var cr;
+    if(n>mobCoord.length)
+        n = mobCoord.length;
     for(var i=0; i<n; ++i){
-        m = {x:160, y:110, mobType:"unknown", mob:null};
-        //m.mobType = Math.random()*100; //TODO replace temp mob TYPE with real
-        m.mobType = pickMobType[ Math.round(Math.random()*2)]; //TODO replace temp mob TYPE with real
-        m.x = Math.round(50 + Math.random() * 220);
-        m.y = Math.round(50 + Math.random() * 130);
-        mobs.push(m);
+        mob = {x:160, y:110, mobType:"unknown"};
+        mob.mobType = pickMobType[Math.round(Math.random()*(pickMobType.length-1))]; //TODO replace temp mob TYPE according to the room type etc
+        cr =  Math.round(Math.random()*(mobCoord.length-1));
+        mob.x = mobCoord[cr].x;
+        mob.y = mobCoord[cr].y;
+        mobCoord.splice(cr,1);
+        mobs.push(mob);
     }
     return mobs;
 };
@@ -770,28 +772,18 @@ waw.generateItems = function(roomType){
     var items = [];
     var n = Math.round(Math.random()*5);    //TODO max items in the room
     var item = null;
-
     var pickItemType = ["key", "coin", "gem", "unknown"];
-    var itemCoord = waw.GetRoomItemsSpawnCoords(roomType);
+    var itemCoord = waw.GetRoomSpawnCoords(roomType);
     var cr;
-    //debugger;
     if(n>itemCoord.length)
         n = itemCoord.length;
     for(var i=0; i<n; ++i){
         item = {x:160, y:110, itemType:"unknown"};
-        item.itemType = pickItemType[ Math.round(Math.random()*(pickItemType.length-1))]; //TODO replace temp item TYPE with real
-
-        cr =  Math.round(Math.random()*(itemCoord.length-1)); //pic
-        //console.log(n, cr, itemCoord[cr].x, itemCoord.length);
+        item.itemType = pickItemType[Math.round(Math.random()*(pickItemType.length-1))]; //TODO replace temp item TYPE with real
+        cr =  Math.round(Math.random()*(itemCoord.length-1));
         item.x = itemCoord[cr].x;
         item.y = itemCoord[cr].y;
-        //debugger;
-
-        //itemCoord =
-            itemCoord.splice(cr,1);
-        //debugger;
-        //item.x = Math.round(50 + Math.random() * 220);
-        //item.y = Math.round(50 + Math.random() * 130);
+        itemCoord.splice(cr,1);
         items.push(item);
     }
     return items;
@@ -799,9 +791,7 @@ waw.generateItems = function(roomType){
 
 //adds grid sprite to show hit Box
 waw.AddHitBoxSprite = function (unit, layer, tag_) {
-    //if(!showDebugInfo) return;
     var tag = tag_ | 0;
-    //var contentSize = unit.getContentSize();
     if(unit.width < 100 && unit.height < 100)
         unit.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
     else
@@ -811,9 +801,6 @@ waw.AddHitBoxSprite = function (unit, layer, tag_) {
     unit.debugCross.y = unit.y;
     layer.addChild(unit.debugCross, 300, tag);
     unit.debugCross.setVisible(showDebugInfo);
-
-    //console.info("U ",unit.x, unit.y, unit.width, unit.height);
-//    sprite.runAction(cc.FadeOut.create(10)); //remove marks
 };
 
 //adds Pillars obstacles of a room onto existing layer
@@ -823,17 +810,11 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
 
     //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
     var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
-    //coords in the room
-    //pos.y += 20;
-    //pos.y -= 0;
     sprite.setPosition(pos);
-    //if(!isAnchoredToBottom)
     sprite.setAnchorPoint(0.5, 0);
     sprite.skewX = -3 + Math.round(6*Math.random());
-    //layer.addChild(sprite, 20+ 250 - pos.y);
     layer.addChild(sprite, 250 - pos.y);
     var wall = new waw.Unit();
-    //hitboxPos.y += 8;   //4
     wall.setAnchorPoint(0.5, 0);
     wall.sprite = sprite; //just a ref to put ACTIONS on the pillar spr
     wall.setContentSize(hitbox); //collision box

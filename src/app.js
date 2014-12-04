@@ -190,13 +190,19 @@ waw.MainLayer = cc.Layer.extend({
         for(var n=0; n<currentRoom.mobs.length; n++){
             m = currentRoom.mobs[n];
             //TODO choose m.mobType
-            //e = new waw.Enemy();
-            if(m.mobType === "PigWalker"){
-                e = new waw.MobPigWalker();
-            } else {
-                e = new waw.MobPigBouncer();
+            switch(m.mobType){
+                case "PigWalker":
+                    e = new waw.MobPigWalker();
+                    break;
+                case "PigBouncer":
+                    e = new waw.MobPigBouncer();
+                    break;
+                case "Merchant":
+                    e = new waw.MobMerchant();
+                    break;
+                default:
+                    throw "Wrong mob type";
             }
-
             pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
             e.setPosition(pos);
             m.mob = e; //to get some params of the mob later, when u exit the room
