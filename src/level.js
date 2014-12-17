@@ -615,18 +615,34 @@ waw.openDoor = function (doorTag, layer) {
                 case TAG_UP_DOOR:
                     node.setTextureRect(cc.rect(0, 0, 80, 80));
                     node.setTag(0);
+                    node.runAction(new cc.Sequence( //animate opened door
+                        new cc.ScaleTo(0.1, 1.2, 1),
+                        new cc.ScaleTo(0.1, 1)
+                    ));
                     break;
                 case TAG_RIGHT_DOOR:
                     node.setTextureRect(cc.rect(80 * 2, 0, 80, 80));
                     node.setTag(0);
+                    node.runAction(new cc.Sequence(
+                        new cc.ScaleTo(0.1, 1, 1.2),
+                        new cc.ScaleTo(0.1, 1)
+                    ));
                     break;
                 case TAG_DOWN_DOOR:
                     node.setTextureRect(cc.rect(80 * 3, 0, 80, 80));
                     node.setTag(0);
+                    node.runAction(new cc.Sequence(
+                        new cc.ScaleTo(0.1, 1.2, 1),
+                        new cc.ScaleTo(0.1, 1)
+                    ));
                     break;
                 case TAG_LEFT_DOOR:
                     node.setTextureRect(cc.rect(80 * 1, 0, 80, 80));
                     node.setTag(0);
+                    node.runAction(new cc.Sequence(
+                        new cc.ScaleTo(0.1, 1, 1.2),
+                        new cc.ScaleTo(0.1, 1)
+                    ));
                     break;
             }
         }
