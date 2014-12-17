@@ -152,33 +152,23 @@ waw.MainLayer = cc.Layer.extend({
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-waw.player.y);
 
-        //this.addChild(waw.whip,251-waw.player.y);
         waw.player.addChild(waw.whip,10);
         waw.whip.setPosition(0,16);
         waw.whip.init();
 
-        //waw.player.setScale(0.8);
-        //waw.player.runAction(new cc.ScaleTo(0.25, 1));
-        //waw.player.runAction(new cc.Blink(0.5, 3)); //Blink Player sprite
-        //waw.player.setPosition(waw.player.getPosition());   //to update players sprite facing direction
-
         //put items on the layer
         this.items = [];
-        for(var n=0; n<currentRoom.items.length; n++){
+        for(var n=0; n<currentRoom.items.length; n++) {
             i = currentRoom.items[n];
-            if(i === null)
-                continue;   //skip just deleted item (we replace deleted items with null)
+            if (i === null) {
+                this.items.push(null);
+                continue;   //replace deleted items with null to keep the order
+            }
             //TODO choose i.itemType
-            //console.log(i.itemType, i.x, i.y);
-            //if(i.itemType != "unknown")
             var item = new waw.Item(i.itemType);
             item.setPosition(i.x, i.y);
-            //m.mob = e; //to get some params of the mob later, when u exit the room
-            //e.setZOrder(250 - pos.y);
-            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(item,250-i.y);
             this.addChild(item.shadowSprite,-14);
-            //position shadow
             item.shadowSprite.setPosition(i.x, i.y-0);
             this.items.push(item);
         }
