@@ -1,5 +1,4 @@
 "use strict";
-
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
@@ -7,6 +6,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
     mobType: "PigBouncer",
     shadowYoffset: 4,
     spriteYoffset: -4,
+    HP: 3,
     state: "idle",
     
     ctor: function () {

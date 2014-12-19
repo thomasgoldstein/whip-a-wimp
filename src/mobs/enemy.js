@@ -14,7 +14,7 @@ waw.Enemy = waw.Unit.extend({
     shadowYoffset: 4,
     spriteYoffset: -4,
     safePos: null,  //TODO revise? why for
-//    HP: 3,
+    HP: 1,
 //    state: "idle",
     stateSchedule: null,
     conditions: [],

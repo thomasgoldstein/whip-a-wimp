@@ -1,5 +1,4 @@
 "use strict";
-
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
@@ -7,6 +6,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
     mobType: "Merchant",
     shadowYoffset: 0,
     spriteYoffset: 0,
+    HP: 2,
     state: "idle",
     
     ctor: function () {

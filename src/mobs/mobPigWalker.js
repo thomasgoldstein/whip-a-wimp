@@ -6,6 +6,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     mobType: "PigWalker",
     shadowYoffset: 4,
     spriteYoffset: -4,
+    HP: 2,
     state: "idle",
     ctor: function () {
         this._super();
