@@ -6,7 +6,8 @@ cc.game.onStart = function(){
 
     //load resources
     cc.LoaderScene.preload(g_resources, function () {
-        cc.director.runScene(new waw.MainScene());
+        cc.director.runScene(new waw.TitleScene());
+        //cc.director.runScene(new waw.MainScene());
     }, this);
 };
 cc.game.run();

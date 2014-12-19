@@ -3,7 +3,7 @@
     "showFPS" : true,
     "frameRate" : 60,
     "id" : "gameCanvas",
-    "renderMode" : 0,
+    "renderMode" : 1,
     "engineDir":"frameworks/cocos2d-html5",
 
     "modules" : ["cocos2d"],
@@ -26,6 +26,8 @@
         "src/mobs/mobMerchant.js",
         "src/mobs/mobPigWalker.js",
         "src/mobs/mobPigBouncer.js",
+        "src/scenes/commonScenes.js",
+        "src/scenes/gameOver.js",
         "src/app.js"
         ]
 

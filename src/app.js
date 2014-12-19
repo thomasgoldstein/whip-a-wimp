@@ -51,7 +51,6 @@ waw.MainScene = cc.Scene.extend({
     }
 });
 
-
 //this layer exists on every Room
 //it contains all keyboard stuff
 waw.MainLayer = cc.Layer.extend({
@@ -92,47 +91,6 @@ waw.MainLayer = cc.Layer.extend({
         this.topLabel.setAnchorPoint(0,1);
         this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
         this.topLabel .setPosition(16, 240-1);
-
-
-        /*        if (cc.sys.capabilities.hasOwnProperty('touches')){
-        //            this.setTouchEnabled(true);
-
-                    //Controls buttons
-                    var circle = new cc.Sprite(s_TouchControls,
-                        cc.rect(0, 0, 48, 48));
-                    var buttons = new cc.Sprite(s_TouchControls,
-                        cc.rect(48, 0, 48, 48));
-                    circle.setPosition(24, 24);
-                    buttons.setPosition(320 - 24, 24);
-                    this.addChild(circle, 400);
-                    this.addChild(buttons, 400);
-                    circle.runAction(cc.FadeIn(1, 2));
-                    buttons.runAction(cc.FadeIn(1, 2));
-                }*/
-/*        if (cc.sys.capabilities.hasOwnProperty('keyboard'))
-            cc.eventManager.addListener({
-                event: cc.EventListener.KEYBOARD,
-                onKeyPressed:function (key, event) {
-                    waw.KEYS[key] = true;
-                    switch (key){   //clean opposite arrows pressed status
-                        case cc.KEY.up:
-                            waw.KEYS[cc.KEY.down] = false;
-                            break;
-                        case cc.KEY.down:
-                            waw.KEYS[cc.KEY.up] = false;
-                            break;
-                        case cc.KEY.left:
-                            waw.KEYS[cc.KEY.right] = false;
-                            break;
-                        case cc.KEY.right:
-                            waw.KEYS[cc.KEY.left] = false;
-                            break;
-                    }
-                },
-                onKeyReleased:function (key, event) {
-                    waw.KEYS[key] = false;
-                }
-            }, this);*/
 
         this.scheduleUpdate();
         //Debug menu
