@@ -44,8 +44,18 @@ var TAG_PILLAR = 110+0;
 
 var TAG_WHIP = 120+0;
 
-var TAG_ENEMY= 200+0;
-var TAG_BOSS= 200+1;
+var TAG_UP_DOOR = 200+0;
+var TAG_RIGHT_DOOR = 200+1;
+var TAG_DOWN_DOOR = 200+2;
+var TAG_LEFT_DOOR = 200+3;
+var TAG_UP_DOORD = 200+4;
+var TAG_RIGHT_DOORD = 200+5;
+var TAG_DOWN_DOORD = 200+6;
+var TAG_LEFT_DOORD = 200+7;
+
+var TAG_ENEMY= 300+0;
+var TAG_BOSS= 300+1;
+
 
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();
