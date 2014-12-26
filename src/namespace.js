@@ -44,5 +44,8 @@ var TAG_PILLAR = 110+0;
 
 var TAG_WHIP = 120+0;
 
+var TAG_ENEMY= 200+0;
+var TAG_BOSS= 200+1;
+
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();

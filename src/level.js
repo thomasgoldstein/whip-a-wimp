@@ -577,39 +577,44 @@ waw.prepareRoomLayer = function(room) {
 
 waw.openDoor = function (doorTag, layer) {
     for (var i = 0; i < waw.units.length; i++) {
+        if(!waw.units[i])
+            continue;
         if (waw.units[i].getTag() === doorTag) {
             //make 'empty' passages for next room gen calls
             switch (doorTag) {
                 case TAG_UP_DOORD:
-                    waw.units.splice(i, 1);
-                    i--;
+                    //waw.units.splice(i, 1);
+                    //i--;
                     rooms[currentRoomY][currentRoomX].walls.up =
                     rooms[currentRoomY - 1][currentRoomX].walls.down = "empty";
                     break;
                 case TAG_RIGHT_DOORD:
-                    waw.units.splice(i, 1);
-                    i--;
+                    //waw.units.splice(i, 1);
+                    //i--;
                     rooms[currentRoomY][currentRoomX].walls.right =
                     rooms[currentRoomY][currentRoomX + 1].walls.left = "empty";
                     break;
                 case TAG_DOWN_DOORD:
-                    waw.units.splice(i, 1);
-                    i--;
+                    //waw.units.splice(i, 1);
+                    //i--;
                     rooms[currentRoomY][currentRoomX].walls.down =
                     rooms[currentRoomY + 1][currentRoomX].walls.up = "empty";
                     break;
                 case TAG_LEFT_DOORD:
-                    waw.units.splice(i, 1);
-                    i--;
+                    //waw.units.splice(i, 1);
+                    //i--;
                     rooms[currentRoomY][currentRoomX].walls.left =
                     rooms[currentRoomY][currentRoomX - 1].walls.right = "empty";
                     break;
             }
+            waw.units[i] = null;
         }
     }
     var allSprites = layer.getChildren();
     for (var i = 0; i < allSprites.length; i++) {
         var node = allSprites[i];
+        if(!node)
+            continue;
         if (node.getTag() === doorTag-4) {
             switch (doorTag-4) {
                 case TAG_UP_DOOR:
@@ -652,19 +657,19 @@ waw.openDoor = function (doorTag, layer) {
             switch (doorTag) {
                 case TAG_UP_DOORD:
                     layer.removeChild(node);
-                    i--;
+                    //i--;
                     break;
                 case TAG_RIGHT_DOORD:
                     layer.removeChild(node);
-                    i--;
+                    //i--;
                     break;
                 case TAG_DOWN_DOORD:
                     layer.removeChild(node);
-                    i--;
+                    //i--;
                     break;
                 case TAG_LEFT_DOORD:
                     layer.removeChild(node);
-                    i--;
+                    //i--;
                     break;
             }
         }
@@ -674,7 +679,7 @@ waw.openDoor = function (doorTag, layer) {
 //adds obstacles of a room onto existing layer
 waw.prepareRoomPattern = function(room) {
     if(!room) throw "unknown room";
-    var units = waw.units;
+    //var units = waw.units;
     var layer = waw.layer;
 
     //some random debris to PSEUDO random per a room

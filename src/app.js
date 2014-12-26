@@ -166,6 +166,14 @@ waw.MainLayer = cc.Layer.extend({
             this.foes.push(e);
         }
         waw.foes = this.foes;
+
+        //TODO - wrap with func add FOES as units for collision
+        for(var n=0; n<waw.foes.length; n++){
+            m = waw.foes[n];
+            m.getTag = function(){ return TAG_ENEMY};
+            waw.units[200+n] = m;
+        }
+
     },
     onEnterTransitionDidFinish: function () {
         this._super();

@@ -242,22 +242,24 @@ waw.Player = waw.Unit.extend({
         var curCollideRect = this.collideRect(curPos);
         var nextCollideRect = this.collideRect(nextPos);
         waw.units.forEach(function (unit) {
-            var unitRect = unit.collideRect();
-            var rect = cc.rectIntersection(nextCollideRect, unitRect);
-            //TODO check this condition && why not || ?
-            if (rect.width > 0 && rect.height > 0) // Collision!
-            {
+            if(unit) {
+                var unitRect = unit.collideRect();
+                var rect = cc.rectIntersection(nextCollideRect, unitRect);
+                //TODO check this condition && why not || ?
+                if (rect.width > 0 && rect.height > 0) // Collision!
+                {
 //                var oldPos = waw.player.getPosition();
-                var oldRect = cc.rectIntersection(curCollideRect , unitRect);
+                    var oldRect = cc.rectIntersection(curCollideRect, unitRect);
 
-                if (oldRect.height > 0) {
-                    // Block the player horizontally
-                    nextPos.x = curPos.x;
-                }
+                    if (oldRect.height > 0) {
+                        // Block the player horizontally
+                        nextPos.x = curPos.x;
+                    }
 
-                if (oldRect.width > 0) {
-                    // Block the player vertically
-                    nextPos.y = curPos.y;
+                    if (oldRect.width > 0) {
+                        // Block the player vertically
+                        nextPos.y = curPos.y;
+                    }
                 }
             }
         });
@@ -371,6 +373,8 @@ waw.Player = waw.Unit.extend({
 
         for (var i = 0; i < waw.units.length; i++) {
             var unit = waw.units[i];
+            if(!unit)
+                continue;
             //console.log(unit.getTag());
             var unitRect = unit.collideRect();
             if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
