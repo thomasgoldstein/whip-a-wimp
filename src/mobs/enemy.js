@@ -223,9 +223,6 @@ waw.Enemy = waw.Unit.extend({
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
-        //this.calcDirection(this.targetX - x,this.targetY - y);
-        //this.sprite.playAnimation(this.state+"_"+this.direction);
-
         //try to move unit
         if (this.targetX < x)
             x -= speed;
@@ -233,13 +230,15 @@ waw.Enemy = waw.Unit.extend({
             x += speed;
         var nextCollideRect = {x: x, y: y, width: this.width, height: this.height};
         waw.units.forEach(function (unit) {
-            var unitRect = unit.collideRect();
-            var rect = cc.rectIntersection(nextCollideRect, unitRect);
-            //TODO check this condition && why not || ?
-            if (rect.width > 0 && rect.height > 0) // Collision!
-            {
-                if (rect.height > 0) {
-                    nextCollideRect.x = oldPos.x;
+            if(unit && unit != this) {
+                var unitRect = unit.collideRect();
+                var rect = cc.rectIntersection(nextCollideRect, unitRect);
+                //TODO check this condition && why not || ?
+                if (rect.width > 0 && rect.height > 0) // Collision!
+                {
+                    if (rect.height > 0) {
+                        nextCollideRect.x = oldPos.x;
+                    }
                 }
             }
         });
@@ -250,13 +249,15 @@ waw.Enemy = waw.Unit.extend({
             y += speed;
         nextCollideRect.y = y;
         waw.units.forEach(function (unit) {
-            var unitRect = unit.collideRect();
-            var rect = cc.rectIntersection(nextCollideRect, unitRect);
-            //TODO check this condition && why not || ?
-            if (rect.width > 0 && rect.height > 0) // Collision!
-            {
-                if (rect.width > 0) {
-                    nextCollideRect.y = oldPos.y;
+            if(unit && unit != this) {
+                var unitRect = unit.collideRect();
+                var rect = cc.rectIntersection(nextCollideRect, unitRect);
+                //TODO check this condition && why not || ?
+                if (rect.width > 0 && rect.height > 0) // Collision!
+                {
+                    if (rect.width > 0) {
+                        nextCollideRect.y = oldPos.y;
+                    }
                 }
             }
         });
