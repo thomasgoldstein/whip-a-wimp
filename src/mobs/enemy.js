@@ -24,6 +24,7 @@ waw.Enemy = waw.Unit.extend({
         //console.info("Enemy ctor");
 
         this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
+        this.SCHEDULE_ATTACK = new waw.Schedule([this.initAttack, this.onAttack], []);
         this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
@@ -106,6 +107,11 @@ waw.Enemy = waw.Unit.extend({
                     this.stateSchedule = this.SCHEDULE_WALK;
                 }
                 break;
+            case "attack":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                console.log("mob attacks player end");
+                break;
             case "walk":
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
@@ -137,6 +143,12 @@ waw.Enemy = waw.Unit.extend({
                 }
                 break;
             case "follow":
+                if(this.conditions.indexOf("canAttack")>=0) {
+                    this.state = "attack";
+                    this.stateSchedule = this.SCHEDULE_ATTACK;
+                    this.stateSchedule.reset();
+                    break;
+                }
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
@@ -154,6 +166,12 @@ waw.Enemy = waw.Unit.extend({
     update: function () {
         var currentTime = new Date();
         this.conditions = this.getConditions();
+
+        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
+            this.state = "attack";
+            this.stateSchedule = this.SCHEDULE_ATTACK;
+            this.stateSchedule.reset();
+        }
 
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();
@@ -189,6 +207,36 @@ waw.Enemy = waw.Unit.extend({
         return true;
     },
     onIdle: function () {
+        var currentTime = new Date();
+        this.dx = this.dy = 0;
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
+    initAttack: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 1000 + Math.random() * 50;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        if (this.safePos.y != 0) {
+            x = this.safePos.x;
+            y = this.safePos.y;
+        } else {
+            var pos = this.getPosition();
+            x = pos.x;
+            y = pos.y;
+        }
+        this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
+        this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
+        return true;
+    },
+    onAttack: function () {
         var currentTime = new Date();
         this.dx = this.dy = 0;
         if (currentTime.getTime() > this.timeToThink) {
