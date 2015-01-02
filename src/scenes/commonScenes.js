@@ -13,6 +13,8 @@ waw.TitleScene = cc.Scene.extend({
 
         this.scheduleOnce(function(){
             var transition = cc.TransitionProgressRadialCW;
+            var transition = cc.TransitionRotoZoom;
+            var transition = cc.TransitionShrinkGrow;
             cc.director.runScene(new transition(1, new waw.MainScene()));  //1st arg = in seconds duration of t
             //cc.director.runScene(new waw.MainScene());
         }, 1);

@@ -12,7 +12,8 @@ waw.GameOverScene = cc.Scene.extend({
         this.addChild(layer);
 
         this.scheduleOnce(function(){
-            cc.director.runScene(new waw.MainScene());
+            cc.director.runScene(new transition(1, new waw.MainScene()));  //1st arg = in seconds duration of t
+            //cc.director.runScene(new waw.MainScene());
         }, 3);
     }
 });
