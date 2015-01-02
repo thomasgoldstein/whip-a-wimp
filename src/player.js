@@ -242,7 +242,7 @@ waw.Player = waw.Unit.extend({
         var curCollideRect = this.collideRect(curPos);
         var nextCollideRect = this.collideRect(nextPos);
         waw.units.forEach(function (unit) {
-            if(unit) {
+            if(unit && unit.getTag() < TAG_ENEMY) {
                 var unitRect = unit.collideRect();
                 var rect = cc.rectIntersection(nextCollideRect, unitRect);
                 //TODO check this condition && why not || ?
