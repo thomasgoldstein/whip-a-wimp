@@ -19,6 +19,11 @@ waw.MobRandomBouncer = waw.Enemy.extend({
                         this.stateSchedule = this.SCHEDULE_BOUNCE;
                     }
                     break;
+                case "attack":
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                    console.log("mob attacks player end");
+                    break;
                 case "bounce":
                     if (Math.random() < 0.3) {
                         this.state = "idle";

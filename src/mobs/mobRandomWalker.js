@@ -19,6 +19,11 @@ waw.MobRandomWalker = waw.Enemy.extend({
                         this.stateSchedule = this.SCHEDULE_WALK;
                     }
                     break;
+                case "attack":
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                    console.log("mob attacks player end");
+                    break;
                 case "walk":
                     if (Math.random() < 0.3) {
                         this.state = "idle";
