@@ -108,6 +108,44 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                     ],
                 delay: 0.5,
                 flippedX: true
+            },
+            "attack_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48)
+                    ],
+                delay: 0.1
+            },
+            "attack_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1, 48, 48),
+                        cc.rect(1+49*2, 1, 48, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
+            },
+            "attack_up_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48)
+                    ],
+                delay: 0.1
+            },
+            "attack_up_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+49*0, 1+49*1, 48, 48),
+                        cc.rect(1+49*2, 1+49*1, 48, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
             }
         };
         animData["follow_up_left"] = animData["walk_up_left"];
@@ -135,6 +173,16 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     update: function () {
         var currentTime = new Date();
         this.conditions = this.getConditions();
+
+        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
+            console.log("mob attacks player0");
+            this.state = "attack";
+            this.stateSchedule = this.SCHEDULE_ATTACK;
+            this.stateSchedule.reset();
+
+            waw.player.onDeath();
+        }
+
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();
         }

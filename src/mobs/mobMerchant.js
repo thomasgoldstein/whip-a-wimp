@@ -66,6 +66,52 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                 delay: 0.3,
                 flippedX: true
             },
+            "attack_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(0+33*0, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48),
+                        cc.rect(0+33*2, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48)
+                    ],
+                delay: 0.1
+            },
+            "attack_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(0+33*0, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48),
+                        cc.rect(0+33*2, 0, 32, 48),
+                        cc.rect(0+33*1, 0, 32, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
+            },
+            "attack_up_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(0+33*0, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48),
+                        cc.rect(0+33*2, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                    ],
+                delay: 0.1
+            },
+            "attack_up_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(0+33*0, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48),
+                        cc.rect(0+33*2, 0+49*1, 32, 48),
+                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
+            },
             "rolling_down":
             {
                 frameRects:
@@ -118,6 +164,15 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
         var currentTime = new Date();
 
         this.conditions = this.getConditions();
+
+        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
+            console.log("mob attacks player0");
+            this.state = "attack";
+            this.stateSchedule = this.SCHEDULE_ATTACK;
+            this.stateSchedule.reset();
+
+            waw.player.onDeath();
+        }
 
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();

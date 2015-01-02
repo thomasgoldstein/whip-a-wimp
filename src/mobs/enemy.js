@@ -24,6 +24,7 @@ waw.Enemy = waw.Unit.extend({
         //console.info("Enemy ctor");
 
         this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
+        this.SCHEDULE_ATTACK = new waw.Schedule([this.initAttack, this.onAttack], []);
         this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
@@ -106,8 +107,14 @@ waw.Enemy = waw.Unit.extend({
                     this.stateSchedule = this.SCHEDULE_WALK;
                 }
                 break;
+            case "attack":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                console.log("mob attacks player end");
+                break;
             case "walk":
                 if(this.conditions.indexOf("seeEnemy")>=0) {
+                    //console.log("seeEnem - follow");
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
                     this.stateSchedule.reset();
@@ -137,6 +144,12 @@ waw.Enemy = waw.Unit.extend({
                 }
                 break;
             case "follow":
+                if(this.conditions.indexOf("canAttack")>=0) {
+                    this.state = "attack";
+                    this.stateSchedule = this.SCHEDULE_ATTACK;
+                    this.stateSchedule.reset();
+                    break;
+                }
                 if(this.conditions.indexOf("seeEnemy")>=0) {
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
@@ -154,6 +167,12 @@ waw.Enemy = waw.Unit.extend({
     update: function () {
         var currentTime = new Date();
         this.conditions = this.getConditions();
+
+        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
+            this.state = "attack";
+            this.stateSchedule = this.SCHEDULE_ATTACK;
+            this.stateSchedule.reset();
+        }
 
         if (this.stateSchedule.isDone()) {
             this.pickAISchedule();
@@ -196,6 +215,36 @@ waw.Enemy = waw.Unit.extend({
         }
         return false;
     },
+    initAttack: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 1000 + Math.random() * 50;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        if (this.safePos.y != 0) {
+            x = this.safePos.x;
+            y = this.safePos.y;
+        } else {
+            var pos = this.getPosition();
+            x = pos.x;
+            y = pos.y;
+        }
+        this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
+        this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        this.sprite.playAnimation(this.state+"_"+this.direction);
+        return true;
+    },
+    onAttack: function () {
+        var currentTime = new Date();
+        this.dx = this.dy = 0;
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
     initWalk: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;
@@ -228,41 +277,25 @@ waw.Enemy = waw.Unit.extend({
             x -= speed;
         else if (this.targetX > x)
             x += speed;
-        var nextCollideRect = {x: x, y: y, width: this.width, height: this.height};
-        waw.units.forEach(function (unit) {
-            if(unit && unit != this) {
-                var unitRect = unit.collideRect();
-                var rect = cc.rectIntersection(nextCollideRect, unitRect);
-                //TODO check this condition && why not || ?
-                if (rect.width > 0 && rect.height > 0) // Collision!
-                {
-                    if (rect.height > 0) {
-                        nextCollideRect.x = oldPos.x;
-                    }
-                }
-            }
-        });
-
+        this.x = x;
+        if(x<50 || x>270 || this.doesCollide(waw.units)) {
+            x = this.x = oldPos.x;
+            y = this.y = oldPos.y;
+            this.conditions.push("feelObstacle");
+        }
         if (this.targetY < y)
             y -= speed;
         else if (this.targetY > y)
             y += speed;
-        nextCollideRect.y = y;
-        waw.units.forEach(function (unit) {
-            if(unit && unit != this) {
-                var unitRect = unit.collideRect();
-                var rect = cc.rectIntersection(nextCollideRect, unitRect);
-                //TODO check this condition && why not || ?
-                if (rect.width > 0 && rect.height > 0) // Collision!
-                {
-                    if (rect.width > 0) {
-                        nextCollideRect.y = oldPos.y;
-                    }
-                }
-            }
-        });
-//
-        this.setPosition(nextCollideRect.x, nextCollideRect.y);
+        this.y = y;
+        if(y<40 || y>180 || this.doesCollide(waw.units)) {
+            y = this.y = oldPos.y;
+            x = this.x = oldPos.x;
+            this.conditions.push("feelObstacle");
+        }
+        //TODO add move around obstacles
+
+        this.setPosition(x, y);
         this.setZOrder(250 - this.y);
         //position shadow
         this.shadowSprite.setPosition(this.x, this.y + this.shadowYoffset);

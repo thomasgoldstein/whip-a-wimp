@@ -49,6 +49,8 @@ waw.MenuDebug = function (layer) {
                 waw.foes[i].debugCross.setVisible(showDebugInfo);
             }
             for (var i in waw.units) {
+                if (!waw.units[i])
+                    continue;
                 waw.units[i].debugCross.setVisible(showDebugInfo);
             }
             for (var i in waw.items) {
