@@ -114,6 +114,7 @@ waw.Enemy = waw.Unit.extend({
                 break;
             case "walk":
                 if(this.conditions.indexOf("seeEnemy")>=0) {
+                    //console.log("seeEnem - follow");
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
                     this.stateSchedule.reset();
@@ -276,41 +277,25 @@ waw.Enemy = waw.Unit.extend({
             x -= speed;
         else if (this.targetX > x)
             x += speed;
-        var nextCollideRect = {x: x, y: y, width: this.width, height: this.height};
-        waw.units.forEach(function (unit) {
-            if(unit && unit != this) {
-                var unitRect = unit.collideRect();
-                var rect = cc.rectIntersection(nextCollideRect, unitRect);
-                //TODO check this condition && why not || ?
-                if (rect.width > 0 && rect.height > 0) // Collision!
-                {
-                    if (rect.height > 0) {
-                        nextCollideRect.x = oldPos.x;
-                    }
-                }
-            }
-        });
-
+        this.x = x;
+        if(x<50 || x>270 || this.doesCollide(waw.units)) {
+            x = this.x = oldPos.x;
+            y = this.y = oldPos.y;
+            this.conditions.push("feelObstacle");
+        }
         if (this.targetY < y)
             y -= speed;
         else if (this.targetY > y)
             y += speed;
-        nextCollideRect.y = y;
-        waw.units.forEach(function (unit) {
-            if(unit && unit != this) {
-                var unitRect = unit.collideRect();
-                var rect = cc.rectIntersection(nextCollideRect, unitRect);
-                //TODO check this condition && why not || ?
-                if (rect.width > 0 && rect.height > 0) // Collision!
-                {
-                    if (rect.width > 0) {
-                        nextCollideRect.y = oldPos.y;
-                    }
-                }
-            }
-        });
-//
-        this.setPosition(nextCollideRect.x, nextCollideRect.y);
+        this.y = y;
+        if(y<40 || y>180 || this.doesCollide(waw.units)) {
+            y = this.y = oldPos.y;
+            x = this.x = oldPos.x;
+            this.conditions.push("feelObstacle");
+        }
+        //TODO add move around obstacles
+
+        this.setPosition(x, y);
         this.setZOrder(250 - this.y);
         //position shadow
         this.shadowSprite.setPosition(this.x, this.y + this.shadowYoffset);
