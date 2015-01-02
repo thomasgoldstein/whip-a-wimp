@@ -5,6 +5,7 @@ waw.Unit = cc.Node.extend({
     debugCross: null,
     direction: "down",
     state: "idle",
+    subState: "",
     ctor: function() {
         this._super();
         if(this.width <= 0 )    //default size for a unit

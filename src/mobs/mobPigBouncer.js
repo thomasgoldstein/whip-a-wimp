@@ -183,6 +183,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             this.state = "attack";
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
+
+            waw.player.onDeath();
         }
 
         if (this.stateSchedule.isDone()) {

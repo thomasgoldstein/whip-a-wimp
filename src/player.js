@@ -331,6 +331,18 @@ waw.Player = waw.Unit.extend({
         }
         return state;
     },
+    onDeath: function () {
+        if (this.subState === "dead")
+            return;
+
+        this.subState = "dead";
+
+        this.unscheduleAllCallbacks();
+        this.scheduleOnce(function () {
+            var transition = cc.TransitionRotoZoom;
+            cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
+        }, 1);
+    },
     shakePillar: function (unit) {
         //TODO move it to another file
         //console.log("shake pillar");

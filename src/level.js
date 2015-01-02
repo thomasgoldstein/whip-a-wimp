@@ -36,6 +36,10 @@ function Room(_name,_x,_y) {
 }
 
 rooms.initLevel = function() {
+    currentRoom = null;
+    currentRoomX = currentRoomY = 4; //The start room is 4,4 by default
+    startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+
 	//init level 9x9
 	for(var y = 0; y < 9 ; y++) {
 		rooms[y] = {};
