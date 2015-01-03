@@ -13,7 +13,7 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 48, 32, 48)
+                    cc.rect(0*34+1, 1*50+1, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -21,7 +21,7 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 0, 32, 48)
+                    cc.rect(0*34+1, 0*50+1, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -29,7 +29,7 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 96, 32, 48)
+                    cc.rect(0*34+1, 2*50+1, 32, 48)
                 ],
                 delay: 0.1,
                 flippedX: true
@@ -38,7 +38,7 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 96, 32, 48)
+                    cc.rect(0*34+1, 2*50+1, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -46,10 +46,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(32, 48, 32, 48),
-                    cc.rect(64, 48, 32, 48),
-                    cc.rect(32, 48, 32, 48),
-                    cc.rect(0, 48, 32, 48)
+                    cc.rect(1*34+1, 1*50+1, 32, 48),
+                    cc.rect(2*34+1, 1*50+1, 32, 48),
+                    cc.rect(1*34+1, 1*50+1, 32, 48),
+                    cc.rect(0*34+1, 1*50+1, 32, 48)
                 ],
                 delay: 0.1,
                 mirrorX: true
@@ -58,10 +58,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(32, 0, 32, 48),
-                    cc.rect(64, 0, 32, 48),
-                    cc.rect(32, 0, 32, 48),
-                    cc.rect(0, 0, 32, 48)
+                    cc.rect(1*34+1, 0*50+1, 32, 48),
+                    cc.rect(2*34+1, 0*50+1, 32, 48),
+                    cc.rect(1*34+1, 0*50+1, 32, 48),
+                    cc.rect(0*34+1, 0*50+1, 32, 48)
                 ],
                 delay: 0.1,
                 mirrorX: true
@@ -70,14 +70,14 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(0, 144, 32, 48),
-                    cc.rect(32, 144, 32, 48),
-                    cc.rect(0, 144, 32, 48),
-                    cc.rect(0, 96, 32, 48),
-                    cc.rect(32, 96, 32, 48),
-                    cc.rect(64, 96, 32, 48),
-                    cc.rect(32, 96, 32, 48),
-                    cc.rect(0, 96, 32, 48)
+                    cc.rect(0*34+1, 3*50+1, 32, 48),
+                    cc.rect(1*34+1, 3*50+1, 32, 48),
+                    cc.rect(0*34+1, 3*50+1, 32, 48),
+                    cc.rect(0*34+1, 2*50+1, 32, 48),
+                    cc.rect(1*34+1, 2*50+1, 32, 48),
+                    cc.rect(2*34+1, 2*50+1, 32, 48),
+                    cc.rect(1*34+1, 2*50+1, 32, 48),
+                    cc.rect(0*34+1, 2*50+1, 32, 48)
                 ],
                 delay: 0.1,
                 flippedX: true
@@ -86,14 +86,14 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(32, 96, 32, 48),
-                    cc.rect(64, 96, 32, 48),
-                    cc.rect(32, 96, 32, 48),
-                    cc.rect(0, 96, 32, 48),
-                    cc.rect(0, 144, 32, 48),
-                    cc.rect(32, 144, 32, 48),
-                    cc.rect(0, 144, 32, 48),
-                    cc.rect(0, 96, 32, 48)
+                    cc.rect(1*34+1, 2*50+1, 32, 48),
+                    cc.rect(2*34+1, 2*50+1, 32, 48),
+                    cc.rect(1*34+1, 2*50+1, 32, 48),
+                    cc.rect(0*34+1, 2*50+1, 32, 48),
+                    cc.rect(0*34+1, 3*50+1, 32, 48),
+                    cc.rect(1*34+1, 3*50+1, 32, 48),
+                    cc.rect(0*34+1, 3*50+1, 32, 48),
+                    cc.rect(0*34+1, 2*50+1, 32, 48)
                 ],
                 delay: 0.1
             },
@@ -101,10 +101,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0, 192, 32, 48),
-                        cc.rect(32, 192, 32, 48),
-                        cc.rect(32, 192, 32, 48),
-                        cc.rect(0, 48, 32, 48)
+                        cc.rect(0*34+1, 4*50+1, 32, 48),
+                        cc.rect(1*34+1, 4*50+1, 32, 48),
+                        cc.rect(1*34+1, 4*50+1, 32, 48),
+                        cc.rect(0*34+1, 1*50+1, 32, 48)
                     ],
                 delay: 0.1,
                 mirrorX: true
@@ -113,10 +113,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0, 288, 32, 48),
-                        cc.rect(32, 288, 32, 48),
-                        cc.rect(32, 288, 32, 48),
-                        cc.rect(0, 0, 32, 48)
+                        cc.rect(0*34+1, 6*50+1, 32, 48),
+                        cc.rect(1*34+1, 6*50+1, 32, 48),
+                        cc.rect(1*34+1, 6*50+1, 32, 48),
+                        cc.rect(0*34+1, 0*50+1, 32, 48)
                     ],
                 delay: 0.1,
                 mirrorX: true
@@ -125,10 +125,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0, 240, 32, 48),
-                        cc.rect(32, 240, 32, 48),
-                        cc.rect(32, 240, 32, 48),
-                        cc.rect(0, 96, 32, 48)
+                        cc.rect(0*34+1, 5*50+1, 32, 48),
+                        cc.rect(1*34+1, 5*50+1, 32, 48),
+                        cc.rect(1*34+1, 5*50+1, 32, 48),
+                        cc.rect(0*34+1, 2*50+1, 32, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
@@ -137,10 +137,10 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0, 240, 32, 48),
-                        cc.rect(32, 240, 32, 48),
-                        cc.rect(32, 240, 32, 48),
-                        cc.rect(0, 96, 32, 48)
+                        cc.rect(0*34+1, 5*50+1, 32, 48),
+                        cc.rect(1*34+1, 5*50+1, 32, 48),
+                        cc.rect(1*34+1, 5*50+1, 32, 48),
+                        cc.rect(0*34+1, 2*50+1, 32, 48)
                     ],
                 delay: 0.1
             }
