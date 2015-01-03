@@ -4,10 +4,13 @@ waw.MenuDebug = function (layer) {
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
-            switch (Math.round(Math.random() * 2)) {
+            switch (Math.round(Math.random() * 0)) {
                 //switch(0){
                 case 0:
                 default:
+                    var e = new waw.MobKiwi();
+                    break;
+                case 3:
                     var e = new waw.MobPigBouncer();
                     break;
                 case 1:
