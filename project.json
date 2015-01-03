@@ -3,16 +3,16 @@
     "showFPS" : true,
     "frameRate" : 60,
     "id" : "gameCanvas",
-    "renderMode" : 1,
+    "renderMode" : 2,
     "engineDir":"frameworks/cocos2d-html5",
 
     "modules" : ["cocos2d"],
 
     "jsList" : [
+        "src/resource.js",
         "src/namespace.js",
         "src/aiSchedule.js",
         "src/seedrandom.js",
-        "src/resource.js",
         "src/animatedSprite.js",
         "src/level.js",
         "src/unit.js",
@@ -24,6 +24,7 @@
         "src/mobs/mobRandomBouncer.js",
         "src/mobs/mobRandomWalker.js",
         "src/mobs/mobMerchant.js",
+        "src/mobs/mobKiwi.js",
         "src/mobs/mobPigWalker.js",
         "src/mobs/mobPigBouncer.js",
         "src/scenes/commonScenes.js",
