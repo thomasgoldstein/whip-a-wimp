@@ -81,10 +81,14 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
+                        cc.rect(0*50+1, 3*50+1, 48, 48),
+                        cc.rect(1*50+1, 3*50+1, 48, 48),
+                        cc.rect(0*50+1, 3*50+1, 48, 48),
                         cc.rect(0*50+1, 2*50+1, 48, 48),
                         cc.rect(1*50+1, 2*50+1, 48, 48),
-                        cc.rect(0*50+1, 2*50+1, 48, 48),
                         cc.rect(2*50+1, 2*50+1, 48, 48),
+                        cc.rect(1*50+1, 2*50+1, 48, 48),
+                        cc.rect(0*50+1, 2*50+1, 48, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
@@ -93,10 +97,14 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0*50+1, 2*50+1, 48, 48),
+                        cc.rect(1*50+1, 2*50+1, 48, 48),
+                        cc.rect(2*50+1, 2*50+1, 48, 48),
                         cc.rect(1*50+1, 2*50+1, 48, 48),
                         cc.rect(0*50+1, 2*50+1, 48, 48),
-                        cc.rect(2*50+1, 2*50+1, 48, 48),
+                        cc.rect(0*50+1, 3*50+1, 48, 48),
+                        cc.rect(1*50+1, 3*50+1, 48, 48),
+                        cc.rect(0*50+1, 3*50+1, 48, 48),
+                        cc.rect(0*50+1, 2*50+1, 48, 48)
                     ],
                 delay: 0.1
             }
@@ -125,7 +133,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
+        this.shadowSprite = new cc.Sprite(s_Shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     calcDirection: function (dx, dy) {
