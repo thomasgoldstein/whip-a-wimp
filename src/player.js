@@ -406,9 +406,11 @@ waw.Player = waw.Unit.extend({
         switch(this.subState){
             case "invincible":
                 console.log("REMOVE subact tim: ", this.subState);
-                this.stopActionByTag(TAG_SUBSTATE_ANIMATION);
-                this.visible = true;
+                //this.stopActionByTag(TAG_SUBSTATE_ANIMATION);
+                //this.visible = true;
                 this.setSubState("");
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
                 break;
             default:
                 this.setSubState("");
@@ -416,10 +418,14 @@ waw.Player = waw.Unit.extend({
     },
     becomeInvincible: function() {
         this.setSubState("invincible", 3000);
-        //cc.RepeatForever(a
-        var action = new cc.Blink(10,30);
-        action.setTag(TAG_SUBSTATE_ANIMATION);
-        this.runAction(action);
+        //var action = new cc.Blink(10,30);
+        //var action = new cc.FadeTo(0.1,  128);
+        //var action2 = new cc.FadeTo(0.1,  128);
+        //action.setTag(TAG_SUBSTATE_ANIMATION);
+        //this.sprite.runAction(action);
+        //this.shadowSprite.runAction(action2);
+        this.sprite.opacity = 180;
+        this.shadowSprite.opacity = 180;
     },
     onDeath: function () {
         if (this.subState === "invincible")
