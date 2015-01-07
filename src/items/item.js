@@ -112,7 +112,7 @@ waw.Item = waw.Unit.extend({
         //player uses item
     },
     onTouch: function () {
-        //player touchs item on the floor (do we need it?)
+        //player touches item on the floor (do we need it?)
     },
     onDestroy: function () {
         //what if the item has been destroyed by some forCe

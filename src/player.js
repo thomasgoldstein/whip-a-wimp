@@ -13,14 +13,14 @@ waw.Player = waw.Unit.extend({
             {
                 frameRects:
                 [
-                    cc.rect(2*34+1, 0*50+1, 32, 48),
+                    cc.rect(1*34+1, 6*50+1, 32, 48),
                     cc.rect(2*34+1, 2*50+1, 32, 48),
                     cc.rect(2*34+1, 1*50+1, 32, 48)
                 ],
                 delay: 0.1,
                 mirrorX: true
             },
-            "standing_up":
+            "idle_up":
             {
                 frameRects:
                 [
@@ -28,7 +28,7 @@ waw.Player = waw.Unit.extend({
                 ],
                 delay: 0.1
             },
-            "standing_down":
+            "idle_down":
             {
                 frameRects:
                 [
@@ -36,7 +36,7 @@ waw.Player = waw.Unit.extend({
                 ],
                 delay: 0.1
             },
-            "standing_left":
+            "idle_left":
             {
                 frameRects:
                 [
@@ -45,7 +45,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 flippedX: true
             },
-            "standing_right":
+            "idle_right":
             {
                 frameRects:
                 [
@@ -53,7 +53,7 @@ waw.Player = waw.Unit.extend({
                 ],
                 delay: 0.1
             },
-            "walking_up":
+            "walk_up":
             {
                 frameRects:
                 [
@@ -65,7 +65,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 mirrorX: true
             },
-            "walking_down":
+            "walk_down":
             {
                 frameRects:
                 [
@@ -77,7 +77,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 mirrorX: true
             },
-            "walking_left":
+            "walk_left":
             {
                 frameRects:
                 [
@@ -93,7 +93,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 flippedX: true
             },
-            "walking_right":
+            "walk_right":
             {
                 frameRects:
                 [
@@ -108,7 +108,7 @@ waw.Player = waw.Unit.extend({
                 ],
                 delay: 0.1
             },
-            "punching_up":
+            "punch_up":
             {
                 frameRects:
                     [
@@ -118,9 +118,9 @@ waw.Player = waw.Unit.extend({
                         cc.rect(0*34+1, 1*50+1, 32, 48)
                     ],
                 delay: 0.1,
-                mirrorX: true
+                //mirrorX: true
             },
-            "punching_down":
+            "punch_down":
             {
                 frameRects:
                     [
@@ -130,9 +130,9 @@ waw.Player = waw.Unit.extend({
                         cc.rect(0*34+1, 0*50+1, 32, 48)
                     ],
                 delay: 0.1,
-                mirrorX: true
+                //mirrorX: true
             },
-            "punching_left":
+            "punch_left":
             {
                 frameRects:
                     [
@@ -144,7 +144,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.1,
                 flippedX: true
             },
-            "punching_right":
+            "punch_right":
             {
                 frameRects:
                     [
@@ -219,9 +219,9 @@ waw.Player = waw.Unit.extend({
             this.direction = "down";
     },
     update: function(pos_) {
-        //punching
+        //punch
 /*        if(waw.KEYS[cc.KEY.space]){
-            this.state = "punching";
+            this.state = "punch";
             console.log("space");
         }*/
 
@@ -287,36 +287,41 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.left] ||
             waw.KEYS[cc.KEY.right] ||
             waw.KEYS[cc.KEY.up] ||
-            waw.KEYS[cc.KEY.down] ? "walking" :
-                waw.KEYS[cc.KEY.space] ? "punching" : "standing";
+            waw.KEYS[cc.KEY.down] ? "walk" :
+                waw.KEYS[cc.KEY.space] ? "punch" : "idle";
         //if(waw.KEYS[cc.KEY.space])
 
-        if(state === "punching" && !waw.whip.visible) {
+        if(state === "punch" && !waw.whip.visible) {
             waw.whip.visible = true;
             switch(this.direction){
                 case "down":
                     waw.whip.setTo(waw.whip.WHIP_HIT1);
                     waw.whip.rotation = 0;
                     waw.whip.zIndex = 10;
+                    waw.whip.setPosition(-10,16);
+
                     break;
                 case "right":
                     waw.whip.setTo(waw.whip.WHIP_HIT1);
                     waw.whip.rotation = -90;
                     waw.whip.zIndex = 10;
+                    waw.whip.setPosition(0,16);
                     break;
                 case "up":
                     waw.whip.setTo(waw.whip.WHIP_HIT1);
                     waw.whip.rotation = 180;
                     waw.whip.zIndex = -10;
+                    waw.whip.setPosition(10,16);
                     break;
                 case "left":
                     waw.whip.setTo(waw.whip.WHIP_HIT2);
                     waw.whip.rotation = 90;
-                    waw.whip.zIndex = -10;
+                    waw.whip.zIndex = 10;
+                    waw.whip.setPosition(0,16);
                     break;
             }
         }
-        if(state !== "punching" && waw.whip.visible) {
+        if(state !== "punch" && waw.whip.visible) {
             waw.whip.visible = false;
             switch(this.direction){
                 case "down":
@@ -337,7 +342,7 @@ waw.Player = waw.Unit.extend({
                 case "left":
                     waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
                     waw.whip.rotation = -90;
-                    waw.whip.zIndex = -10;
+                    waw.whip.zIndex = 10;
                     break;
             }
 
@@ -417,7 +422,7 @@ waw.Player = waw.Unit.extend({
         }
     },
     becomeInvincible: function() {
-        this.setSubState("invincible", 3000);
+        this.setSubState("invincible", 2000);
         //var action = new cc.Blink(10,30);
         //var action = new cc.FadeTo(0.1,  128);
         //var action2 = new cc.FadeTo(0.1,  128);
@@ -427,7 +432,7 @@ waw.Player = waw.Unit.extend({
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
     },
-    onDeath: function () {
+    onDeath: function (mob) {
         if (this.subState === "invincible")
             return;
 
@@ -435,10 +440,19 @@ waw.Player = waw.Unit.extend({
             return;
         this.subState = "dead";
         this.sprite.playAnimation("death");
-        this.sprite.runAction(new cc.MoveBy(3, 0, 100));
+        this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
+
+        if(mob){
+            //mob.sprite.visible = false;
+            //TODO actions dont work. I make mob transparent for debug
+            mob.sprite.opacity = 100;
+            mob.shadowSprite.opacity = 100;
+            console.log("You were killed by "+mob.mobType+"'s touch");
+            //runAction(new cc.TintTo(0, 255, 0, 0));
+        }
 
         this.unscheduleAllCallbacks();
         this.scheduleOnce(function () {

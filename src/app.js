@@ -41,7 +41,7 @@ waw.MainScene = cc.Scene.extend({
         waw.player.setPosition(startPlayerPos);
 
         waw.whip = new waw.Whip();
-        waw.whip.setPosition(startPlayerPos);
+        //waw.whip.setPosition(startPlayerPos);
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -111,7 +111,7 @@ waw.MainLayer = cc.Layer.extend({
         this.addChild(waw.player,250-waw.player.y);
 
         waw.player.addChild(waw.whip,10);
-        waw.whip.setPosition(0,16);
+        //waw.whip.setPosition(0,16);
         waw.whip.init();
 
         //put items on the layer
