@@ -173,7 +173,7 @@ waw.MainLayer = cc.Layer.extend({
             m.getTag = function(){ return TAG_ENEMY};
             waw.units[200+n] = m;
         }
-
+        waw.player.becomeInvincible();
     },
     onEnterTransitionDidFinish: function () {
         this._super();

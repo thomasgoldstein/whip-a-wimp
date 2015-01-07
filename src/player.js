@@ -9,6 +9,17 @@ waw.Player = waw.Unit.extend({
 
         var animData =
         {
+            "death":
+            {
+                frameRects:
+                [
+                    cc.rect(2*34+1, 0*50+1, 32, 48),
+                    cc.rect(2*34+1, 2*50+1, 32, 48),
+                    cc.rect(2*34+1, 1*50+1, 32, 48)
+                ],
+                delay: 0.1,
+                mirrorX: true
+            },
             "standing_up":
             {
                 frameRects:
@@ -231,6 +242,8 @@ waw.Player = waw.Unit.extend({
 
         this.doCheckAction();    //Hit Button
 
+        this.checkSubState();
+
         if(showDebugInfo && this.label) {
             //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
             this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.direction);
@@ -331,18 +344,6 @@ waw.Player = waw.Unit.extend({
         }
         return state;
     },
-    onDeath: function () {
-        if (this.subState === "dead")
-            return;
-
-        this.subState = "dead";
-
-        this.unscheduleAllCallbacks();
-        this.scheduleOnce(function () {
-            var transition = cc.TransitionRotoZoom;
-            cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 1);
-    },
     shakePillar: function (unit) {
         //TODO move it to another file
         //console.log("shake pillar");
@@ -396,5 +397,47 @@ waw.Player = waw.Unit.extend({
                 this.interactWithUnit(unit);
             }*/
         }
+    },
+    checkSubState: function () {
+        var currentTime = new Date();
+        if (this.subStateCountDown === 0 || this.subState === "" || currentTime.getTime() < this.subStateCountDown)
+            return;
+        console.log("subact tim: ", this.subState);
+        switch(this.subState){
+            case "invincible":
+                console.log("REMOVE subact tim: ", this.subState);
+                this.stopActionByTag(TAG_SUBSTATE_ANIMATION);
+                this.visible = true;
+                this.setSubState("");
+                break;
+            default:
+                this.setSubState("");
+        }
+    },
+    becomeInvincible: function() {
+        this.setSubState("invincible", 3000);
+        //cc.RepeatForever(a
+        var action = new cc.Blink(10,30);
+        action.setTag(TAG_SUBSTATE_ANIMATION);
+        this.runAction(action);
+    },
+    onDeath: function () {
+        if (this.subState === "invincible")
+            return;
+
+        if (this.subState === "dead")
+            return;
+        this.subState = "dead";
+        this.sprite.playAnimation("death");
+        this.sprite.runAction(new cc.MoveBy(3, 0, 100));
+        this.sprite.runAction(new cc.FadeOut(3));
+        this.shadowSprite.runAction(new cc.FadeOut(3));
+        this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
+
+        this.unscheduleAllCallbacks();
+        this.scheduleOnce(function () {
+            var transition = cc.TransitionRotoZoom;
+            cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
+        }, 1);
     }
 });
