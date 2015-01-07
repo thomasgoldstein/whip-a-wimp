@@ -6,6 +6,7 @@ waw.Unit = cc.Node.extend({
     direction: "down",
     state: "idle",
     subState: "",
+    subStateCountDown: 0,
     ctor: function() {
         this._super();
         if(this.width <= 0 )    //default size for a unit
@@ -20,6 +21,11 @@ waw.Unit = cc.Node.extend({
     },
     toSafeYCoord: function (y) {
         return (y<50 ? 50 : (y>180 ? 180 : y));
+    },
+    setSubState: function(subState, subStateCountDown) {
+        var currentTime = new Date();
+        this.subState = subState;
+        this.subStateCountDown = 0 || currentTime.getTime() + subStateCountDown;
     },
     collideRect: function(pos) {
         if (!pos)

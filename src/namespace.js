@@ -56,6 +56,8 @@ var TAG_LEFT_DOORD = 200+7;
 var TAG_ENEMY= 300+0;
 var TAG_BOSS= 300+1;
 
+var TAG_SUBSTATE_ANIMATION = 400+0;
+
 
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();
