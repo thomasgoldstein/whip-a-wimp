@@ -137,6 +137,10 @@ waw.MainLayer = cc.Layer.extend({
         //TODO Plug. Temp put enemy on the screen
         for(var n=0; n<currentRoom.mobs.length; n++){
             m = currentRoom.mobs[n];
+            if(!m) {
+                this.foes.push(null);
+                continue;
+            }
             //TODO choose m.mobType
             switch(m.mobType){
                 case "PigWalker":
@@ -172,7 +176,8 @@ waw.MainLayer = cc.Layer.extend({
         //TODO - wrap with func add FOES as units for collision
         for(var n=0; n<waw.foes.length; n++){
             m = waw.foes[n];
-            m.getTag = function(){ return TAG_ENEMY};
+            if(m)
+                m.getTag = function(){ return TAG_ENEMY};
             waw.units[200+n] = m;
         }
         waw.player.becomeInvincible();
