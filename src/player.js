@@ -360,6 +360,10 @@ waw.Player = waw.Unit.extend({
                 break;
             case "idle":
             case "walk":
+                if(Math.random() < 0.5)
+                    cc.audioEngine.playEffect(sfx_Whip01);
+                else
+                    cc.audioEngine.playEffect(sfx_Whip02);
                 waw.whip.visible = true;
                 this.setSubState("whip",500);
                 switch (this.direction) {

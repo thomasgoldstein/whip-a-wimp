@@ -22,6 +22,9 @@ var s_Map = "res/Map.png";
 var s_TouchControls = "res/TouchControls.png";
 //music
 var bgm_Level1 = "res/Music/ingame01.mp3";
+//SFX
+var sfx_Whip01 = "res/SFX/Whip01.ogg";
+var sfx_Whip02 = "res/SFX/Whip02.ogg";
 //gfx for debug
 var s_HitBoxGrid = "res/DBG/hbGrid.png";
 var s_HitBoxGridBlue = "res/DBG/hbGridBlue.png";
@@ -59,4 +62,6 @@ var g_resources = [
     //{src:bgm_Level1},
 
     //effect
+    {src:sfx_Whip01},
+    {src:sfx_Whip02},
 ];
