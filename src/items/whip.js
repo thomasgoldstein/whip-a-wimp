@@ -18,30 +18,30 @@ waw.Whip = waw.Unit.extend({
     WHIP_HIT1: [
         {rotation: -5, rotation2: 3, step: 10},
         {rotation: 3, rotation2: 4, step: 15},
-        {rotation: 28, rotation2: 8, step: 20},
-        {rotation: -10, rotation2: 11, step: 25},
-        {rotation: 50, rotation2: 16, step: 30}
+        {rotation: 28, rotation2: 8, step: 15},
+        {rotation: -10, rotation2: 11, step: 20},
+        {rotation: 40, rotation2: 16, step: 20}
     ],
     WHIP_HIT2: [
         {rotation: 5, rotation2: 3, step: 10},
         {rotation: -3, rotation2: 4, step: 15},
-        {rotation: -28, rotation2: 8, step: 20},
-        {rotation: 10, rotation2: 11, step: 25},
-        {rotation: -50, rotation2: 16, step: 30}
+        {rotation: -28, rotation2: 8, step: 15},
+        {rotation: 10, rotation2: 11, step: 20},
+        {rotation: -40, rotation2: 16, step: 20}
     ],
     WHIP_BACK1: [
         {rotation: -115, rotation2: 6, step: 5},
         {rotation: -130, rotation2: 5, step: 10},
         {rotation: -135, rotation2: 4, step: 15},
         {rotation: -150, rotation2: 6, step: 10},
-        {rotation: -175, rotation2: 6, step: 15}
+        {rotation: -150, rotation2: 6, step: 15}
     ],
     WHIP_BACK2: [
         {rotation: 115, rotation2: 6, step: 5},
         {rotation: 130, rotation2: 5, step: 10},
         {rotation: 135, rotation2: 4, step: 15},
         {rotation: 150, rotation2: 6, step: 10},
-        {rotation: 175, rotation2: 6, step: 15}
+        {rotation: 150, rotation2: 6, step: 15}
     ],
     ctor: function (itemT) {
         this._super();
@@ -124,10 +124,11 @@ waw.Whip = waw.Unit.extend({
                 var sprite = chainBase.getChildByTag(TAG_WHIP);
                 r = sprite.getParent().rotation;
                 if (sprite.rotation < this.chain[i].rotation - this.chain[i].step)
-                    sprite.rotation += this.chain[i].step;
+                    sprite.rotation += this.chain[i].step + Math.random()*3;
                 else if (sprite.rotation > this.chain[i].rotation + this.chain[i].step)
-                    sprite.rotation -= this.chain[i].step;
+                    sprite.rotation -= this.chain[i].step + Math.random()*3;
                 chainBase = sprite;
+                sprite.rotation += -3 + Math.random()*6;
             }
     }
 });
