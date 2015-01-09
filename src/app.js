@@ -164,6 +164,8 @@ waw.MainLayer = cc.Layer.extend({
             //position shadow
             e.shadowSprite.setPosition(pos.x, pos.y-0);
             this.foes.push(e);
+
+            e.becomeInvincible();
         }
         waw.foes = this.foes;
 
