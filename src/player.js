@@ -1,7 +1,7 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     speed: 6,
-    timeToThink: 0,
+    //timeToThink: 0,
     ctor: function() {
         this._super();
         //console.info("Player ctor");
@@ -117,7 +117,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(1*34+1, 4*50+1, 32, 48),
                         cc.rect(0*34+1, 1*50+1, 32, 48)
                     ],
-                delay: 0.1,
+                delay: 0.2,
                 //mirrorX: true
             },
             "punch_down":
@@ -129,7 +129,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(1*34+1, 6*50+1, 32, 48),
                         cc.rect(0*34+1, 0*50+1, 32, 48)
                     ],
-                delay: 0.1,
+                delay: 0.2,
                 //mirrorX: true
             },
             "punch_left":
@@ -141,7 +141,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(1*34+1, 5*50+1, 32, 48),
                         cc.rect(0*34+1, 2*50+1, 32, 48)
                     ],
-                delay: 0.1,
+                delay: 0.2,
                 flippedX: true
             },
             "punch_right":
@@ -153,7 +153,7 @@ waw.Player = waw.Unit.extend({
                         cc.rect(1*34+1, 5*50+1, 32, 48),
                         cc.rect(0*34+1, 2*50+1, 32, 48)
                     ],
-                delay: 0.1
+                delay: 0.2
             }
 
         };
@@ -219,30 +219,27 @@ waw.Player = waw.Unit.extend({
             this.direction = "down";
     },
     update: function(pos_) {
-        //punch
-/*        if(waw.KEYS[cc.KEY.space]){
-            this.state = "punch";
-            console.log("space");
-        }*/
-
-        //var curPos = this.getPosition();
-        var pos = this.handleCollisions();
-
-        this.calcDirection(pos.x - this.x, pos.y - this.y);
-
-        this.setPosition(pos);
-        //Z Index
-        this.setZOrder(250- pos.y);
-
-        var animKey = this.getState() + "_" + this.direction;
-        this.sprite.playAnimation(animKey);
-
-        //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y+0);
+        var pos = this.getPosition();
 
         this.doCheckAction();    //Hit Button
-
         this.checkSubState();
+
+        switch(this.subState) {
+            case "whip":
+                break;
+            default:
+                //var curPos = this.getPosition();
+                pos = this.handleCollisions();
+                this.calcDirection(pos.x - this.x, pos.y - this.y);
+                this.setPosition(pos);
+                //Z Index
+                this.setZOrder(250- pos.y);
+                var animKey = this.getState() + "_" + this.direction;
+                this.sprite.playAnimation(animKey);
+                //position shadow
+                this.shadowSprite.setPosition(pos.x, pos.y+0);
+
+        }
 
         if(showDebugInfo && this.label) {
             //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
@@ -288,65 +285,12 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.right] ||
             waw.KEYS[cc.KEY.up] ||
             waw.KEYS[cc.KEY.down] ? "walk" :
-                waw.KEYS[cc.KEY.space] ? "punch" : "idle";
+                //waw.KEYS[cc.KEY.space] ? "punch" : "idle";
+                "idle";
         //if(waw.KEYS[cc.KEY.space])
-
-        if(state === "punch" && !waw.whip.visible) {
-            waw.whip.visible = true;
-            switch(this.direction){
-                case "down":
-                    waw.whip.setTo(waw.whip.WHIP_HIT1);
-                    waw.whip.rotation = 0;
-                    waw.whip.zIndex = 10;
-                    waw.whip.setPosition(-10,16);
-
-                    break;
-                case "right":
-                    waw.whip.setTo(waw.whip.WHIP_HIT1);
-                    waw.whip.rotation = -90;
-                    waw.whip.zIndex = 10;
-                    waw.whip.setPosition(0,16);
-                    break;
-                case "up":
-                    waw.whip.setTo(waw.whip.WHIP_HIT1);
-                    waw.whip.rotation = 180;
-                    waw.whip.zIndex = -10;
-                    waw.whip.setPosition(10,16);
-                    break;
-                case "left":
-                    waw.whip.setTo(waw.whip.WHIP_HIT2);
-                    waw.whip.rotation = 90;
-                    waw.whip.zIndex = 10;
-                    waw.whip.setPosition(0,16);
-                    break;
-            }
-        }
-        if(state !== "punch" && waw.whip.visible) {
-            waw.whip.visible = false;
-            switch(this.direction){
-                case "down":
-                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
-                    waw.whip.rotation = 180;
-                    waw.whip.zIndex = 10;
-                    break;
-                case "right":
-                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
-                    waw.whip.rotation = 90;
-                    waw.whip.zIndex = 10;
-                    break;
-                case "up":
-                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
-                    waw.whip.rotation = 0;
-                    waw.whip.zIndex = -10;
-                    break;
-                case "left":
-                    waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                    waw.whip.rotation = -90;
-                    waw.whip.zIndex = 10;
-                    break;
-            }
-
-        }
+        /*if(this.subState === "whip"){
+            state = "punch";
+        }*/
         return state;
     },
     shakePillar: function (unit) {
@@ -382,10 +326,14 @@ waw.Player = waw.Unit.extend({
     doCheckAction: function () {
         var currentTime = new Date();
         //var t, x = this.x-16, y = this.y- 8;
-        if (!waw.KEYS[cc.KEY.space] || currentTime.getTime() < this.timeToThink)
+        //if (!waw.KEYS[cc.KEY.space] || currentTime.getTime() < this.timeToThink)
+        if (!waw.KEYS[cc.KEY.space]
+            || this.subState === "whip"
+            || this.subState === "invincible"
+        )
             return;
         //cool down time 1 sec
-        this.timeToThink = currentTime.getTime() + 1000;
+        //this.timeToThink = currentTime.getTime() + 1000;
 
         var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
 
@@ -402,6 +350,48 @@ waw.Player = waw.Unit.extend({
                 this.interactWithUnit(unit);
             }*/
         }
+
+        switch (this.state) {
+            case "invincible":
+                break;
+            case "idle":
+            case "walk":
+                waw.whip.visible = true;
+                this.setSubState("whip",500);
+                switch (this.direction) {
+                    case "down":
+                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                        waw.whip.setTo(waw.whip.WHIP_HIT1);
+                        waw.whip.rotation = 0;
+                        waw.whip.zIndex = 10;
+                        waw.whip.setPosition(-10, 16);
+                        break;
+                    case "right":
+                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                        waw.whip.setTo(waw.whip.WHIP_HIT1);
+                        waw.whip.rotation = -90;
+                        waw.whip.zIndex = 10;
+                        waw.whip.setPosition(0, 16);
+                        break;
+                    case "up":
+                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                        waw.whip.setTo(waw.whip.WHIP_HIT1);
+                        waw.whip.rotation = 180;
+                        waw.whip.zIndex = -10;
+                        waw.whip.setPosition(10, 16);
+                        break;
+                    case "left":
+                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
+                        waw.whip.setTo(waw.whip.WHIP_HIT2);
+                        waw.whip.rotation = 90;
+                        waw.whip.zIndex = 10;
+                        waw.whip.setPosition(0, 16);
+                        break;
+                }
+                var animKey = "punch_" + this.direction;
+                this.sprite.playAnimation(animKey);
+                break;
+        }
     },
     checkSubState: function () {
         var currentTime = new Date();
@@ -417,6 +407,12 @@ waw.Player = waw.Unit.extend({
                 this.sprite.opacity = 255;
                 this.shadowSprite.opacity = 255;
                 break;
+            case "whip":
+                console.log("REMOVE subact tim: ", this.subState);
+                waw.whip.visible = false;
+                this.state = "idle";
+                this.setSubState("");
+                break;
             default:
                 this.setSubState("");
         }
@@ -431,14 +427,16 @@ waw.Player = waw.Unit.extend({
         //this.shadowSprite.runAction(action2);
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
+
+        waw.whip.visible = false; //hide Whip
     },
     onDeath: function (mob) {
         if (this.subState === "invincible")
             return;
 
-        if (this.subState === "dead")
+        if (this.subState === "death")
             return;
-        this.subState = "dead";
+        this.subState = "death";
         this.sprite.playAnimation("death");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
