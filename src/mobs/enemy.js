@@ -435,32 +435,35 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
     },
-    onDeath: function (mob) {
+    onDeath: function (killer) {
         if (this.subState === "invincible")
             return;
 
         if (this.subState === "dead")
             return;
+        this.unscheduleAllCallbacks();
         this.subState = "dead";
-        this.sprite.playAnimation("death");
-        this.sprite.runAction(new cc.MoveBy(3, 0, 240));
+        //this.sprite.playAnimation("death");
+        //this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
+        this.sprite.runAction(new cc.ScaleTo(3, 0.3));
         this.shadowSprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
 
-        if(mob){
+        if(killer){
             //mob.sprite.visible = false;
-            //TODO actions dont work. I make mob transparent for debug
-            mob.sprite.opacity = 100;
-            mob.shadowSprite.opacity = 100;
-            console.log("You were killed by "+mob.mobType+"'s touch");
-            //runAction(new cc.TintTo(0, 255, 0, 0));
+            //console.log("Mob "+mob.mobType+"'s touch");
         }
 
-        this.unscheduleAllCallbacks();
-        this.scheduleOnce(function () {
-            var transition = cc.TransitionRotoZoom;
-            cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 1);
+        //clear from this 1. local room foes 2. global room 3. local units - collision check
+        for(var n=0; n<waw.foes.length; n++){
+            var m = waw.foes[n];
+            if( this === m ){
+                waw.foes[n] = null;
+                waw.units[200+n] = null;
+                currentRoom.mobs[n] = null;
+                break;
+            }
+        }
     }
 });

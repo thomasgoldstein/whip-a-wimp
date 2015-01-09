@@ -48,6 +48,8 @@ waw.MenuDebug = function (layer) {
             waw.player.label.setVisible(showDebugInfo);
             waw.player.debugCross.setVisible(showDebugInfo);
             for (var i in waw.foes) {
+                if (!waw.foes[i])
+                    continue;
                 waw.foes[i].label.setVisible(showDebugInfo);
                 waw.foes[i].debugCross.setVisible(showDebugInfo);
             }
