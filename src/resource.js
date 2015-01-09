@@ -16,6 +16,7 @@ var s_Shadow24x12 = "res/Shadow24x12.png";
 var s_Shadow32x16 = "res/Shadow32x16.png";
 var s_Pit = "res/Pit.png";
 var s_Debris = "res/Debris.png";
+var s_Sparkle = "res/Sparkle.png";
 var s_Pig = themeDir + "Pig.png";
 var s_Map = "res/Map.png";
 var s_TouchControls = "res/TouchControls.png";
@@ -43,6 +44,7 @@ var g_resources = [
     {src:s_Merchant},
     {src:s_Pit},
     {src:s_Debris},
+    {src:s_Sparkle},
     {src:s_Pig},
     {src:s_Map},
     {src:s_TouchControls},
