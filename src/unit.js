@@ -25,7 +25,7 @@ waw.Unit = cc.Node.extend({
     setSubState: function(subState, subStateCountDown) {
         var currentTime = new Date();
         this.subState = subState;
-        this.subStateCountDown = 0 || currentTime.getTime() + subStateCountDown;
+        this.subStateCountDown = currentTime.getTime() + (subStateCountDown || 1000);
     },
     collideRect: function(pos) {
         if (!pos)

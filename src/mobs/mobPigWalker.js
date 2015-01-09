@@ -188,6 +188,8 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         }
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
+        this.checkSubState();
+
         if(showDebugInfo && this.label) {
             this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
             "\n"+this.mobType+" "+this.state+"_"+this.direction );

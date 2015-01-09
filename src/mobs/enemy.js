@@ -179,6 +179,8 @@ waw.Enemy = waw.Unit.extend({
         }
         this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
 
+        this.checkSubState();
+
         if(showDebugInfo && this.label) {
             this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
         }
@@ -411,6 +413,54 @@ waw.Enemy = waw.Unit.extend({
             return true; //get to the target x,y
         }
         return false;
-    }   //this.runAction(cc.Blink.create(1, 10)); //Blink Foe sprite
-    //TODO 1.make enemy not stuck 2.check collision with other foes
+    },
+    checkSubState: function () {
+        var currentTime = new Date();
+        if (this.subStateCountDown === 0 || this.subState === "" || currentTime.getTime() < this.subStateCountDown)
+            return;
+        console.log("ENMY subact tim: ", this.subState);
+        switch(this.subState){
+            case "invincible":
+                console.log("ENM REMOVE subact tim: ", this.subState);
+                this.setSubState("");
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
+                break;
+            default:
+                this.setSubState("");
+        }
+    },
+    becomeInvincible: function() {
+        this.setSubState("invincible", 1000);
+        this.sprite.opacity = 180;
+        this.shadowSprite.opacity = 180;
+    },
+    onDeath: function (mob) {
+        if (this.subState === "invincible")
+            return;
+
+        if (this.subState === "dead")
+            return;
+        this.subState = "dead";
+        this.sprite.playAnimation("death");
+        this.sprite.runAction(new cc.MoveBy(3, 0, 240));
+        this.sprite.runAction(new cc.FadeOut(3));
+        this.shadowSprite.runAction(new cc.FadeOut(3));
+        this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
+
+        if(mob){
+            //mob.sprite.visible = false;
+            //TODO actions dont work. I make mob transparent for debug
+            mob.sprite.opacity = 100;
+            mob.shadowSprite.opacity = 100;
+            console.log("You were killed by "+mob.mobType+"'s touch");
+            //runAction(new cc.TintTo(0, 255, 0, 0));
+        }
+
+        this.unscheduleAllCallbacks();
+        this.scheduleOnce(function () {
+            var transition = cc.TransitionRotoZoom;
+            cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
+        }, 1);
+    }
 });
