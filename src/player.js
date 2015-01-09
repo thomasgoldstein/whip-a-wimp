@@ -318,6 +318,10 @@ waw.Player = waw.Unit.extend({
             case TAG_RIGHT_DOORD:
                 waw.openDoor(t, this.getParent());
                 break;
+            case TAG_ENEMY:
+                //TODO temp. remove later
+                //unit.onDeath(this);
+                break;
             default:
                 if(t>0)
                    console.log("Wrong Unit Tag 4interaction: "+t);
@@ -409,9 +413,28 @@ waw.Player = waw.Unit.extend({
                 break;
             case "whip":
                 console.log("REMOVE subact tim: ", this.subState);
+
+                var wp =  waw.whip.getHitPosition();
+                console.log("Whip HIT Coords: ", wp.x, wp.y );
+                var cross = new cc.Sprite(s_Sparkle,
+                    cc.rect(3 * 8, 0, 7, 7));
+                cross.setPosition(wp.x, wp.y);
+                //var p = this.getParent();
+                this.getParent().addChild(cross, 300);
+
                 waw.whip.visible = false;
                 this.state = "idle";
                 this.setSubState("");
+
+                for(var n=0; n<waw.foes.length; n++){
+                    var m = waw.foes[n];
+                    if( m ) {
+                        if (cc.rectContainsPoint(m.collideRect(), wp)) {
+                            m.onDeath(this);
+                            break;
+                        }
+                    }
+                }
                 break;
             default:
                 this.setSubState("");
