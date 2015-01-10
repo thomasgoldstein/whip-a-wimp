@@ -445,14 +445,52 @@ waw.Player = waw.Unit.extend({
                 waw.whip.visible = false;
                 this.state = "idle";
                 this.setSubState("");
+                var whip_rect = cc.rect(this.x - 70, this.y - 70 + 8, 70*2, 70*2);
+                switch (this.direction) {
+                    case "down":
+                        whip_rect = cc.rect(this.x - 8, this.y - 70 + 8, 8*2, 70);
+                        break;
+                    case "right":
+                        whip_rect = cc.rect(this.x , this.y + 8, 70, 8*2);
+                        break;
+                    case "up":
+                        whip_rect = cc.rect(this.x - 8, this.y + 8, 8*2, 70);
+                        break;
+                    case "left":
+                        whip_rect = cc.rect(this.x - 70, this.y + 8, 70, 8*2);
+                        break;
+                }
+                //debug - show hit box
+                var hitArea = new cc.Sprite(s_HitBoxGrid, whip_rect);
+                hitArea.setPosition(this.x, this.y+8);
+                switch (this.direction) {
+                    case "down":
+                        hitArea.setAnchorPoint(0.5, 1);
+                        break;
+                    case "right":
+                        hitArea.setAnchorPoint(0, 0.5);
+                        break;
+                    case "up":
+                        hitArea.setAnchorPoint(0.5, 0);
+                        break;
+                    case "left":
+                        hitArea.setAnchorPoint(1, 0.5);
+                        break;
+                }
+                this.getParent().addChild(hitArea, 300);
+                hitArea.runAction(new cc.Sequence(
+                    new cc.FadeOut(0.3),
+                    new cc.RemoveSelf()
+                ));
 
                 for(var n=0; n<waw.foes.length; n++){
                     var m = waw.foes[n];
                     if( m ) {
                         //if (cc.rectContainsPoint(m.collideRect(), wp)) {
-                        //    m.onDeath(this);
-                            break;
-                        //}
+                        if (cc.rectIntersectsRect(m.collideRect(), whip_rect)) {
+                            m.onDeath(this);
+                            //break;
+                        }
                     }
                 }
                 break;
