@@ -369,7 +369,8 @@ waw.Player = waw.Unit.extend({
                 switch (this.direction) {
                     case "down":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                        waw.whip.setTo(waw.whip.WHIP_HIT2);
+                        waw.whip.setTo(waw.whip.WHIP_HIT_UP);
+                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 0;
                         waw.whip.zIndex = 10;
                         waw.whip.setPosition(-10, 16);
@@ -377,13 +378,15 @@ waw.Player = waw.Unit.extend({
                     case "right":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
                         waw.whip.setTo(waw.whip.WHIP_HIT1);
+                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDR);}, 0.40);
                         waw.whip.rotation = -90;
                         waw.whip.zIndex = 10;
                         waw.whip.setPosition(0, 16);
                         break;
                     case "up":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                        waw.whip.setTo(waw.whip.WHIP_HIT2);
+                        waw.whip.setTo(waw.whip.WHIP_HIT_UP);
+                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 180;
                         waw.whip.zIndex = -10;
                         waw.whip.setPosition(10, 16);
@@ -391,6 +394,7 @@ waw.Player = waw.Unit.extend({
                     case "left":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
                         waw.whip.setTo(waw.whip.WHIP_HIT2);
+                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 90;
                         waw.whip.zIndex = 10;
                         waw.whip.setPosition(0, 16);
