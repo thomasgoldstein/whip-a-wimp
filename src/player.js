@@ -365,7 +365,7 @@ waw.Player = waw.Unit.extend({
                 else
                     cc.audioEngine.playEffect(sfx_Whip02);
                 waw.whip.visible = true;
-                this.setSubState("whip",500);
+                this.setSubState("whip",600);
                 switch (this.direction) {
                     case "down":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
@@ -373,7 +373,8 @@ waw.Player = waw.Unit.extend({
                         this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 0;
                         waw.whip.zIndex = 10;
-                        waw.whip.setPosition(-10, 16);
+                        waw.whip.setPosition(-10, 24);
+                        this.scheduleOnce(function () {waw.whip.setPosition(-10, 14);}, 0.2);
                         break;
                     case "right":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
@@ -381,7 +382,8 @@ waw.Player = waw.Unit.extend({
                         this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDR);}, 0.40);
                         waw.whip.rotation = -90;
                         waw.whip.zIndex = 10;
-                        waw.whip.setPosition(0, 16);
+                        waw.whip.setPosition(-2, 22);
+                        this.scheduleOnce(function () {waw.whip.setPosition(12, 14);}, 0.2);
                         break;
                     case "up":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
@@ -389,7 +391,8 @@ waw.Player = waw.Unit.extend({
                         this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 180;
                         waw.whip.zIndex = -10;
-                        waw.whip.setPosition(10, 16);
+                        waw.whip.setPosition(10, 24);
+                        this.scheduleOnce(function () {waw.whip.setPosition(10, 14);}, 0.2);
                         break;
                     case "left":
                         waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
@@ -397,7 +400,8 @@ waw.Player = waw.Unit.extend({
                         this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
                         waw.whip.rotation = 90;
                         waw.whip.zIndex = 10;
-                        waw.whip.setPosition(0, 16);
+                        waw.whip.setPosition(2, 22);
+                        this.scheduleOnce(function () {waw.whip.setPosition(-12, 14);}, 0.2);
                         break;
                 }
                 var animKey = "punch_" + this.direction;
@@ -412,7 +416,7 @@ waw.Player = waw.Unit.extend({
         console.log("subact tim: ", this.subState);
         switch(this.subState){
             case "invincible":
-                console.log("REMOVE subact tim: ", this.subState);
+                //console.log("REMOVE subact tim: ", this.subState);
                 //this.stopActionByTag(TAG_SUBSTATE_ANIMATION);
                 //this.visible = true;
                 this.setSubState("");
@@ -420,15 +424,23 @@ waw.Player = waw.Unit.extend({
                 this.shadowSprite.opacity = 255;
                 break;
             case "whip":
-                console.log("REMOVE subact tim: ", this.subState);
+                //console.log("REMOVE subact tim: ", this.subState);
 
                 var wp =  waw.whip.getHitPosition();
-                console.log("Whip HIT Coords: ", wp.x, wp.y );
+                //console.log("Whip HIT Coords: ", wp.x, wp.y );
                 var cross = new cc.Sprite(s_Sparkle,
                     cc.rect(3 * 8, 0, 7, 7));
                 cross.setPosition(wp.x, wp.y);
                 //var p = this.getParent();
                 this.getParent().addChild(cross, 300);
+                cross.runAction(new cc.Sequence(
+                    new cc.Spawn(
+                        new cc.FadeOut(0.3),
+                        new cc.RotateBy(0.3, 45),
+                        new cc.ScaleTo(0.3, 0.5)
+                    ),
+                    new cc.RemoveSelf()
+                ));
 
                 waw.whip.visible = false;
                 this.state = "idle";
@@ -437,10 +449,10 @@ waw.Player = waw.Unit.extend({
                 for(var n=0; n<waw.foes.length; n++){
                     var m = waw.foes[n];
                     if( m ) {
-                        if (cc.rectContainsPoint(m.collideRect(), wp)) {
-                            m.onDeath(this);
+                        //if (cc.rectContainsPoint(m.collideRect(), wp)) {
+                        //    m.onDeath(this);
                             break;
-                        }
+                        //}
                     }
                 }
                 break;
