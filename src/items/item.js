@@ -49,7 +49,7 @@ waw.Item = waw.Unit.extend({
     cleanUp: function () {
         var i;
         this.unscheduleUpdate();
-
+        cc.audioEngine.playEffect(sfx_Coin01);
         this.setZOrder(300); //make item over player
         this.getParent().removeChild(this.sprite);   //remove item sprite
         this.sprite.runAction(new cc.Sequence(
