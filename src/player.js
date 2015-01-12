@@ -1,7 +1,8 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     speed: 6,
-    //timeToThink: 0,
+    currentWeapon: "punch",
+
     ctor: function() {
         this._super();
         //console.info("Player ctor");
@@ -226,6 +227,8 @@ waw.Player = waw.Unit.extend({
 
         switch(this.subState) {
             case "whip":
+            case "punch":
+            case "candelabre":
                 break;
             default:
                 //var curPos = this.getPosition();
@@ -287,16 +290,12 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.down] ? "walk" :
                 //waw.KEYS[cc.KEY.space] ? "punch" : "idle";
                 "idle";
-        //if(waw.KEYS[cc.KEY.space])
-        /*if(this.subState === "whip"){
-            state = "punch";
-        }*/
         return state;
     },
     shakePillar: function (unit) {
         //TODO move it to another file
-        //console.log("shake pillar");
-        var r = Math.random() * 3 + 2;
+        console.log("shake pillar");
+        /*var r = Math.random() * 3 + 2;
         if (Math.random() < 0.5)
             r = -r;
         unit.sprite.runAction(
@@ -304,7 +303,7 @@ waw.Player = waw.Unit.extend({
                 cc.skewBy(0.3, -r, 0),
                 cc.skewBy(0.3, r, 0)
             )
-        );
+        );*/
     },
     interactWithUnit: function (unit) {
         var t = unit.getTag();
@@ -333,6 +332,8 @@ waw.Player = waw.Unit.extend({
         //if (!waw.KEYS[cc.KEY.space] || currentTime.getTime() < this.timeToThink)
         if (!waw.KEYS[cc.KEY.space]
             || this.subState === "whip"
+            || this.subState === "punch"
+            || this.subState === "candelabre"
             || this.subState === "invincible"
         )
             return;
@@ -360,52 +361,79 @@ waw.Player = waw.Unit.extend({
                 break;
             case "idle":
             case "walk":
-                if(Math.random() < 0.5)
-                    cc.audioEngine.playEffect(sfx_Whip01);
-                else
-                    cc.audioEngine.playEffect(sfx_Whip02);
-                waw.whip.visible = true;
-                this.setSubState("whip",600);
-                switch (this.direction) {
-                    case "down":
-                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                        waw.whip.setTo(waw.whip.WHIP_HIT_UP);
-                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
-                        waw.whip.rotation = 0;
-                        waw.whip.zIndex = 10;
-                        waw.whip.setPosition(-10, 24);
-                        this.scheduleOnce(function () {waw.whip.setPosition(-10, 14);}, 0.2);
+                this.setSubState(this.currentWeapon,600);   //whip, punch, candelabre, etc
+
+                switch (this.subState) {
+                    case "punch":
+                        var animKey = "punch_" + this.direction;
+                        this.sprite.playAnimation(animKey);
                         break;
-                    case "right":
-                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
-                        waw.whip.setTo(waw.whip.WHIP_HIT1);
-                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDR);}, 0.40);
-                        waw.whip.rotation = -90;
-                        waw.whip.zIndex = 10;
-                        waw.whip.setPosition(-2, 22);
-                        this.scheduleOnce(function () {waw.whip.setPosition(12, 14);}, 0.2);
+                    case "candelabre":
                         break;
-                    case "up":
-                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                        waw.whip.setTo(waw.whip.WHIP_HIT_UP);
-                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
-                        waw.whip.rotation = 180;
-                        waw.whip.zIndex = -10;
-                        waw.whip.setPosition(10, 24);
-                        this.scheduleOnce(function () {waw.whip.setPosition(10, 14);}, 0.2);
-                        break;
-                    case "left":
-                        waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
-                        waw.whip.setTo(waw.whip.WHIP_HIT2);
-                        this.scheduleOnce(function () {waw.whip.setTo(waw.whip.WHIP_GROUNDL);}, 0.40);
-                        waw.whip.rotation = 90;
-                        waw.whip.zIndex = 10;
-                        waw.whip.setPosition(2, 22);
-                        this.scheduleOnce(function () {waw.whip.setPosition(-12, 14);}, 0.2);
+                    case "whip":
+                        if(Math.random() < 0.5)
+                            cc.audioEngine.playEffect(sfx_Whip01);
+                        else
+                            cc.audioEngine.playEffect(sfx_Whip02);
+                        waw.whip.visible = true;
+                        switch (this.direction) {
+                            case "down":
+                                waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
+                                waw.whip.setTo(waw.whip.WHIP_HIT_UP);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setTo(waw.whip.WHIP_GROUNDL);
+                                }, 0.40);
+                                waw.whip.rotation = 0;
+                                waw.whip.zIndex = 10;
+                                waw.whip.setPosition(-10, 24);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setPosition(-10, 14);
+                                }, 0.2);
+                                break;
+                            case "right":
+                                waw.whip.setInstantlyTo(waw.whip.WHIP_BACK1);
+                                waw.whip.setTo(waw.whip.WHIP_HIT1);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setTo(waw.whip.WHIP_GROUNDR);
+                                }, 0.40);
+                                waw.whip.rotation = -90;
+                                waw.whip.zIndex = 10;
+                                waw.whip.setPosition(-2, 22);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setPosition(12, 14);
+                                }, 0.2);
+                                break;
+                            case "up":
+                                waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
+                                waw.whip.setTo(waw.whip.WHIP_HIT_UP);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setTo(waw.whip.WHIP_GROUNDL);
+                                }, 0.40);
+                                waw.whip.rotation = 180;
+                                waw.whip.zIndex = -10;
+                                waw.whip.setPosition(10, 24);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setPosition(10, 14);
+                                }, 0.2);
+                                break;
+                            case "left":
+                                waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
+                                waw.whip.setTo(waw.whip.WHIP_HIT2);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setTo(waw.whip.WHIP_GROUNDL);
+                                }, 0.40);
+                                waw.whip.rotation = 90;
+                                waw.whip.zIndex = 10;
+                                waw.whip.setPosition(2, 22);
+                                this.scheduleOnce(function () {
+                                    waw.whip.setPosition(-12, 14);
+                                }, 0.2);
+                                break;
+                        }
+                        var animKey = "punch_" + this.direction;
+                        this.sprite.playAnimation(animKey);
                         break;
                 }
-                var animKey = "punch_" + this.direction;
-                this.sprite.playAnimation(animKey);
                 break;
         }
     },
@@ -422,6 +450,11 @@ waw.Player = waw.Unit.extend({
                 this.setSubState("");
                 this.sprite.opacity = 255;
                 this.shadowSprite.opacity = 255;
+                break;
+            case "punch":
+                this.state = "idle";
+                this.setSubState("");
+                this.showHitBoxAndKill(24, 8);
                 break;
             case "whip":
                 //console.log("REMOVE subact tim: ", this.subState);
@@ -445,57 +478,60 @@ waw.Player = waw.Unit.extend({
                 waw.whip.visible = false;
                 this.state = "idle";
                 this.setSubState("");
-                var whip_rect = cc.rect(this.x - 70, this.y - 70 + 8, 70*2, 70*2);
-                switch (this.direction) {
-                    case "down":
-                        whip_rect = cc.rect(this.x - 8, this.y - 70 + 8, 8*2, 70);
-                        break;
-                    case "right":
-                        whip_rect = cc.rect(this.x , this.y + 8, 70, 8*2);
-                        break;
-                    case "up":
-                        whip_rect = cc.rect(this.x - 8, this.y + 8, 8*2, 70);
-                        break;
-                    case "left":
-                        whip_rect = cc.rect(this.x - 70, this.y + 8, 70, 8*2);
-                        break;
-                }
-                //debug - show hit box
-                var hitArea = new cc.Sprite(s_HitBoxGrid, whip_rect);
-                hitArea.setPosition(this.x, this.y+8);
-                switch (this.direction) {
-                    case "down":
-                        hitArea.setAnchorPoint(0.5, 1);
-                        break;
-                    case "right":
-                        hitArea.setAnchorPoint(0, 0.5);
-                        break;
-                    case "up":
-                        hitArea.setAnchorPoint(0.5, 0);
-                        break;
-                    case "left":
-                        hitArea.setAnchorPoint(1, 0.5);
-                        break;
-                }
-                this.getParent().addChild(hitArea, 300);
-                hitArea.runAction(new cc.Sequence(
-                    new cc.FadeOut(0.3),
-                    new cc.RemoveSelf()
-                ));
-
-                for(var n=0; n<waw.foes.length; n++){
-                    var m = waw.foes[n];
-                    if( m ) {
-                        //if (cc.rectContainsPoint(m.collideRect(), wp)) {
-                        if (cc.rectIntersectsRect(m.collideRect(), whip_rect)) {
-                            m.onDeath(this);
-                            //break;
-                        }
-                    }
-                }
+                this.showHitBoxAndKill(70, 8);
                 break;
             default:
                 this.setSubState("");
+        }
+    },
+    showHitBoxAndKill: function(wa, ha) {
+        var hitArea_rect = cc.rect(this.x - wa, this.y - ha + 8, wa*2, ha*2);
+        switch (this.direction) {
+            case "down":
+                hitArea_rect = cc.rect(this.x - 8, this.y - wa + 8, ha*2, wa);
+                break;
+            case "right":
+                hitArea_rect = cc.rect(this.x , this.y + 8, wa, ha*2);
+                break;
+            case "up":
+                hitArea_rect = cc.rect(this.x - 8, this.y + 8, ha*2, wa);
+                break;
+            case "left":
+                hitArea_rect = cc.rect(this.x - wa, this.y + 8, wa, ha*2);
+                break;
+        }
+        //debug - show hit box
+        var hitArea = new cc.Sprite(s_HitBoxGrid, hitArea_rect);
+        hitArea.setPosition(this.x, this.y+8);
+        switch (this.direction) {
+            case "down":
+                hitArea.setAnchorPoint(0.5, 1);
+                break;
+            case "right":
+                hitArea.setAnchorPoint(0, 0.5);
+                break;
+            case "up":
+                hitArea.setAnchorPoint(0.5, 0);
+                break;
+            case "left":
+                hitArea.setAnchorPoint(1, 0.5);
+                break;
+        }
+        this.getParent().addChild(hitArea, 300);
+        hitArea.runAction(new cc.Sequence(
+            new cc.FadeOut(0.3),
+            new cc.RemoveSelf()
+        ));
+
+        for(var n=0; n<waw.foes.length; n++){
+            var m = waw.foes[n];
+            if( m ) {
+                //if (cc.rectContainsPoint(m.collideRect(), wp)) {
+                if (cc.rectIntersectsRect(m.collideRect(), hitArea_rect)) {
+                    m.onDeath(this);
+                    //break;
+                }
+            }
         }
     },
     becomeInvincible: function() {
