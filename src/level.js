@@ -634,6 +634,7 @@ waw.openDoor = function (doorTag, layer) {
     }
     //we need 2 tags _DOOR and _DOORD that's why -4
     layer.removeChildByTag(doorTag);
+    cc.audioEngine.playEffect(sfx_Door01);
 };
 
 //adds obstacles of a room onto existing layer
