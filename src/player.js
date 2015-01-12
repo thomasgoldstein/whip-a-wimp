@@ -2,6 +2,7 @@
 waw.Player = waw.Unit.extend({
     speed: 6,
     currentWeapon: "punch",
+    weaponSprite: null,
 
     ctor: function() {
         this._super();
@@ -365,10 +366,67 @@ waw.Player = waw.Unit.extend({
 
                 switch (this.subState) {
                     case "punch":
+                        cc.audioEngine.playEffect(sfx_Punch01);
                         var animKey = "punch_" + this.direction;
                         this.sprite.playAnimation(animKey);
                         break;
                     case "candelabre":
+                        cc.audioEngine.playEffect(sfx_Candelabre01);
+                        var animKey = "punch_" + this.direction;
+
+                        this.weaponSprite = new cc.Sprite(s_Weapons,
+                            cc.rect(13, 0, 34, 34));
+                        this.weaponSprite.setAnchorPoint(0.5, 0.8);
+                        this.weaponSprite.runAction(new cc.Sequence(
+                            new cc.Spawn(
+                                //new cc.FadeOut(0.6),
+                                //new cc.RotateBy(0.6, 45),
+                                new cc.ScaleTo(0.6, 1.1)
+                            ),
+                            new cc.RemoveSelf()
+                        ));
+                        this.addChild(this.weaponSprite);
+
+                        this.sprite.playAnimation(animKey);
+
+                        switch (this.direction) {
+                            case "down":
+                                this.weaponSprite.rotation = 0;
+                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setPosition(-10, 24);
+                                this.scheduleOnce(function () {
+                                    this.weaponSprite.setPosition(-10, 14);
+                                }, 0.2);
+                                this.weaponSprite.runAction(new cc.RotateBy(0.3, -10));
+                                break;
+                            case "right":
+                                this.weaponSprite.rotation = -90;
+                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setPosition(-2, 22);
+                                this.scheduleOnce(function () {
+                                    this.weaponSprite.setPosition(12, 14);
+                                }, 0.2);
+                                this.weaponSprite.runAction(new cc.RotateBy(0.3, 30));
+                                break;
+                            case "up":
+                                this.weaponSprite.rotation = 180;
+                                this.weaponSprite.zIndex = -10;
+                                this.weaponSprite.setPosition(10, 24);
+                                this.scheduleOnce(function () {
+                                    this.weaponSprite.setPosition(10, 14);
+                                }, 0.2);
+                                this.weaponSprite.runAction(new cc.RotateBy(0.3, 10));
+                                break;
+                            case "left":
+                                this.weaponSprite.rotation = 90;
+                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setPosition(2, 22);
+                                this.scheduleOnce(function () {
+                                    this.weaponSprite.setPosition(-12, 14);
+                                }, 0.2);
+                                this.weaponSprite.runAction(new cc.RotateBy(0.3, -30));
+                                break;
+                        }
                         break;
                     case "whip":
                         if(Math.random() < 0.5)
@@ -456,6 +514,11 @@ waw.Player = waw.Unit.extend({
                 this.setSubState("");
                 this.showHitBoxAndKill(24, 8);
                 break;
+            case "candelabre":
+                this.state = "idle";
+                this.setSubState("");
+                this.showHitBoxAndKill(32, 12);
+                break;
             case "whip":
                 //console.log("REMOVE subact tim: ", this.subState);
 
@@ -500,29 +563,30 @@ waw.Player = waw.Unit.extend({
                 hitArea_rect = cc.rect(this.x - wa, this.y + 8, wa, ha*2);
                 break;
         }
-        //debug - show hit box
-        var hitArea = new cc.Sprite(s_HitBoxGrid, hitArea_rect);
-        hitArea.setPosition(this.x, this.y+8);
-        switch (this.direction) {
-            case "down":
-                hitArea.setAnchorPoint(0.5, 1);
-                break;
-            case "right":
-                hitArea.setAnchorPoint(0, 0.5);
-                break;
-            case "up":
-                hitArea.setAnchorPoint(0.5, 0);
-                break;
-            case "left":
-                hitArea.setAnchorPoint(1, 0.5);
-                break;
+        if (showDebugInfo) {
+            //debug - show hit box
+            var hitArea = new cc.Sprite(s_HitBoxGrid, hitArea_rect);
+            hitArea.setPosition(this.x, this.y + 8);
+            switch (this.direction) {
+                case "down":
+                    hitArea.setAnchorPoint(0.5, 1);
+                    break;
+                case "right":
+                    hitArea.setAnchorPoint(0, 0.5);
+                    break;
+                case "up":
+                    hitArea.setAnchorPoint(0.5, 0);
+                    break;
+                case "left":
+                    hitArea.setAnchorPoint(1, 0.5);
+                    break;
+            }
+            this.getParent().addChild(hitArea, 300);
+            hitArea.runAction(new cc.Sequence(
+                new cc.FadeOut(0.3),
+                new cc.RemoveSelf()
+            ));
         }
-        this.getParent().addChild(hitArea, 300);
-        hitArea.runAction(new cc.Sequence(
-            new cc.FadeOut(0.3),
-            new cc.RemoveSelf()
-        ));
-
         for(var n=0; n<waw.foes.length; n++){
             var m = waw.foes[n];
             if( m ) {
