@@ -78,6 +78,7 @@ waw.MenuDebug = function (layer) {
 //            if(audioEngine.isMusicPlaying){
 //                audioEngine.pauseMusic();
             cc.audioEngine.stopMusic();
+            cc.audioEngine.stopAllEffects();
 //            } else {
 //                audioEngine.resumeMusic();
 //                audioEngine.playMusic(bgm_Level1, true);
