@@ -7,7 +7,7 @@ var s_UpperWalls = themeDir + "UpperWalls.png";
 var s_Doors = themeDir + "Doors.png";
 var s_Pillar = themeDir + "Pillar.png";
 var s_Items = themeDir + "Items.png";
-var s_Whip = "res/Whip.png";
+var s_Weapons = "res/Weapons.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
 var s_Kiwi = "res/Kiwi.png";
@@ -23,8 +23,12 @@ var s_TouchControls = "res/TouchControls.png";
 //music
 var bgm_Level1 = "res/Music/ingame01.mp3";
 //SFX
+var sfx_Punch01 = "res/SFX/Punch01.ogg";
+var sfx_Candelabre01 = "res/SFX/Candelabre01.ogg";
 var sfx_Whip01 = "res/SFX/Whip01.ogg";
 var sfx_Whip02 = "res/SFX/Whip02.ogg";
+var sfx_Coin01 = "res/SFX/Coin01.ogg";
+var sfx_Door01 = "res/SFX/Door01.ogg";
 //gfx for debug
 var s_HitBoxGrid = "res/DBG/hbGrid.png";
 var s_HitBoxGridBlue = "res/DBG/hbGridBlue.png";
@@ -43,7 +47,7 @@ var g_resources = [
     {src:s_Shadow32x16},
     {src:s_Pillar},
     {src:s_Items},
-    {src:s_Whip},
+    {src:s_Weapons},
     {src:s_Merchant},
     {src:s_Pit},
     {src:s_Debris},
@@ -62,6 +66,10 @@ var g_resources = [
     //{src:bgm_Level1},
 
     //effect
+    {src:sfx_Punch01},
+    {src:sfx_Candelabre01},
     {src:sfx_Whip01},
     {src:sfx_Whip02},
+    {src:sfx_Coin01},
+    {src:sfx_Door01},
 ];
