@@ -24,10 +24,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48),
-                        cc.rect(0+33*2, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48)
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
                 delay: 0.3
             },
@@ -35,10 +35,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48),
-                        cc.rect(0+33*2, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48)
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
                 delay: 0.3,
                 flippedX: true
@@ -47,10 +47,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48),
-                        cc.rect(0+33*2, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                        cc.rect(1+34*0, 0+50*1, 32, 48),
+                        cc.rect(1+34*1, 0+50*1, 32, 48),
+                        cc.rect(1+34*2, 0+50*1, 32, 48),
+                        cc.rect(1+34*1, 0+50*1, 32, 48)
                     ],
                 delay: 0.3
             },
@@ -58,10 +58,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48),
-                        cc.rect(0+33*2, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                        cc.rect(1+34*0, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48),
+                        cc.rect(1+34*2, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48)
                     ],
                 delay: 0.3,
                 flippedX: true
@@ -70,10 +70,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48),
-                        cc.rect(0+33*2, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48)
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
                 delay: 0.1
             },
@@ -81,10 +81,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48),
-                        cc.rect(0+33*2, 0, 32, 48),
-                        cc.rect(0+33*1, 0, 32, 48)
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
@@ -93,10 +93,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48),
-                        cc.rect(0+33*2, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                        cc.rect(1+34*0, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48),
+                        cc.rect(1+34*2, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48)
                     ],
                 delay: 0.1
             },
@@ -104,10 +104,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*0, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48),
-                        cc.rect(0+33*2, 0+49*1, 32, 48),
-                        cc.rect(0+33*1, 0+49*1, 32, 48)
+                        cc.rect(1+34*0, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48),
+                        cc.rect(1+34*2, 1+50*1, 32, 48),
+                        cc.rect(1+34*1, 1+50*1, 32, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
@@ -116,8 +116,8 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*1, 0+49*0, 32, 48),
-                        cc.rect(0+33*0, 0+49*0, 32, 48)
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*0, 1+50*0, 32, 48)
                     ],
                 delay: 2,
                 mirrorX: true
@@ -126,8 +126,8 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(0+33*1, 0+49*1, 32, 48),
-                        cc.rect(0+33*0, 0+49*1, 32, 48)
+                        cc.rect(1+34*1, 1+50*1, 32, 48),
+                        cc.rect(1+34*0, 1+50*1, 32, 48)
                     ],
                 delay: 2,
                 mirrorX: true
