@@ -24,10 +24,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48)
                     ],
                 delay: 0.2
             },
@@ -35,10 +35,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48)
                     ],
                 delay: 0.2,
                 flippedX: true
@@ -47,10 +47,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48)
                     ],
                 delay: 0.2
             },
@@ -58,10 +58,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48)
                     ],
                 delay: 0.2,
                 flippedX: true
@@ -70,10 +70,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48)
                     ],
                 delay: 0.5
             },
@@ -81,10 +81,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48),
-                        cc.rect(1+49*1, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48),
+                        cc.rect(1+50*1, 1, 48, 48)
                     ],
                 delay: 0.5,
                 flippedX: true
@@ -93,10 +93,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48)
                     ],
                 delay: 0.5
             },
@@ -104,10 +104,10 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48),
-                        cc.rect(1+49*1, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48),
+                        cc.rect(1+50*1, 1+50*1, 48, 48)
                     ],
                 delay: 0.5,
                 flippedX: true
@@ -116,8 +116,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48)
                     ],
                 delay: 0.1
             },
@@ -125,8 +125,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1, 48, 48),
-                        cc.rect(1+49*2, 1, 48, 48)
+                        cc.rect(1+50*0, 1, 48, 48),
+                        cc.rect(1+50*2, 1, 48, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
@@ -135,8 +135,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48)
                     ],
                 delay: 0.1
             },
@@ -144,8 +144,8 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+49*0, 1+49*1, 48, 48),
-                        cc.rect(1+49*2, 1+49*1, 48, 48)
+                        cc.rect(1+50*0, 1+50*1, 48, 48),
+                        cc.rect(1+50*2, 1+50*1, 48, 48)
                     ],
                 delay: 0.1,
                 flippedX: true
