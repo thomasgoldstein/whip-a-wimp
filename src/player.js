@@ -1,7 +1,7 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     speed: 6,
-    currentWeapon: "punch",
+    currentWeapon: "whip",
     weaponSprite: null,
 
     ctor: function() {
@@ -320,7 +320,7 @@ waw.Player = waw.Unit.extend({
                 break;
             case TAG_ENEMY:
                 //TODO temp. remove later
-                //unit.onHurt(this);
+                //unit.onGetDamage(this);
                 break;
             default:
                 if(t>0)
@@ -592,7 +592,7 @@ waw.Player = waw.Unit.extend({
             if( m ) {
                 //if (cc.rectContainsPoint(m.collideRect(), wp)) {
                 if (cc.rectIntersectsRect(m.collideRect(), hitArea_rect)) {
-                    m.onHurt(this);
+                    m.onGetDamage(this);
                     //break;
                 }
             }
