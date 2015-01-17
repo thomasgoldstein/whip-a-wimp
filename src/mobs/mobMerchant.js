@@ -198,7 +198,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onHurt(this);
+            waw.player.onDeath(this);
         }
 
         if (this.stateSchedule.isDone()) {
@@ -210,7 +210,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
 
         if(showDebugInfo && this.label) {
             this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
-            "\n"+this.mobType+" "+this.state+"_"+this.direction );
+            "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
         }
     }
 })

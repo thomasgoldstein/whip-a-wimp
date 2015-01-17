@@ -27,6 +27,7 @@ waw.Enemy = waw.Unit.extend({
 
         this.SCHEDULE_IDLE = new waw.Schedule([this.initIdle, this.onIdle], ["seeEnemy"]);
         this.SCHEDULE_ATTACK = new waw.Schedule([this.initAttack, this.onAttack], []);
+        this.SCHEDULE_HURT = new waw.Schedule([this.initHurt, this.onHurt], ["none"]);
         this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onWalk], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onFollowEnemy], ["feelObstacle"]);
@@ -113,6 +114,12 @@ waw.Enemy = waw.Unit.extend({
                 this.state = "idle";
                 this.stateSchedule = this.SCHEDULE_IDLE;
                 console.log("mob attacks player end");
+                break;
+            case "hurt":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                this.stateSchedule.reset();
+                console.log("mobs hurt stat end");
                 break;
             case "walk":
                 if(this.conditions.indexOf("seeEnemy")>=0) {
@@ -242,6 +249,22 @@ waw.Enemy = waw.Unit.extend({
         return true;
     },
     onAttack: function () {
+        var currentTime = new Date();
+        this.dx = this.dy = 0;
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
+    initHurt: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
+
+        this.sprite.playAnimation("hurt_"+this.direction);
+        return true;
+    },
+    onHurt: function () {
         var currentTime = new Date();
         this.dx = this.dy = 0;
         if (currentTime.getTime() > this.timeToThink) {
@@ -420,10 +443,10 @@ waw.Enemy = waw.Unit.extend({
         var currentTime = new Date();
         if (this.subStateCountDown === 0 || this.subState === "" || currentTime.getTime() < this.subStateCountDown)
             return;
-        console.log("ENMY subact tim: ", this.subState);
+        //console.log("ENMY subact tim: ", this.subState);
         switch(this.subState){
             case "invincible":
-                console.log("ENM REMOVE subact tim: ", this.subState);
+                //console.log("ENM REMOVE subact tim: ", this.subState);
                 this.setSubState("");
                 this.sprite.opacity = 255;
                 this.shadowSprite.opacity = 255;
@@ -437,22 +460,25 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
     },
-    onHurt : function (killer) {
+    onGetDamage : function (killer) {
         if (this.subState === "invincible")
             return;
 
         if (this.subState === "dead")
             return;
 
+        this.becomeInvincible(200);
         this.HP--;
         cc.audioEngine.playEffect(this.sfx_hurt);
+        this.state = "hurt";
+        this.stateSchedule = this.SCHEDULE_HURT;
+        this.stateSchedule.reset();
+
+        //this.sprite.playAnimation("hurt_"+this.direction);
         if(this.HP <= 0)
             this.onDeath(killer);
     },
     onDeath : function (killer) {
-        if (this.subState === "invincible")
-            return;
-
         if (this.subState === "dead")
             return;
         cc.audioEngine.playEffect(this.sfx_dead);

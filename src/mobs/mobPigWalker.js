@@ -151,7 +151,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
+                        cc.rect(1+50*0, 1+50*0, 48, 48),
                         cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48),
                         cc.rect(1+50*1, 1+50*2, 48, 48)
                     ],
                 delay: 0.1
@@ -160,7 +162,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
+                        cc.rect(1+50*0, 1+50*0, 48, 48),
                         cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48),
                         cc.rect(1+50*1, 1+50*2, 48, 48)
                     ],
                 delay: 0.1,
@@ -202,7 +206,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onHurt(this);
+            waw.player.onDeath(this);
         }
 
         if (this.stateSchedule.isDone()) {
@@ -214,7 +218,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
 
         if(showDebugInfo && this.label) {
             this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
-            "\n"+this.mobType+" "+this.state+"_"+this.direction );
+            "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
         }
     }
 })

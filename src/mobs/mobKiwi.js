@@ -107,6 +107,23 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
                         cc.rect(0*50+1, 2*50+1, 48, 48)
                     ],
                 delay: 0.1
+            },
+            "hurt_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(0*50+1, 2*50+1, 48, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
+            },
+            "hurt_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(0*50+1, 2*50+1, 48, 48)
+                    ],
+                delay: 0.1
             }
         };
         animData["follow_up"] = animData["walk_up"];
@@ -123,8 +140,8 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         animData["attack_down"] = animData["walk_down"];
         animData["attack_left"] = animData["walk_left"];
 
-        animData["hurt_up_left"] = animData["hurt_down_left"];
-        animData["hurt_up_right"] = animData["hurt_down_right"];
+        animData["hurt_up"] = animData["hurt_left"];
+        animData["hurt_down"] = animData["hurt_right"];
 
         this.sprite = new waw.AnimatedSprite(s_Kiwi, animData);
         this.calcDirection(0,0);
@@ -160,7 +177,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onHurt(this);
+            waw.player.onDeath(this);
         }
 
         if (this.stateSchedule.isDone()) {
@@ -172,7 +189,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
 
         if(showDebugInfo && this.label) {
             this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
-            "\n"+this.mobType+" "+this.state+"_"+this.direction );
+            "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
         }
     }
 })
