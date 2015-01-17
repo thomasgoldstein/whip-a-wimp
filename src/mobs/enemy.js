@@ -116,9 +116,10 @@ waw.Enemy = waw.Unit.extend({
                 console.log("mob attacks player end");
                 break;
             case "hurt":
-                this.state = "idle";
-                this.stateSchedule = this.SCHEDULE_IDLE;
+                this.state = "follow";
+                this.stateSchedule = this.SCHEDULE_FOLLOW;
                 this.stateSchedule.reset();
+                this.speed += 1;
                 console.log("mobs hurt stat end");
                 break;
             case "walk":
@@ -467,7 +468,7 @@ waw.Enemy = waw.Unit.extend({
         if (this.subState === "dead")
             return;
 
-        this.becomeInvincible(200);
+        this.becomeInvincible(1000);
         this.HP--;
         cc.audioEngine.playEffect(this.sfx_hurt);
         this.state = "hurt";
