@@ -131,6 +131,29 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
                     ],
                 delay: 2,
                 mirrorX: true
+            },
+            "hurt_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
+                    ],
+                delay: 0.1
+            },
+            "hurt_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+34*0, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48),
+                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*1, 1+50*0, 32, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
             }
         };
         animData["follow_up_left"] = animData["walk_up_left"];
@@ -146,6 +169,10 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
         animData["idle_up_right"] = animData["rolling_up"];
         animData["idle_down_left"] = animData["rolling_down"];
         animData["idle_down_right"] = animData["rolling_down"];
+
+        animData["hurt_up_left"] = animData["hurt_down_left"];
+        animData["hurt_up_right"] = animData["hurt_down_right"];
+
 
         this.sprite = new waw.AnimatedSprite(s_Merchant, animData);
         this.calcDirection(0,0);
@@ -171,7 +198,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onDeath(this);
+            waw.player.onHurt(this);
         }
 
         if (this.stateSchedule.isDone()) {

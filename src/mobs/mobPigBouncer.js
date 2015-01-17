@@ -149,6 +149,25 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
                     ],
                 delay: 0.1,
                 flippedX: true
+            },
+            "hurt_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48)
+                    ],
+                delay: 0.1
+            },
+            "hurt_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
             }
         };
         animData["follow_up_left"] = animData["walk_up_left"];
@@ -159,6 +178,9 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
         animData["bounce_up_right"] = animData["walk_up_right"];
         animData["bounce_down_left"] = animData["walk_down_left"];
         animData["bounce_down_right"] = animData["walk_down_right"];
+
+        animData["hurt_up_left"] = animData["hurt_down_left"];
+        animData["hurt_up_right"] = animData["hurt_down_right"];
 
         this.sprite = new waw.AnimatedSprite(s_Pig, animData);
         this.calcDirection(0,0);
@@ -184,7 +206,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onDeath(this);
+            waw.player.onHurt(this);
         }
 
         if (this.stateSchedule.isDone()) {

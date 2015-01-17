@@ -19,6 +19,8 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
+    sfx_hurt: sfx_Punch01,
+    sfx_dead: sfx_Candelabre01,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
@@ -435,12 +437,25 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
     },
-    onDeath: function (killer) {
+    onHurt : function (killer) {
         if (this.subState === "invincible")
             return;
 
         if (this.subState === "dead")
             return;
+
+        this.HP--;
+        cc.audioEngine.playEffect(this.sfx_hurt);
+        if(this.HP <= 0)
+            this.onDeath(killer);
+    },
+    onDeath : function (killer) {
+        if (this.subState === "invincible")
+            return;
+
+        if (this.subState === "dead")
+            return;
+        cc.audioEngine.playEffect(this.sfx_dead);
         this.unscheduleAllCallbacks();
         this.subState = "dead";
         //this.sprite.playAnimation("death");

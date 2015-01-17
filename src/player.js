@@ -320,7 +320,7 @@ waw.Player = waw.Unit.extend({
                 break;
             case TAG_ENEMY:
                 //TODO temp. remove later
-                //unit.onDeath(this);
+                //unit.onHurt(this);
                 break;
             default:
                 if(t>0)
@@ -592,7 +592,7 @@ waw.Player = waw.Unit.extend({
             if( m ) {
                 //if (cc.rectContainsPoint(m.collideRect(), wp)) {
                 if (cc.rectIntersectsRect(m.collideRect(), hitArea_rect)) {
-                    m.onDeath(this);
+                    m.onHurt(this);
                     //break;
                 }
             }

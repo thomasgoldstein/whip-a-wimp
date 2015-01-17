@@ -123,6 +123,9 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         animData["attack_down"] = animData["walk_down"];
         animData["attack_left"] = animData["walk_left"];
 
+        animData["hurt_up_left"] = animData["hurt_down_left"];
+        animData["hurt_up_right"] = animData["hurt_down_right"];
+
         this.sprite = new waw.AnimatedSprite(s_Kiwi, animData);
         this.calcDirection(0,0);
         this.sprite.playAnimation(this.state+"_"+this.direction);
@@ -157,7 +160,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onDeath(this);
+            waw.player.onHurt(this);
         }
 
         if (this.stateSchedule.isDone()) {

@@ -6,7 +6,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     mobType: "PigWalker",
     shadowYoffset: 4,
     spriteYoffset: -4,
-    HP: 2,
+    HP: 3,
     state: "idle",
     ctor: function () {
         this._super();
@@ -146,6 +146,25 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
                     ],
                 delay: 0.1,
                 flippedX: true
+            },
+            "hurt_down_right":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48)
+                    ],
+                delay: 0.1
+            },
+            "hurt_down_left":
+            {
+                frameRects:
+                    [
+                        cc.rect(1+50*0, 1+50*2, 48, 48),
+                        cc.rect(1+50*1, 1+50*2, 48, 48)
+                    ],
+                delay: 0.1,
+                flippedX: true
             }
         };
         animData["follow_up_left"] = animData["walk_up_left"];
@@ -156,6 +175,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         animData["bounce_up_right"] = animData["walk_up_right"];
         animData["bounce_down_left"] = animData["walk_down_left"];
         animData["bounce_down_right"] = animData["walk_down_right"];
+
+        animData["hurt_up_left"] = animData["hurt_down_left"];
+        animData["hurt_up_right"] = animData["hurt_down_right"];
 
         this.sprite = new waw.AnimatedSprite(s_Pig, animData);
         this.calcDirection(0,0);
@@ -180,7 +202,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onDeath(this);
+            waw.player.onHurt(this);
         }
 
         if (this.stateSchedule.isDone()) {
