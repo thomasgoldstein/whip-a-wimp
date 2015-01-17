@@ -487,10 +487,14 @@ waw.Enemy = waw.Unit.extend({
         this.subState = "dead";
         //this.sprite.playAnimation("death");
         //this.sprite.runAction(new cc.MoveBy(3, 0, 240));
-        this.sprite.runAction(new cc.FadeOut(3));
-        this.sprite.runAction(new cc.ScaleTo(3, 0.3));
-        this.shadowSprite.runAction(new cc.FadeOut(3));
-        this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
+
+        this.sprite.playAnimation("idle_"+this.direction);
+        this.sprite.setAnchorPoint(0.5, 1);
+        this.sprite.rotation = 180;
+        this.sprite.runAction(new cc.FadeOut(1));
+        this.sprite.runAction(new cc.ScaleTo(1, 0.7));
+        this.shadowSprite.runAction(new cc.FadeOut(0.7));
+        this.shadowSprite.runAction(new cc.ScaleTo(0.7, 0.5));
 
         if(killer){
             //mob.sprite.visible = false;
