@@ -367,11 +367,15 @@ waw.Player = waw.Unit.extend({
                 switch (this.subState) {
                     case "punch":
                         cc.audioEngine.playEffect(sfx_Punch01);
+                        this.showHitBoxAndKill(24, 8);
+
                         var animKey = "punch_" + this.direction;
                         this.sprite.playAnimation(animKey);
                         break;
                     case "candelabre":
                         cc.audioEngine.playEffect(sfx_Candelabre01);
+                        this.showHitBoxAndKill(32, 12);
+
                         var animKey = "punch_" + this.direction;
 
                         this.weaponSprite = new cc.Sprite(s_Weapons,
@@ -434,6 +438,7 @@ waw.Player = waw.Unit.extend({
                         else
                             cc.audioEngine.playEffect(sfx_Whip02);
                         waw.whip.visible = true;
+                        this.showHitBoxAndKill(70, 8);
                         switch (this.direction) {
                             case "down":
                                 waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
@@ -512,12 +517,12 @@ waw.Player = waw.Unit.extend({
             case "punch":
                 this.state = "idle";
                 this.setSubState("");
-                this.showHitBoxAndKill(24, 8);
+                //this.showHitBoxAndKill(24, 8);
                 break;
             case "candelabre":
                 this.state = "idle";
                 this.setSubState("");
-                this.showHitBoxAndKill(32, 12);
+                //this.showHitBoxAndKill(32, 12);
                 break;
             case "whip":
                 //console.log("REMOVE subact tim: ", this.subState);
@@ -541,7 +546,7 @@ waw.Player = waw.Unit.extend({
                 waw.whip.visible = false;
                 this.state = "idle";
                 this.setSubState("");
-                this.showHitBoxAndKill(70, 8);
+                //this.showHitBoxAndKill(70, 8);
                 break;
             default:
                 this.setSubState("");
