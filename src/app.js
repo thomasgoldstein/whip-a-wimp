@@ -30,29 +30,21 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-	//audioEngine.setMusicVolume(0.5);
-     //   audioEngine.playMusic(bgm_Level1, true);
-
-        //init the current labyrinth of rooms;
         rooms.initLevel();
         rooms.genLevel();
 
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
-
         waw.whip = new waw.Whip();
-        //waw.whip.setPosition(startPlayerPos);
 
         //TODO add menu
         var layer = new waw.MainLayer();
         layer.init();
         this.addChild(layer);
-//	    this.setScale(0.5); //size 50% to see that it's the 1st room.
     }
 });
 
 //this layer exists on every Room
-//it contains all keyboard stuff
 waw.MainLayer = cc.Layer.extend({
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
@@ -62,7 +54,6 @@ waw.MainLayer = cc.Layer.extend({
     init: function () {
         this._super();
         //console.info("init layer", currentRoomX, currentRoomY);
-        //var w = cc.director.waw;
         waw.layer = this;
         waw.units = []; //clear obstacles
         this.units = waw.units;
@@ -73,9 +64,7 @@ waw.MainLayer = cc.Layer.extend({
             waw.initWalls(currentRoom); //init array units with non-destructable walls (8 pieces)
             waw.prepareRoomLayer(currentRoom);
         } else
-            throw "this room coords are out of the grid"
-        //waw.units = this.units;   //init array
-
+            throw "this room coords are out of the grid";
 
         var room = rooms[currentRoomY][currentRoomX];
         room.visited = true;
@@ -93,8 +82,7 @@ waw.MainLayer = cc.Layer.extend({
         this.topLabel .setPosition(16, 240-1);
 
         this.scheduleUpdate();
-        //Debug menu
-        //TODO
+        //TODO Remove Debug menu
         waw.MenuDebug(this);
     },
     onEnter: function () {
@@ -102,16 +90,13 @@ waw.MainLayer = cc.Layer.extend({
         this._super();
         console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
-        //TODO
         waw.player.update();   //to update players sprite facing direction
 
         //attach players shadow to layer OVER BG floor (its Z index = -15)
-        //TODO
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-waw.player.y);
 
         waw.player.addChild(waw.whip,10);
-        //waw.whip.setPosition(0,16);
         waw.whip.init();
 
         //put items on the layer
@@ -184,11 +169,11 @@ waw.MainLayer = cc.Layer.extend({
     },
     onEnterTransitionDidFinish: function () {
         this._super();
-//        console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
+//      console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
         waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
-        var m,pos,mf;
+        var m,pos;
         this._super();
         //console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
 
@@ -214,57 +199,10 @@ waw.MainLayer = cc.Layer.extend({
         this.units = [];
         this.cleanup();
     },
-    onTouchesBegan: function(touch, event){
-//        console.log(touch, event);
-/*        var pos = touch[0].getLocation();
-        if(pos.x>50 || pos.y >50)
-            return;
-        if(pos.x<16) {
-            waw.player.keyUp(cc.KEY.right);
-            waw.player.keyDown(cc.KEY.left);
-        }
-        else if(pos.x>50-16) {
-            waw.player.keyUp(cc.KEY.left);
-            waw.player.keyDown(cc.KEY.right);
-        }
-        if(pos.y<16) {
-            waw.player.keyUp(cc.KEY.up);
-            waw.player.keyDown(cc.KEY.down);
-        }
-        else if(pos.y>50-16) {
-            waw.player.keyUp(cc.KEY.down);
-            waw.player.keyDown(cc.KEY.up);
-        }*/
-    },
-    onTouchesEnded: function(touch, event){
-//        console.log(touch, event);
-/*        if(!touch[0])
-            return;
-        var pos = touch[0].getLocation();
-        if(pos.x>50 || pos.y >50) {
-            waw.player.keyUp(cc.KEY.left);
-            waw.player.keyUp(cc.KEY.right);
-            waw.player.keyUp(cc.KEY.down);
-            waw.player.keyUp(cc.KEY.up);
-            return;
-        }
-        if(pos.x<16) {
-            waw.player.keyUp(cc.KEY.left);
-        }
-        else if(pos.x>50-16) {
-            waw.player.keyUp(cc.KEY.right);
-        }
-        if(pos.y<16) {
-            waw.player.keyUp(cc.KEY.down);
-        }
-        else if(pos.y>50-16) {
-            waw.player.keyUp(cc.KEY.up);
-        }*/
-    },
     onGotoNextRoom: function (e, playerPos) {
         //set player coords for the next room
         this.removeChild(waw.player, true);
-        waw.player.setPosition(playerPos);    //TODO Fix it better. this setpos insta moves player to the next room pos. It prevents running UPDATE several times at once.
+        waw.player.setPosition(playerPos);
         waw.player.unscheduleUpdate();
         this.unscheduleUpdate();
 
@@ -305,8 +243,6 @@ waw.MainLayer = cc.Layer.extend({
                 break;
         }
 
-        //NOW we prepare NEXT room to slide from current to the next one.
-
         currentRoom = room; //TODO remove later?
         //create new scene to put a layer of the next room into it. To use DIRECTOR to use transitions between scenes
         var nextScene = new cc.Scene();
@@ -315,7 +251,7 @@ waw.MainLayer = cc.Layer.extend({
         nextScene.addChild(nextLayer);
 
         cc.director.runScene(new transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
-//        cc.director.replaceScene(nextScene);    //Instant transition between rooms
+        //cc.director.runScene(nextScene);    //Instant transition between rooms
     },
     update: function (dt) {
         //score-keys TODO: do not update every frame
@@ -326,9 +262,7 @@ waw.MainLayer = cc.Layer.extend({
         //monsters
         for(var i=0; i<this.foes.length; ++i){
             if(this.foes[i]) {
-                this.foes[i].update(); //pass current closure to have access to its Units arr
-//                if(!this.foes[i].condition.alive)
-//                    this.foes[i] = null;
+                this.foes[i].update();
             }
         }
         //go to another room?
@@ -337,22 +271,15 @@ waw.MainLayer = cc.Layer.extend({
         if (playerPos.x < 16) {
             playerPos.x = 320 - 32;
             this.onGotoNextRoom(cc.KEY.left, playerPos);
-            return;
-
         } else if (playerPos.y < 16) {
             playerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
             this.onGotoNextRoom(cc.KEY.down, playerPos);
-            return;
-
         } else if (playerPos.x > 320 - 16) {
             playerPos.x = 32;
             this.onGotoNextRoom(cc.KEY.right, playerPos);
-            return;
-
         } else if (playerPos.y > 240 - 32) {  //upper wall is 16pix taller
             playerPos.y = 32;
             this.onGotoNextRoom(cc.KEY.up, playerPos);
-            return;
         }
     }
 });

@@ -25,8 +25,6 @@ function Room(_name,_x,_y) {
 	this.walls = new Walls();
     this.visited = false;
     this.type = 0; //0 = clean room type
-    //this.mobs = waw.generateMobs();
-    //this.items = waw.generateItems();
     this.mobs = [];
     this.items = [];
 
@@ -277,42 +275,6 @@ waw.GenerateMiniMap = function() {
     }
     return layer;
 };
-
-/*//old Vectors style
-waw.GenerateMiniMapV = function() {
-    var color = null;
-//    var layer = cc.Layer.create(39, 39);    //transparent BG of mini-map
-    var layer = cc.LayerColor.create(cc.c4b(0, 0, 0, 24), 39, 39);   //dark BG
-    var draw = cc.DrawNode.create();
-    layer.addChild(draw);
-
-    for(var y = 0; y < 9 ; y++) {
-        for(var x = 0; x < 9; x++) {
-            var r = rooms[y][x];
-            if(r) {	//is it a Room
-                if(r.visited)
-                    color = cc.c4f( 1,1,1, 0.5);
-                else
-                    color = cc.c4f( 0.2,0.2,0.2, 0.5);
-                //4 passages
-                if(r.walls.up != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 + 1.6), 0.5, color );
-                if(r.walls.right != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 +1.6, (8-y)*4+3.5), 0.5, color );
-                if(r.walls.down != "wall")
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5 - 1.6), 0.5, color );
-                if(r.walls.left != "wall")
-                    draw.drawDot( cc.p(x*4+3.5 -1.6, (8-y)*4+3.5), 0.5, color );
-                //the room
-                draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1.7, color );
-                //Draw yellow dot for player
-                if(currentRoomX == x && currentRoomY == y)
-                    draw.drawDot( cc.p(x*4+3.5, (8-y)*4+3.5), 1, cc.c4f( 25,0,0, 1) );
-            }
-        }
-    }
-    return layer;
-};*/
 
 //init 8 pieces of impassable walls
 waw.initWalls = function(room) {
@@ -657,19 +619,7 @@ waw.prepareRoomPattern = function(room) {
         if(waw.rand()>0.5)
             continue;
         d.setScale(0.75 + waw.rand()*0.3);
-        //d.runAction(cc.FadeTo.create(5,0.5));
     }
-    //TODO remove them from there. they'll be in the patterns
-    //we do not use "laying on the floor obstacles" now
-/*
-    for(var x = 0; x < waw.rand()*2; x++) {
-        var d = cc.Sprite.create(s_Pit,
-            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
-        layer.addChild(d,-8); //on the floor
-        d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
-        units.push(d);
-    }
-*/
 
     //now put some obstacles, according to the room.type
     waw.rand = new Math.seedrandom(room.randomSeedObstacles); //a temp Pseudo random func with set seed
@@ -790,7 +740,6 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     var units = waw.units;
     var layer = waw.layer;
 
-    //var sprite = cc.Sprite.create(s_Pillar,cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 64)); //to pick random
     var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
     sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
