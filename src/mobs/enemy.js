@@ -482,19 +482,21 @@ waw.Enemy = waw.Unit.extend({
     onDeath : function (killer) {
         if (this.subState === "dead")
             return;
-        cc.audioEngine.playEffect(this.sfx_dead);
         this.unscheduleAllCallbacks();
         this.subState = "dead";
-        //this.sprite.playAnimation("death");
-        //this.sprite.runAction(new cc.MoveBy(3, 0, 240));
+        this.sprite.opacity = 255;
+        this.shadowSprite.opacity = 255;
 
-        this.sprite.playAnimation("idle_"+this.direction);
-        this.sprite.setAnchorPoint(0.5, 1);
-        this.sprite.rotation = 180;
-        this.sprite.runAction(new cc.FadeOut(1));
-        this.sprite.runAction(new cc.ScaleTo(1, 0.7));
-        this.shadowSprite.runAction(new cc.FadeOut(0.7));
-        this.shadowSprite.runAction(new cc.ScaleTo(0.7, 0.5));
+        this.sprite.playAnimation("hurt_"+this.direction);
+        this.scheduleOnce(function () {
+            cc.audioEngine.playEffect(this.sfx_dead);
+            this.sprite.setAnchorPoint(0.5, 1);
+            this.sprite.rotation = 180;
+            this.sprite.runAction(new cc.FadeOut(1));
+            this.sprite.runAction(new cc.ScaleTo(1, 0.7));
+            this.shadowSprite.runAction(new cc.FadeOut(0.7));
+            this.shadowSprite.runAction(new cc.ScaleTo(0.7, 0.5));
+        }, 0.6);
 
         if(killer){
             //mob.sprite.visible = false;
