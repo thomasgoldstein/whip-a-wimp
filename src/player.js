@@ -623,6 +623,7 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "death")
             return;
         this.subState = "death";
+        waw.whip.visible = false; //hide Whip
         this.sprite.playAnimation("death");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
