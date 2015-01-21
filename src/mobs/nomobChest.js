@@ -16,6 +16,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         //this.setAnchorPoint(0.5, 0);
         this.speed = 0;
 
+        
         this.safePos = cc.p(0, 0);
 
         var animData =
