@@ -51,6 +51,11 @@ waw.MainLayer = cc.Layer.extend({
     topLabel: null, //Hi Score, Keys,etc
     topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
 
+    lightspot1: null,
+    lightspot2: null,
+    lightspot3: null,
+    lightspot4: null,
+
     init: function () {
         this._super();
         //console.info("init layer", currentRoomX, currentRoomY);
@@ -80,6 +85,39 @@ waw.MainLayer = cc.Layer.extend({
         this.topLabel.setAnchorPoint(0,1);
         this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
         this.topLabel .setPosition(16, 240-1);
+
+        this.lightspot1 = new cc.Sprite(s_LightSpot);
+        this.lightspot1.setAnchorPoint(0, 1);
+        this.lightspot1.setRotation(0);
+        this.lightspot1.setPosition(160, 120);
+        this.lightspot2 = new cc.Sprite(s_LightSpot);
+        this.lightspot2.setAnchorPoint(0, 1);
+        this.lightspot2.setRotation(90);
+        this.lightspot2.setPosition(160, 120);
+        this.lightspot3 = new cc.Sprite(s_LightSpot);
+        this.lightspot3.setAnchorPoint(0, 1);
+        this.lightspot3.setRotation(180);
+        this.lightspot3.setPosition(160, 120);
+        this.lightspot4 = new cc.Sprite(s_LightSpot);
+        this.lightspot4.setAnchorPoint(0, 1);
+        this.lightspot4.setRotation(270);
+        this.lightspot4.setPosition(160, 120);
+
+        this.addChild(this.lightspot1, 399);
+        this.addChild(this.lightspot2, 399);
+        this.addChild(this.lightspot3, 399);
+        this.addChild(this.lightspot4, 399);
+        if (currentRoom.dark) {
+            this.lightspot1.visible =
+                this.lightspot2.visible =
+                    this.lightspot3.visible =
+                        this.lightspot4.visible = true;
+        } else {
+            this.lightspot1.visible =
+                this.lightspot2.visible =
+                    this.lightspot3.visible =
+                        this.lightspot4.visible = false;
+        }
 
         this.scheduleUpdate();
         //TODO Remove Debug menu
@@ -258,6 +296,28 @@ waw.MainLayer = cc.Layer.extend({
         var s = "HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" Keys:"+waw.keys+" Coins:"+waw.coins+" Gems:"+waw.gems;
         if (s != this.topLabelString)
             this.topLabel.setString(this.topLabelString = s);
+
+        //
+        if(currentRoom.dark) {
+            if(!this.lightspot1.visible){
+                this.lightspot1.visible =
+                    this.lightspot2.visible =
+                        this.lightspot3.visible =
+                            this.lightspot4.visible = true;
+            }
+            var pos = waw.player.getPosition();
+            this.lightspot1.setPosition(pos);
+            this.lightspot2.setPosition(pos);
+            this.lightspot3.setPosition(pos);
+            this.lightspot4.setPosition(pos);
+        } else {
+            if(this.lightspot1.visible){
+                this.lightspot1.visible =
+                    this.lightspot2.visible =
+                        this.lightspot3.visible =
+                            this.lightspot4.visible = false;
+            }
+        }
 
         //monsters
         for(var i=0; i<this.foes.length; ++i){

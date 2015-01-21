@@ -8,6 +8,9 @@ var s_Doors = themeDir + "Doors.png";
 var s_Pillar = themeDir + "Pillar.png";
 var s_Items = themeDir + "Items.png";
 var s_Weapons = "res/Weapons.png";
+var s_LightSpot = "res/LightSpot.png";
+var s_Debris = "res/Debris.png";
+var s_Chest = themeDir + "Chest.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
 var s_Kiwi = "res/Kiwi.png";
@@ -15,7 +18,6 @@ var s_Shadow12x6 = "res/Shadow12x6.png";
 var s_Shadow24x12 = "res/Shadow24x12.png";
 var s_Shadow32x16 = "res/Shadow32x16.png";
 var s_Pit = "res/Pit.png";
-var s_Debris = "res/Debris.png";
 var s_Sparkle = "res/Sparkle.png";
 var s_Pig = themeDir + "Pig.png";
 var s_Map = "res/Map.png";
@@ -40,6 +42,8 @@ var g_resources = [
     {src:s_MiddleWalls},
     {src:s_UpperWalls},
     {src:s_Doors},
+    {src:s_LightSpot},
+    {src:s_Chest},
     {src:s_Jesus},
     {src:s_Kiwi},
     {src:s_Shadow12x6},

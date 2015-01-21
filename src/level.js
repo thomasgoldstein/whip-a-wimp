@@ -24,6 +24,7 @@ function Room(_name,_x,_y) {
 	this.y = _y;
 	this.walls = new Walls();
     this.visited = false;
+    this.dark = false;
     this.type = 0; //0 = clean room type
     this.mobs = [];
     this.items = [];
@@ -67,7 +68,10 @@ rooms.genLevel = function() {
 				//r.Walls.up = r.Walls.down = r.Walls.left = r.Walls.right = "empty";
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
-			}
+			} else {
+                if(Math.random() <= 0.1)
+                    r.dark = true;
+            }
 
             //random type of the room obstacles pattern
             //set chance to set a pattern to 90%  TODO - put it back to 50

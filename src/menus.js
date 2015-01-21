@@ -125,10 +125,10 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugMenu10.setPosition(16, 150);
 
-    labelDebug = new cc.LabelTTF("N/A", "System", 10);
+    labelDebug = new cc.LabelTTF("Dark", "System", 10);
     var debugMenu11 = new cc.MenuItemLabel(labelDebug,
         function () {
-            // N/A
+            currentRoom.dark = !currentRoom.dark;
         }, layer);
     menu = new cc.Menu(debugMenu11);
     menu.setPosition(0, 0);
