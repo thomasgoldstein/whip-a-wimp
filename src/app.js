@@ -103,6 +103,31 @@ waw.MainLayer = cc.Layer.extend({
         this.lightspot4.setRotation(270);
         this.lightspot4.setPosition(160, 120);
 
+        this.lightspot1.runAction(new cc.RepeatForever(
+            new cc.Sequence(
+                new cc.ScaleTo(0.2 + Math.random(), 0.98),
+                new cc.ScaleTo(0.2 + Math.random(), 1)
+            )
+        ));
+        this.lightspot2.runAction(new cc.RepeatForever(
+            new cc.Sequence(
+                new cc.ScaleTo(0.2 + Math.random(), 0.98),
+                new cc.ScaleTo(0.2 + Math.random(), 1)
+            )
+        ));
+        this.lightspot3.runAction(new cc.RepeatForever(
+            new cc.Sequence(
+                new cc.ScaleTo(0.2 + Math.random(), 0.98),
+                new cc.ScaleTo(0.2 + Math.random(), 1)
+            )
+        ));
+        this.lightspot4.runAction(new cc.RepeatForever(
+            new cc.Sequence(
+                new cc.ScaleTo(0.2 + Math.random(), 0.98),
+                new cc.ScaleTo(0.2 + Math.random(), 1)
+            )
+        ));
+
         this.addChild(this.lightspot1, 399);
         this.addChild(this.lightspot2, 399);
         this.addChild(this.lightspot3, 399);
@@ -252,6 +277,8 @@ waw.MainLayer = cc.Layer.extend({
                 if (room) {
                     currentRoomY -= 1;
                     transition = cc.TransitionSlideInT; //effect - scrolls one scene out
+                    this.lightspot3.visible = false;
+                    this.lightspot4.visible = false;
                 } else
                     return;
                 break;
@@ -260,6 +287,8 @@ waw.MainLayer = cc.Layer.extend({
                 if (room) {
                     currentRoomY += 1;
                     transition = cc.TransitionSlideInB;
+                    this.lightspot1.visible = false;
+                    this.lightspot2.visible = false;
                 } else
                     return;
                 break;
@@ -268,6 +297,8 @@ waw.MainLayer = cc.Layer.extend({
                 if (room) {
                     currentRoomX -= 1;
                     transition = cc.TransitionSlideInL;
+                    this.lightspot2.visible = false;
+                    this.lightspot3.visible = false;
                 } else
                     return;
                 break;
@@ -276,6 +307,8 @@ waw.MainLayer = cc.Layer.extend({
                 if (room) {
                     currentRoomX += 1;
                     transition = cc.TransitionSlideInR;
+                    this.lightspot1.visible = false;
+                    this.lightspot4.visible = false;
                 } else
                     return;
                 break;

@@ -69,7 +69,7 @@ rooms.genLevel = function() {
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
 			} else {
-                if(Math.random() <= 0.1)
+                if(Math.random() <= 0.05)
                     r.dark = true;
             }
 
