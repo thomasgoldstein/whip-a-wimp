@@ -128,10 +128,10 @@ waw.MainLayer = cc.Layer.extend({
             )
         ));
 
-        this.addChild(this.lightspot1, 399);
-        this.addChild(this.lightspot2, 399);
-        this.addChild(this.lightspot3, 399);
-        this.addChild(this.lightspot4, 399);
+        this.addChild(this.lightspot1, 290);
+        this.addChild(this.lightspot2, 290);
+        this.addChild(this.lightspot3, 290);
+        this.addChild(this.lightspot4, 290);
         if (currentRoom.dark) {
             this.lightspot1.visible =
                 this.lightspot2.visible =
