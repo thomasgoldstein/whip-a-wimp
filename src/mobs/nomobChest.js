@@ -1,7 +1,7 @@
 "use strict";
 //states: idle 
 
-waw.MobKiwi = waw.MobRandomBouncer.extend({
+waw.NoMobChest = waw.Enemy.extend({
     mobType: "Chest",
     shadowYoffset: 0,
     spriteYoffset: 0,
@@ -15,20 +15,13 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         this.setContentSize(16, 16);
         //this.setAnchorPoint(0.5, 0);
         this.speed = 0;
+        this.direction = "down";
 
         
         this.safePos = cc.p(0, 0);
 
         var animData =
         {
-            "idle_up":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 1*50+1, 48, 48)
-                    ],
-                delay: 0.1
-            },
             "idle_down":
             {
                 frameRects:
@@ -37,88 +30,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
                     ],
                 delay: 0.1
             },
-            "idle_left":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1,
-                flippedX: true
-            },
-            "idle_right":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1
-            },
-            "walk_up":
-            {
-                frameRects:
-                    [
-                        cc.rect(1*50+1, 1*50+1, 48, 48),
-                        cc.rect(2*50+1, 1*50+1, 48, 48),
-                        cc.rect(1*50+1, 1*50+1, 48, 48),
-                        cc.rect(0*50+1, 1*50+1, 48, 48)
-                    ],
-                delay: 0.1,
-                mirrorX: true
-            },
-            "walk_down":
-            {
-                frameRects:
-                    [
-                        cc.rect(1*50+1, 0*50+1, 48, 48),
-                        cc.rect(2*50+1, 0*50+1, 48, 48),
-                        cc.rect(1*50+1, 0*50+1, 48, 48),
-                        cc.rect(0*50+1, 0*50+1, 48, 48)
-                    ],
-                delay: 0.1,
-                mirrorX: true
-            },
-            "walk_left":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 3*50+1, 48, 48),
-                        cc.rect(1*50+1, 3*50+1, 48, 48),
-                        cc.rect(0*50+1, 3*50+1, 48, 48),
-                        cc.rect(0*50+1, 2*50+1, 48, 48),
-                        cc.rect(1*50+1, 2*50+1, 48, 48),
-                        cc.rect(2*50+1, 2*50+1, 48, 48),
-                        cc.rect(1*50+1, 2*50+1, 48, 48),
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1,
-                flippedX: true
-            },
-            "walk_right":
-            {
-                frameRects:
-                    [
-                        cc.rect(1*50+1, 2*50+1, 48, 48),
-                        cc.rect(2*50+1, 2*50+1, 48, 48),
-                        cc.rect(1*50+1, 2*50+1, 48, 48),
-                        cc.rect(0*50+1, 2*50+1, 48, 48),
-                        cc.rect(0*50+1, 3*50+1, 48, 48),
-                        cc.rect(1*50+1, 3*50+1, 48, 48),
-                        cc.rect(0*50+1, 3*50+1, 48, 48),
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1
-            },
-            "hurt_left":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1,
-                flippedX: true
-            },
-            "hurt_right":
+            "hurt_down":
             {
                 frameRects:
                     [
@@ -127,28 +39,14 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
                 delay: 0.1
             }
         };
-        animData["follow_up"] = animData["walk_up"];
-        animData["follow_right"] = animData["walk_right"];
-        animData["follow_down"] = animData["walk_down"];
-        animData["follow_left"] = animData["walk_left"];
-        animData["bounce_up"] = animData["walk_up"];
-        animData["bounce_right"] = animData["walk_right"];
-        animData["bounce_down"] = animData["walk_down"];
-        animData["bounce_left"] = animData["walk_left"];
 
-        animData["attack_up"] = animData["walk_up"];
-        animData["attack_right"] = animData["walk_right"];
-        animData["attack_down"] = animData["walk_down"];
-        animData["attack_left"] = animData["walk_left"];
+        animData["attack_down"] = animData["hurt_down"];
 
-        animData["hurt_up"] = animData["hurt_left"];
-        animData["hurt_down"] = animData["hurt_right"];
-
-        this.sprite = new waw.AnimatedSprite(s_Kiwi, animData);
+        this.sprite = new cc.Sprite(s_Chest, new cc.rect(0, 0, 32, 24));
         this.calcDirection(0,0);
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        //this.sprite.playAnimation(this.state+"_"+this.direction);
 
-        this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
+        this.sprite.setPosition(0,this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite);
         this.debugCross.setAnchorPoint(0.5, 0);
@@ -156,15 +54,10 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         //create monsters shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
+
+        //this.setZOrder(250 - this.y);
     },
     calcDirection: function (dx, dy) {
-        if (dx < 0)
-            this.direction = "left";
-        else if (dx > 0)
-            this.direction = "right";
-        else if (dy > 0)
-            this.direction = "up";
-        else if (dy < 0)
             this.direction = "down";
     },
     update: function () {
@@ -183,6 +76,82 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
             this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
             "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
         }
+    },
+    initIdle: function () {
+        var currentTime = new Date();
+
+        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 500;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        //this.sprite.playAnimation(this.state+"_"+this.direction);
+        return true;
+    },
+    onIdle: function () {
+        var currentTime = new Date();
+        this.dx = this.dy = 0;
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
+    pickAISchedule: function () {
+        this.state = "idle";
+        this.stateSchedule = this.SCHEDULE_IDLE;
+        this.stateSchedule.reset();
+    },
+    initHurt: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
+
+        //this.sprite.playAnimation("hurt_"+this.direction);
+        return true;
+    },
+    onHurt: function () {
+        var currentTime = new Date();
+        this.dx = this.dy = 0;
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
+        }
+        return false;
+    },
+
+    onDeath : function (killer) {
+        if (this.subState === "dead")
+            return;
+        this.unscheduleAllCallbacks();
+        this.subState = "dead";
+        this.sprite.opacity = 255;
+        this.shadowSprite.opacity = 255;
+
+        //this.sprite.playAnimation("hurt_" + this.direction);
+        this.scheduleOnce(function () {
+            cc.audioEngine.playEffect(this.sfx_dead);
+            this.sprite.setAnchorPoint(0.5, 1);
+            this.sprite.rotation = 180;
+            this.sprite.runAction(new cc.FadeOut(1));
+            this.sprite.runAction(new cc.ScaleTo(1, 0.7));
+            this.shadowSprite.runAction(new cc.FadeOut(0.7));
+            this.shadowSprite.runAction(new cc.ScaleTo(0.7, 0.5));
+        }, 0.6);
+
+        if (killer) {
+            //mob.sprite.visible = false;
+            //console.log("Mob "+mob.mobType+"'s touch");
+        }
+
+        //clear from this 1. local room foes 2. global room 3. local units - collision check
+        for (var n = 0; n < waw.foes.length; n++) {
+            var m = waw.foes[n];
+            if (this === m) {
+                waw.foes[n] = null;
+                waw.units[200 + n] = null;
+                currentRoom.mobs[n] = null;
+                break;
+            }
+        }
     }
-})
-;
+
+
+});

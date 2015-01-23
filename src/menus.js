@@ -23,11 +23,11 @@ waw.MenuDebug = function (layer) {
             var m = {x: 100, y: 110};
             var pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
             e.setPosition(pos);
-            e.setZOrder(250 - pos.y);
             e.setScale(0.1);
             e.runAction(new cc.ScaleTo(0.5, 1));
             //e.runAction(new cc.Blink(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
+            e.setZOrder(250 - pos.y);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite, -14);
             //position shadow
@@ -134,4 +134,24 @@ waw.MenuDebug = function (layer) {
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugMenu11.setPosition(16, 140);
+
+    labelDebug = new cc.LabelTTF("Chest", "System", 12);
+    var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
+        function () {
+            var e = new waw.NoMobChest();
+            var pos = waw.player.getPosition();
+            e.setPosition(pos);
+            e.setScale(0.1);
+            e.runAction(new cc.ScaleTo(0.5, 1));
+            this.addChild(e, 6);
+            this.addChild(e.shadowSprite, -14);
+            e.setZOrder(250 - pos.y);
+            e.shadowSprite.setPosition(pos.x, pos.y - 0);
+            waw.foes.push(e);
+        }, layer);
+    menu = new cc.Menu(debugSpawnChest);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugSpawnChest.setPosition(16, 126);
+
 };
