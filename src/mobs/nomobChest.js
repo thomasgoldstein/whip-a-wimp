@@ -5,57 +5,35 @@ waw.NoMobChest = waw.Enemy.extend({
     mobType: "Chest",
     shadowYoffset: 0,
     spriteYoffset: 0,
-    HP: 5,
+    HP: 2,
     state: "idle",
+    sfx_hurt: sfx_Punch01,
+    sfx_dead: sfx_Candelabre01,
+    topSprite: null,
 
     ctor: function () {
         this._super();
         //console.info("Chest ctor");
 
         this.setContentSize(16, 16);
-        //this.setAnchorPoint(0.5, 0);
-        this.speed = 0;
-        this.direction = "down";
 
-        
-        this.safePos = cc.p(0, 0);
 
-        var animData =
-        {
-            "idle_down":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 0*50+1, 48, 48)
-                    ],
-                delay: 0.1
-            },
-            "hurt_down":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*50+1, 2*50+1, 48, 48)
-                    ],
-                delay: 0.1
-            }
-        };
 
-        animData["attack_down"] = animData["hurt_down"];
-
-        this.sprite = new cc.Sprite(s_Chest, new cc.rect(0, 0, 32, 24));
-        this.calcDirection(0,0);
-        //this.sprite.playAnimation(this.state+"_"+this.direction);
-
+        this.sprite = new cc.Sprite(s_Chest, new cc.rect(0, 5, 32, 24));
         this.sprite.setPosition(0,this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
+
+        this.topSprite = new cc.Sprite(s_Chest, new cc.rect(33, 0, 32, 15));
+        this.topSprite.setAnchorPoint(0, 0);
+        this.topSprite.setPosition(0, 24-10);
+        this.sprite.addChild(this.topSprite, 1);
+
         this.addChild(this.sprite);
+
         this.debugCross.setAnchorPoint(0.5, 0);
 
-        //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow32x16);
+        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
-
-        //this.setZOrder(250 - this.y);
     },
     calcDirection: function (dx, dy) {
             this.direction = "down";
@@ -102,10 +80,7 @@ waw.NoMobChest = waw.Enemy.extend({
     },
     initHurt: function () {
         var currentTime = new Date();
-        //stop
         this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
-
-        //this.sprite.playAnimation("hurt_"+this.direction);
         return true;
     },
     onHurt: function () {
@@ -125,16 +100,23 @@ waw.NoMobChest = waw.Enemy.extend({
         this.sprite.opacity = 255;
         this.shadowSprite.opacity = 255;
 
-        //this.sprite.playAnimation("hurt_" + this.direction);
+        if(Math.random()<0.5){
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_dead);
-            this.sprite.setAnchorPoint(0.5, 1);
-            this.sprite.rotation = 180;
-            this.sprite.runAction(new cc.FadeOut(1));
-            this.sprite.runAction(new cc.ScaleTo(1, 0.7));
-            this.shadowSprite.runAction(new cc.FadeOut(0.7));
-            this.shadowSprite.runAction(new cc.ScaleTo(0.7, 0.5));
+            this.topSprite.runAction(new cc.MoveTo(0.2, 0, 24));
         }, 0.6);
+        this.scheduleOnce(function () {
+            this.topSprite.setZOrder(-1);
+            cc.audioEngine.playEffect(this.sfx_hurt);
+            this.topSprite.runAction(new cc.MoveTo(0.2, -2+Math.random()*4, 3));
+        }, 0.8);
+        } else {
+            this.scheduleOnce(function () {
+                cc.audioEngine.playEffect(this.sfx_dead);
+                this.topSprite.runAction(new cc.MoveTo(0.2, -2+Math.random()*4, -3));
+                this.topSprite.runAction(new cc.RotateBy(0.4, -5+Math.random()*10));
+            }, 0.6);
+        }
 
         if (killer) {
             //mob.sprite.visible = false;
