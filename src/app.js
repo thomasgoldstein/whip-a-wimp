@@ -338,7 +338,22 @@ waw.MainLayer = cc.Layer.extend({
                         this.lightspot3.visible =
                             this.lightspot4.visible = true;
             }
+            //flickering
+            if(Math.random()<0.01){
+                this.lightspot1.visible =
+                    this.lightspot2.visible =
+                        this.lightspot3.visible =
+                            this.lightspot4.visible = false;
+            }
+            var rs = 0.8 + Math.random()*0.4;
+            this.lightspot1.scale = rs;
+                    this.lightspot2.scale = rs;
+                        this.lightspot3.scale = rs;
+                            this.lightspot4.scale = rs;
+
+
             var pos = waw.player.getPosition();
+            pos.y += 24;
             this.lightspot1.setPosition(pos);
             this.lightspot2.setPosition(pos);
             this.lightspot3.setPosition(pos);
