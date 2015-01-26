@@ -136,23 +136,25 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             {
                 frameRects:
                     [
-                        cc.rect(1+34*0, 1+50*0, 32, 48),
-                        cc.rect(1+34*1, 1+50*0, 32, 48),
-                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*0, 1+50*2, 32, 48),
+                        cc.rect(1+34*1, 1+50*2, 32, 48),
+                        cc.rect(1+34*1, 1+50*2, 32, 48),
+                        cc.rect(1+34*0, 1+50*2, 32, 48),
                         cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
-                delay: 0.1
+                delay: 0.15
             },
             "hurt_down_left":
             {
                 frameRects:
                     [
-                        cc.rect(1+34*0, 1+50*0, 32, 48),
-                        cc.rect(1+34*1, 1+50*0, 32, 48),
-                        cc.rect(1+34*2, 1+50*0, 32, 48),
+                        cc.rect(1+34*0, 1+50*2, 32, 48),
+                        cc.rect(1+34*1, 1+50*2, 32, 48),
+                        cc.rect(1+34*1, 1+50*2, 32, 48),
+                        cc.rect(1+34*0, 1+50*2, 32, 48),
                         cc.rect(1+34*1, 1+50*0, 32, 48)
                     ],
-                delay: 0.1,
+                delay: 0.15,
                 flippedX: true
             }
         };

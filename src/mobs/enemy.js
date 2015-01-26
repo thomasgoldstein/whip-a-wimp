@@ -490,8 +490,8 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.playAnimation("hurt_"+this.direction);
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_dead);
-            this.sprite.setAnchorPoint(0.5, 1);
-            this.sprite.rotation = 180;
+            //this.sprite.setAnchorPoint(0.5, 1);
+            //this.sprite.rotation = 180;
             this.sprite.runAction(new cc.FadeOut(1));
             this.sprite.runAction(new cc.ScaleTo(1, 0.7));
             this.shadowSprite.runAction(new cc.FadeOut(0.7));
