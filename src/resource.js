@@ -1,6 +1,7 @@
 "use strict";
 var themeDir = "res/Themes/Temple/";
 
+var s_TitleGFX = themeDir + "TitleGFX.png";
 var s_Floor = themeDir + "Floor.png";
 var s_MiddleWalls = themeDir + "MiddleWalls.png";
 var s_UpperWalls = themeDir + "UpperWalls.png";
@@ -38,6 +39,7 @@ var s_HitBoxGridBlue = "res/DBG/hbGridBlue.png";
 var g_resources = [
     //image
     {src:s_HitBoxGrid},
+    {src:s_TitleGFX},
     {src:s_Floor},
     {src:s_MiddleWalls},
     {src:s_UpperWalls},
