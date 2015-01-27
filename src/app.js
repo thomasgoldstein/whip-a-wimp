@@ -55,6 +55,7 @@ waw.MainLayer = cc.Layer.extend({
     lightspot2: null,
     lightspot3: null,
     lightspot4: null,
+    lightspotPos: null,
 
     init: function () {
         this._super();
@@ -105,26 +106,26 @@ waw.MainLayer = cc.Layer.extend({
 
         this.lightspot1.runAction(new cc.RepeatForever(
             new cc.Sequence(
-                new cc.ScaleTo(0.2 + Math.random(), 0.98),
-                new cc.ScaleTo(0.2 + Math.random(), 1)
+                new cc.ScaleTo(0.5, 0.90),
+                new cc.ScaleTo(0.5, 1)
             )
         ));
         this.lightspot2.runAction(new cc.RepeatForever(
             new cc.Sequence(
-                new cc.ScaleTo(0.2 + Math.random(), 0.98),
-                new cc.ScaleTo(0.2 + Math.random(), 1)
+                new cc.ScaleTo(0.5, 0.90),
+                new cc.ScaleTo(0.5, 1)
             )
         ));
         this.lightspot3.runAction(new cc.RepeatForever(
             new cc.Sequence(
-                new cc.ScaleTo(0.2 + Math.random(), 0.98),
-                new cc.ScaleTo(0.2 + Math.random(), 1)
+                new cc.ScaleTo(0.5, 0.90),
+                new cc.ScaleTo(0.5, 1)
             )
         ));
         this.lightspot4.runAction(new cc.RepeatForever(
             new cc.Sequence(
-                new cc.ScaleTo(0.2 + Math.random(), 0.98),
-                new cc.ScaleTo(0.2 + Math.random(), 1)
+                new cc.ScaleTo(0.5, 0.90),
+                new cc.ScaleTo(0.5, 1)
             )
         ));
 
@@ -339,25 +340,49 @@ waw.MainLayer = cc.Layer.extend({
                             this.lightspot4.visible = true;
             }
             //flickering
-            if(Math.random()<0.01){
-                this.lightspot1.visible =
-                    this.lightspot2.visible =
-                        this.lightspot3.visible =
-                            this.lightspot4.visible = false;
+            if(this.lightspot1.opacity < 255) {
+                this.lightspot1.opacity =
+                    this.lightspot2.opacity =
+                this.lightspot3.opacity =
+                    this.lightspot4.opacity = this.lightspot1.opacity + 1;
+            } else if(Math.random()<0.01){
+                this.lightspot1.opacity =
+                    this.lightspot2.opacity =
+                        this.lightspot3.opacity =
+                            this.lightspot4.opacity = 200 + 5 * Math.round(Math.random()*10);
             }
-            var rs = 0.8 + Math.random()*0.4;
-            this.lightspot1.scale = rs;
-                    this.lightspot2.scale = rs;
-                        this.lightspot3.scale = rs;
-                            this.lightspot4.scale = rs;
-
-
             var pos = waw.player.getPosition();
+            if(this.lightspotPos == null)
+                this.lightspotPos = pos;
             pos.y += 24;
-            this.lightspot1.setPosition(pos);
-            this.lightspot2.setPosition(pos);
-            this.lightspot3.setPosition(pos);
-            this.lightspot4.setPosition(pos);
+            switch(waw.player.direction){
+                case "down":
+                    pos.y -= 16;
+                    break;
+                case "up":
+                    pos.y += 16;
+                    break;
+                case "left":
+                    pos.x -= 16;
+                    break;
+                case "right":
+                    pos.x += 16;
+                    break;
+            }
+
+            if(this.lightspotPos.x < pos.x)
+                this.lightspotPos.x = this.lightspotPos.x + (pos.x-this.lightspotPos.x)/20;
+            else if(this.lightspotPos.x > pos.x)
+                this.lightspotPos.x = this.lightspotPos.x - (this.lightspotPos.x-pos.x)/20;
+            if(this.lightspotPos.y < pos.y)
+                this.lightspotPos.y = this.lightspotPos.y + (pos.y-this.lightspotPos.y)/20;
+            else if(this.lightspotPos.y > pos.y)
+                this.lightspotPos.y = this.lightspotPos.y - (this.lightspotPos.y-pos.y)/20;
+
+            this.lightspot1.setPosition(this.lightspotPos);
+            this.lightspot2.setPosition(this.lightspotPos);
+            this.lightspot3.setPosition(this.lightspotPos);
+            this.lightspot4.setPosition(this.lightspotPos);
         } else {
             if(this.lightspot1.visible){
                 this.lightspot1.visible =
