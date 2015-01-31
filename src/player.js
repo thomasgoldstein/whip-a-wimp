@@ -3,6 +3,8 @@ waw.Player = waw.Unit.extend({
     speed: 6,
     currentWeapon: "whip",
     weaponSprite: null,
+    sprite: null,
+    sprite2: null,
 
     ctor: function() {
         this._super();
@@ -187,9 +189,16 @@ waw.Player = waw.Unit.extend({
             }
 
         };
+        var animData2 = [];
+        animData2 = waw.deepCopy(animData);
+
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
         this.sprite.setAnchorPoint(0.5, 0);
+
+        this.sprite2 = new waw.AnimatedSprite(s_JesusCloth, animData2);
+        this.addChild(this.sprite2);
+        this.sprite2.setAnchorPoint(0.5, 0);
 
         //add debug text info under the player
 //        if(showDebugInfo) {
@@ -268,6 +277,7 @@ waw.Player = waw.Unit.extend({
                 this.setZOrder(250- pos.y);
                 var animKey = this.getState() + "_" + this.direction;
                 this.sprite.playAnimation(animKey);
+                this.sprite2.playAnimation(animKey);
                 //position shadow
                 this.shadowSprite.setPosition(pos.x, pos.y+0);
 
@@ -399,6 +409,7 @@ waw.Player = waw.Unit.extend({
 
                         var animKey = "punch_" + this.direction;
                         this.sprite.playAnimation(animKey);
+                        this.sprite2.playAnimation(animKey);
                         break;
                     case "candelabre":
                         cc.audioEngine.playEffect(sfx_Candelabre01);
@@ -420,6 +431,7 @@ waw.Player = waw.Unit.extend({
                         this.addChild(this.weaponSprite);
 
                         this.sprite.playAnimation(animKey);
+                        this.sprite2.playAnimation(animKey);
 
                         switch (this.direction) {
                             case "down":
@@ -523,6 +535,7 @@ waw.Player = waw.Unit.extend({
                         }
                         var animKey = "punch_" + this.direction;
                         this.sprite.playAnimation(animKey);
+                        this.sprite2.playAnimation(animKey);
                         break;
                 }
                 break;
@@ -653,8 +666,11 @@ waw.Player = waw.Unit.extend({
         this.subState = "death";
         waw.whip.visible = false; //hide Whip
         this.sprite.playAnimation("death");
+        this.sprite2.playAnimation("death");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
+        this.sprite2.runAction(new cc.MoveBy(3, 0, 240));
+        this.sprite2.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
 

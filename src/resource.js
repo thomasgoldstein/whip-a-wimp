@@ -14,6 +14,7 @@ var s_Debris = "res/Debris.png";
 var s_Chest = themeDir + "Chest.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
+var s_JesusCloth = "res/JesusCloth.png";
 var s_Kiwi = "res/Kiwi.png";
 var s_Shadow12x6 = "res/Shadow12x6.png";
 var s_Shadow24x12 = "res/Shadow24x12.png";
@@ -47,6 +48,7 @@ var g_resources = [
     {src:s_LightSpot},
     {src:s_Chest},
     {src:s_Jesus},
+    {src:s_JesusCloth},
     {src:s_Kiwi},
     {src:s_Shadow12x6},
     {src:s_Shadow24x12},
