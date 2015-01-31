@@ -11,6 +11,7 @@
     "jsList" : [
         "src/resource.js",
         "src/namespace.js",
+        "src/functions.js",
         "src/aiSchedule.js",
         "src/seedrandom.js",
         "src/animatedSprite.js",
