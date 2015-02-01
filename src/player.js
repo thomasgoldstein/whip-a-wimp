@@ -189,8 +189,36 @@ waw.Player = waw.Unit.extend({
             }
 
         };
-        var animData2 = [];
+        var animData2 = []; //Red Cloth animations cloned from players
         animData2 = waw.deepCopy(animData);
+        animData2["walk_up"] =
+        {
+            frameRects: [
+                cc.rect(0 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(1 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 1 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 4 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 1 * 50 + 1, 32, 48)
+            ],
+            delay: 0.1
+        };
+        animData2["walk_down"] =
+        {
+            frameRects: [
+                cc.rect(0 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(1 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 0 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 3 * 50 + 1, 32, 48),
+                cc.rect(0 * 34 + 1, 0 * 50 + 1, 32, 48)
+            ],
+            delay: 0.1
+        };
 
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
