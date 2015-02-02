@@ -74,8 +74,7 @@ rooms.genLevel = function() {
             }
 
             //random type of the room obstacles pattern
-            //set chance to set a pattern to 90%  TODO - put it back to 50
-            if(Math.random() <= 0.9)
+            if(Math.random() <= 0.5)
                 r.type = Math.floor(Math.random()*7);
             else
                 r.type = 0;
@@ -606,12 +605,11 @@ waw.openDoor = function (doorTag, layer) {
 //adds obstacles of a room onto existing layer
 waw.prepareRoomPattern = function(room) {
     if(!room) throw "unknown room";
-    //var units = waw.units;
     var layer = waw.layer;
 
     //some random debris to PSEUDO random per a room
     waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
-    for(var x = 0; x < waw.rand()*2; x++) { //*3+1
+    for(var x = 0; x < waw.rand()*3; x++) { //*3+1
         var d = new cc.Sprite(s_Debris,
             cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
 
@@ -619,10 +617,10 @@ waw.prepareRoomPattern = function(room) {
         d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
         if(waw.rand()>0.5)
             continue;
-        d.setRotation(waw.rand()*360);
+        d.setRotation(Math.round((waw.rand()*4))*90);
         if(waw.rand()>0.5)
             continue;
-        d.setScale(0.75 + waw.rand()*0.3);
+        d.setScale(1 + waw.rand()*0.25);
     }
 
     //now put some obstacles, according to the room.type
