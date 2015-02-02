@@ -53,6 +53,7 @@ waw.MainLayer = cc.Layer.extend({
     topLabel: null, //Hi Score, Keys,etc
     topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
 
+    lightspot: null,
     lightspot1: null,
     lightspot2: null,
     lightspot3: null,
@@ -89,62 +90,52 @@ waw.MainLayer = cc.Layer.extend({
         this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
         this.topLabel .setPosition(16, 240-1);
 
+        this.lightspot = new cc.Sprite(s_LightSpot, new cc.rect(0,0,1,1));
+        this.lightspot.setAnchorPoint(0.5, 0.5);
+        this.lightspot.setPosition(160, 120);
+        //right down spot
         this.lightspot1 = new cc.Sprite(s_LightSpot);
         this.lightspot1.setAnchorPoint(0, 1);
         this.lightspot1.setRotation(0);
-        this.lightspot1.setPosition(160, 120);
+        this.lightspot.addChild(this.lightspot1);
+        this.lightspot1.setPosition(0, 0);
+        //left down
         this.lightspot2 = new cc.Sprite(s_LightSpot);
         this.lightspot2.setAnchorPoint(0, 1);
         this.lightspot2.setRotation(90);
-        this.lightspot2.setPosition(160, 120);
+        this.lightspot.addChild(this.lightspot2);
+        this.lightspot2.setPosition(0, 0);
+        //left up
         this.lightspot3 = new cc.Sprite(s_LightSpot);
         this.lightspot3.setAnchorPoint(0, 1);
         this.lightspot3.setRotation(180);
-        this.lightspot3.setPosition(160, 120);
+        this.lightspot.addChild(this.lightspot3);
+        this.lightspot3.setPosition(0, 0);
+        //right up
         this.lightspot4 = new cc.Sprite(s_LightSpot);
         this.lightspot4.setAnchorPoint(0, 1);
         this.lightspot4.setRotation(270);
-        this.lightspot4.setPosition(160, 120);
+        this.lightspot.addChild(this.lightspot4);
+        this.lightspot4.setPosition(0, 0);
 
-        this.lightspot1.runAction(new cc.RepeatForever(
+        this.lightspot.runAction(new cc.RepeatForever(
             new cc.Sequence(
-                new cc.ScaleTo(0.5, 0.90),
-                new cc.ScaleTo(0.5, 1)
-            )
-        ));
-        this.lightspot2.runAction(new cc.RepeatForever(
-            new cc.Sequence(
-                new cc.ScaleTo(0.5, 0.90),
-                new cc.ScaleTo(0.5, 1)
-            )
-        ));
-        this.lightspot3.runAction(new cc.RepeatForever(
-            new cc.Sequence(
-                new cc.ScaleTo(0.5, 0.90),
-                new cc.ScaleTo(0.5, 1)
-            )
-        ));
-        this.lightspot4.runAction(new cc.RepeatForever(
-            new cc.Sequence(
-                new cc.ScaleTo(0.5, 0.90),
-                new cc.ScaleTo(0.5, 1)
+                new cc.ScaleTo(0.5, 0.9), //0.9
+                new cc.ScaleTo(0.5, 1)    //1
             )
         ));
 
-        this.addChild(this.lightspot1, 290);
-        this.addChild(this.lightspot2, 290);
-        this.addChild(this.lightspot3, 290);
-        this.addChild(this.lightspot4, 290);
+        this.addChild(this.lightspot, 290);
         if (currentRoom.dark) {
-            this.lightspot1.visible =
+                this.lightspot1.visible =
                 this.lightspot2.visible =
-                    this.lightspot3.visible =
-                        this.lightspot4.visible = true;
+                this.lightspot3.visible =
+                this.lightspot4.visible = true;
         } else {
-            this.lightspot1.visible =
+                this.lightspot1.visible =
                 this.lightspot2.visible =
-                    this.lightspot3.visible =
-                        this.lightspot4.visible = false;
+                this.lightspot3.visible =
+                this.lightspot4.visible = false;
         }
 
         this.scheduleUpdate();
@@ -337,21 +328,21 @@ waw.MainLayer = cc.Layer.extend({
         if(currentRoom.dark) {
             if(!this.lightspot1.visible){
                 this.lightspot1.visible =
-                    this.lightspot2.visible =
-                        this.lightspot3.visible =
-                            this.lightspot4.visible = true;
+                this.lightspot2.visible =
+                this.lightspot3.visible =
+                this.lightspot4.visible = true;
             }
             //flickering
             if(this.lightspot1.opacity < 255) {
                 this.lightspot1.opacity =
-                    this.lightspot2.opacity =
+                this.lightspot2.opacity =
                 this.lightspot3.opacity =
-                    this.lightspot4.opacity = this.lightspot1.opacity + 1;
+                this.lightspot4.opacity = this.lightspot1.opacity + 1;
             } else if(Math.random()<0.01){
                 this.lightspot1.opacity =
-                    this.lightspot2.opacity =
-                        this.lightspot3.opacity =
-                            this.lightspot4.opacity = 200 + 5 * Math.round(Math.random()*10);
+                this.lightspot2.opacity =
+                this.lightspot3.opacity =
+                this.lightspot4.opacity = 200 + 5 * Math.round(Math.random()*10);
             }
             var pos = waw.player.getPosition();
             if(this.lightspotPos == null)
@@ -381,10 +372,7 @@ waw.MainLayer = cc.Layer.extend({
             else if(this.lightspotPos.y > pos.y)
                 this.lightspotPos.y = this.lightspotPos.y - (this.lightspotPos.y-pos.y)/20;
 
-            this.lightspot1.setPosition(this.lightspotPos);
-            this.lightspot2.setPosition(this.lightspotPos);
-            this.lightspot3.setPosition(this.lightspotPos);
-            this.lightspot4.setPosition(this.lightspotPos);
+            this.lightspot.setPosition(this.lightspotPos);
         } else {
             if(this.lightspot1.visible){
                 this.lightspot1.visible =
