@@ -205,10 +205,10 @@ waw.GetRoomSpawnCoords = function (roomType) {
         case 4:
             //1 obstacle in the middle of the room
             //4 obstacles wide around the middle of the room
-            a.push({x: 40 + Math.round(Math.random() * 20), y: 40 + Math.round(Math.random() * 20)});
-            a.push({x: 40 + Math.round(Math.random() * 20), y: 170 + Math.round(Math.random() * 20)});
-            a.push({x: 260 + Math.round(Math.random() * 20), y: 170 + Math.round(Math.random() * 20)});
-            a.push({x: 260 + Math.round(Math.random() * 20), y: 40 + Math.round(Math.random() * 20)});
+            a.push({x: 40 + Math.round(Math.random() * 16), y: 40 + Math.round(Math.random() * 18)});
+            a.push({x: 40 + Math.round(Math.random() * 16), y: 171 + Math.round(Math.random() * 18)});
+            a.push({x: 262 + Math.round(Math.random() * 16), y: 171 + Math.round(Math.random() * 18)});
+            a.push({x: 262 + Math.round(Math.random() * 16), y: 40 + Math.round(Math.random() * 18)});
             a.push({x: 140 + Math.round(Math.random() * 40), y: 60 + Math.round(Math.random() * 30)});
             break;
         case 5:
