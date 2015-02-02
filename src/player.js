@@ -189,8 +189,8 @@ waw.Player = waw.Unit.extend({
             }
 
         };
-        var animData2 = []; //Red Cloth animations cloned from players
-        animData2 = waw.deepCopy(animData);
+        //Red Cloth animations cloned from players
+        var animData2 = waw.deepCopy(animData);
         animData2["walk_up"] =
         {
             frameRects: [
@@ -267,18 +267,14 @@ waw.Player = waw.Unit.extend({
         this.sprite2.setAnchorPoint(0.5, 0);
 
         //add debug text info under the player
-//        if(showDebugInfo) {
-            this.label = new cc.LabelTTF("Player", "System", 9);
-            this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
-            this.label.setPosition(0, -4);
-            this.label.setVisible(showDebugInfo);
-//        }
+        this.label = new cc.LabelTTF("Player", "System", 9);
+        this.addChild(this.label, 299); //, TAG_LABEL_SPRITE1);
+        this.label.setPosition(0, -4);
+        this.label.setVisible(showDebugInfo);
 
         //create players shadow sprite
         this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5 , 0.5);
-
-        //this.alive = true;
     },
     getNextPosition: function() {
         var //p = this.getPositionF(),
