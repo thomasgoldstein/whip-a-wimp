@@ -30,6 +30,8 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
+        cc.audioEngine.playMusic(bgm_Level1, true);
+
         rooms.initLevel();
         rooms.genLevel();
 

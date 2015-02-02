@@ -39,7 +39,7 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16, 239 - 28);
+    debugOnOffItem.setPosition(16+2, 239 - 28);
 
     labelDebug = new cc.LabelTTF("HitBox", "System", 10);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
@@ -72,17 +72,15 @@ waw.MenuDebug = function (layer) {
     debugOnOffItem.setPosition(16, 239 - 7 - 38);
 
 //---
-    labelDebug = new cc.LabelTTF("Music Off", "System", 10);
+    labelDebug = new cc.LabelTTF("Music", "System", 10);
     var debugMusicOnOff = new cc.MenuItemLabel(labelDebug,
         function () {
-//            if(audioEngine.isMusicPlaying){
-//                audioEngine.pauseMusic();
-            cc.audioEngine.stopMusic();
-            cc.audioEngine.stopAllEffects();
-//            } else {
-//                audioEngine.resumeMusic();
-//                audioEngine.playMusic(bgm_Level1, true);
-//            }
+          if(cc.audioEngine.isMusicPlaying()){
+              cc.audioEngine.pauseMusic();
+              //cc.audioEngine.stopAllEffects();
+          } else {
+              cc.audioEngine.resumeMusic();
+            }
         }, layer
     );
     menu = new cc.Menu(debugMusicOnOff);
@@ -90,13 +88,11 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugMusicOnOff.setPosition(16, 239 - 7 - 48);
 
-    labelDebug = new cc.LabelTTF("Doors N", "System", 10);
+
+    labelDebug = new cc.LabelTTF("N/A", "System", 10);
     var debugDoors = new cc.MenuItemLabel(labelDebug,
         function () {
-            waw.openDoor(TAG_DOWN_DOORD, layer);
-            waw.openDoor(TAG_UP_DOORD, layer);
-            waw.openDoor(TAG_LEFT_DOORD, layer);
-            waw.openDoor(TAG_RIGHT_DOORD, layer);
+            //
         }, layer);
     menu = new cc.Menu(debugDoors);
     menu.setPosition(0, 0);
