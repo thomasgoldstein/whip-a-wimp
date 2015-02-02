@@ -219,6 +219,44 @@ waw.Player = waw.Unit.extend({
             ],
             delay: 0.1
         };
+        animData2["idle_left"] =
+        {
+            frameRects: [
+                cc.rect(3 * 34 + 1, 2 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 2 * 50 + 1, 32, 48),
+                cc.rect(5 * 34 + 1, 2 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 2 * 50 + 1, 32, 48)
+            ],
+            delay: 0.2
+        };
+        animData2["walk_left"] =
+        {
+            frameRects: [
+                cc.rect(3 * 34 + 1, 5 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 5 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 5 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 2 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 6 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 6 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 6 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 2 * 50 + 1, 32, 48)
+            ],
+            delay: 0.1
+        };
+        animData2["punch_left"] =
+        {
+            frameRects: [
+                cc.rect(3 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(4 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(5 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(5 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(5 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(5 * 34 + 1, 9 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 2 * 50 + 1, 32, 48),
+                cc.rect(3 * 34 + 1, 2 * 50 + 1, 32, 48)
+            ],
+            delay: 0.1
+        };
 
         this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
         this.addChild(this.sprite);
