@@ -33,6 +33,9 @@ waw.GameOverLayer = cc.Layer.extend({
         label.setAnchorPoint(0.5, 0.5);
         this.addChild(label, 299 + 5);
         label.setPosition(320/2, 240/2);
+
+        cc.audioEngine.stopAllEffects();
+        cc.audioEngine.stopMusic();
     },
     onEnter: function () {
         this._super();
