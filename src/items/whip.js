@@ -12,7 +12,8 @@ waw.Whip = waw.Unit.extend({
     targetY: 110,
     shadowYoffset: 0,
     spriteYoffset: 0,
-    chainLength: 5,
+    chainLength: 2,
+    chainLengthMax: 5,
     chain: [],
 
     WHIP_HIT1: [
@@ -98,10 +99,10 @@ waw.Whip = waw.Unit.extend({
 
         var chainBase = this;
         var sprite;
-        for (var i = 0; i < this.chainLength; i++) {
+        for (var i = 0; i < this.chainLengthMax; i++) {
             if (i === 0)
                 sprite = new cc.Sprite(s_Weapons, cc.rect(0, 0, 7, 15));
-            else if (i >= this.chainLength - 1)
+            else if (i >= this.chainLengthMax - 1)
                 sprite = new cc.Sprite(s_Weapons, cc.rect(0, 16 * 2, 7, 15));
             else
                 sprite = new cc.Sprite(s_Weapons, cc.rect(0, 16 * 1, 7, 15));
@@ -109,6 +110,8 @@ waw.Whip = waw.Unit.extend({
             if (i > 0)
                 sprite.setPosition(3.5, 1);
             sprite.setAnchorPoint(0.5, 1);
+            if(i >= this.chainLength)
+                sprite.visible = false;
             chainBase.addChild(sprite, 0, TAG_WHIP);
             chainBase = sprite;
         }
@@ -118,7 +121,7 @@ waw.Whip = waw.Unit.extend({
     init: function () {
         var chainBase = this;
         this.chain = [];
-        for (var i = 0; i < this.chainLength; i++) {
+        for (var i = 0; i < this.chainLengthMax; i++) {
             var sprite = chainBase.getChildByTag(TAG_WHIP);
             if (Math.random() > 0.5) {
                 sprite.rotation = 1;
@@ -133,21 +136,21 @@ waw.Whip = waw.Unit.extend({
     },
     setAllTo: function (rot, rot2) {
         var a = [];
-        for (var i = 0; i < this.chainLength; i++) {
+        for (var i = 0; i < this.chainLengthMax; i++) {
             a.push({rotation: rot, step: 1, rotation2: rot2});
         }
         this.chain = a;
     },
     setTo: function (a) {
         this.chain = [];
-        for (var i = 0; i < this.chainLength; i++) {
+        for (var i = 0; i < this.chainLengthMax; i++) {
             this.chain.push(a[i]);
         }
     },
     setInstantlyTo: function (a) {
         this.chain = [];
         var chainBase = this;
-        for (var i = 0; i < this.chainLength; i++) {
+        for (var i = 0; i < this.chainLengthMax; i++) {
             this.chain.push(a[i]);
             var sprite = chainBase.getChildByTag(TAG_WHIP);
             sprite.rotation = this.chain[i].rotation;
@@ -161,6 +164,17 @@ waw.Whip = waw.Unit.extend({
             chainBase = sprite;
         }
         return chainBase.convertToWorldSpace(chainBase.getPosition());
+    },
+    addLink: function () {
+        if (this.chainLength < this.chainLengthMax) {
+            this.chainLength++;
+            var chainBase = this;
+            for (var i = 0; i < this.chainLength; i++) {
+                var sprite = chainBase.getChildByTag(TAG_WHIP);
+                sprite.visible = true;
+                chainBase = sprite;
+            }
+        }
     },
     update: function () {
         var chainBase = this;

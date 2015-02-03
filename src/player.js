@@ -540,7 +540,7 @@ waw.Player = waw.Unit.extend({
                         else
                             cc.audioEngine.playEffect(sfx_Whip02);
                         waw.whip.visible = true;
-                        this.showHitBoxAndKill(70, 8);
+                        this.showHitBoxAndKill(20 + waw.whip.chainLength * 10 , 8);
                         switch (this.direction) {
                             case "down":
                                 waw.whip.setInstantlyTo(waw.whip.WHIP_BACK2);
