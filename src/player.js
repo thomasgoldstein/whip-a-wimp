@@ -563,7 +563,7 @@ waw.Player = waw.Unit.extend({
                                 }, 0.40);
                                 waw.whip.rotation = -90;
                                 waw.whip.zIndex = 10;
-                                waw.whip.setPosition(-2, 22);
+                                waw.whip.setPosition(0, 22);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(12, 14);
                                 }, 0.2);
@@ -589,7 +589,7 @@ waw.Player = waw.Unit.extend({
                                 }, 0.40);
                                 waw.whip.rotation = 90;
                                 waw.whip.zIndex = 10;
-                                waw.whip.setPosition(2, 22);
+                                waw.whip.setPosition(0, 22);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(-12, 14);
                                 }, 0.2);
