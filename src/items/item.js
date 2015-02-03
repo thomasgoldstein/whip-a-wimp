@@ -27,8 +27,11 @@ waw.Item = waw.Unit.extend({
             case "gem":
                 this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 2, 0, 16, 16));
                 break;
+            case "map":
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 3, 0, 16, 16));
+                break;
             default:
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * (3 + Math.round(Math.random() * 1)), 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * (4 + Math.round(Math.random() * 1)), 0, 16, 16));
         }
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -103,6 +106,12 @@ waw.Item = waw.Unit.extend({
             case "coin":
                 waw.coins += 1;
                 waw.addScore(100);
+                break;
+            case "map":
+                if(rooms.foundMap === false)
+                    waw.AddMiniMap(this.getParent(), currentRoom, true);
+                rooms.foundMap = true;
+                waw.addScore(150);
                 break;
             default:
                 waw.addScore(1);    //WTF?

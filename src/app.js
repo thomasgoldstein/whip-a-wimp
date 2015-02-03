@@ -77,12 +77,9 @@ waw.MainLayer = cc.Layer.extend({
 
         var room = rooms[currentRoomY][currentRoomX];
         room.visited = true;
-        var miniMap = waw.GenerateMiniMap();
-        this.addChild(miniMap, 400);
-        if(room.walls.up_d > 0) //if the upper door is shifted to right, then put mini-map to left
-            miniMap.setPosition(34,240-48);
-        else
-            miniMap.setPosition(320-33-40,240-48);  //mm to the right
+
+        if(rooms.foundMap)
+            waw.AddMiniMap(this, room);
 
         //HI-SCORE, keys
         this.topLabel = new cc.LabelTTF(this.topLabelString, "System", 10);

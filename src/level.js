@@ -47,6 +47,7 @@ rooms.initLevel = function() {
 			rooms[y][x] = null;
 		}
 	}
+    rooms.foundMap = false;
 };
 
 rooms.genLevel = function() {
@@ -277,6 +278,24 @@ waw.GenerateMiniMap = function() {
         }
     }
     return layer;
+};
+
+waw.AddMiniMap = function (layer, room, animateTheMapOpening) {
+    var miniMap = waw.GenerateMiniMap();
+    var x = 34, y = 240 - 48;
+    layer.addChild(miniMap, 400);
+    if (room.walls.up_d <= 0) {
+        x = 320 - 33 - 40;  //if the upper door is shifted to right, then put mini-map to left
+    }
+    if(animateTheMapOpening){
+        miniMap.setPosition(waw.player.x, waw.player.y);
+        miniMap.setScale(0.2, 0.2);
+        miniMap.runAction(new cc.RotateBy(1.2, 360));
+        miniMap.runAction(new cc.ScaleTo(1.2, 1));
+        miniMap.runAction(new cc.MoveTo(1, x, y));
+    } else {
+        miniMap.setPosition(x, y);
+    }
 };
 
 //init 8 pieces of impassable walls
@@ -706,7 +725,7 @@ waw.generateItems = function(roomType){
     var items = [];
     var n = Math.round(Math.random()*5);    //TODO max items in the room
     var item = null;
-    var pickItemType = ["key", "coin", "gem", "unknown"];
+    var pickItemType = ["key", "coin", "gem", "map", "unknown"];
     var itemCoord = waw.GetRoomSpawnCoords(roomType);
     var cr;
     if(n>itemCoord.length)
