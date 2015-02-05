@@ -1,19 +1,23 @@
 "use strict";
 waw.Player = waw.Unit.extend({
     speed: 6,
+    HP: 2,
     currentWeapon: "whip",
     weaponSprite: null,
     sprite: null,
     sprite2: null,
+    sfx_hurt: sfx_Punch01,
 
     ctor: function() {
         this._super();
         //console.info("Player ctor");
+        this.HP = 2;
+
         this.setContentSize(16, 16);
 
         var animData =
         {
-            "death":
+            "dead":
             {
                 frameRects:
                 [
@@ -719,16 +723,33 @@ waw.Player = waw.Unit.extend({
 
         waw.whip.visible = false; //hide Whip
     },
-    onDeath: function (mob) {
+    onGetDamage : function (killer) {
         if (this.subState === "invincible")
             return;
-
-        if (this.subState === "death")
+        if (this.subState === "dead")
             return;
-        this.subState = "death";
+        this.becomeInvincible(1100);
+        this.HP--;
+        cc.audioEngine.playEffect(this.sfx_hurt);
+        //this.state = "hurt";
+        //this.stateSchedule = this.SCHEDULE_HURT;
+        //this.stateSchedule.reset();
+        //this.sprite.playAnimation("hurt_"+this.direction);
+
+        if (this.HP <= 0)
+            this.onDeath(killer);
+        if (this.HP === 1) {
+            this.sprite2.visible = false;
+        }
+    },
+    onDeath: function (killer) {
+        if (this.subState === "dead")
+            return;
+
+        this.subState = "dead";
         waw.whip.visible = false; //hide Whip
-        this.sprite.playAnimation("death");
-        this.sprite2.playAnimation("death");
+        this.sprite.playAnimation("dead");
+        this.sprite2.playAnimation("dead");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
         this.sprite2.runAction(new cc.MoveBy(3, 0, 240));
@@ -736,12 +757,12 @@ waw.Player = waw.Unit.extend({
         this.shadowSprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
 
-        if(mob){
+        if(killer){
             //mob.sprite.visible = false;
             //TODO actions dont work. I make mob transparent for debug
-            mob.sprite.opacity = 100;
-            mob.shadowSprite.opacity = 100;
-            console.log("You were killed by "+mob.mobType+"'s touch");
+            killer.sprite.opacity = 200;
+            //killer.shadowSprite.opacity = 100;
+            console.log("You were killed by "+killer.mobType+"'s touch");
             //runAction(new cc.TintTo(0, 255, 0, 0));
         }
 

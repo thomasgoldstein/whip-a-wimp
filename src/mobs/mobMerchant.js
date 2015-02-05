@@ -200,7 +200,7 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
 
-            waw.player.onDeath(this);
+            waw.player.onGetDamage(this);
         }
 
         if (this.stateSchedule.isDone()) {
