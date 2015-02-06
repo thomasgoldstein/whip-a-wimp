@@ -123,17 +123,11 @@ waw.MainLayer = cc.Layer.extend({
         ));
 
         this.addChild(this.lightspot, 290);
-        if (currentRoom.dark) {
-                this.lightspot1.visible =
-                this.lightspot2.visible =
-                this.lightspot3.visible =
-                this.lightspot4.visible = true;
-        } else {
-                this.lightspot1.visible =
-                this.lightspot2.visible =
-                this.lightspot3.visible =
-                this.lightspot4.visible = false;
-        }
+
+        this.lightspot1.visible =
+        this.lightspot2.visible =
+        this.lightspot3.visible =
+        this.lightspot4.visible = currentRoom.dark;
 
         this.scheduleUpdate();
         //TODO Remove Debug menu
