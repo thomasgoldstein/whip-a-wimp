@@ -17,6 +17,18 @@ waw.Player = waw.Unit.extend({
 
         var animData =
         {
+            "hurt":
+            {
+                frameRects:
+                [
+                    cc.rect(1+34*0, 1+50*10, 32, 48),
+                    cc.rect(1+34*1, 1+50*10, 32, 48),
+                    cc.rect(1+34*1, 1+50*10, 32, 48),
+                    cc.rect(1+34*0, 1+50*10, 32, 48),
+                    cc.rect(1+34*2, 1+50*7, 32, 48)
+                ],
+                delay: 0.15
+            },
             "dead":
             {
                 frameRects:
@@ -333,6 +345,7 @@ waw.Player = waw.Unit.extend({
             case "whip":
             case "punch":
             case "candelabre":
+            case "hurt":
                 break;
             default:
                 //var curPos = this.getPosition();
@@ -440,6 +453,7 @@ waw.Player = waw.Unit.extend({
             || this.subState === "punch"
             || this.subState === "candelabre"
             || this.subState === "invincible"
+            || this.subState === "hurt"
         )
             return;
         //cool down time 1 sec
@@ -624,12 +638,14 @@ waw.Player = waw.Unit.extend({
             case "punch":
                 this.state = "idle";
                 this.setSubState("");
-                //this.showHitBoxAndKill(24, 8);
+                break;
+            case "hurt":
+                this.state = "idle";
+                this.becomeInvincible(500);
                 break;
             case "candelabre":
                 this.state = "idle";
                 this.setSubState("");
-                //this.showHitBoxAndKill(32, 12);
                 break;
             case "whip":
                 //console.log("REMOVE subact tim: ", this.subState);
@@ -639,7 +655,6 @@ waw.Player = waw.Unit.extend({
                 var cross = new cc.Sprite(s_Sparkle,
                     cc.rect(3 * 8, 0, 7, 7));
                 cross.setPosition(wp.x, wp.y);
-                //var p = this.getParent();
                 this.getParent().addChild(cross, 300);
                 cross.runAction(new cc.Sequence(
                     new cc.Spawn(
@@ -653,7 +668,6 @@ waw.Player = waw.Unit.extend({
                 waw.whip.visible = false;
                 this.state = "idle";
                 this.setSubState("");
-                //this.showHitBoxAndKill(70, 8);
                 break;
             default:
                 this.setSubState("");
@@ -726,15 +740,19 @@ waw.Player = waw.Unit.extend({
     onGetDamage : function (killer) {
         if (this.subState === "invincible")
             return;
+        if (this.subState === "hurt")
+            return;
         if (this.subState === "dead")
             return;
-        this.becomeInvincible(1100);
         this.HP--;
+        //this.becomeInvincible(1100);
         cc.audioEngine.playEffect(this.sfx_hurt);
+        this.setSubState("hurt", 500);
         //this.state = "hurt";
         //this.stateSchedule = this.SCHEDULE_HURT;
         //this.stateSchedule.reset();
-        //this.sprite.playAnimation("hurt_"+this.direction);
+        this.sprite.playAnimation("hurt");
+        this.sprite2.playAnimation("hurt");
 
         if (this.HP <= 0)
             this.onDeath(killer);
