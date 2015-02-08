@@ -263,6 +263,7 @@ waw.Enemy = waw.Unit.extend({
         this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
 
         this.sprite.playAnimation("hurt_"+this.direction);
+        this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         return true;
     },
     onHurt: function () {
@@ -488,6 +489,7 @@ waw.Enemy = waw.Unit.extend({
         this.shadowSprite.opacity = 255;
 
         this.sprite.playAnimation("hurt_"+this.direction);
+        this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_dead);
             //this.sprite.setAnchorPoint(0.5, 1);

@@ -716,7 +716,6 @@ waw.Player = waw.Unit.extend({
         for(var n=0; n<waw.foes.length; n++){
             var m = waw.foes[n];
             if( m ) {
-                //if (cc.rectContainsPoint(m.collideRect(), wp)) {
                 if (cc.rectIntersectsRect(m.collideRect(), hitArea_rect)) {
                     m.onGetDamage(this);
                     //break;
@@ -745,12 +744,8 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         this.HP--;
-        //this.becomeInvincible(1100);
         cc.audioEngine.playEffect(this.sfx_hurt);
         this.setSubState("hurt", 500);
-        //this.state = "hurt";
-        //this.stateSchedule = this.SCHEDULE_HURT;
-        //this.stateSchedule.reset();
         this.sprite.playAnimation("hurt");
         this.sprite2.playAnimation("hurt");
 
@@ -758,6 +753,7 @@ waw.Player = waw.Unit.extend({
             this.onDeath(killer);
         if (this.HP === 1) {
             this.sprite2.visible = false;
+            this.runAction(new cc.jumpBy(0.35, 0, 0, 8, 1));
         }
     },
     onDeath: function (killer) {
