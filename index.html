@@ -21,24 +21,9 @@
     </style>
     <script type="text/javascript" src="cocos2d-js-v3.3.js" charset="UTF-8"></script>
     <script type="text/javascript" src="src/resource.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 <body>
 <canvas id="gameCanvas" width="320" height="240"></canvas>
-<script type="text/javascript">
-    window.onload = function () {
-        cc.game.onStart = function () {
-            var designSize = cc.size(320, 240);
-            //var screenSize = cc.view.getFrameSize();
-            cc.view.setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.SHOW_ALL);
-
-            //load resources
-//            cc.LoaderScene.preload(["LoadingScreen.png"], function () {
-            cc.LoaderScene.preload(g_resources, function () {
-                cc.director.runScene(new waw.TitleScene());
-            }, this);
-        };
-        cc.game.run("gameCanvas");
-    };
-</script>
 </body>
 </html>
