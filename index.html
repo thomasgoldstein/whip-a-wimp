@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Whip-a-Wimp 0.4</title>
     <link rel="icon" type="image/GIF" href="res/favicon.ico"/>
-    <meta name="viewport" content="width=321,user-scalable=no" />
+    <meta name="viewport" content="width=320,user-scalable=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="full-screen" content="yes"/>
     <meta name="screen-orientation" content="portrait"/>
@@ -19,10 +19,26 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
     </style>
-    <script src="CCBoot.js"></script>
-    <script src="main.js"></script>
+    <script type="text/javascript" src="cocos2d-js-v3.3.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="src/resource.js"></script>
 </head>
-<body style="padding:0; margin: 0; background: #000;">
+<body>
 <canvas id="gameCanvas" width="320" height="240"></canvas>
+<script type="text/javascript">
+    window.onload = function () {
+        cc.game.onStart = function () {
+            var designSize = cc.size(320, 240);
+            //var screenSize = cc.view.getFrameSize();
+            cc.view.setDesignResolutionSize(designSize.width, designSize.height, cc.ResolutionPolicy.SHOW_ALL);
+
+            //load resources
+//            cc.LoaderScene.preload(["LoadingScreen.png"], function () {
+            cc.LoaderScene.preload(g_resources, function () {
+                cc.director.runScene(new waw.TitleScene());
+            }, this);
+        };
+        cc.game.run("gameCanvas");
+    };
+</script>
 </body>
 </html>
