@@ -232,14 +232,9 @@ waw.GetRoomSpawnCoords = function (roomType) {
 
 //Generate Mini Map Layer
 waw.GenerateMiniMap = function() {
-    var visited = null;
     var m = null;
     var r,w;
-//    var layer = new cc.Layer(39, 39);    //transparent BG of mini-map
     var layer = new cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
-    var draw = new cc.DrawNode();
-    layer.addChild(draw);
-
     for(var y = 0; y < 9 ; y++) {
         for(var x = 0; x < 9; x++) {
             w = 0; //walls-doors counter
@@ -258,21 +253,18 @@ waw.GenerateMiniMap = function() {
                 m = new cc.Sprite(s_Map,
                     cc.rect(w * 6, 0, 6, 6));
                 m.setOpacity(r.visited ? 255 : 63);
-                draw.addChild(m);
+                layer.addChild(m);
                 m.setPositionX(x*5+3);
                 m.setPositionY((8-y)*5+2);
-                if(currentRoomX == x && currentRoomY == y){
+                if(currentRoomX === x && currentRoomY === y){
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
-                    //red dot - players pos
-                    m = new cc.Sprite(s_Map,
-                        cc.rect(0, 12, 6, 6));
-                    draw.addChild(m);
+                    m = new cc.Sprite(s_Map, cc.rect(0, 12, 6, 6)); //red dot - players pos
+                    layer.addChild(m);
                     m.setPositionX(x*5+3);
                     m.setPositionY((8-y)*5+2);
                     m.setOpacity(127);
-
                 }
             }
         }
