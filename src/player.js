@@ -366,7 +366,10 @@ waw.Player = waw.Unit.extend({
                 this.sprite2.playAnimation(animKey);
                 //position shadow
                 this.shadowSprite.setPosition(pos.x, pos.y+0);
-
+        }
+        //additional anim? cannot use actions
+        if(waw.player.HP === 1) {
+            waw.player.sprite2.visible = !waw.player.sprite2.visible;
         }
 
         if(showDebugInfo && this.label) {
@@ -759,7 +762,9 @@ waw.Player = waw.Unit.extend({
         if (this.HP <= 0)
             this.onDeath(killer);
         if (this.HP === 1) {
-            this.sprite2.visible = false;
+            this.sprite2.visible = false
+            //this.sprite2.runAction(new cc.Blink(3,9));
+            //this.sprite2.runAction(new cc.FadeIn(3));
             this.runAction(new cc.jumpBy(0.35, 0, 0, 8, 1));
         }
     },
