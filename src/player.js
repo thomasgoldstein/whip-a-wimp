@@ -754,7 +754,12 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         this.HP--;
-        cc.audioEngine.playEffect(this.sfx_hurt);
+        if(Math.random()<0.2)
+            cc.audioEngine.playEffect(sfx_Ouch03);
+        else if(Math.random()<0.5)
+            cc.audioEngine.playEffect(sfx_Ouch02);
+        else
+            cc.audioEngine.playEffect(sfx_Ouch01);
         this.setSubState("hurt", 500);
         this.sprite.playAnimation("hurt");
         this.sprite2.playAnimation("hurt");

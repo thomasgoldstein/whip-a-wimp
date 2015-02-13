@@ -28,6 +28,9 @@ var s_TouchControls = "res/TouchControls.png";
 //music
 var bgm_Level1 = "res/Music/ingame01.mp3";
 //SFX
+var sfx_Ouch01 = "res/SFX/Ouch01.ogg";
+var sfx_Ouch02 = "res/SFX/Ouch02.ogg";
+var sfx_Ouch03 = "res/SFX/Ouch03.ogg";
 var sfx_Punch01 = "res/SFX/Punch01.ogg";
 var sfx_Candelabre01 = "res/SFX/Candelabre01.ogg";
 var sfx_Whip01 = "res/SFX/Whip01.ogg";
@@ -76,6 +79,9 @@ var g_resources = [
     {src:bgm_Level1},
 
     //effect
+    {src:sfx_Ouch01},
+    {src:sfx_Ouch02},
+    {src:sfx_Ouch03},
     {src:sfx_Punch01},
     {src:sfx_Candelabre01},
     {src:sfx_Whip01},
