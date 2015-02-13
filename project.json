@@ -27,6 +27,7 @@
         "src/mobs/mobKiwi.js",
         "src/mobs/mobPigWalker.js",
         "src/mobs/mobPigBouncer.js",
+        "src/mobs/mobThorn.js",
         "src/mobs/nomobChest.js",
         "src/scenes/commonScenes.js",
         "src/scenes/gameOver.js",

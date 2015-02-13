@@ -185,6 +185,9 @@ waw.MainLayer = cc.Layer.extend({
                 case "Merchant":
                     e = new waw.MobMerchant();
                     break;
+                case "Thorn":
+                    e = new waw.MobThorn();
+                    break;
                 default:
                     throw "Wrong mob type";
             }
