@@ -1,32 +1,34 @@
 "use strict";
 //states: idle
 
-waw.MobThorn = waw.Enemy.extend({
-    mobType: "Thorn",
+waw.MobSpikes = waw.Enemy.extend({
+    mobType: "Spikes",
     shadowYoffset: 0,
     spriteYoffset: 0,
     HP: 100,
     state: "idle",
 
     ctor: function () {
-        this._super(35, 28);
-        //console.info("MobThorn ctor");
+        this._super();
+        //console.info("MobSpikes ctor");
 
-        this.setContentSize(35, 28);
+        this.setContentSize(32, 28);
         this.speed = 0;
 
         var animData =
         {
             "idle": {
                 frameRects: [
-                    cc.rect(0, 0, 35, 36),
-                    cc.rect(36, 0, 35, 36)
+                    cc.rect(1+34*0, 1, 32, 32),
+                    cc.rect(1+34*1, 1, 32, 32),
+                    cc.rect(1+34*2, 1, 32, 32),
+                    cc.rect(1+34*1, 1, 32, 32)
                 ],
                 delay: 0.3+Math.random()*0.2
             }
         };
 
-        this.sprite = new waw.AnimatedSprite(s_Thorn, animData);
+        this.sprite = new waw.AnimatedSprite(s_Spikes, animData);
         this.calcDirection(0, 0);
         this.sprite.playAnimation(this.state);
 
