@@ -8,6 +8,9 @@ waw.MobMerchant = waw.MobRandomWalker.extend({
     spriteYoffset: 0,
     HP: 2,
     state: "idle",
+    sfx_hurt01: sfx_MerchHurt01,
+    sfx_hurt02: sfx_MerchHurt02,
+    sfx_death: sfx_MerchDeath,
     
     ctor: function () {
         this._super();

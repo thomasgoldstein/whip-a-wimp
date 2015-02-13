@@ -8,6 +8,9 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
     spriteYoffset: -4,
     HP: 3,
     state: "idle",
+    sfx_hurt01: sfx_PigHurt01,
+    sfx_hurt02: sfx_PigHurt02,
+    sfx_death: sfx_PigDeath,
     
     ctor: function () {
         this._super();

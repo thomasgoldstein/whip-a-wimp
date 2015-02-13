@@ -19,8 +19,9 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-    sfx_hurt: sfx_Punch01,
-    sfx_dead: sfx_Candelabre01,
+    sfx_hurt01: sfx_PigHurt01,
+    sfx_hurt02: sfx_PigHurt02,
+    sfx_death: sfx_PigDeath,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
@@ -471,7 +472,7 @@ waw.Enemy = waw.Unit.extend({
 
         this.becomeInvincible(1000);
         this.HP--;
-        cc.audioEngine.playEffect(this.sfx_hurt);
+
         this.state = "hurt";
         this.stateSchedule = this.SCHEDULE_HURT;
         this.stateSchedule.reset();
@@ -479,6 +480,12 @@ waw.Enemy = waw.Unit.extend({
         //this.sprite.playAnimation("hurt_"+this.direction);
         if(this.HP <= 0)
             this.onDeath(killer);
+        else {
+            if(Math.random()<0.5)
+                cc.audioEngine.playEffect(this.sfx_hurt01);
+            else
+                cc.audioEngine.playEffect(this.sfx_hurt02);
+        }
     },
     onDeath : function (killer) {
         if (this.subState === "dead")
@@ -487,11 +494,11 @@ waw.Enemy = waw.Unit.extend({
         this.subState = "dead";
         this.sprite.opacity = 255;
         this.shadowSprite.opacity = 255;
-
+        cc.audioEngine.playEffect(this.sfx_death);
         this.sprite.playAnimation("hurt_"+this.direction);
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         this.scheduleOnce(function () {
-            cc.audioEngine.playEffect(this.sfx_dead);
+            cc.audioEngine.playEffect(this.sfx_death);
             //this.sprite.setAnchorPoint(0.5, 1);
             //this.sprite.rotation = 180;
             this.sprite.runAction(new cc.FadeOut(1));

@@ -7,8 +7,9 @@ waw.NoMobChest = waw.Enemy.extend({
     spriteYoffset: 0,
     HP: 2,
     state: "idle",
-    sfx_hurt: sfx_Punch01,
-    sfx_dead: sfx_Candelabre01,
+    sfx_hurt01: sfx_Punch01,
+    sfx_hurt02: sfx_Punch01,
+    sfx_death: sfx_Candelabre01,
     topSprite: null,
 
     ctor: function () {
@@ -100,21 +101,21 @@ waw.NoMobChest = waw.Enemy.extend({
         this.sprite.opacity = 255;
         this.shadowSprite.opacity = 255;
 
-        if(Math.random()<0.5){
-        this.scheduleOnce(function () {
-            cc.audioEngine.playEffect(this.sfx_dead);
-            this.topSprite.runAction(new cc.MoveTo(0.2, 0, 24));
-        }, 0.6);
-        this.scheduleOnce(function () {
-            this.topSprite.setZOrder(-1);
-            cc.audioEngine.playEffect(this.sfx_hurt);
-            this.topSprite.runAction(new cc.MoveTo(0.2, -2+Math.random()*4, 3));
-        }, 0.8);
+        if (Math.random() < 0.5) {
+            this.scheduleOnce(function () {
+                cc.audioEngine.playEffect(this.sfx_hurt01);
+                this.topSprite.runAction(new cc.MoveTo(0.2, 0, 24));
+            }, 0.6);
+            this.scheduleOnce(function () {
+                this.topSprite.setZOrder(-1);
+                cc.audioEngine.playEffect(this.sfx_hurt02);
+                this.topSprite.runAction(new cc.MoveTo(0.2, -2 + Math.random() * 4, 3));
+            }, 0.8);
         } else {
             this.scheduleOnce(function () {
-                cc.audioEngine.playEffect(this.sfx_dead);
-                this.topSprite.runAction(new cc.MoveTo(0.2, -2+Math.random()*4, -3));
-                this.topSprite.runAction(new cc.RotateBy(0.4, -5+Math.random()*10));
+                cc.audioEngine.playEffect(this.sfx_death);
+                this.topSprite.runAction(new cc.MoveTo(0.2, -2 + Math.random() * 4, -3));
+                this.topSprite.runAction(new cc.RotateBy(0.4, -5 + Math.random() * 10));
             }, 0.6);
         }
 

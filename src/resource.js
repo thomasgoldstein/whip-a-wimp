@@ -32,6 +32,12 @@ var sfx_Ouch01 = "res/SFX/Ouch01.ogg";
 var sfx_Ouch02 = "res/SFX/Ouch02.ogg";
 var sfx_Ouch03 = "res/SFX/Ouch03.ogg";
 var sfx_Punch01 = "res/SFX/Punch01.ogg";
+var sfx_PigHurt01 = "res/SFX/PigHurt01.ogg";
+var sfx_PigHurt02 = "res/SFX/PigHurt02.ogg";
+var sfx_PigDeath = "res/SFX/PigDeath.ogg";
+var sfx_MerchHurt01 = "res/SFX/MerchHurt01.ogg";
+var sfx_MerchHurt02 = "res/SFX/MerchHurt02.ogg";
+var sfx_MerchDeath = "res/SFX/MerchDeath.ogg";
 var sfx_Candelabre01 = "res/SFX/Candelabre01.ogg";
 var sfx_Whip01 = "res/SFX/Whip01.ogg";
 var sfx_Whip02 = "res/SFX/Whip02.ogg";
@@ -83,6 +89,12 @@ var g_resources = [
     {src:sfx_Ouch02},
     {src:sfx_Ouch03},
     {src:sfx_Punch01},
+    {src:sfx_PigHurt01},
+    {src:sfx_PigHurt02},
+    {src:sfx_PigDeath},
+    {src:sfx_MerchHurt01},
+    {src:sfx_MerchHurt02},
+    {src:sfx_MerchDeath},
     {src:sfx_Candelabre01},
     {src:sfx_Whip01},
     {src:sfx_Whip02},
