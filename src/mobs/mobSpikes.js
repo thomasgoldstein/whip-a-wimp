@@ -20,11 +20,14 @@ waw.MobSpikes = waw.Enemy.extend({
             "idle": {
                 frameRects: [
                     cc.rect(1+34*0, 1, 32, 32),
+                    cc.rect(1+34*0, 1, 32, 32),
+                    cc.rect(1+34*0, 1, 32, 32),
                     cc.rect(1+34*1, 1, 32, 32),
+                    cc.rect(1+34*2, 1, 32, 32),
                     cc.rect(1+34*2, 1, 32, 32),
                     cc.rect(1+34*1, 1, 32, 32)
                 ],
-                delay: 0.3+Math.random()*0.2
+                delay: 0.15+Math.random()*0.15
             }
         };
 
