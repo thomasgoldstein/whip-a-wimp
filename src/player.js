@@ -367,11 +367,6 @@ waw.Player = waw.Unit.extend({
                 //position shadow
                 this.shadowSprite.setPosition(pos.x, pos.y+0);
         }
-        //additional anim? cannot use actions
-        if(waw.player.HP === 1) {
-            waw.player.sprite2.visible = !waw.player.sprite2.visible;
-        }
-
         if(showDebugInfo && this.label) {
             //this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + gr.x.toFixed(2) + "," + gr.y.toFixed(2));
             this.label.setString("" + pos.x.toFixed(2) + "," + pos.y.toFixed(2) + "\n" + this.direction);
@@ -767,10 +762,23 @@ waw.Player = waw.Unit.extend({
         if (this.HP <= 0)
             this.onDeath(killer);
         if (this.HP === 1) {
-            this.sprite2.visible = false
+            this.sprite2.visible = false;
             //this.sprite2.runAction(new cc.Blink(3,9));
             //this.sprite2.runAction(new cc.FadeIn(3));
             this.runAction(new cc.jumpBy(0.35, 0, 0, 8, 1));
+
+            var redCloth = new cc.Sprite(s_JesusCloth,
+                cc.rect(0*34+1, 1*50+1, 32, 48));
+            redCloth.setPosition(this.x, this.y+36);
+            this.getParent().addChild(redCloth, 300);
+            redCloth.runAction(new cc.Sequence(
+                new cc.Spawn(
+                    new cc.FadeOut(0.5),
+                    new cc.RotateBy(0.5, -45 + Math.random()*90),
+                    new cc.MoveBy(0.5, -8 + Math.random()*16, -24)
+                ),
+                new cc.RemoveSelf()
+            ));
         }
     },
     onDeath: function (killer) {
@@ -791,9 +799,9 @@ waw.Player = waw.Unit.extend({
         if(killer){
             //mob.sprite.visible = false;
             //TODO actions dont work. I make mob transparent for debug
-            killer.sprite.opacity = 200;
+            //killer.sprite.opacity = 200;
             //killer.shadowSprite.opacity = 100;
-            console.log("You were killed by "+killer.mobType+"'s touch");
+            //console.log("You were killed by "+killer.mobType+"'s touch");
             //runAction(new cc.TintTo(0, 255, 0, 0));
         }
 
