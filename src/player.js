@@ -630,7 +630,7 @@ waw.Player = waw.Unit.extend({
         var currentTime = new Date();
         if (this.subStateCountDown === 0 || this.subState === "" || currentTime.getTime() < this.subStateCountDown)
             return;
-        console.log("subact tim: ", this.subState);
+        //console.log("subact tim: ", this.subState);
         switch(this.subState){
             case "invincible":
                 //console.log("REMOVE subact tim: ", this.subState);

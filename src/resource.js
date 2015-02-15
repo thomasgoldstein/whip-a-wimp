@@ -23,6 +23,7 @@ var s_Pit = "res/Pit.png";
 var s_Sparkle = "res/Sparkle.png";
 var s_Pig = themeDir + "Pig.png";
 var s_Spikes = themeDir + "Spikes.png";
+var s_Barrel = themeDir + "Barrel.png";
 var s_Map = "res/Map.png";
 var s_TouchControls = "res/TouchControls.png";
 //music
@@ -72,6 +73,7 @@ var g_resources = [
     {src:s_Sparkle},
     {src:s_Pig},
     {src:s_Spikes},
+    {src:s_Barrel},
     {src:s_Map},
     {src:s_TouchControls},
 

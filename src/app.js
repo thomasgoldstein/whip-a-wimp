@@ -188,6 +188,9 @@ waw.MainLayer = cc.Layer.extend({
                 case "Spikes":
                     e = new waw.MobSpikes();
                     break;
+                case "Barrel":
+                    e = new waw.MobBarrel();
+                    break;
                 default:
                     throw "Wrong mob type";
             }
