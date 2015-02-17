@@ -47,6 +47,10 @@ waw.Enemy = waw.Unit.extend({
         this.calcDirection(0, 0);
         this.stateSchedule = this.SCHEDULE_IDLE;
     },
+    //mark as an obstacle (some kinds of enemy)
+    getTag: function(){
+            return TAG_ENEMY;
+    },
     calcDirection: function(dx, dy){
         var t="";
         if(dy>0)
@@ -381,7 +385,7 @@ waw.Enemy = waw.Unit.extend({
 
         y += this.dy*speed;
         this.y = y;
-        if(y<40 || y>180 || this.doesCollide(waw.units)) {
+        if(y<32 || y>180 || this.doesCollide(waw.units)) {
             this.dy = -this.dy;
             this.calcDirection(this.dx, this.dy);
             this.sprite.playAnimation(this.state+"_"+this.direction);

@@ -208,17 +208,12 @@ waw.MainLayer = cc.Layer.extend({
             e.shadowSprite.setPosition(pos.x, pos.y-0);
             this.foes.push(e);
 
+            waw.units[200+n] = e;   //to make it obstacle
+
             e.becomeInvincible();
         }
         waw.foes = this.foes;
 
-        //TODO - wrap with func add FOES as units for collision
-        for(var n=0; n<waw.foes.length; n++){
-            m = waw.foes[n];
-            if(m)
-                m.getTag = function(){ return TAG_ENEMY};
-            waw.units[200+n] = m;
-        }
         waw.player.becomeInvincible();
     },
     onEnterTransitionDidFinish: function () {

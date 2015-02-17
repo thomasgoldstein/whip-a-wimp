@@ -64,6 +64,11 @@ waw.MobBarrel = waw.Enemy.extend({
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
         this.shadowSprite.visible = false;  //no shadow
     },
+    getTag: function(){
+        if( this.state !== "idle")
+            return TAG_ENEMY;
+        return 0;
+    },
     update: function () {
 
         this.conditions = this.getConditions();
@@ -93,9 +98,55 @@ waw.MobBarrel = waw.Enemy.extend({
     },
     calcDirection: function (dx, dy) {
         if(dx != 0 && dy === 0)
-            this.direction = "vertical";
-        else
             this.direction = "horizontal";
+        else
+            this.direction = "vertical";
+    },
+    pickAISchedule: function () {
+        switch (this.state) {
+            case "idle":
+                if (Math.random() < 0.7) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                } else if (Math.random() < 0.3) {
+                    this.state = "bounce";
+                    this.stateSchedule = this.SCHEDULE_BOUNCE;
+                }
+                break;
+            case "attack":
+            case "follow":
+            case "bounce":
+                if (Math.random() < 0.3) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                } else {
+                    this.state = "bounce";
+                    this.stateSchedule = this.SCHEDULE_BOUNCE;
+                }
+                break;
+        }
+    },
+    initBounce: function () {
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 5500 + Math.random() * 5500;
+        if(Math.random() < 0.5) {
+            //horizontal
+            this.dy = 0;
+            if (Math.random() < 0.5)
+                this.dx = this.speed;
+            else
+                this.dx = -this.speed;
+        } else {
+            //vertical
+            this.dx = 0;
+            if (Math.random() < 0.5)
+                this.dy = this.speed;
+            else
+                this.dy = -this.speed;
+        }
+        this.calcDirection(this.dx, this.dy);
+        this.sprite.playAnimation(this.state + "_" + this.direction);
+        return true;
     },
     initIdle: function () {
         this.setZOrder(250 - this.y - 32);
@@ -128,12 +179,16 @@ waw.MobBarrel = waw.Enemy.extend({
             conditions.push("canAttack");
         }
     },
-    pickAISchedule: function () {
+/*    pickAISchedule: function () {
         this.state = "idle";
         this.stateSchedule = this.SCHEDULE_IDLE;
         this.stateSchedule.reset();
-    },
+    },*/
     onGetDamage : function (killer) {
+        var currentTime = new Date();
+        this.state = "idle";
+        this.stateSchedule = this.SCHEDULE_IDLE;
+        this.timeToThink = currentTime.getTime() + 1500 + Math.random() * 1500;
     }
 })
 ;
