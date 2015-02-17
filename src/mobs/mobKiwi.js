@@ -5,7 +5,7 @@
 waw.MobKiwi = waw.MobRandomBouncer.extend({
     mobType: "Kiwi",
     shadowYoffset: 0,
-    spriteYoffset: 0,
+    spriteYoffset: -12,
     HP: 1,
     state: "idle",
 
