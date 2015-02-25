@@ -133,7 +133,7 @@ waw.MenuDebug = function (layer) {
 
     labelDebug = new cc.LabelTTF("Chest", "System", 12);
     var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
-        function () {
+       function () {
             var e = new waw.NoMobChest();
             var pos = waw.player.getPosition();
             e.setPosition(pos);
@@ -142,9 +142,19 @@ waw.MenuDebug = function (layer) {
             this.addChild(e, 6);
             this.addChild(e.shadowSprite, -14);
             e.setZOrder(250 - pos.y);
-            e.shadowSprite.setPosition(pos.x, pos.y - 0);
-            waw.foes.push(e);
-        }, layer);
+            e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
+            e.setTag(TAG_CHEST);
+            console.log(waw.units.length);
+            //waw.foes.push(e);
+            //waw.units[waw.foes.length-1] = e;   //to make it obstacle&
+
+            this.scheduleOnce(function () {
+                waw.units.push(e);   //to make it obstacle&
+                console.log(waw.units.length);
+            }, 1);
+
+    }, layer);
+
     menu = new cc.Menu(debugSpawnChest);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);

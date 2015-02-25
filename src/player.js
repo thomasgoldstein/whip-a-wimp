@@ -440,6 +440,9 @@ waw.Player = waw.Unit.extend({
             case TAG_RIGHT_DOORD:
                 waw.openDoor(t, this.getParent());
                 break;
+            case TAG_CHEST:
+                unit.onOpen(this);
+                break;
             case TAG_ENEMY:
                 //TODO temp. remove later
                 //unit.onGetDamage(this);
@@ -475,9 +478,6 @@ waw.Player = waw.Unit.extend({
             if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
                 this.interactWithUnit(unit);
             }
-            /*if (cc.rectContainsPoint(unitRect, new cc.Point(x + 16, y))) {
-                this.interactWithUnit(unit);
-            }*/
         }
 
         switch (this.state) {

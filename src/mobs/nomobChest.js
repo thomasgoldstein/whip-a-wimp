@@ -1,12 +1,12 @@
 "use strict";
 //states: idle 
 
-waw.NoMobChest = waw.Enemy.extend({
+waw.NoMobChest = waw.Unit.extend({
     mobType: "Chest",
-    shadowYoffset: 0,
-    spriteYoffset: 0,
-    HP: 2,
-    state: "idle",
+    shadowYoffset: -4,
+    spriteYoffset: -4,
+    //HP: 2,
+    //state: "idle",
     sfx_hurt01: sfx_Punch01,
     sfx_hurt02: sfx_Punch01,
     sfx_death: sfx_Candelabre01,
@@ -15,10 +15,7 @@ waw.NoMobChest = waw.Enemy.extend({
     ctor: function () {
         this._super();
         //console.info("Chest ctor");
-
-        this.setContentSize(16, 16);
-
-
+        this.setContentSize(32, 16);
 
         this.sprite = new cc.Sprite(s_Chest, new cc.rect(0, 5, 32, 24));
         this.sprite.setPosition(0,this.spriteYoffset);
@@ -28,7 +25,6 @@ waw.NoMobChest = waw.Enemy.extend({
         this.topSprite.setAnchorPoint(0, 0);
         this.topSprite.setPosition(0, 24-10);
         this.sprite.addChild(this.topSprite, 1);
-
         this.addChild(this.sprite);
 
         this.debugCross.setAnchorPoint(0.5, 0);
@@ -36,70 +32,22 @@ waw.NoMobChest = waw.Enemy.extend({
         this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
-    calcDirection: function (dx, dy) {
-            this.direction = "down";
-    },
-    update: function () {
-        var currentTime = new Date();
-
-        this.conditions = this.getConditions();
-
-        if (this.stateSchedule.isDone()) {
-            this.pickAISchedule();
-        }
-        this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
-
-        this.checkSubState();
-
-        if(showDebugInfo && this.label) {
-            this.label.setString(this.x.toFixed(1)+","+this.y.toFixed(1)+" DX:"+this.dx.toFixed(1)+", DY"+this.dy.toFixed(1)+
-            "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
+    //clear from this unit 1. local room foes 2. global room 3. local units - collision check
+    cleanRefs: function () {
+        for (var n = 0; n < waw.units.length; n++) {
+            var m = waw.units[n];
+            if (this === m) {
+                waw.units[n] = null;
+                //TODO instantly remove from room spawn?
+                break;
+            }
         }
     },
-    initIdle: function () {
-        var currentTime = new Date();
-
-        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 500;
-        this.targetX = this.targetY = 0;
-        var x, y;
-
-        //this.sprite.playAnimation(this.state+"_"+this.direction);
-        return true;
-    },
-    onIdle: function () {
-        var currentTime = new Date();
-        this.dx = this.dy = 0;
-        if (currentTime.getTime() > this.timeToThink) {
-            return true;
-        }
-        return false;
-    },
-    pickAISchedule: function () {
-        this.state = "idle";
-        this.stateSchedule = this.SCHEDULE_IDLE;
-        this.stateSchedule.reset();
-    },
-    initHurt: function () {
-        var currentTime = new Date();
-        this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
-        return true;
-    },
-    onHurt: function () {
-        var currentTime = new Date();
-        this.dx = this.dy = 0;
-        if (currentTime.getTime() > this.timeToThink) {
-            return true;
-        }
-        return false;
-    },
-
-    onDeath : function (killer) {
-        if (this.subState === "dead")
+    onOpen : function (killer) {
+        if (this.subState === "open")
             return;
         this.unscheduleAllCallbacks();
-        this.subState = "dead";
-        this.sprite.opacity = 255;
-        this.shadowSprite.opacity = 255;
+        this.subState = "open";
 
         if (Math.random() < 0.5) {
             this.scheduleOnce(function () {
@@ -118,23 +66,15 @@ waw.NoMobChest = waw.Enemy.extend({
                 this.topSprite.runAction(new cc.RotateBy(0.4, -5 + Math.random() * 10));
             }, 0.6);
         }
+        this.scheduleOnce(function () {
+            this.cleanRefs();   //TODO should remove it from room spawn instantly to prevent cheating
 
-        if (killer) {
-            //mob.sprite.visible = false;
-            //console.log("Mob "+mob.mobType+"'s touch");
-        }
-
-        //clear from this 1. local room foes 2. global room 3. local units - collision check
-        for (var n = 0; n < waw.foes.length; n++) {
-            var m = waw.foes[n];
-            if (this === m) {
-                waw.foes[n] = null;
-                waw.units[200 + n] = null;
-                currentRoom.mobs[n] = null;
-                break;
-            }
-        }
+            this.scheduleOnce(function () {
+                this.sprite.runAction(new cc.FadeOut(1));
+                this.topSprite.runAction(new cc.FadeOut(0.8));
+                this.shadowSprite.runAction(new cc.FadeOut(0.7));
+            }, 0.6);
+            //TODO turn it into sequence
+        }, 3);
     }
-
-
 });
