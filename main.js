@@ -6,7 +6,8 @@ window.onload = function () {
 
         //load resources
 //      cc.LoaderScene.preload(["LoadingScreen.png"], function () {
-        cc.LoaderScene.preload(g_resources, function () {
+        //cc._loaderImage = "data:image/png;base64,iVBORw ... fQAAAABJRU5ErkJggg==";
+        cc.LoaderScene.preload([g_resources], function () {
             cc.director.runScene(new waw.TitleScene());
         }, this);
     };

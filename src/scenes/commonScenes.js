@@ -13,10 +13,14 @@ waw.TitleScene = cc.Scene.extend({
 
         this.scheduleOnce(function(){
             var transition = cc.TransitionProgressRadialCW;
-            var transition = cc.TransitionRotoZoom;
-            var transition = cc.TransitionProgressVertical;
-            cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t
-            //cc.director.runScene(new waw.MainScene());
+            //var transition = cc.TransitionRotoZoom;
+            //var transition = cc.TransitionProgressVertical;
+
+            cc.LoaderScene.preload(g_resources, function () {
+                cc.director.runScene(new transition(0.5, new waw.MainScene()));
+            }, this);
+
+            //cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t
         }, 5);
     }
 });
@@ -121,14 +125,14 @@ waw.TitleLayer = cc.Layer.extend({
     },
     onEnter: function () {
         this._super();
-        console.info("onEnter GO");
+        //console.info("onEnter GO");
     },
     onEnterTransitionDidFinish: function () {
         this._super();
-        console.info("onEnterTransitionDidFinish Title");
+        //console.info("onEnterTransitionDidFinish Title");
     },
     onExitTransitionDidStart: function () {
         this._super();
-        console.info("onExitTransitionDidStart Title");
+        //console.info("onExitTransitionDidStart Title");
     }
 });

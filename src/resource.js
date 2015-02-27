@@ -49,6 +49,9 @@ var s_HitBoxGrid = "res/DBG/hbGrid.png";
 var s_HitBoxGridBlue = "res/DBG/hbGridBlue.png";
 
 var g_resources = [
+    //bgm
+    {src:bgm_Level1},
+
     //image
     {src:s_HitBoxGrid},
     {src:s_TitleGFX},
@@ -83,9 +86,6 @@ var g_resources = [
 
     //tmx
 
-    //bgm
-    {src:bgm_Level1},
-
     //effect
     {src:sfx_Ouch01},
     {src:sfx_Ouch02},
@@ -101,5 +101,5 @@ var g_resources = [
     {src:sfx_Whip01},
     {src:sfx_Whip02},
     {src:sfx_Coin01},
-    {src:sfx_Door01},
+    {src:sfx_Door01}
 ];
