@@ -28,6 +28,7 @@
         "src/mobs/mobPigWalker.js",
         "src/mobs/mobPigBouncer.js",
         "src/mobs/mobSpikes.js",
+        "src/mobs/mobSpikes2.js",
         "src/mobs/mobBarrel.js",
         "src/mobs/nomobChest.js",
         "src/scenes/commonScenes.js",
