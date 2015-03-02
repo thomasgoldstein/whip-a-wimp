@@ -1,5 +1,9 @@
 "use strict";
 
+waw.oldLayer = null;
+waw.currentLayer = null;
+waw.currentScene = null;
+
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
         event: cc.EventListener.KEYBOARD,
@@ -50,8 +54,6 @@ waw.MainScene = cc.Scene.extend({
 waw.MainLayer = cc.Layer.extend({
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
-    //topLabel: null, //Hi Score, Keys,etc
-    //topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
 
     lightspot: null,
     lightspot1: null,
@@ -130,7 +132,7 @@ waw.MainLayer = cc.Layer.extend({
     onEnter: function () {
         var i, m, e, pos;
         this._super();
-        console.info("onEnter ROOM",currentRoomX,currentRoomY);
+        //console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
         waw.player.update();   //to update players sprite facing direction
 
@@ -242,7 +244,7 @@ waw.MainLayer = cc.Layer.extend({
         this.units = [];
         this.cleanup();
     },
-    onGotoNextRoom: function (e, playerPos) {
+    onGotoNextRoom: function (key, playerPos) {
         //set player coords for the next room
         this.removeChild(waw.player, true);
         waw.player.setPosition(playerPos);
@@ -250,13 +252,11 @@ waw.MainLayer = cc.Layer.extend({
         this.unscheduleUpdate();
 
         var room = null;
-        var transition = cc.TransitionProgressRadialCW;   //transition for teleporting (never used)
-        switch (e) {
+        switch (key) {
             case cc.KEY.up:
                 room = rooms[currentRoomY - 1][currentRoomX];
                 if (room) {
                     currentRoomY -= 1;
-                    transition = cc.TransitionSlideInT; //effect - scrolls one scene out
                     this.lightspot3.visible = false;
                     this.lightspot4.visible = false;
                 } else
@@ -266,7 +266,6 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY + 1][currentRoomX];
                 if (room) {
                     currentRoomY += 1;
-                    transition = cc.TransitionSlideInB;
                     this.lightspot1.visible = false;
                     this.lightspot2.visible = false;
                 } else
@@ -276,7 +275,6 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY][currentRoomX - 1];
                 if (room) {
                     currentRoomX -= 1;
-                    transition = cc.TransitionSlideInL;
                     this.lightspot2.visible = false;
                     this.lightspot3.visible = false;
                 } else
@@ -286,23 +284,49 @@ waw.MainLayer = cc.Layer.extend({
                 room = rooms[currentRoomY][currentRoomX + 1];
                 if (room) {
                     currentRoomX += 1;
-                    transition = cc.TransitionSlideInR;
                     this.lightspot1.visible = false;
                     this.lightspot4.visible = false;
                 } else
                     return;
                 break;
         }
-
         currentRoom = room; //TODO remove later?
-        //create new scene to put a layer of the next room into it. To use DIRECTOR to use transitions between scenes
-        var nextScene = new cc.Scene();
+
+        this.scrollToNextRoom(key, 0.5);  //1st arg = in seconds duration of the transition
+    },
+    scrollToNextRoom: function (direction) {
+        waw.oldLayer = this;
+        waw.oldLayer.unscheduleUpdate();
+        waw.oldLayer.stopAllActions();
+        waw.oldLayer.onExitTransitionDidStart();
+
         var nextLayer = new waw.MainLayer();
         nextLayer.init();
-        nextScene.addChild(nextLayer);
 
-        cc.director.runScene(new transition(0.5, nextScene));  //1st arg = in seconds duration of the transition
-        //cc.director.runScene(nextScene);    //Instant transition between rooms
+        switch (direction) {
+            case cc.KEY.up:
+                nextLayer.setPosition(0,240);
+                waw.oldLayer.runAction(new cc.MoveTo(0.5, 0,-240));
+                break;
+            case cc.KEY.down:
+                nextLayer.setPosition(0,-240);
+                waw.oldLayer.runAction(new cc.MoveTo(0.5, 0,240));
+                break;
+            case cc.KEY.left:
+                nextLayer.setPosition(-320,0);
+                waw.oldLayer.runAction(new cc.MoveTo(0.5, 320,0));
+                break;
+            case cc.KEY.right:
+                nextLayer.setPosition(320,0);
+                waw.oldLayer.runAction(new cc.MoveTo(0.5, -320,0));
+                break;
+            default:
+                nextLayer.setPosition(60,60);   //debug
+                waw.oldLayer.runAction(new cc.MoveTo(0.5, 200,200));
+        }
+        waw.currentScene.addChild(nextLayer);
+        nextLayer.runAction(new cc.MoveTo(0.5, 0,0));
+        this.scheduleOnce(function(){ waw.oldLayer.removeAllChildrenWithCleanup(); },0.35);
     },
     update: function (dt) {
         if(currentRoom.dark) {

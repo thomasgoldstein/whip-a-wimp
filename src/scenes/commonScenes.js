@@ -16,8 +16,10 @@ waw.TitleScene = cc.Scene.extend({
             //var transition = cc.TransitionRotoZoom;
             //var transition = cc.TransitionProgressVertical;
 
+            waw.currentScene = new waw.MainScene();
+
             cc.LoaderScene.preload(g_resources, function () {
-                cc.director.runScene(new transition(0.5, new waw.MainScene()));
+                cc.director.runScene(new transition(0.5, waw.currentScene));
             }, this);
 
             //cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t

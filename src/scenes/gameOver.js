@@ -19,7 +19,8 @@ waw.GameOverScene = cc.Scene.extend({
             var rooms = {};
 
             //cc.director.runScene(new transition(1, new waw.MainScene()));  //1st arg = in seconds duration of t
-            cc.director.runScene(new waw.MainScene());
+            waw.currentScene = new waw.MainScene();
+            cc.director.runScene(waw.currentScene);
         }, 3);
     }
 });
