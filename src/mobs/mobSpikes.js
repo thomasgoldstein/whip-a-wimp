@@ -27,7 +27,7 @@ waw.MobSpikes = waw.Enemy.extend({
                 frameRects: [
                     cc.rect(1+34*1, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
-                    cc.rect(1+34*1, 1, 32, 32),
+                    cc.rect(1+34*0, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
