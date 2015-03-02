@@ -91,7 +91,6 @@ waw.Item = waw.Unit.extend({
         var pos = this.getPosition();
         if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 200) {
             this.onTake();
-            this.cleanUp();
         }
         if (showDebugInfo && this.label) {
 //            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
@@ -128,11 +127,13 @@ waw.Item = waw.Unit.extend({
                     waw.player.HP = 2;
                     waw.player.sprite2.visible = true;
                     waw.addScore(50);
-                }
+                } else
+                    return;
                 break;
             default:
                 waw.addScore(1);    //WTF?
         }
+        this.cleanUp();
     },
     onUse: function () {
         //player uses item
