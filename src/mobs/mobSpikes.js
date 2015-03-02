@@ -10,7 +10,7 @@ waw.MobSpikes = waw.Enemy.extend({
 
     ctor: function () {
         this._super();
-        //console.info("MobSpikes ctor");
+        //console.info("MobSpikes2 ctor");
 
         this.setContentSize(32, 28);
         this.speed = 0;
@@ -19,6 +19,12 @@ waw.MobSpikes = waw.Enemy.extend({
         {
             "idle": {
                 frameRects: [
+                    cc.rect(1 + 34 * 2, 1, 32, 32)
+                ],
+                delay: 5 + Math.random() * 0.15
+            },
+            "attack": {
+                frameRects: [
                     cc.rect(1+34*1, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
                     cc.rect(1+34*0, 1, 32, 32),
@@ -26,7 +32,7 @@ waw.MobSpikes = waw.Enemy.extend({
                     cc.rect(1+34*2, 1, 32, 32),
                     cc.rect(1+34*2, 1, 32, 32)
                 ],
-                delay: 0.12+Math.random()*0.1
+                delay: 0.2
             }
         };
 
@@ -45,13 +51,10 @@ waw.MobSpikes = waw.Enemy.extend({
         this.shadowSprite.visible = false;  //no shadow
     },
     update: function () {
-
         this.conditions = this.getConditions();
 
-        if (this.state !== "attack" && this.conditions.indexOf("canAttack") >= 0) {
-            console.log("mob attacks player0");
-            this.state = "attack";
-            this.stateSchedule = this.SCHEDULE_ATTACK;
+        if (this.state === "attack" && this.conditions.indexOf("canAttack") >= 0) {
+            //console.log("mob attacks player0");
             this.stateSchedule.reset();
 
             waw.player.onGetDamage(this);
@@ -70,10 +73,14 @@ waw.MobSpikes = waw.Enemy.extend({
         }
     },
     calcDirection: function (dx, dy) {
-        this.direction = "idle";
+        //this.direction = "idle";
+        this.direction = this.state;
     },
     initIdle: function () {
-        this.setZOrder(250 - this.y - 27);
+        this.setZOrder(250 - this.y - 27);  //used once
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 2500 + Math.random() * 500;
+        this.sprite.playAnimation(this.state);
         return true;
     },
     onIdle: function () {
@@ -86,7 +93,8 @@ waw.MobSpikes = waw.Enemy.extend({
     },
     initAttack: function () {
         var currentTime = new Date();
-        this.timeToThink = currentTime.getTime() + 10000 + Math.random() * 500;
+        this.timeToThink = currentTime.getTime() + 2000 + Math.random() * 50;
+        this.sprite.playAnimation(this.state);
         return true;
     },
     onAttack: function () {
@@ -98,13 +106,29 @@ waw.MobSpikes = waw.Enemy.extend({
         return false;
     },
     getVisualConditions: function (conditions) {
+        if(this.state === "idle"){
+            return;
+        }
         if(cc.rectIntersectsRect(waw.player.collideRect(), this.collideRect())){
             conditions.push("canAttack");
         }
     },
     pickAISchedule: function () {
-        this.state = "idle";
-        this.stateSchedule = this.SCHEDULE_IDLE;
+        switch (this.state) {
+            case "idle":
+                if (Math.random() < 0.2) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                } else {
+                    this.state = "attack";
+                    this.stateSchedule = this.SCHEDULE_ATTACK;
+                }
+                break;
+            case "attack":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                break;
+        }
         this.stateSchedule.reset();
     },
     onGetDamage : function (killer) {
