@@ -46,6 +46,8 @@ waw.NoMobChest = waw.Unit.extend({
     onOpen : function (killer) {
         if (this.subState === "open")
             return;
+        if (this.subState === "open")
+            return;
         this.unscheduleAllCallbacks();
         this.subState = "open";
 

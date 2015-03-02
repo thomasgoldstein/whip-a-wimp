@@ -50,8 +50,8 @@ waw.MainScene = cc.Scene.extend({
 waw.MainLayer = cc.Layer.extend({
     foes: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
-    topLabel: null, //Hi Score, Keys,etc
-    topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
+    //topLabel: null, //Hi Score, Keys,etc
+    //topLabelString: "Hi-SCORE: "+waw.hiScore, //Hi Score, Keys,etc
 
     lightspot: null,
     lightspot1: null,
@@ -80,12 +80,6 @@ waw.MainLayer = cc.Layer.extend({
 
         if(rooms.foundMap)
             waw.AddMiniMap(this, room);
-
-        //HI-SCORE, keys
-        this.topLabel = new cc.LabelTTF(this.topLabelString, "System", 10);
-        this.topLabel.setAnchorPoint(0,1);
-        this.addChild(this.topLabel , 299+5); //, TAG_LABEL_SPRITE1);
-        this.topLabel .setPosition(16, 240-1);
 
         this.lightspot = new cc.Sprite(s_LightSpot, new cc.rect(0,0,1,1));
         this.lightspot.setAnchorPoint(0.5, 0.5);
@@ -311,12 +305,6 @@ waw.MainLayer = cc.Layer.extend({
         //cc.director.runScene(nextScene);    //Instant transition between rooms
     },
     update: function (dt) {
-        //score-keys TODO: do not update every frame
-        var s = "HI-SCORE:"+waw.hiScore+" SCORE:"+waw.score+" Keys:"+waw.keys+" Coins:"+waw.coins+" Gems:"+waw.gems;
-        if (s != this.topLabelString)
-            this.topLabel.setString(this.topLabelString = s);
-
-        //
         if(currentRoom.dark) {
             if(!this.lightspot1.visible){
                 this.lightspot1.visible =
