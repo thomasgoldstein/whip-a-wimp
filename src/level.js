@@ -717,7 +717,7 @@ waw.generateItems = function(roomType){
     var items = [];
     var n = Math.round(Math.random()*5);    //TODO max items in the room
     var item = null;
-    var pickItemType = ["key", "coin", "gem", "map", "rope", "cloth", "unknown"];
+    var pickItemType = ["key", "coin", "gem", "map", "rope", "cloth", "invincibility", "unknown"];
     var itemCoord = waw.GetRoomSpawnCoords(roomType);
     var cr;
     if(n>itemCoord.length)

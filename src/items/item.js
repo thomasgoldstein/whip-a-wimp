@@ -19,25 +19,28 @@ waw.Item = waw.Unit.extend({
         this.setContentSize(8, 8);
         switch (this.itemType) {
             case "key":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(0, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 0, 0, 16, 16));
                 break;
             case "coin":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 1, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 1, 1, 16, 16));
                 break;
             case "gem":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 2, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 2, 1, 16, 16));
                 break;
             case "map":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 3, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 3, 1, 16, 16));
                 break;
             case "rope":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 4, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 4, 1, 16, 16));
                 break;
             case "cloth":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 6, 0, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 5, 1, 16, 16));
                 break;
-            default:
-                this.sprite = new cc.Sprite(s_Items, cc.rect(17 * 7 , 0, 16, 16));
+            case "invincibility":
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 6, 1, 16, 16));
+                break;
+            default:    //unknown
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 7, 1, 16, 16));
         }
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -128,6 +131,9 @@ waw.Item = waw.Unit.extend({
                     waw.player.sprite2.visible = true;
                     waw.addScore(50);
                 } else
+                    return;
+                break;
+            case "invincibility":
                     return;
                 break;
             default:
