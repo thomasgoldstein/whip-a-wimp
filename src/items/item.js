@@ -35,6 +35,7 @@ waw.Item = waw.Unit.extend({
                 break;
             case "cloth":
                 this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 5, 1, 16, 16));
+                this.spriteYoffset = -3;
                 break;
             case "invincibility":
                 this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 6, 1, 16, 16));
@@ -53,7 +54,7 @@ waw.Item = waw.Unit.extend({
         //add debug text info under an item
         this.label = new cc.LabelTTF("Item", "System", 9);
         this.addChild(this.label, 299, TAG_LABELSPRITE);
-        this.label.setPosition(0, -8);
+        this.label.setPosition(0, -8 + this.shadowYoffset);
         this.label.setVisible(showDebugInfo);
 
         this.scheduleUpdate();
