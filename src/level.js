@@ -29,6 +29,7 @@ function Room(_name,_x,_y) {
     this.mobs = [];
     this.items = [];
 
+    this.distance = 100;    //rooms to the level entrance
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
@@ -147,19 +148,15 @@ rooms.genLevel = function() {
 		//check for bounds
 		if(x>=8) {
 			x=8;
-			//noCycle--;
 		}
 		if(x<0) {
 			x=0;
-			//noCycle--;
 		}
 		if(y>=8) {
 			y=8;
-			//noCycle--;
 		}
 		if(y<0) {
 			y=0;
-			//noCycle--;
 		}
 		//check for max number of rooms to generate
 	} while(noCycle<15 );
@@ -167,6 +164,50 @@ rooms.genLevel = function() {
     //start room[4,4] should have no obstacles!
     rooms[4][4].type = 0;
 };
+
+rooms.initDistance = function () {
+    for (var y = 0; y < 9; y++) {
+        for (var x = 0; x < 9; x++) {
+            if (!rooms[y][x])
+                rooms[y][x].distance = 100;
+        }
+    }
+    rooms[4][4].distance = 0;
+};
+
+rooms.putDistance = function (y, x, d) {
+    if (y < 0 || x < 0 || y >= 9 || x >= 9 || !rooms[y][x])
+        return;
+    rooms[y][x].distance = d;
+};
+rooms.getDistance = function (y, x, d) {
+    if (y < 0 || x < 0 || y >= 9 || x >= 9)
+        return 101;
+    if (!rooms[y][x])
+        return 100;
+    return rooms[y][x].distance;
+};
+
+rooms.calcDistance = function (y, x, d) {
+    if (y < 0 || x < 0 || y >= 9 || x >= 9)
+        return;
+    if (!rooms[y][x])
+        return;
+    var r = rooms[y][x];
+
+    if (r.distance > d + 1)
+        r.distance = d + 1;
+
+    if (r.walls.up !== "wall")
+        rooms.calcDistance(y + 1, x, r.distance);
+    if (r.walls.right == "wall")
+        rooms.calcDistance(y, x + 1, r.distance);
+    if (r.walls.down == "wall")
+        rooms.calcDistance(y - 1, x, r.distance);
+    if (r.walls.left == "wall")
+        rooms.calcDistance(y, x - 1, r.distance);
+};
+
 
 waw.GetRoomSpawnCoords = function (roomType) {
     var a = [];
