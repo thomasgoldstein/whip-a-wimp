@@ -146,7 +146,24 @@ waw.Item = waw.Unit.extend({
             case "invincibility":
                 if (waw.player.subState === "") {
                     waw.player.setSubState("invincible", 5000);
+
                     waw.addScore(50);
+
+                    //
+                    var sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 6, 1, 16, 16));
+                    waw.player.addChild(sprite, -20);
+                    sprite.setScale(2);
+                    sprite.setPosition(0, 0);
+                    sprite.runAction(
+                        new cc.Sequence(
+                            new cc.RotateBy(2.5, 360*3),
+                            new cc.FadeOut(0.5),
+                            new cc.RemoveSelf()
+                        )
+                    );
+                    //
+
+
                 } else
                     return;
                 break;
