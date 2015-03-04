@@ -275,7 +275,11 @@ waw.GetRoomSpawnCoords = function (roomType) {
 waw.GenerateMiniMap = function() {
     var m = null;
     var r,w;
-    var layer = new cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
+    var mapXOffset = 15, mapYOffset = 5;
+    var layerMapSprite = new cc.Sprite(s_Map,
+        cc.rect(0, 6, 64, 56));
+    layerMapSprite.opacity = 200;
+    //cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
     for(var y = 0; y < 9 ; y++) {
         for(var x = 0; x < 9; x++) {
             w = 0; //walls-doors counter
@@ -292,34 +296,32 @@ waw.GenerateMiniMap = function() {
                     w |= 8;
                 //the room
                 m = new cc.Sprite(s_Map,
-                    cc.rect(w * 6, 0, 6, 6));
+                    cc.rect(w * 6, 0, 5, 5));
                 m.setOpacity(r.visited ? 255 : 63);
-                layer.addChild(m);
-                m.setPositionX(x*5+3);
-                m.setPositionY((8-y)*5+2);
+                layerMapSprite.addChild(m);
+                m.setPositionX(x*5+3 +mapXOffset);
+                m.setPositionY((8-y)*5+2 +mapYOffset);
                 if(currentRoomX === x && currentRoomY === y){
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
-                    m = new cc.Sprite(s_Map, cc.rect(0, 12, 6, 6)); //red dot - players pos
-                    layer.addChild(m);
-                    m.setPositionX(x*5+3);
-                    m.setPositionY((8-y)*5+2);
+                    m = new cc.Sprite(s_Map, cc.rect(90, 0, 5, 5)); //red dot - players pos
+                    layerMapSprite.addChild(m);
+                    m.setPositionX(x*5+3 +mapXOffset);
+                    m.setPositionY((8-y)*5+2 +mapYOffset);
                     m.setOpacity(127);
                 }
             }
         }
     }
-    return layer;
+    return layerMapSprite;
 };
 
 waw.AddMiniMap = function (layer, room, animateTheMapOpening) {
     var miniMap = waw.GenerateMiniMap();
-    var x = 34, y = 240 - 48;
     layer.addChild(miniMap, 400);
-    if (room.walls.up_d <= 0) {
-        x = 320 - 33 - 40;  //if the upper door is shifted to right, then put mini-map to left
-    }
+    var x = 320 - 42;  //if the upper door is shifted to right, then put mini-map to left
+    var y = 240 - 32;
     if(animateTheMapOpening){
         miniMap.setPosition(waw.player.x, waw.player.y);
         miniMap.setScale(0.2, 0.2);
