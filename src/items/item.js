@@ -144,6 +144,10 @@ waw.Item = waw.Unit.extend({
                     return;
                 break;
             case "invincibility":
+                if (waw.player.subState === "") {
+                    waw.player.setSubState("invincible", 5000);
+                    waw.addScore(50);
+                } else
                     return;
                 break;
             default:
