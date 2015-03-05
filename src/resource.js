@@ -10,7 +10,7 @@ var s_Pillar = themeDir + "Pillar.png";
 var s_Items = themeDir + "Items.png";
 var s_Weapons = "res/Weapons.png";
 var s_LightSpot = "res/LightSpot.png";
-var s_Debris = themeDir + "Debris.png";
+var s_Textures = themeDir + "Textures.png";
 var s_Chest = themeDir + "Chest.png";
 var s_Merchant = themeDir + "Merchant.png";
 var s_Jesus = "res/Jesus.png";
@@ -72,7 +72,7 @@ var g_resources = [
     {src:s_Weapons},
     {src:s_Merchant},
     {src:s_Pit},
-    {src:s_Debris},
+    {src:s_Textures},
     {src:s_Sparkle},
     {src:s_Pig},
     {src:s_Spikes},

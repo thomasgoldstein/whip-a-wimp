@@ -42,7 +42,7 @@ function Room(_name,_x,_y) {
 
     this.distance = 100;    //rooms to the level entrance
 // Random Seed to generate the same lists of decorative elements
-    this.randomSeedDebris = Math.round(Math.random()*100000);
+    this.randomSeedTextures = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
 }
 
@@ -709,12 +709,13 @@ waw.prepareRoomPattern = function(room) {
     var layer = waw.layer;
 
     //some random debris to PSEUDO random per a room
-    waw.rand = new Math.seedrandom(room.randomSeedDebris); //a temp Pseudo random func with set seed
-    for(var x = 0; x < waw.rand()*3; x++) { //*3+1
-        var d = new cc.Sprite(s_Debris,
-            cc.rect(Math.floor(waw.rand()*10)*32, 0, 32, 32));
+    waw.rand = new Math.seedrandom(room.randomSeedTextures); //a temp Pseudo random func with set seed
+    for(var x = 0; x < waw.rand()*4; x++) {
+        var d = new cc.Sprite(s_Textures,
+            cc.rect(Math.floor(waw.rand()*10)*19+1, 1, 16, 16));
 
         layer.addChild(d,-15); //on the floor (lower than players/mobs shadows)
+        d.opacity = 200;
         d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
         if(waw.rand()>0.5)
             continue;
