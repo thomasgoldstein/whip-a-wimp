@@ -11,10 +11,11 @@ function Walls() {
     this.right_d = 0;
     this.down_d = 0;
     this.left_d = 0;
+
     // ceiling & floor
     //TODO add usage of top / bottom ladders in the level
-	this.top = "wall";
-	this.bottom = "wall";
+	//this.top = "wall";
+	//this.bottom = "wall";
 }
 
 //a Room generator
@@ -29,6 +30,16 @@ function Room(_name,_x,_y) {
     this.mobs = [];
     this.items = [];
 
+    //rooms around )
+    this.up_room = null;    //near rooms, even trough doors
+    this.right_room = null;
+    this.down_room = null;
+    this.left_room = null;
+    this.up_direct_room = null; //ref to the room with direct access
+    this.right_direct_room = null;
+    this.down_direct_room = null;
+    this.left_direct_room = null;
+
     this.distance = 100;    //rooms to the level entrance
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedDebris = Math.round(Math.random()*100000);
@@ -39,16 +50,14 @@ rooms.initLevel = function() {
     currentRoom = null;
     currentRoomX = currentRoomY = 4; //The start room is 4,4 by default
     startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
-
 	//init level 9x9
 	for(var y = 0; y < 9 ; y++) {
 		rooms[y] = {};
 		for(var x = 0; x < 9 ; x++) {
-			//var t = new Room("name"+x+"_"+y,x,y);
 			rooms[y][x] = null;
 		}
 	}
-    rooms.foundMap = false;
+    rooms.foundMap = false; //player found no map yet
 };
 
 rooms.genLevel = function() {
@@ -61,13 +70,13 @@ rooms.genLevel = function() {
     var temp = "empty";
     var maxDy = 36; //+- max vertical shift of left + right doors
     var maxDx = 90; //+- max horizontal shift of up + down doors
+    var max_rooms_N = 15;
 	do {
 		noCycle++;
 		if(!rooms[y][x]) {
             var d = 0; //delta offset of the door/passage position
 			var r = new Room("Room "+x+"-"+y,x,y);
 			if(x == 4 && y == 4){ //for TEST mark start Room x4,y4
-				//r.Walls.up = r.Walls.down = r.Walls.left = r.Walls.right = "empty";
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
 			} else {
@@ -159,53 +168,91 @@ rooms.genLevel = function() {
 			y=0;
 		}
 		//check for max number of rooms to generate
-	} while(noCycle<15 );
+	} while(noCycle < max_rooms_N);
 
     //start room[4,4] should have no obstacles!
     rooms[4][4].type = 0;
 };
 
-rooms.initDistance = function () {
+rooms.initNeighbours = function () {
     for (var y = 0; y < 9; y++) {
         for (var x = 0; x < 9; x++) {
-            if (!rooms[y][x])
-                rooms[y][x].distance = 100;
+            var r = rooms[y][x];
+            if (r) {
+                r.distance = 100;
+                if (r.walls.up !== "wall")
+                    r.up_room = rooms.getRoom(y - 1, x);
+                if (r.walls.down !== "wall")
+                    r.down_room = rooms.getRoom(y + 1, x);
+                if (r.walls.left !== "wall")
+                    r.left_room = rooms.getRoom(y, x - 1);
+                if (r.walls.right !== "wall")
+                    r.right_room = rooms.getRoom(y, x + 1);
+
+                if (r.walls.up === "empty")
+                    r.up_direct_room = rooms.getRoom(y - 1, x);
+                if (r.walls.down === "empty")
+                    r.down_direct_room = rooms.getRoom(y + 1, x);
+                if (r.walls.left === "empty")
+                    r.left_direct_room = rooms.getRoom(y, x - 1);
+                if (r.walls.right === "empty")
+                    r.right_direct_room = rooms.getRoom(y, x + 1);
+            }
         }
     }
     rooms[4][4].distance = 0;
+
+    real_rooms = []; // the start room goes 1st
+    real_rooms.push(rooms[4][4]);
+    for (y = 0; y < 9; y++) {
+        for (x = 0; x < 9; x++) {
+            r = rooms[y][x];
+            if (r && !(x === 4 && y === 4)) {
+                real_rooms.push(r);
+            }
+        }
+    }
 };
 
-rooms.putDistance = function (y, x, d) {
-    if (y < 0 || x < 0 || y >= 9 || x >= 9 || !rooms[y][x])
-        return;
-    rooms[y][x].distance = d;
-};
-rooms.getDistance = function (y, x, d) {
+rooms.getRoom = function (y, x) {
     if (y < 0 || x < 0 || y >= 9 || x >= 9)
-        return 101;
+        return null;
     if (!rooms[y][x])
-        return 100;
-    return rooms[y][x].distance;
+        return null;
+    return rooms[y][x];
 };
 
-rooms.calcDistance = function (y, x, d) {
-    if (y < 0 || x < 0 || y >= 9 || x >= 9)
+rooms.compareDistance = function (r, r2) {
+    if (!r2)
         return;
-    if (!rooms[y][x])
-        return;
-    var r = rooms[y][x];
+    if (r.distance > r2.distance + 1) {
+        console.log(r.name, "r > r2 ", r.distance, r2.distance, r2.name);
+        r.distance = r2.distance + 1;
+        //console.log(r.name, "! r > r2 ", r.distance, r2.distance, r2.name);
 
-    if (r.distance > d + 1)
-        r.distance = d + 1;
+    } else if (r2.distance > r.distance + 1) {
+        console.log(r2.name, "r2 > r ", r2.distance, r.distance, r.name);
+        r2.distance = r.distance + 1;
+        //console.log(r2.name, "! r2 > r ", r2.distance, r.distance, r.name);
+    }
+};
 
-    if (r.walls.up !== "wall")
-        rooms.calcDistance(y + 1, x, r.distance);
-    if (r.walls.right == "wall")
-        rooms.calcDistance(y, x + 1, r.distance);
-    if (r.walls.down == "wall")
-        rooms.calcDistance(y - 1, x, r.distance);
-    if (r.walls.left == "wall")
-        rooms.calcDistance(y, x - 1, r.distance);
+rooms.calcDistance = function () {
+    for (var pass = 1; pass <= 5; pass++) {
+        console.log("Calc Distance pass " + pass);
+        for (var i = 0; i < real_rooms.length; i++) {
+            var r = real_rooms[i];
+            /* rooms.compareDistance(r, r.up_direct_room);
+             rooms.compareDistance(r, r.down_direct_room);
+             rooms.compareDistance(r, r.left_direct_room);
+             rooms.compareDistance(r, r.right_direct_room);*/
+
+            rooms.compareDistance(r, r.up_room);
+            rooms.compareDistance(r, r.down_room);
+            rooms.compareDistance(r, r.left_room);
+            rooms.compareDistance(r, r.right_room);
+        }
+    }
 };
 
 
@@ -580,7 +627,7 @@ waw.prepareRoomLayer = function(room) {
 
     //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
-        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type, "Arial", 12);
+        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type+" Dist2entryL"+room.distance, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
         label.setAnchorPoint(0,1);
         label.setPosition(20, 230);

@@ -51,7 +51,7 @@ waw.Item = waw.Unit.extend({
                 new cc.Sequence(
                     new cc.JumpBy(0.3, 0,0, 2, 1),
                     new cc.JumpBy(0.2, 0,0, 1, 1),
-                    new cc.DelayTime(3+ Math.random()*3)
+                    new cc.DelayTime(1+ Math.random()*3)
                 )
             )
         );
