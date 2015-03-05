@@ -208,11 +208,10 @@ rooms.initNeighbours = function () {
         for (x = 0; x < 9; x++) {
             r = rooms[y][x];
             if (r && !(x === 4 && y === 4)) {
-                    real_rooms.push(r);
+                real_rooms.push(r);
             }
         }
     }
-    console.log(real_rooms);
 };
 
 rooms.getRoom = function (y, x) {
@@ -223,37 +222,37 @@ rooms.getRoom = function (y, x) {
     return rooms[y][x];
 };
 
-rooms.putDistance = function (y, x, d) {
-    if (y < 0 || x < 0 || y >= 9 || x >= 9 || !rooms[y][x])
+rooms.compareDistance = function (r, r2) {
+    if (!r2)
         return;
-    rooms[y][x].distance = d;
+    if (r.distance > r2.distance + 1) {
+        console.log(r.name, "r > r2 ", r.distance, r2.distance, r2.name);
+        r.distance = r2.distance + 1;
+        //console.log(r.name, "! r > r2 ", r.distance, r2.distance, r2.name);
+
+    } else if (r2.distance > r.distance + 1) {
+        console.log(r2.name, "r2 > r ", r2.distance, r.distance, r.name);
+        r2.distance = r.distance + 1;
+        //console.log(r2.name, "! r2 > r ", r2.distance, r.distance, r.name);
+    }
 };
-rooms.getDistance = function (y, x, d) {
-    if (y < 0 || x < 0 || y >= 9 || x >= 9)
-        return 101;
-    if (!rooms[y][x])
-        return 100;
-    return rooms[y][x].distance;
-};
 
-rooms.calcDistance = function (y, x, d) {
-    if (y < 0 || x < 0 || y >= 9 || x >= 9)
-        return;
-    if (!rooms[y][x])
-        return;
-    var r = rooms[y][x];
+rooms.calcDistance = function () {
+    for (var pass = 1; pass <= 5; pass++) {
+        console.log("Calc Distance pass " + pass);
+        for (var i = 0; i < real_rooms.length; i++) {
+            var r = real_rooms[i];
+            /* rooms.compareDistance(r, r.up_direct_room);
+             rooms.compareDistance(r, r.down_direct_room);
+             rooms.compareDistance(r, r.left_direct_room);
+             rooms.compareDistance(r, r.right_direct_room);*/
 
-    if (r.distance > d + 1)
-        r.distance = d + 1;
-
-    if (r.walls.up !== "wall")
-        rooms.calcDistance(y + 1, x, r.distance);
-    if (r.walls.right == "wall")
-        rooms.calcDistance(y, x + 1, r.distance);
-    if (r.walls.down == "wall")
-        rooms.calcDistance(y - 1, x, r.distance);
-    if (r.walls.left == "wall")
-        rooms.calcDistance(y, x - 1, r.distance);
+            rooms.compareDistance(r, r.up_room);
+            rooms.compareDistance(r, r.down_room);
+            rooms.compareDistance(r, r.left_room);
+            rooms.compareDistance(r, r.right_room);
+        }
+    }
 };
 
 
