@@ -22,26 +22,26 @@ waw.Item = waw.Unit.extend({
                 this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 0, 0, 16, 16));
                 break;
             case "coin":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 1, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 1, 1, 16, 16));
                 break;
             case "gem":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 2, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 2, 1, 16, 16));
                 break;
             case "map":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 3, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 3, 1, 16, 16));
                 break;
             case "rope":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 4, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 4, 1, 16, 16));
                 break;
             case "cloth":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 5, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 5, 1, 16, 16));
                 this.spriteYoffset = -1;
                 break;
             case "invincibility":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 6, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 6, 1, 16, 16));
                 break;
             default:    //unknown
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 7, 1, 16, 16));
+                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 7, 1, 16, 16));
         }
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -150,7 +150,7 @@ waw.Item = waw.Unit.extend({
                     waw.addScore(50);
 
                     //
-                    var sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 6, 1, 16, 16));
+                    var sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 6, 1, 16, 16));
                     waw.player.addChild(sprite, -20);
                     sprite.setScale(2);
                     sprite.setPosition(0, 0);

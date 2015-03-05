@@ -712,10 +712,10 @@ waw.prepareRoomPattern = function(room) {
     waw.rand = new Math.seedrandom(room.randomSeedTextures); //a temp Pseudo random func with set seed
     for(var x = 0; x < waw.rand()*4; x++) {
         var d = new cc.Sprite(s_Textures,
-            cc.rect(Math.floor(waw.rand()*10)*19+1, 1, 16, 16));
+            cc.rect(Math.floor(waw.rand()*10)*18+1, 1, 16, 16));
 
         layer.addChild(d,-15); //on the floor (lower than players/mobs shadows)
-        d.opacity = 200;
+        d.opacity = 127;
         d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
         if(waw.rand()>0.5)
             continue;
