@@ -28,7 +28,8 @@ var waw = {
 var currentRoom = null;
 var currentRoomX = 4, currentRoomY = 4; //The start room is 4,4 by default
 var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
-var rooms = {};
+var rooms = []; //2d 9x9 array of the level rooms
+var real_rooms = []; //1d array with all generated rooms
 
 //console.log(cc.Director.getInstance().waw);
 
