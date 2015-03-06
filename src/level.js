@@ -761,7 +761,7 @@ waw.prepareRoomPattern = function(room) {
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 1);
         layer.addChild(d, -19); //middle wall Zindex = -20
-        d.opacity = 220;
+        d.opacity = 127;
         d.setPosition(Math.round(64 + waw.rand() * 192), 228);
         if (waw.rand() > 0.5)
             d.flippedX = true;
@@ -775,7 +775,7 @@ waw.prepareRoomPattern = function(room) {
         d.setAnchorPoint(0.5, 0);
         d.flippedY = true;
         layer.addChild(d, -19); //middle wall Zindex = -20
-        d.opacity = 220;
+        d.opacity = 127;
         d.setPosition(Math.round(64 + waw.rand() * 192), 12);
         if (waw.rand() > 0.5)
             d.flippedX = true;
@@ -790,7 +790,7 @@ waw.prepareRoomPattern = function(room) {
         d.flippedY = true;
         d.rotation = 90;
         layer.addChild(d, -19); //middle wall Zindex = -20
-        d.opacity = 220;
+        d.opacity = 127;
         d.setPosition(12, Math.round(32 + waw.rand() * 170));
         if (waw.rand() > 0.5)
             d.flippedX = true;
@@ -805,7 +805,7 @@ waw.prepareRoomPattern = function(room) {
         d.flippedY = true;
         d.rotation = -90;
         layer.addChild(d, -19); //middle wall Zindex = -20
-        d.opacity = 220;
+        d.opacity = 127;
         d.setPosition(308, Math.round(32 + waw.rand() * 170));
         if (waw.rand() > 0.5)
             d.flippedX = true;
