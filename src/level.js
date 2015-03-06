@@ -516,8 +516,8 @@ waw.prepareRoomLayer = function(room) {
     floor.ignoreAnchor = true;
     middleWalls.ignoreAnchor = true;
     upperWalls.ignoreAnchor = true;
-    layer.addChild(floor, -20); //Z index the lowest one
-    layer.addChild(middleWalls, -19);
+    layer.addChild(floor, -21); //Z index the lowest one
+    layer.addChild(middleWalls, -20);
     layer.addChild(upperWalls, 255);
 
     //add doors
@@ -733,22 +733,82 @@ waw.openDoor = function (doorTag, layer) {
 waw.prepareRoomPattern = function(room) {
     if(!room) throw "unknown room";
     var layer = waw.layer;
+    var d;
 
-    //some random debris to PSEUDO random per a room
+    //some random floor debris to PSEUDO random per a room
     waw.rand = new Math.seedrandom(room.randomSeedTextures); //a temp Pseudo random func with set seed
     for(var x = 0; x < waw.rand()*4; x++) {
-        var d = new cc.Sprite(s_Textures,
-            cc.rect(Math.floor(waw.rand()*10)*18+1, 1, 16, 16));
+        d = new cc.Sprite(s_Textures,
+            cc.rect(Math.floor(waw.rand()*8)*18+1, 1, 16, 16));
 
         layer.addChild(d,-15); //on the floor (lower than players/mobs shadows)
         d.opacity = 127;
         d.setPosition(Math.round(64+waw.rand()*192),Math.round(64+waw.rand()*112));
-        if(waw.rand()>0.5)
-            continue;
+        //if(waw.rand()>0.5)
+        //    continue;
         d.setRotation(Math.round((waw.rand()*4))*90);
         if(waw.rand()>0.5)
             continue;
         d.setScale(1 + waw.rand()*0.25);
+    }
+    //some of them go to the walls
+    var wallDecorN = [0,1,2,3,4,5,6]; //u can repeat some elements like cracks
+    //upper
+    var n = Math.floor(waw.rand() * wallDecorN.length);
+    n = wallDecorN.splice(n,1);
+    if(waw.rand()< 0.5) {
+        d = new cc.Sprite(s_Textures,
+            cc.rect(n[0] * 22 + 1, 19, 20, 20));
+        d.setAnchorPoint(0.5, 1);
+        layer.addChild(d, -19); //middle wall Zindex = -20
+        d.opacity = 220;
+        d.setPosition(Math.round(64 + waw.rand() * 192), 228);
+        if (waw.rand() > 0.5)
+            d.flippedX = true;
+    }
+    //bottom
+    n = Math.floor(waw.rand() * wallDecorN.length);
+    n = wallDecorN.splice(n,1);
+    if(waw.rand()< 0.5) {
+        d = new cc.Sprite(s_Textures,
+            cc.rect(n[0] * 22 + 1, 19, 20, 20));
+        d.setAnchorPoint(0.5, 0);
+        d.flippedY = true;
+        layer.addChild(d, -19); //middle wall Zindex = -20
+        d.opacity = 220;
+        d.setPosition(Math.round(64 + waw.rand() * 192), 12);
+        if (waw.rand() > 0.5)
+            d.flippedX = true;
+    }
+    //left
+    n = Math.floor(waw.rand() * wallDecorN.length);
+    n = wallDecorN.splice(n,1);
+    if(waw.rand()< 0.5) {
+        d = new cc.Sprite(s_Textures,
+            cc.rect(n[0] * 22 + 1, 19, 20, 20));
+        d.setAnchorPoint(0.5, 0);
+        d.flippedY = true;
+        d.rotation = 90;
+        layer.addChild(d, -19); //middle wall Zindex = -20
+        d.opacity = 220;
+        d.setPosition(12, Math.round(32 + waw.rand() * 170));
+        if (waw.rand() > 0.5)
+            d.flippedX = true;
+    }
+    //right
+    n = Math.floor(waw.rand() * wallDecorN.length);
+    n = wallDecorN.splice(n,1);
+    if(waw.rand()< 0.5) {
+        d = new cc.Sprite(s_Textures,
+            cc.rect(n[0] * 22 + 1, 19, 20, 20));
+        d.setAnchorPoint(0.5, 0);
+        d.flippedY = true;
+        d.rotation = -90;
+        layer.addChild(d, -19); //middle wall Zindex = -20
+        d.opacity = 220;
+        d.setPosition(308, Math.round(32 + waw.rand() * 170));
+        if (waw.rand() > 0.5)
+            d.flippedX = true;
     }
 
     //now put some obstacles, according to the room.type
