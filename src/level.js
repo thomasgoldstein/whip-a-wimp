@@ -41,6 +41,7 @@ function Room(_name,_x,_y) {
     this.left_direct_room = null;
 
     this.distance = 100;    //rooms to the level entrance
+    this.doors = 100;   //# closed doors to the level entrance
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedTextures = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
@@ -180,6 +181,7 @@ rooms.initNeighbours = function () {
             var r = rooms[y][x];
             if (r) {
                 r.distance = 100;
+                r.doors = 100;
                 if (r.walls.up !== "wall")
                     r.up_room = rooms.getRoom(y - 1, x);
                 if (r.walls.down !== "wall")
@@ -201,6 +203,7 @@ rooms.initNeighbours = function () {
         }
     }
     rooms[4][4].distance = 0;
+    rooms[4][4].doors = 0;
 
     real_rooms = []; // the start room goes 1st
     real_rooms.push(rooms[4][4]);
@@ -228,12 +231,30 @@ rooms.compareDistance = function (r, r2) {
     if (r.distance > r2.distance + 1) {
         console.log(r.name, "r > r2 ", r.distance, r2.distance, r2.name);
         r.distance = r2.distance + 1;
-        //console.log(r.name, "! r > r2 ", r.distance, r2.distance, r2.name);
-
     } else if (r2.distance > r.distance + 1) {
         console.log(r2.name, "r2 > r ", r2.distance, r.distance, r.name);
         r2.distance = r.distance + 1;
-        //console.log(r2.name, "! r2 > r ", r2.distance, r.distance, r.name);
+    }
+};
+
+rooms.countDoors = function (r, r2, d) {
+    if (!r2)
+        return;
+    switch(d) {
+        case "":
+        case "empty":
+            if (r.doors > r2.doors)
+                r.doors = r2.doors;
+            else
+                r2.doors = r.doors;
+            break;
+        case "door":
+            if (r.doors > r2.doors) {
+                r.doors = r2.doors + 1;
+            } else if (r2.doors > r.doors + 1) {
+                r2.doors = r.doors + 1;
+            }
+            break;
     }
 };
 
@@ -242,15 +263,20 @@ rooms.calcDistance = function () {
         console.log("Calc Distance pass " + pass);
         for (var i = 0; i < real_rooms.length; i++) {
             var r = real_rooms[i];
-            /* rooms.compareDistance(r, r.up_direct_room);
-             rooms.compareDistance(r, r.down_direct_room);
-             rooms.compareDistance(r, r.left_direct_room);
-             rooms.compareDistance(r, r.right_direct_room);*/
+            /*rooms.countDoors(r, r.up_direct_room);
+            rooms.countDoors(r, r.down_direct_room);
+            rooms.countDoors(r, r.left_direct_room);
+            rooms.countDoors(r, r.right_direct_room);*/
 
             rooms.compareDistance(r, r.up_room);
             rooms.compareDistance(r, r.down_room);
             rooms.compareDistance(r, r.left_room);
             rooms.compareDistance(r, r.right_room);
+
+            rooms.countDoors(r, r.up_room, r.walls.up);
+            rooms.countDoors(r, r.down_room, r.walls.down);
+            rooms.countDoors(r, r.left_room, r.walls.left);
+            rooms.countDoors(r, r.right_room, r.walls.right);
         }
     }
 };
@@ -627,7 +653,7 @@ waw.prepareRoomLayer = function(room) {
 
     //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
-        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type+" Dist2entryL"+room.distance, "Arial", 12);
+        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
         label.setAnchorPoint(0,1);
         label.setPosition(20, 230);
