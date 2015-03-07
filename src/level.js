@@ -765,6 +765,8 @@ waw.prepareRoomPattern = function(room) {
         d.setPosition(Math.round(64 + waw.rand() * 192), 228);
         if (waw.rand() > 0.5)
             d.flippedX = true;
+        if (waw.rand() > 0.5)
+            d.setScale(1+waw.rand()*0.25);
     }
     //bottom
     n = Math.floor(waw.rand() * wallDecorN.length);
@@ -773,12 +775,13 @@ waw.prepareRoomPattern = function(room) {
         d = new cc.Sprite(s_Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
-        d.flippedY = true;
         layer.addChild(d, -19); //middle wall Zindex = -20
         d.opacity = 127;
         d.setPosition(Math.round(64 + waw.rand() * 192), 12);
         if (waw.rand() > 0.5)
             d.flippedX = true;
+        if (waw.rand() > 0.5)
+            d.flippedY = true;
     }
     //left
     n = Math.floor(waw.rand() * wallDecorN.length);
@@ -787,13 +790,14 @@ waw.prepareRoomPattern = function(room) {
         d = new cc.Sprite(s_Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
-        d.flippedY = true;
         d.rotation = 90;
         layer.addChild(d, -19); //middle wall Zindex = -20
         d.opacity = 127;
         d.setPosition(12, Math.round(32 + waw.rand() * 170));
         if (waw.rand() > 0.5)
             d.flippedX = true;
+        if (waw.rand() > 0.5)
+            d.flippedY = true;
     }
     //right
     n = Math.floor(waw.rand() * wallDecorN.length);
@@ -802,13 +806,14 @@ waw.prepareRoomPattern = function(room) {
         d = new cc.Sprite(s_Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
-        d.flippedY = true;
         d.rotation = -90;
         layer.addChild(d, -19); //middle wall Zindex = -20
         d.opacity = 127;
         d.setPosition(308, Math.round(32 + waw.rand() * 170));
         if (waw.rand() > 0.5)
             d.flippedX = true;
+        if (waw.rand() > 0.5)
+            d.flippedY = true;
     }
 
     //now put some obstacles, according to the room.type
