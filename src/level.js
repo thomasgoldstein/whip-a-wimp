@@ -877,7 +877,7 @@ waw.generateMobs = function(roomType){
     var mobs = [];
     var n = Math.round(Math.random()*5);    //max mobs in the room
     var mob = null;
-    var pickMobType = ["PigWalker", "PigBouncer", "Merchant", "Spikes", "Barrel"];
+    var pickMobType = ["PigWalker", "PigBouncer", "Merchant", "Bat", "Spikes", "Barrel"];
     var mobCoord = waw.GetRoomSpawnCoords(roomType);
     var cr;
     if(n>mobCoord.length)

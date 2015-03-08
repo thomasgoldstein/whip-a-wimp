@@ -186,6 +186,9 @@ waw.MainLayer = cc.Layer.extend({
                 case "Spikes":
                     e = new waw.MobSpikes();
                     break;
+                case "Bat":
+                    e = new waw.MobBat();
+                    break;
                 case "Barrel":
                     e = new waw.MobBarrel();
                     break;
