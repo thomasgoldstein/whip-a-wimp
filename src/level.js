@@ -518,7 +518,7 @@ waw.prepareRoomLayer = function(room) {
     upperWalls.ignoreAnchor = true;
     layer.addChild(floor, -21); //Z index the lowest one
     layer.addChild(middleWalls, -20);
-    layer.addChild(upperWalls, 255);
+    layer.addChild(upperWalls, 280); //255
 
     //add doors
     switch (room.walls.up) {    //FAT upper wall

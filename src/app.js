@@ -3,6 +3,7 @@
 waw.oldLayer = null;
 waw.currentLayer = null;
 waw.currentScene = null;
+waw.scrollActionDone = true; //isDone scrolling between rooms
 
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
@@ -330,9 +331,14 @@ waw.MainLayer = cc.Layer.extend({
                 nextLayer.setPosition(60,60);   //debug
                 waw.oldLayer.runAction(new cc.MoveTo(0.5, 200,200));
         }
+        waw.scrollActionDone = false;
         waw.currentScene.addChild(nextLayer);
         nextLayer.runAction(new cc.MoveTo(0.5, 0,0));
-        this.scheduleOnce(function(){ waw.oldLayer.removeAllChildrenWithCleanup(); },0.35);
+        this.scheduleOnce(
+            function(){
+                waw.oldLayer.removeAllChildrenWithCleanup();
+                waw.scrollActionDone = true;
+            }, 0.9);
     },
     update: function (dt) {
         if(currentRoom.dark) {
@@ -400,19 +406,31 @@ waw.MainLayer = cc.Layer.extend({
         }
         //go to another room?
         var playerPos = waw.player.getPosition();
+        if(waw.scrollActionDone) {
+            if (playerPos.x < 8/*16*/) {
+                playerPos.x = 320-8;
+                this.onGotoNextRoom(cc.KEY.left, playerPos);
+            } else if (playerPos.y < 4) {
+                playerPos.y = 240 - 12; //upper wall is 16pix taller
+                this.onGotoNextRoom(cc.KEY.down, playerPos);
+            } else if (playerPos.x > 320-8 ) {
+                playerPos.x = 8;
+                this.onGotoNextRoom(cc.KEY.right, playerPos);
+            } else if (playerPos.y > 240 - 12) {  //upper wall is 16pix taller
+                playerPos.y = 4;
+                this.onGotoNextRoom(cc.KEY.up, playerPos);
+            }
+        } else {
+            if (playerPos.x < 8) {
+                waw.player.x = 8;
+            } else if (playerPos.y < 4) {
+                waw.player.y = 4 ; //upper wall is 16pix taller
+            } else if (playerPos.x > 320-8 ) {
+                waw.player.x = 320-8;
+            } else if (playerPos.y > 240 - 12) {  //upper wall is 16pix taller
+                waw.player.y = 240-12;
+            }
 
-        if (playerPos.x < 16) {
-            playerPos.x = 320 - 32;
-            this.onGotoNextRoom(cc.KEY.left, playerPos);
-        } else if (playerPos.y < 16) {
-            playerPos.y = 240 - 32 - 16; //upper wall is 16pix taller
-            this.onGotoNextRoom(cc.KEY.down, playerPos);
-        } else if (playerPos.x > 320 - 16) {
-            playerPos.x = 32;
-            this.onGotoNextRoom(cc.KEY.right, playerPos);
-        } else if (playerPos.y > 240 - 32) {  //upper wall is 16pix taller
-            playerPos.y = 32;
-            this.onGotoNextRoom(cc.KEY.up, playerPos);
         }
     }
 });
