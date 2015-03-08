@@ -45,7 +45,7 @@ waw.MobSpikes = waw.Enemy.extend({
 
         this.sprite = new waw.AnimatedSprite(s_Spikes, animData);
         this.calcDirection(0, 0);
-        this.sprite.playAnimation(this.state);
+        this.sprite.playAnimation(this.getAnimationName());
 
         this.sprite.setPosition(0, this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
@@ -56,6 +56,12 @@ waw.MobSpikes = waw.Enemy.extend({
         this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
         this.shadowSprite.visible = false;  //no shadow
+    },
+    getAnimationName: function() {
+        return this.state;
+    },
+    getAnimationNameHurt: function() {
+        return this.state;
     },
     update: function () {
         this.conditions = this.getConditions();
@@ -87,7 +93,7 @@ waw.MobSpikes = waw.Enemy.extend({
         this.setZOrder(250 - this.y - 27);  //used once
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 2500 + Math.random() * 500;
-        this.sprite.playAnimation(this.state);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onIdle: function () {
@@ -101,7 +107,7 @@ waw.MobSpikes = waw.Enemy.extend({
     initAttack: function () {
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 2000 + Math.random() * 50;
-        this.sprite.playAnimation(this.state);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onAttack: function () {

@@ -212,6 +212,12 @@ waw.Enemy = waw.Unit.extend({
             }
         }
     },
+    getAnimationName: function() {
+        return this.state+"_"+this.direction;
+    },
+    getAnimationNameHurt: function() {
+        return "hurt_"+this.direction;
+    },
     initIdle: function () {
         var currentTime = new Date();
         //stop
@@ -233,7 +239,7 @@ waw.Enemy = waw.Unit.extend({
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         //TODO it doesnt slow
         //this.direction
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onIdle: function () {
@@ -263,7 +269,7 @@ waw.Enemy = waw.Unit.extend({
         this.setZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onAttack: function () {
@@ -279,7 +285,7 @@ waw.Enemy = waw.Unit.extend({
         //stop
         this.timeToThink = currentTime.getTime() + 350 + Math.random() * 50;
 
-        this.sprite.playAnimation("hurt_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         return true;
     },
@@ -303,7 +309,7 @@ waw.Enemy = waw.Unit.extend({
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
         }
         this.calcDirection(this.targetX - this.x,this.targetY - this.y);
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onWalk: function () {
@@ -367,7 +373,7 @@ waw.Enemy = waw.Unit.extend({
                 this.dy = -this.dy;
         }
         this.calcDirection(this.dx, this.dy);
-        this.sprite.playAnimation(this.state + "_" + this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onBounce: function () {
@@ -389,7 +395,7 @@ waw.Enemy = waw.Unit.extend({
         if(x<50 || x>270 || this.doesCollide(waw.units)) {
             this.dx = -this.dx;
             this.calcDirection(this.dx, this.dy);
-            this.sprite.playAnimation(this.state+"_"+this.direction);
+            this.sprite.playAnimation(this.getAnimationName());
             x = this.x = oldPos.x;
             y = this.y = oldPos.y;
             this.conditions.push("feelObstacle");
@@ -400,7 +406,7 @@ waw.Enemy = waw.Unit.extend({
         if(y<32 || y>180 || this.doesCollide(waw.units)) {
             this.dy = -this.dy;
             this.calcDirection(this.dx, this.dy);
-            this.sprite.playAnimation(this.state+"_"+this.direction);
+            this.sprite.playAnimation(this.getAnimationName());
             y = this.y = oldPos.y;
             x = this.x = oldPos.x;
             this.conditions.push("feelObstacle");
@@ -424,7 +430,7 @@ waw.Enemy = waw.Unit.extend({
         this.dx = 0;
         this.dy = 0;
         this.calcDirection(this.targetX - this.x,this.targetY - this.y);
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
         return true;
     },
     onFollowEnemy: function () {
@@ -493,7 +499,6 @@ waw.Enemy = waw.Unit.extend({
         this.stateSchedule = this.SCHEDULE_HURT;
         this.stateSchedule.reset();
 
-        //this.sprite.playAnimation("hurt_"+this.direction);
         if(this.HP <= 0)
             this.onDeath(killer);
         else {
@@ -511,7 +516,7 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.opacity = 255;
         this.shadowSprite.opacity = 255;
         cc.audioEngine.playEffect(this.sfx_death);
-        this.sprite.playAnimation("hurt_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_death);

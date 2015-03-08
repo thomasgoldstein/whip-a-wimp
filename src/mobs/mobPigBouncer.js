@@ -191,7 +191,7 @@ waw.MobPigBouncer = waw.MobRandomBouncer.extend({
 
         this.sprite = new waw.AnimatedSprite(s_Pig, animData);
         this.calcDirection(0,0);
-        this.sprite.playAnimation(this.state+"_"+this.direction);
+        this.sprite.playAnimation(this.getAnimationName());
 
         this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
