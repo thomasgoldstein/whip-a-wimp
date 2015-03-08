@@ -787,12 +787,19 @@ waw.Player = waw.Unit.extend({
 
         this.subState = "dead";
         waw.whip.visible = false; //hide Whip
-        this.sprite.playAnimation("dead");
+        this.sprite.visible = false;
+        this.sprite2.visible = false;
+        var sprite = new cc.Sprite(s_Jesus, cc.rect(205, 1, 52, 61));
+        waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
+        sprite.setAnchorPoint(0.5, 0);
+        sprite.runAction(new cc.MoveBy(3, 0, 240));
+        sprite.runAction(new cc.FadeOut(3));
+/*        this.sprite.playAnimation("dead");
         this.sprite2.playAnimation("dead");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
         this.sprite.runAction(new cc.FadeOut(3));
         this.sprite2.runAction(new cc.MoveBy(3, 0, 240));
-        this.sprite2.runAction(new cc.FadeOut(3));
+        this.sprite2.runAction(new cc.FadeOut(3));*/
         this.shadowSprite.runAction(new cc.FadeOut(3));
         this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
 
