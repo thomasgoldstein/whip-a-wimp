@@ -255,6 +255,7 @@ waw.MainLayer = cc.Layer.extend({
         waw.player.setPosition(playerPos);
         waw.player.unscheduleUpdate();
         this.unscheduleUpdate();
+        waw.player.removeTempSprites();
 
         var room = null;
         switch (key) {

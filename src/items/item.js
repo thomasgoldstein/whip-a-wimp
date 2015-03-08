@@ -151,12 +151,12 @@ waw.Item = waw.Unit.extend({
 
                     //
                     var sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 6, 1, 16, 16));
-                    waw.player.addChild(sprite, -20);
+                    waw.player.addChild(sprite, -20, TAG_SPRITE_TEMP);
                     sprite.setScale(2);
                     sprite.setPosition(0, 0);
                     sprite.runAction(
                         new cc.Sequence(
-                            new cc.RotateBy(2.5, 360*3),
+                            new cc.RotateBy(4.5, 360*3),
                             new cc.FadeOut(0.5),
                             new cc.RemoveSelf()
                         )

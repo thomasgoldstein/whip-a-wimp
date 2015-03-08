@@ -22,6 +22,9 @@ waw.Unit = cc.Node.extend({
     toSafeYCoord: function (y) {
         return (y<50 ? 50 : (y>180 ? 180 : y));
     },
+    removeTempSprites: function() {
+        this.removeChildByTag(TAG_SPRITE_TEMP, true);
+    },
     setSubState: function(subState, subStateCountDown) {
         var currentTime = new Date();
         this.subState = subState;
