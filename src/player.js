@@ -789,11 +789,11 @@ waw.Player = waw.Unit.extend({
         waw.whip.visible = false; //hide Whip
         this.sprite.visible = false;
         this.sprite2.visible = false;
-        var sprite = new cc.Sprite(s_Jesus, cc.rect(205, 1, 52, 61));
+        var sprite = new cc.Sprite(s_Jesus, cc.rect(1, 601, 52, 61));
         waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
         sprite.setAnchorPoint(0.5, 0);
         sprite.runAction(new cc.MoveBy(3, 0, 240));
-        sprite.runAction(new cc.FadeOut(3));
+        //sprite.runAction(new cc.FadeOut(3));
 /*        this.sprite.playAnimation("dead");
         this.sprite2.playAnimation("dead");
         this.sprite.runAction(new cc.MoveBy(3, 0, 240));
@@ -816,6 +816,6 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionRotoZoom;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 1);
+        }, 2);
     }
 });
