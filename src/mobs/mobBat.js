@@ -58,7 +58,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.calcDirection(0,0);
         this.sprite.playAnimation(this.getAnimationName());
 
-        this.sprite.setPosition(0,this.spriteYoffset); //pig 48x48
+        this.sprite.setPosition(0,this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite);
         this.debugCross.setAnchorPoint(0.5, 0);
@@ -76,13 +76,94 @@ waw.MobBat = waw.MobRandomWalker.extend({
     getVisualConditions: function (conditions) {
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
-        if (cc.pDistanceSQ(pPos, pos) < 1000) {
-            conditions.push("seeEnemy");
+        //if (cc.pDistanceSQ(pPos, pos) < 1000) {
+        //    conditions.push("seeEnemy");
             if (cc.pDistanceSQ(pPos, pos) < 300) {
                 conditions.push("canAttack");
             }
+        //}
+    },
 
+    initIdle: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 500;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        if (this.safePos.y != 0) {
+            x = this.safePos.x;
+            y = this.safePos.y;
+        } else {
+            var pos = this.getPosition();
+            x = pos.x;
+            y = pos.y;
         }
+        this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
+        //not default for bats!
+        if(y > 150)
+            this.setZOrder(600 - y);    //to be over the upper wall
+        else
+            this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        //TODO it doesnt slow
+        //this.direction
+        this.sprite.playAnimation(this.getAnimationName());
+
+        //this.sprite.setPosition(0,this.spriteYoffset);
+        this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset*3));
+        if(Math.random()<0.5)
+            this.sprite.runAction(new cc.RotateTo(0.25, -180));
+        else
+            this.sprite.runAction(new cc.RotateTo(0.25, 180));
+        this.shadowSprite.runAction(new cc.ScaleTo(0.5, 0.7));
+        return true;
+    },
+    initWalk: function () {
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;
+        if (this.targetX == 0 || this.targetY == 0) {
+            //random point to go
+            this.targetX = this.toSafeXCoord( Math.round(50 + Math.random() * 220) );
+            this.targetY = this.toSafeYCoord( Math.round(50 + Math.random() * 130) );
+        } else {
+            this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
+            this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
+        }
+        this.calcDirection(this.targetX - this.x,this.targetY - this.y);
+        this.sprite.playAnimation(this.getAnimationName());
+
+        this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset));
+        this.sprite.runAction(new cc.RotateTo(0.25, 0));
+        this.shadowSprite.runAction(new cc.ScaleTo(0.5, 1.0));
+        return true;
+    },
+    initAttack: function () {
+        var currentTime = new Date();
+        //stop
+        this.timeToThink = currentTime.getTime() + 1000 + Math.random() * 50;
+        this.targetX = this.targetY = 0;
+        var x, y;
+
+        if (this.safePos.y != 0) {
+            x = this.safePos.x;
+            y = this.safePos.y;
+        } else {
+            var pos = this.getPosition();
+            x = pos.x;
+            y = pos.y;
+        }
+        this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
+        this.setZOrder(250 - y);
+        //position shadow
+        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        this.sprite.playAnimation(this.getAnimationName());
+
+        this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset));
+        this.sprite.runAction(new cc.RotateTo(0.25, 0));
+        this.shadowSprite.runAction(new cc.ScaleTo(0.5, 1.0));
+        return true;
     },
     onGetDamage : function (killer) {
         if (this.state === "idle")  //idling bats are invincible
@@ -113,7 +194,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
 
         this.conditions = this.getConditions();
 
-        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
+        if(this.state !== "attack" && this.state !== "idle" && this.conditions.indexOf("canAttack")>=0) {
             console.log("mob attacks player 0b");
             this.state = "attack";
             this.stateSchedule = this.SCHEDULE_ATTACK;
