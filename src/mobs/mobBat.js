@@ -84,6 +84,30 @@ waw.MobBat = waw.MobRandomWalker.extend({
 
         }
     },
+    onGetDamage : function (killer) {
+        if (this.state === "idle")  //idling bats are invincible
+            return;
+        if (this.subState === "invincible")
+            return;
+        if (this.subState === "dead")
+            return;
+
+        this.becomeInvincible(1000);
+        this.HP--;
+
+        this.state = "hurt";
+        this.stateSchedule = this.SCHEDULE_HURT;
+        this.stateSchedule.reset();
+
+        if(this.HP <= 0)
+            this.onDeath(killer);
+        else {
+            if(Math.random()<0.5)
+                cc.audioEngine.playEffect(this.sfx_hurt01);
+            else
+                cc.audioEngine.playEffect(this.sfx_hurt02);
+        }
+    },
     update: function () {
         var currentTime = new Date();
 
