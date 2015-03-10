@@ -8,18 +8,19 @@ var s_UpperWalls = themeDir + "UpperWalls.png";
 var s_Doors = themeDir + "Doors.png";
 var s_Pillar = themeDir + "Pillar.png";
 var s_Items = themeDir + "Items.png";
-var s_Weapons = "res/Weapons.png";
-var s_LightSpot = "res/LightSpot.png";
+var s_Weapons = "res/Common/Weapons.png";
+var s_LightSpot = "res/Common/LightSpot.png";
 var s_Textures = themeDir + "Textures.png";
 var s_Chest = themeDir + "Chest.png";
 var s_Merchant = themeDir + "Merchant.png";
-var s_Jesus = "res/Jesus.png";
-var s_JesusCloth = "res/JesusCloth.png";
-var s_Kiwi = "res/Kiwi.png";
-var s_Shadow12x6 = "res/Shadow12x6.png";
-var s_Shadow24x12 = "res/Shadow24x12.png";
-var s_Shadow32x16 = "res/Shadow32x16.png";
-var s_Sparkle = "res/Sparkle.png";
+var s_Jesus = "res/Common/Jesus.png";
+var s_JesusCloth = "res/Common/JesusCloth.png";
+var s_Cherub = "res/Common/Cherub.png";
+var s_Kiwi = "res/Common/Kiwi.png";
+var s_Shadow12x6 = "res/Common/Shadow12x6.png";
+var s_Shadow24x12 = "res/Common/Shadow24x12.png";
+var s_Shadow32x16 = "res/Common/Shadow32x16.png";
+var s_Sparkle = "res/Common/Sparkle.png";
 var s_Pig = themeDir + "Pig.png";
 var s_Spikes = themeDir + "Spikes.png";
 var s_Barrel = themeDir + "Barrel.png";
@@ -63,6 +64,7 @@ var g_resources = [
     {src:s_Chest},
     {src:s_Jesus},
     {src:s_JesusCloth},
+    {src:s_Cherub},
     {src:s_Kiwi},
     {src:s_Shadow12x6},
     {src:s_Shadow24x12},
