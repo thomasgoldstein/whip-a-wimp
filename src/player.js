@@ -684,7 +684,7 @@ waw.Player = waw.Unit.extend({
                 delay: 0.16
             }
         };
-        var cherubSprite1 = new waw.AnimatedSprite(s_Cherub, animDataChe);
+        var cherubSprite1 = new waw.AnimatedSprite(waw.gfx.Cherub, animDataChe);
         cherubSprite1.playAnimation("left");
         waw.player.addChild(cherubSprite1, -1, TAG_SPRITE_TEMP);
         cherubSprite1.setPosition(280,100);
@@ -696,7 +696,7 @@ waw.Player = waw.Unit.extend({
             )
         );
 
-        var cherubSprite2 = new waw.AnimatedSprite(s_Cherub, animDataChe);
+        var cherubSprite2 = new waw.AnimatedSprite(waw.gfx.Cherub, animDataChe);
         cherubSprite2.playAnimation("right");
         waw.player.addChild(cherubSprite2, -1, TAG_SPRITE_TEMP);
         cherubSprite2.setPosition(-280,100);
