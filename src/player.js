@@ -659,7 +659,54 @@ waw.Player = waw.Unit.extend({
         var sprite = new cc.Sprite(s_Jesus, cc.rect(1, 601, 52, 61));
         waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
         sprite.setAnchorPoint(0.5, 0);
-        sprite.runAction(new cc.MoveBy(3, 0, 240));
+        sprite.runAction(
+            new cc.Sequence(
+                new cc.DelayTime(2),
+                new cc.MoveBy(3, 0, 240)
+            )
+        );
+
+        //Cherub anim
+        var s = waw.SpriteRect(24,32);
+        var animDataChe =
+        {
+            "left": {
+                frameRects: [
+                    s(0, 0), s(1, 0), s(2, 0), s(1, 0)
+                ],
+                delay: 0.15,
+                flippedX: true
+            },
+            "right": {
+                frameRects: [
+                    s(0, 0), s(1, 0), s(2, 0), s(1, 0)
+                ],
+                delay: 0.16
+            }
+        };
+        var cherubSprite1 = new waw.AnimatedSprite(s_Cherub, animDataChe);
+        cherubSprite1.playAnimation("left");
+        waw.player.addChild(cherubSprite1, -1, TAG_SPRITE_TEMP);
+        cherubSprite1.setPosition(280,100);
+        cherubSprite1.runAction(
+            new cc.Sequence(
+                new cc.MoveTo(1.5, 26, 56),
+                new cc.DelayTime(0.5),
+                new cc.MoveBy(3, 0, 240)
+            )
+        );
+
+        var cherubSprite2 = new waw.AnimatedSprite(s_Cherub, animDataChe);
+        cherubSprite2.playAnimation("right");
+        waw.player.addChild(cherubSprite2, -1, TAG_SPRITE_TEMP);
+        cherubSprite2.setPosition(-280,100);
+        cherubSprite2.runAction(
+            new cc.Sequence(
+                new cc.MoveTo(1.5, -26, 56),
+                new cc.DelayTime(0.5),
+                new cc.MoveBy(3, 0, 240)
+            )
+        );
         //sprite.runAction(new cc.FadeOut(3));
 /*        this.sprite.playAnimation("dead");
         this.sprite2.playAnimation("dead");
@@ -683,6 +730,6 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionRotoZoom;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 2);
+        }, 5);
     }
 });
