@@ -143,7 +143,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         animData["hurt_up"] = animData["hurt_left"];
         animData["hurt_down"] = animData["hurt_right"];
 
-        this.sprite = new waw.AnimatedSprite(s_Kiwi, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.Kiwi, animData);
         this.calcDirection(0,0);
         this.sprite.playAnimation(this.getAnimationName());
 
@@ -153,7 +153,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow32x16);
+        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     calcDirection: function (dx, dy) {

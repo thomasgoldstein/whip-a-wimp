@@ -8,8 +8,8 @@
     "modules" : ["cocos2d"],
 
     "jsList" : [
-        "src/resource.js",
         "src/namespace.js",
+        "src/resource.js",
         "src/functions.js",
         "src/aiSchedule.js",
         "src/seedrandom.js",

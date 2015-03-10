@@ -7,9 +7,9 @@ waw.NoMobChest = waw.Unit.extend({
     spriteYoffset: -4,
     //HP: 2,
     //state: "idle",
-    sfx_hurt01: sfx_Punch01,
-    sfx_hurt02: sfx_Punch01,
-    sfx_death: sfx_Candelabre01,
+    sfx_hurt01: waw.sfx.Punch01,
+    sfx_hurt02: waw.sfx.Punch01,
+    sfx_death: waw.sfx.Candelabre01,
     topSprite: null,
 
     ctor: function () {
@@ -17,11 +17,11 @@ waw.NoMobChest = waw.Unit.extend({
         //console.info("Chest ctor");
         this.setContentSize(32, 16);
 
-        this.sprite = new cc.Sprite(s_Chest, new cc.rect(0, 5, 32, 24));
+        this.sprite = new cc.Sprite(waw.gfx.Chest, new cc.rect(0, 5, 32, 24));
         this.sprite.setPosition(0,this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
 
-        this.topSprite = new cc.Sprite(s_Chest, new cc.rect(33, 0, 32, 15));
+        this.topSprite = new cc.Sprite(waw.gfx.Chest, new cc.rect(33, 0, 32, 15));
         this.topSprite.setAnchorPoint(0, 0);
         this.topSprite.setPosition(0, 24-10);
         this.sprite.addChild(this.topSprite, 1);
@@ -29,7 +29,7 @@ waw.NoMobChest = waw.Unit.extend({
 
         this.debugCross.setAnchorPoint(0.5, 0);
 
-        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
+        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check

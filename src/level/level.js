@@ -231,7 +231,7 @@ waw.GenerateMiniMap = function() {
     var m = null;
     var r,w;
     var mapXOffset = 15, mapYOffset = 5;
-    var layerMapSprite = new cc.Sprite(s_Map,
+    var layerMapSprite = new cc.Sprite(waw.gfx.Map,
         cc.rect(0, 6, 64, 56));
     layerMapSprite.opacity = 200;
     //cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
@@ -250,7 +250,7 @@ waw.GenerateMiniMap = function() {
                 if(r.walls.left == "wall")
                     w |= 8;
                 //the room
-                m = new cc.Sprite(s_Map,
+                m = new cc.Sprite(waw.gfx.Map,
                     cc.rect(w * 6, 0, 5, 5));
                 m.setOpacity(r.visited ? 255 : 63);
                 layerMapSprite.addChild(m);
@@ -260,7 +260,7 @@ waw.GenerateMiniMap = function() {
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
-                    m = new cc.Sprite(s_Map, cc.rect(90, 0, 5, 5)); //red dot - players pos
+                    m = new cc.Sprite(waw.gfx.Map, cc.rect(90, 0, 5, 5)); //red dot - players pos
                     layerMapSprite.addChild(m);
                     m.setPositionX(x*5+3 +mapXOffset);
                     m.setPositionY((8-y)*5+2 +mapYOffset);
@@ -391,9 +391,9 @@ waw.prepareRoomLayer = function(room) {
     var wall, d;
 
     //add room Background
-    var floor = new cc.Sprite(s_Floor);
-    var middleWalls = new cc.Sprite(s_MiddleWalls);
-    var upperWalls = new cc.Sprite(s_UpperWalls);
+    var floor = new cc.Sprite(waw.gfx.Floor);
+    var middleWalls = new cc.Sprite(waw.gfx.MiddleWalls);
+    var upperWalls = new cc.Sprite(waw.gfx.UpperWalls);
     layer.ignoreAnchor = true;
     floor.ignoreAnchor = true;
     middleWalls.ignoreAnchor = true;
@@ -405,7 +405,7 @@ waw.prepareRoomLayer = function(room) {
     //add doors
     switch (room.walls.up) {    //FAT upper wall
         case "door":
-            d = new cc.Sprite(s_Doors, cc.rect(0,80,80,80)); //closed door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(0,80,80,80)); //closed door
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_UP_DOOR);
             d.setPosition(160+room.walls.up_d,240-88);
@@ -420,7 +420,7 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_UP_DOORD);
             break;
         case "empty":
-            d = new cc.Sprite(s_Doors, cc.rect(0,0,80,80));  //open door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(0,0,80,80));  //open door
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
             d.setPosition(160+room.walls.up_d,240-88);
@@ -438,7 +438,7 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.right) {
         case "door":
-            d = new cc.Sprite(s_Doors, cc.rect(80*2,80,80,80)); //closed door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*2,80,80,80)); //closed door
             layer.addChild(d,-18,TAG_RIGHT_DOOR);
             d.setPosition(320-32,120-40+room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
@@ -453,7 +453,7 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOORD);
             break;
         case "empty":
-            d = new cc.Sprite(s_Doors, cc.rect(80*2,0,80,80)); //open door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*2,0,80,80)); //open door
             layer.addChild(d,-18);
             d.setPosition(320-32,120-40+room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
@@ -470,7 +470,7 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.down) {
         case "door":
-            d = new cc.Sprite(s_Doors, cc.rect(80*3,80,80,80)); //closed door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*3,80,80,80)); //closed door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18, TAG_DOWN_DOOR);
             // obstacle
@@ -483,7 +483,7 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOORD);
             break;
         case "empty":
-            d = new cc.Sprite(s_Doors, cc.rect(80*3,0,80,80)); //open door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*3,0,80,80)); //open door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18);
             break;
@@ -499,7 +499,7 @@ waw.prepareRoomLayer = function(room) {
     }
     switch (room.walls.left) {
         case "door":
-            d = new cc.Sprite(s_Doors, cc.rect(80*1,80,80,80)); //closed door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*1,80,80,80)); //closed door
             d.setPosition(32,120-40+room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_LEFT_DOOR);
@@ -514,7 +514,7 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOORD);
             break;
         case "empty":
-            d = new cc.Sprite(s_Doors, cc.rect(80*1,0,80,80)); //open door
+            d = new cc.Sprite(waw.gfx.Doors, cc.rect(80*1,0,80,80)); //open door
             d.setPosition(32,120-40+room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
@@ -608,7 +608,7 @@ waw.openDoor = function (doorTag, layer) {
     }
     //we need 2 tags _DOOR and _DOORD that's why -4
     layer.removeChildByTag(doorTag);
-    cc.audioEngine.playEffect(sfx_Door01);
+    cc.audioEngine.playEffect(waw.sfx.Door01);
 };
 
 //adds obstacles of a room onto existing layer
@@ -620,7 +620,7 @@ waw.prepareRoomPattern = function(room) {
     //some random floor debris to PSEUDO random per a room
     waw.rand = new Math.seedrandom(room.randomSeedTextures); //a temp Pseudo random func with set seed
     for(var x = 0; x < waw.rand()*4; x++) {
-        d = new cc.Sprite(s_Textures,
+        d = new cc.Sprite(waw.gfx.Textures,
             cc.rect(Math.floor(waw.rand()*8)*18+1, 1, 16, 16));
 
         layer.addChild(d,-15); //on the floor (lower than players/mobs shadows)
@@ -639,7 +639,7 @@ waw.prepareRoomPattern = function(room) {
     var n = Math.floor(waw.rand() * wallDecorN.length);
     n = wallDecorN.splice(n,1);
     if(waw.rand()< 0.5) {
-        d = new cc.Sprite(s_Textures,
+        d = new cc.Sprite(waw.gfx.Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 1);
         layer.addChild(d, -19); //middle wall Zindex = -20
@@ -654,7 +654,7 @@ waw.prepareRoomPattern = function(room) {
     n = Math.floor(waw.rand() * wallDecorN.length);
     n = wallDecorN.splice(n,1);
     if(waw.rand()< 0.5) {
-        d = new cc.Sprite(s_Textures,
+        d = new cc.Sprite(waw.gfx.Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
         layer.addChild(d, -19); //middle wall Zindex = -20
@@ -669,7 +669,7 @@ waw.prepareRoomPattern = function(room) {
     n = Math.floor(waw.rand() * wallDecorN.length);
     n = wallDecorN.splice(n,1);
     if(waw.rand()< 0.5) {
-        d = new cc.Sprite(s_Textures,
+        d = new cc.Sprite(waw.gfx.Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
         d.rotation = 90;
@@ -685,7 +685,7 @@ waw.prepareRoomPattern = function(room) {
     n = Math.floor(waw.rand() * wallDecorN.length);
     n = wallDecorN.splice(n,1);
     if(waw.rand()< 0.5) {
-        d = new cc.Sprite(s_Textures,
+        d = new cc.Sprite(waw.gfx.Textures,
             cc.rect(n[0] * 22 + 1, 19, 20, 20));
         d.setAnchorPoint(0.5, 0);
         d.rotation = -90;
@@ -758,9 +758,9 @@ waw.prepareRoomPattern = function(room) {
 waw.AddHitBoxSprite = function (unit, layer, tag_) {
     var tag = tag_ | 0;
     if(unit.width < 100 && unit.height < 100)
-        unit.debugCross = new cc.Sprite(s_HitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
+        unit.debugCross = new cc.Sprite(waw.gfx.dbg.HitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
     else
-        unit.debugCross = new cc.Sprite(s_HitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
+        unit.debugCross = new cc.Sprite(waw.gfx.dbg.HitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
     unit.debugCross.setAnchorPoint(0.5, 0);
     unit.debugCross.x = unit.x;
     unit.debugCross.y = unit.y;
@@ -773,7 +773,7 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     var units = waw.units;
     var layer = waw.layer;
 
-    var sprite = new cc.Sprite(s_Pillar,cc.rect(0, 0, 32, 64));
+    var sprite = new cc.Sprite(waw.gfx.Pillar,cc.rect(0, 0, 32, 64));
     sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
     sprite.skewX = -3 + Math.round(6*Math.random());

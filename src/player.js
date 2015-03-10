@@ -6,7 +6,7 @@ waw.Player = waw.Unit.extend({
     weaponSprite: null,
     sprite: null,
     sprite2: null,
-    sfx_hurt: sfx_Punch01,
+    sfx_hurt: waw.sfx.Punch01,
 
     ctor: function() {
         this._super();
@@ -148,11 +148,11 @@ waw.Player = waw.Unit.extend({
             delay: 0.1
         };
 
-        this.sprite = new waw.AnimatedSprite(s_Jesus, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.Jesus, animData);
         this.addChild(this.sprite);
         this.sprite.setAnchorPoint(0.5, 0);
 
-        this.sprite2 = new waw.AnimatedSprite(s_JesusCloth, animData2);
+        this.sprite2 = new waw.AnimatedSprite(waw.gfx.JesusCloth, animData2);
         this.addChild(this.sprite2);
         this.sprite2.setAnchorPoint(0.5, 0);
 
@@ -163,7 +163,7 @@ waw.Player = waw.Unit.extend({
         this.label.setVisible(showDebugInfo);
 
         //create players shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
+        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5 , 0.5);
     },
     getNextPosition: function() {
@@ -356,7 +356,7 @@ waw.Player = waw.Unit.extend({
 
                 switch (this.subState) {
                     case "punch":
-                        cc.audioEngine.playEffect(sfx_Punch01);
+                        cc.audioEngine.playEffect(waw.sfx.Punch01);
                         this.showHitBoxAndKill(24, 8);
 
                         var animKey = "punch_" + this.direction;
@@ -364,12 +364,12 @@ waw.Player = waw.Unit.extend({
                         this.sprite2.playAnimation(animKey);
                         break;
                     case "candelabre":
-                        cc.audioEngine.playEffect(sfx_Candelabre01);
+                        cc.audioEngine.playEffect(waw.sfx.Candelabre01);
                         this.showHitBoxAndKill(32, 12);
 
                         var animKey = "punch_" + this.direction;
 
-                        this.weaponSprite = new cc.Sprite(s_Weapons,
+                        this.weaponSprite = new cc.Sprite(waw.gfx.Weapons,
                             cc.rect(13, 0, 34, 34));
                         this.weaponSprite.setAnchorPoint(0.5, 0.8);
                         this.weaponSprite.runAction(new cc.Sequence(
@@ -426,9 +426,9 @@ waw.Player = waw.Unit.extend({
                         break;
                     case "whip":
                         if(Math.random() < 0.5)
-                            cc.audioEngine.playEffect(sfx_Whip01);
+                            cc.audioEngine.playEffect(waw.sfx.Whip01);
                         else
-                            cc.audioEngine.playEffect(sfx_Whip02);
+                            cc.audioEngine.playEffect(waw.sfx.Whip02);
                         waw.whip.visible = true;
                         this.showHitBoxAndKill(20 + waw.whip.chainLength * 10 , 8);
                         switch (this.direction) {
@@ -524,7 +524,7 @@ waw.Player = waw.Unit.extend({
 
                 var wp =  waw.whip.getHitPosition();
                 //console.log("Whip HIT Coords: ", wp.x, wp.y );
-                var cross = new cc.Sprite(s_Sparkle,
+                var cross = new cc.Sprite(waw.gfx.Sparkle,
                     cc.rect(3 * 8, 0, 7, 7));
                 cross.setPosition(wp.x, wp.y);
                 this.getParent().addChild(cross, 300);
@@ -563,7 +563,7 @@ waw.Player = waw.Unit.extend({
         }
         if (showDebugInfo) {
             //debug - show hit box
-            var hitArea = new cc.Sprite(s_HitBoxGrid, hitArea_rect);
+            var hitArea = new cc.Sprite(waw.gfx.dbg.HitBoxGrid, hitArea_rect);
             hitArea.setPosition(this.x, this.y + 8);
             switch (this.direction) {
                 case "down":
@@ -617,11 +617,11 @@ waw.Player = waw.Unit.extend({
             return;
         this.HP--;
         if(Math.random()<0.2)
-            cc.audioEngine.playEffect(sfx_Ouch03);
+            cc.audioEngine.playEffect(waw.sfx.Ouch03);
         else if(Math.random()<0.5)
-            cc.audioEngine.playEffect(sfx_Ouch02);
+            cc.audioEngine.playEffect(waw.sfx.Ouch02);
         else
-            cc.audioEngine.playEffect(sfx_Ouch01);
+            cc.audioEngine.playEffect(waw.sfx.Ouch01);
         this.setSubState("hurt", 500);
         this.sprite.playAnimation("hurt");
         this.sprite2.playAnimation("hurt");
@@ -634,7 +634,7 @@ waw.Player = waw.Unit.extend({
             //this.sprite2.runAction(new cc.FadeIn(3));
             this.runAction(new cc.jumpBy(0.35, 0, 0, 8, 1));
 
-            var redCloth = new cc.Sprite(s_JesusCloth,
+            var redCloth = new cc.Sprite(waw.gfx.JesusCloth,
                 cc.rect(0*34+1, 1*50+1, 32, 48));
             redCloth.setPosition(this.x, this.y+36);
             this.getParent().addChild(redCloth, 300);
@@ -656,7 +656,7 @@ waw.Player = waw.Unit.extend({
         waw.whip.visible = false; //hide Whip
         this.sprite.visible = false;
         this.sprite2.visible = false;
-        var sprite = new cc.Sprite(s_Jesus, cc.rect(1, 601, 52, 61));
+        var sprite = new cc.Sprite(waw.gfx.Jesus, cc.rect(1, 601, 52, 61));
         waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
         sprite.setAnchorPoint(0.5, 0);
         sprite.runAction(new cc.MoveBy(3, 0, 240));

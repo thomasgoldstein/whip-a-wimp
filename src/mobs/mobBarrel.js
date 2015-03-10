@@ -50,7 +50,7 @@ waw.MobBarrel = waw.Enemy.extend({
         };
         animData["idle_horizontal"] = animData["bounce_horizontal"];
 
-        this.sprite = new waw.AnimatedSprite(s_Barrel, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.Barrel, animData);
         this.calcDirection(0, 0);
         this.sprite.playAnimation(this.state+"_"+this.direction);
 
@@ -60,7 +60,7 @@ waw.MobBarrel = waw.Enemy.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow24x12);
+        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
         this.shadowSprite.visible = false;  //no shadow
     },

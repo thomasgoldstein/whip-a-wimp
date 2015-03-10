@@ -35,7 +35,7 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        cc.audioEngine.playMusic(bgm_Level1, true);
+        cc.audioEngine.playMusic(waw.bgm.Level1, true);
 
         rooms.initLevel();
         rooms.genLevel();
@@ -84,29 +84,29 @@ waw.MainLayer = cc.Layer.extend({
         if(rooms.foundMap)
             waw.AddMiniMap(this, waw.curRoom);
 
-        this.lightspot = new cc.Sprite(s_LightSpot, new cc.rect(0,0,1,1));
+        this.lightspot = new cc.Sprite(waw.gfx.LightSpot, new cc.rect(0,0,1,1));
         this.lightspot.setAnchorPoint(0.5, 0.5);
         this.lightspot.setPosition(160, 120);
         //right down spot
-        this.lightspot1 = new cc.Sprite(s_LightSpot);
+        this.lightspot1 = new cc.Sprite(waw.gfx.LightSpot);
         this.lightspot1.setAnchorPoint(0, 1);
         this.lightspot1.setRotation(0);
         this.lightspot.addChild(this.lightspot1);
         this.lightspot1.setPosition(0, 0);
         //left down
-        this.lightspot2 = new cc.Sprite(s_LightSpot);
+        this.lightspot2 = new cc.Sprite(waw.gfx.LightSpot);
         this.lightspot2.setAnchorPoint(0, 1);
         this.lightspot2.setRotation(90);
         this.lightspot.addChild(this.lightspot2);
         this.lightspot2.setPosition(0, 0);
         //left up
-        this.lightspot3 = new cc.Sprite(s_LightSpot);
+        this.lightspot3 = new cc.Sprite(waw.gfx.LightSpot);
         this.lightspot3.setAnchorPoint(0, 1);
         this.lightspot3.setRotation(180);
         this.lightspot.addChild(this.lightspot3);
         this.lightspot3.setPosition(0, 0);
         //right up
-        this.lightspot4 = new cc.Sprite(s_LightSpot);
+        this.lightspot4 = new cc.Sprite(waw.gfx.LightSpot);
         this.lightspot4.setAnchorPoint(0, 1);
         this.lightspot4.setRotation(270);
         this.lightspot.addChild(this.lightspot4);

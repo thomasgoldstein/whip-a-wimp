@@ -19,29 +19,29 @@ waw.Item = waw.Unit.extend({
         this.setContentSize(8, 8);
         switch (this.itemType) {
             case "key":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 19 * 0, 0, 16, 16));
                 break;
             case "coin":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 1, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 1, 1, 16, 16));
                 break;
             case "gem":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 2, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 2, 1, 16, 16));
                 break;
             case "map":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 3, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 3, 1, 16, 16));
                 break;
             case "rope":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 4, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 4, 1, 16, 16));
                 break;
             case "cloth":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 5, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 5, 1, 16, 16));
                 this.spriteYoffset = -1;
                 break;
             case "invincibility":
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 6, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 6, 1, 16, 16));
                 break;
             default:    //unknown
-                this.sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 7, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 7, 1, 16, 16));
         }
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -57,7 +57,7 @@ waw.Item = waw.Unit.extend({
         );
 
         //create shadow sprite
-        this.shadowSprite = new cc.Sprite(s_Shadow12x6);
+        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow12x6);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
         //add debug text info under an item
@@ -71,7 +71,7 @@ waw.Item = waw.Unit.extend({
     cleanUp: function () {
         var i;
         this.unscheduleUpdate();
-        cc.audioEngine.playEffect(sfx_Coin01);
+        cc.audioEngine.playEffect(waw.sfx.Coin01);
         this.setZOrder(300); //make item over player
         this.getParent().removeChild(this.sprite);   //remove item sprite
         this.sprite.runAction(new cc.Sequence(
@@ -150,7 +150,7 @@ waw.Item = waw.Unit.extend({
                     waw.addScore(50);
 
                     //
-                    var sprite = new cc.Sprite(s_Items, cc.rect(1 + 18 * 6, 1, 16, 16));
+                    var sprite = new cc.Sprite(waw.gfx.Items, cc.rect(1 + 18 * 6, 1, 16, 16));
                     waw.player.addChild(sprite, -20, TAG_SPRITE_TEMP);
                     sprite.setScale(2);
                     sprite.setPosition(0, 0);

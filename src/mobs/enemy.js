@@ -19,9 +19,9 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-    sfx_hurt01: sfx_PigHurt01,
-    sfx_hurt02: sfx_PigHurt02,
-    sfx_death: sfx_PigDeath,
+    sfx_hurt01: waw.sfx.PigHurt01,
+    sfx_hurt02: waw.sfx.PigHurt02,
+    sfx_death: waw.sfx.PigDeath,
     ctor: function () {
         this._super();
         //console.info("Enemy ctor");
