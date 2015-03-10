@@ -7,9 +7,9 @@ var waw = {
     layer: null,    //main layer to attach units / sprites, etc
     player: null,   //player unit obj
     units: [],      //obstacles
-    foes: [],        //enemy units
+    mobs: [],        //enemy units
     items: [],        //items
-    hitBoxField: [], // [320][240] of passable/not of the current level
+    //hitBoxField: [], // [320][240] of passable/not of the current level
     KEYS: [], // list of pressed keys. bool
     score: 0,
     hiScore: 100,

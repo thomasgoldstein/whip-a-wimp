@@ -200,12 +200,12 @@ waw.Enemy = waw.Unit.extend({
             this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
         }
     },
-    //clear from this unit 1. local room foes 2. global room 3. local units - collision check
+    //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
-        for (var n = 0; n < waw.foes.length; n++) {
-            var m = waw.foes[n];
+        for (var n = 0; n < waw.mobs.length; n++) {
+            var m = waw.mobs[n];
             if (this === m) {
-                waw.foes[n] = null;
+                waw.mobs[n] = null;
                 waw.units[200 + n] = null;  //TODO do something with 200 offset
                 currentRoom.mobs[n] = null;
                 break;

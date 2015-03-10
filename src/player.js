@@ -718,8 +718,8 @@ waw.Player = waw.Unit.extend({
                 new cc.RemoveSelf()
             ));
         }
-        for(var n=0; n<waw.foes.length; n++){
-            var m = waw.foes[n];
+        for(var n=0; n<waw.mobs.length; n++){
+            var m = waw.mobs[n];
             if( m ) {
                 if (cc.rectIntersectsRect(m.collideRect(), hitArea_rect)) {
                     m.onGetDamage(this);

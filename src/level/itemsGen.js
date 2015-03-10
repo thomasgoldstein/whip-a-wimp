@@ -21,3 +21,26 @@ waw.generateItems = function(roomType){
     }
     return items;
 };
+
+
+//put items on the layer
+waw.spawnItems = function(layer) {
+    var items = [];
+    var n, item, i;
+    for (n = 0; n < currentRoom.items.length; n++) {
+        i = currentRoom.items[n];
+        if (i === null) {
+            items.push(null);
+            continue;   //replace deleted items with null to keep the order
+        }
+        //TODO choose i.itemType
+        item = new waw.Item(i.itemType);
+        item.setPosition(i.x, i.y);
+        layer.addChild(item, 250 - i.y);
+        layer.addChild(item.shadowSprite, -14);
+        item.shadowSprite.setPosition(i.x, i.y - 0);
+        items.push(item);
+    }
+    waw.items = items;
+    return items;
+};

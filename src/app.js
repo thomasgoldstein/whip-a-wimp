@@ -55,7 +55,7 @@ waw.MainScene = cc.Scene.extend({
 
 //this layer exists on every Room
 waw.MainLayer = cc.Layer.extend({
-    foes: [], //current room enemy
+    mobs: [], //current room enemy
     units: [], //curr room obstacles (collision boxes)
 
     lightspot: null,
@@ -72,19 +72,17 @@ waw.MainLayer = cc.Layer.extend({
         waw.units = []; //clear obstacles
         this.units = waw.units;
 
-        //Initially draw room BG, walls, foes onto layer
+        //Initially draw room BG walls onto layer
         currentRoom = rooms[currentRoomY][currentRoomX];
         if (currentRoom) {
             waw.initWalls(currentRoom); //init array units with non-destructable walls (8 pieces)
             waw.prepareRoomLayer(currentRoom);
         } else
             throw "this room coords are out of the grid";
-
-        var room = rooms[currentRoomY][currentRoomX];
-        room.visited = true;
+        currentRoom.visited = true;
 
         if(rooms.foundMap)
-            waw.AddMiniMap(this, room);
+            waw.AddMiniMap(this, currentRoom);
 
         this.lightspot = new cc.Sprite(s_LightSpot, new cc.rect(0,0,1,1));
         this.lightspot.setAnchorPoint(0.5, 0.5);
@@ -133,7 +131,6 @@ waw.MainLayer = cc.Layer.extend({
         waw.MenuDebug(this);
     },
     onEnter: function () {
-        var i, m, e, pos;
         this._super();
         //console.info("onEnter ROOM",currentRoomX,currentRoomY);
 
@@ -147,74 +144,10 @@ waw.MainLayer = cc.Layer.extend({
         waw.whip.init();
 
         //put items on the layer
-        this.items = [];
-        for(var n=0; n<currentRoom.items.length; n++) {
-            i = currentRoom.items[n];
-            if (i === null) {
-                this.items.push(null);
-                continue;   //replace deleted items with null to keep the order
-            }
-            //TODO choose i.itemType
-            var item = new waw.Item(i.itemType);
-            item.setPosition(i.x, i.y);
-            this.addChild(item,250-i.y);
-            this.addChild(item.shadowSprite,-14);
-            item.shadowSprite.setPosition(i.x, i.y-0);
-            this.items.push(item);
-        }
-        waw.items = this.items;
+        this.items = waw.spawnItems(this);
 
-        //put enemy on the layer
-        this.foes = [];
-        //TODO Plug. Temp put enemy on the screen
-        for(var n=0; n<currentRoom.mobs.length; n++){
-            m = currentRoom.mobs[n];
-            if(!m) {
-                this.foes.push(null);
-                continue;
-            }
-            //TODO choose m.mobType
-            switch(m.mobType){
-                case "PigWalker":
-                    e = new waw.MobPigWalker();
-                    break;
-                case "PigBouncer":
-                    e = new waw.MobPigBouncer();
-                    break;
-                case "Merchant":
-                    e = new waw.MobMerchant();
-                    break;
-                case "Spikes":
-                    e = new waw.MobSpikes();
-                    break;
-                case "Bat":
-                    e = new waw.MobBat();
-                    break;
-                case "Barrel":
-                    e = new waw.MobBarrel();
-                    break;
-                default:
-                    throw "Wrong mob type";
-            }
-            pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
-            e.setPosition(pos);
-            m.mob = e; //to get some params of the mob later, when u exit the room
-            e.setZOrder(250 - pos.y);
-            e.setScale(0.1);
-            e.runAction(new cc.ScaleTo(0.5, 1));
-            //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
-            this.addChild(e, 250 - pos.y);
-            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
-            this.addChild(e.shadowSprite,-14);
-            //position shadow
-            e.shadowSprite.setPosition(pos.x, pos.y-0);
-            this.foes.push(e);
-
-            waw.units[200+n] = e;   //to make it obstacle
-
-            e.becomeInvincible();
-        }
-        waw.foes = this.foes;
+        //put mobs on the layer
+        this.mobs = waw.spawnMobs(this);
 
         waw.player.becomeInvincible();
     },
@@ -230,24 +163,8 @@ waw.MainLayer = cc.Layer.extend({
 
         this.removeChild(waw.player.shadowSprite);
 
-        for(var i=0; i<currentRoom.mobs.length; i++) {
-            m = currentRoom.mobs[i];
-            if(!m)
-                continue;
-            if(!m.mob)      //TODO why it might be NULL ? cant find the prob
-                continue;
-            pos = m.mob.getPosition();
-            m.x = pos.x;
-            m.y = pos.y;
-            m.mob = null;
-        }
+        waw.cleanSpawnMobs(this);
 
-        for(var i=0; i<waw.foes.length; i++) {
-            waw.foes[i] = null;
-        }
-        this.foes = [];
-        waw.foes = [];
-        this.units = [];
         this.cleanup();
     },
     onGotoNextRoom: function (key, playerPos) {
@@ -397,13 +314,9 @@ waw.MainLayer = cc.Layer.extend({
                             this.lightspot4.visible = false;
             }
         }
-
         //monsters
-        for(var i=0; i<this.foes.length; ++i){
-            if(this.foes[i]) {
-                this.foes[i].update();
-            }
-        }
+        waw.updateSpawnMobs(this);
+
         //go to another room?
         var playerPos = waw.player.getPosition();
         if(waw.scrollActionDone) {

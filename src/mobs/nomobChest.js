@@ -32,7 +32,7 @@ waw.NoMobChest = waw.Unit.extend({
         this.shadowSprite = new cc.Sprite(s_Shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
-    //clear from this unit 1. local room foes 2. global room 3. local units - collision check
+    //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
         for (var n = 0; n < waw.units.length; n++) {
             var m = waw.units[n];

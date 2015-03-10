@@ -32,7 +32,7 @@ waw.MenuDebug = function (layer) {
             this.addChild(e.shadowSprite, -14);
             //position shadow
             e.shadowSprite.setPosition(pos.x, pos.y - 0);
-            waw.foes.push(e);
+            waw.mobs.push(e);
 
         }, layer);
     //debugOnOffItem.setAnchorPoint(0.5, 0.5);
@@ -47,11 +47,11 @@ waw.MenuDebug = function (layer) {
             showDebugInfo = !showDebugInfo;
             waw.player.label.setVisible(showDebugInfo);
             waw.player.debugCross.setVisible(showDebugInfo);
-            for (var i in waw.foes) {
-                if (!waw.foes[i])
+            for (var i in waw.mobs) {
+                if (!waw.mobs[i])
                     continue;
-                waw.foes[i].label.setVisible(showDebugInfo);
-                waw.foes[i].debugCross.setVisible(showDebugInfo);
+                waw.mobs[i].label.setVisible(showDebugInfo);
+                waw.mobs[i].debugCross.setVisible(showDebugInfo);
             }
             for (var i in waw.units) {
                 if (!waw.units[i])
@@ -145,8 +145,8 @@ waw.MenuDebug = function (layer) {
             e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
             e.setTag(TAG_CHEST);
             console.log(waw.units.length);
-            //waw.foes.push(e);
-            //waw.units[waw.foes.length-1] = e;   //to make it obstacle&
+            //waw.mobs.push(e);
+            //waw.units[waw.mobs.length-1] = e;   //to make it obstacle&
 
             this.scheduleOnce(function () {
                 waw.units.push(e);   //to make it obstacle&
