@@ -25,7 +25,7 @@ var s_Spikes = themeDir + "Spikes.png";
 var s_Barrel = themeDir + "Barrel.png";
 var s_Bat = themeDir + "Bat.png";
 var s_Map = themeDir + "Map.png";
-var s_TouchControls = "res/TouchControls.png";
+var s_TouchControls = "res/UI/TouchControls.png";
 //music
 var bgm_Level1 = "res/Music/ingame01.mp3";
 //SFX
