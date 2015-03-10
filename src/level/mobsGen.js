@@ -27,8 +27,8 @@ waw.spawnMobs = function(layer){
     var foes = [];
     var pos, e, m, n;
     //TODO Plug. Temp put enemy on the screen
-    for(n=0; n<currentRoom.mobs.length; n++){
-        m = currentRoom.mobs[n];
+    for(n=0; n<waw.curRoom.mobs.length; n++){
+        m = waw.curRoom.mobs[n];
         if(!m) {
             foes.push(null);
             continue;
@@ -80,8 +80,8 @@ waw.spawnMobs = function(layer){
 
 waw.cleanSpawnMobs = function(layer) {
     var i, m, pos;
-    for(i=0; i<currentRoom.mobs.length; i++) {
-        m = currentRoom.mobs[i];
+    for(i=0; i<waw.curRoom.mobs.length; i++) {
+        m = waw.curRoom.mobs[i];
         if(!m)
             continue;
         if(!m.mob)      //TODO why it might be NULL ? cant find the prob

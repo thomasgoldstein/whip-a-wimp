@@ -124,7 +124,7 @@ waw.MenuDebug = function (layer) {
     labelDebug = new cc.LabelTTF("Dark", "System", 10);
     var debugMenu11 = new cc.MenuItemLabel(labelDebug,
         function () {
-            currentRoom.dark = !currentRoom.dark;
+            waw.curRoom.dark = !waw.curRoom.dark;
         }, layer);
     menu = new cc.Menu(debugMenu11);
     menu.setPosition(0, 0);

@@ -27,8 +27,8 @@ waw.generateItems = function(roomType){
 waw.spawnItems = function(layer) {
     var items = [];
     var n, item, i;
-    for (n = 0; n < currentRoom.items.length; n++) {
-        i = currentRoom.items[n];
+    for (n = 0; n < waw.curRoom.items.length; n++) {
+        i = waw.curRoom.items[n];
         if (i === null) {
             items.push(null);
             continue;   //replace deleted items with null to keep the order

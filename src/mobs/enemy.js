@@ -207,7 +207,7 @@ waw.Enemy = waw.Unit.extend({
             if (this === m) {
                 waw.mobs[n] = null;
                 waw.units[200 + n] = null;  //TODO do something with 200 offset
-                currentRoom.mobs[n] = null;
+                waw.curRoom.mobs[n] = null;
                 break;
             }
         }

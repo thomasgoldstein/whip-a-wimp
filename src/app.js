@@ -67,22 +67,22 @@ waw.MainLayer = cc.Layer.extend({
 
     init: function () {
         this._super();
-        //console.info("init layer", currentRoomX, currentRoomY);
+        //console.info("init layer", waw.curRoomX, waw.curRoomY);
         waw.layer = this;
         waw.units = []; //clear obstacles
         this.units = waw.units;
 
         //Initially draw room BG walls onto layer
-        currentRoom = rooms[currentRoomY][currentRoomX];
-        if (currentRoom) {
-            waw.initWalls(currentRoom); //init array units with non-destructable walls (8 pieces)
-            waw.prepareRoomLayer(currentRoom);
+        waw.curRoom = rooms[waw.curRoomY][waw.curRoomX];
+        if (waw.curRoom) {
+            waw.initWalls(waw.curRoom); //init array units with non-destructable walls (8 pieces)
+            waw.prepareRoomLayer(waw.curRoom);
         } else
             throw "this room coords are out of the grid";
-        currentRoom.visited = true;
+        waw.curRoom.visited = true;
 
         if(rooms.foundMap)
-            waw.AddMiniMap(this, currentRoom);
+            waw.AddMiniMap(this, waw.curRoom);
 
         this.lightspot = new cc.Sprite(s_LightSpot, new cc.rect(0,0,1,1));
         this.lightspot.setAnchorPoint(0.5, 0.5);
@@ -124,7 +124,7 @@ waw.MainLayer = cc.Layer.extend({
         this.lightspot1.visible =
         this.lightspot2.visible =
         this.lightspot3.visible =
-        this.lightspot4.visible = currentRoom.dark;
+        this.lightspot4.visible = waw.curRoom.dark;
 
         this.scheduleUpdate();
         //TODO Remove Debug menu
@@ -132,7 +132,7 @@ waw.MainLayer = cc.Layer.extend({
     },
     onEnter: function () {
         this._super();
-        //console.info("onEnter ROOM",currentRoomX,currentRoomY);
+        //console.info("onEnter ROOM",waw.curRoomX,waw.curRoomY);
 
         waw.player.update();   //to update players sprite facing direction
 
@@ -153,13 +153,13 @@ waw.MainLayer = cc.Layer.extend({
     },
     onEnterTransitionDidFinish: function () {
         this._super();
-//      console.info("onEnterTransitionDidFinish ROOM:",currentRoomX,currentRoomY);
+//      console.info("onEnterTransitionDidFinish ROOM:",waw.curRoomX,waw.curRoomY);
         waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
         var m,pos;
         this._super();
-        //console.info("onExitTransitionDidStart ROOM",currentRoomX,currentRoomY);
+        //console.info("onExitTransitionDidStart ROOM",waw.curRoomX,waw.curRoomY);
 
         this.removeChild(waw.player.shadowSprite);
 
@@ -178,43 +178,43 @@ waw.MainLayer = cc.Layer.extend({
         var room = null;
         switch (key) {
             case cc.KEY.up:
-                room = rooms[currentRoomY - 1][currentRoomX];
+                room = rooms[waw.curRoomY - 1][waw.curRoomX];
                 if (room) {
-                    currentRoomY -= 1;
+                    waw.curRoomY -= 1;
                     this.lightspot3.visible = false;
                     this.lightspot4.visible = false;
                 } else
                     return;
                 break;
             case cc.KEY.down:
-                room = rooms[currentRoomY + 1][currentRoomX];
+                room = rooms[waw.curRoomY + 1][waw.curRoomX];
                 if (room) {
-                    currentRoomY += 1;
+                    waw.curRoomY += 1;
                     this.lightspot1.visible = false;
                     this.lightspot2.visible = false;
                 } else
                     return;
                 break;
             case cc.KEY.left:
-                room = rooms[currentRoomY][currentRoomX - 1];
+                room = rooms[waw.curRoomY][waw.curRoomX - 1];
                 if (room) {
-                    currentRoomX -= 1;
+                    waw.curRoomX -= 1;
                     this.lightspot2.visible = false;
                     this.lightspot3.visible = false;
                 } else
                     return;
                 break;
             case cc.KEY.right:
-                room = rooms[currentRoomY][currentRoomX + 1];
+                room = rooms[waw.curRoomY][waw.curRoomX + 1];
                 if (room) {
-                    currentRoomX += 1;
+                    waw.curRoomX += 1;
                     this.lightspot1.visible = false;
                     this.lightspot4.visible = false;
                 } else
                     return;
                 break;
         }
-        currentRoom = room; //TODO remove later?
+        waw.curRoom = room; //TODO remove later?
 
         this.scrollToNextRoom(key, 0.5);  //1st arg = in seconds duration of the transition
     },
@@ -258,7 +258,7 @@ waw.MainLayer = cc.Layer.extend({
             }, 0.9);
     },
     update: function (dt) {
-        if(currentRoom.dark) {
+        if(waw.curRoom.dark) {
             if(!this.lightspot1.visible){
                 this.lightspot1.visible =
                 this.lightspot2.visible =
@@ -314,7 +314,7 @@ waw.MainLayer = cc.Layer.extend({
                             this.lightspot4.visible = false;
             }
         }
-        //monsters
+        //update all monsters in the room
         waw.updateSpawnMobs(this);
 
         //go to another room?

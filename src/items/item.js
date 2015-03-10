@@ -93,7 +93,7 @@ waw.Item = waw.Unit.extend({
         for (i = 0; i < waw.items.length; i++) { //remove from current items array
             if (waw.items[i] === this) {
                 waw.items[i] = null;
-                currentRoom.items[i] = null;
+                waw.curRoom.items[i] = null;
                 break;
             }
         }
@@ -127,7 +127,7 @@ waw.Item = waw.Unit.extend({
                 break;
             case "map":
                 if(rooms.foundMap === false)
-                    waw.AddMiniMap(this.getParent(), currentRoom, true);
+                    waw.AddMiniMap(this.getParent(), waw.curRoom, true);
                 rooms.foundMap = true;
                 waw.addScore(150);
                 break;

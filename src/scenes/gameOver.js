@@ -11,13 +11,9 @@ waw.GameOverScene = cc.Scene.extend({
         layer.init();
         this.addChild(layer);
 
-        this.scheduleOnce(function(){
-//TODO move to proper func
-            var currentRoom = null;
-            var currentRoomX = 4, currentRoomY = 4; //The start room is 4,4 by default
-            var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
-            var rooms = {};
+        this.scheduleOnce(function () {
 
+            rooms.initLevel();
             //cc.director.runScene(new transition(1, new waw.MainScene()));  //1st arg = in seconds duration of t
             waw.currentScene = new waw.MainScene();
             cc.director.runScene(waw.currentScene);

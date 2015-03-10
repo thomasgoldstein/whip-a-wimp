@@ -11,11 +11,6 @@ function Walls() {
     this.right_d = 0;
     this.down_d = 0;
     this.left_d = 0;
-
-    // ceiling & floor
-    //TODO add usage of top / bottom ladders in the level
-	//this.top = "wall";
-	//this.bottom = "wall";
 }
 
 //a Room generator
@@ -30,15 +25,11 @@ function Room(_name,_x,_y) {
     this.mobs = [];
     this.items = [];
 
-    //rooms around )
+    //rooms around
     this.up_room = null;    //near rooms, even trough doors
     this.right_room = null;
     this.down_room = null;
     this.left_room = null;
-    this.up_direct_room = null; //ref to the room with direct access
-    this.right_direct_room = null;
-    this.down_direct_room = null;
-    this.left_direct_room = null;
 
     this.distance = 100;    //rooms to the level entrance
     this.doors = 100;   //# closed doors to the level entrance
@@ -48,9 +39,8 @@ function Room(_name,_x,_y) {
 }
 
 rooms.initLevel = function() {
-    currentRoom = null;
-    currentRoomX = currentRoomY = 4; //The start room is 4,4 by default
-    startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+    waw.curRoom = null;
+    waw.curRoomX = waw.curRoomY = 4; //The start room is 4,4 by default
 	//init level 9x9
 	for(var y = 0; y < 9 ; y++) {
 		rooms[y] = {};
@@ -139,39 +129,38 @@ rooms.genLevel = function() {
 			noCycle--;
 		}
 
-		oldx = x;
-		oldy = y;
-		// % CHANCE //randomly move to the next room in the generated maze
-		if(Math.random()*100 < 50) {
-			//X
-			if(Math.random()*100 < 50)
-				x++;
-			else
-				x--;	
-		} else {
-			//Y
-			if(Math.random()*100 < 50)
-				y--;
-			else
-				y++;
-		}
-		//check for bounds
-		if(x>=8) {
-			x=8;
-		}
-		if(x<0) {
-			x=0;
-		}
-		if(y>=8) {
-			y=8;
-		}
-		if(y<0) {
-			y=0;
-		}
+        oldx = x;
+        oldy = y;
+        // % CHANCE //randomly move to the next room in the generated maze
+        if (Math.random() * 100 < 50) {
+            //X
+            if (Math.random() * 100 < 50)
+                x++;
+            else
+                x--;
+        } else {
+            //Y
+            if (Math.random() * 100 < 50)
+                y--;
+            else
+                y++;
+        }
+        //check for bounds
+        if (x >= 8) {
+            x = 8;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        if (y >= 8) {
+            y = 8;
+        }
+        if (y < 0) {
+            y = 0;
+        }
 		//check for max number of rooms to generate
 	} while(noCycle < max_rooms_N);
-
-    //start room[4,4] should have no obstacles!
+    //start room[4,4] should has no obstacles!
     rooms[4][4].type = 0;
 };
 
@@ -267,7 +256,7 @@ waw.GenerateMiniMap = function() {
                 layerMapSprite.addChild(m);
                 m.setPositionX(x*5+3 +mapXOffset);
                 m.setPositionY((8-y)*5+2 +mapYOffset);
-                if(currentRoomX === x && currentRoomY === y){
+                if(waw.curRoomX === x && waw.curRoomY === y){
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
@@ -546,7 +535,7 @@ waw.prepareRoomLayer = function(room) {
 
     //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
-        var label = new cc.LabelTTF("ROOM: "+currentRoomX+","+currentRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
+        var label = new cc.LabelTTF("ROOM: "+waw.curRoomX+","+waw.curRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
         label.setAnchorPoint(0,1);
         label.setPosition(20, 230);
@@ -563,20 +552,20 @@ waw.openDoor = function (doorTag, layer) {
             //make 'empty' passages for next room gen calls
             switch (doorTag) {
                 case TAG_UP_DOORD:
-                    rooms[currentRoomY][currentRoomX].walls.up =
-                        rooms[currentRoomY - 1][currentRoomX].walls.down = "empty";
+                    rooms[waw.curRoomY][waw.curRoomX].walls.up =
+                        rooms[waw.curRoomY - 1][waw.curRoomX].walls.down = "empty";
                     break;
                 case TAG_RIGHT_DOORD:
-                    rooms[currentRoomY][currentRoomX].walls.right =
-                        rooms[currentRoomY][currentRoomX + 1].walls.left = "empty";
+                    rooms[waw.curRoomY][waw.curRoomX].walls.right =
+                        rooms[waw.curRoomY][waw.curRoomX + 1].walls.left = "empty";
                     break;
                 case TAG_DOWN_DOORD:
-                    rooms[currentRoomY][currentRoomX].walls.down =
-                        rooms[currentRoomY + 1][currentRoomX].walls.up = "empty";
+                    rooms[waw.curRoomY][waw.curRoomX].walls.down =
+                        rooms[waw.curRoomY + 1][waw.curRoomX].walls.up = "empty";
                     break;
                 case TAG_LEFT_DOORD:
-                    rooms[currentRoomY][currentRoomX].walls.left =
-                        rooms[currentRoomY][currentRoomX - 1].walls.right = "empty";
+                    rooms[waw.curRoomY][waw.curRoomX].walls.left =
+                        rooms[waw.curRoomY][waw.curRoomX - 1].walls.right = "empty";
                     break;
             }
             waw.units[i] = null;
@@ -796,7 +785,6 @@ waw.putRoomObstacle = function(pos, hitbox, hitboxPos, isAnchoredToBottom) {
     wall.setPosition(hitboxPos); //collision box 32x16
     wall.setTag(TAG_PILLAR);
     units.push(wall);
-
     //debug
     waw.AddHitBoxSprite(wall, layer);
 };
