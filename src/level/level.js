@@ -541,10 +541,14 @@ waw.prepareRoomLayer = function(room) {
         label.setPosition(20, 230);
         label.setOpacity(200);
     }
-
 };
 
 waw.openDoor = function (doorTag, layer) {
+    if(waw.keys<=0) {
+        cc.audioEngine.playEffect(waw.sfx.pigDeath);
+        console.log("You have no a key to open the door");
+        return;
+    }
     for (var i = 0; i < waw.units.length; i++) {
         if (!waw.units[i])
             continue;
@@ -571,6 +575,7 @@ waw.openDoor = function (doorTag, layer) {
             waw.units[i] = null;
         }
     }
+    waw.keys--;
     var node = layer.getChildByTag(doorTag - 4);
     switch (doorTag - 4) {
         case TAG_UP_DOOR:

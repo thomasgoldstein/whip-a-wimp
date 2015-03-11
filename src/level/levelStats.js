@@ -15,15 +15,6 @@ rooms.initNeighbours = function () {
                     r.left_room = rooms.getRoom(y, x - 1);
                 if (r.walls.right !== "wall")
                     r.right_room = rooms.getRoom(y, x + 1);
-
-/*                if (r.walls.up === "empty")
-                    r.up_direct_room = rooms.getRoom(y - 1, x);
-                if (r.walls.down === "empty")
-                    r.down_direct_room = rooms.getRoom(y + 1, x);
-                if (r.walls.left === "empty")
-                    r.left_direct_room = rooms.getRoom(y, x - 1);
-                if (r.walls.right === "empty")
-                    r.right_direct_room = rooms.getRoom(y, x + 1);*/
             }
         }
     }

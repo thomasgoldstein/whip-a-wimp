@@ -44,3 +44,15 @@ waw.spawnItems = function(layer) {
     waw.items = items;
     return items;
 };
+
+waw.putMap = function() {
+
+};
+
+waw.putKeys = function() {
+
+};
+
+waw.putExit = function() {
+
+};
