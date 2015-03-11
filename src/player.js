@@ -563,7 +563,7 @@ waw.Player = waw.Unit.extend({
         }
         if (showDebugInfo) {
             //debug - show hit box
-            var hitArea = new cc.Sprite(waw.gfx.dbg.hitBoxGrid, hitArea_rect);
+            var hitArea = new cc.Sprite(waw.gfx.hitBoxGrid, hitArea_rect);
             hitArea.setPosition(this.x, this.y + 8);
             switch (this.direction) {
                 case "down":

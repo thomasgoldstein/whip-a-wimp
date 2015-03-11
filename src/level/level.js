@@ -763,9 +763,9 @@ waw.prepareRoomPattern = function(room) {
 waw.AddHitBoxSprite = function (unit, layer, tag_) {
     var tag = tag_ | 0;
     if(unit.width < 100 && unit.height < 100)
-        unit.debugCross = new cc.Sprite(waw.gfx.dbg.hitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
+        unit.debugCross = new cc.Sprite(waw.gfx.hitBoxGridBlue, cc.rect(0, 0, unit.width, unit.height));
     else
-        unit.debugCross = new cc.Sprite(waw.gfx.dbg.hitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
+        unit.debugCross = new cc.Sprite(waw.gfx.hitBoxGrid, cc.rect(0, 0, unit.width, unit.height));
     unit.debugCross.setAnchorPoint(0.5, 0);
     unit.debugCross.x = unit.x;
     unit.debugCross.y = unit.y;

@@ -26,11 +26,9 @@ waw.gfx = {
     titleGFX: themeDir + "TitleGFX.png",
     touchControls: "res/UI/TouchControls.png",
     upperWalls: themeDir + "UpperWalls.png",
-    weapons: "res/Common/Weapons.png"
-};
-
-//gfx for debug
-waw.gfx.dbg = {
+    weapons: "res/Common/Weapons.png",
+	
+    //gfx for debug
     hitBoxGrid: "res/DBG/hbGrid.png",
     hitBoxGridBlue: "res/DBG/hbGridBlue.png"
 };
@@ -92,8 +90,8 @@ var g_resources = [
     {src:waw.gfx.weapons},
 
     //gfx for debug
-    {src:waw.gfx.dbg.hitBoxGrid},
-    {src:waw.gfx.dbg.hitBoxGridBlue},
+    {src:waw.gfx.hitBoxGrid},
+    {src:waw.gfx.hitBoxGridBlue},
 
     //plist
 
