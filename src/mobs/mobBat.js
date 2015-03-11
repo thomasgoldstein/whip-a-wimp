@@ -8,9 +8,9 @@ waw.MobBat = waw.MobRandomWalker.extend({
     spriteYoffset: 24,
     HP: 1,
     state: "idle",
-    sfx_hurt01: waw.sfx.MerchHurt01,
-    sfx_hurt02: waw.sfx.MerchHurt02,
-    sfx_death: waw.sfx.Ouch03,
+    sfx_hurt01: waw.sfx.merchHurt01,
+    sfx_hurt02: waw.sfx.merchHurt02,
+    sfx_death: waw.sfx.ouch03,
 
     ctor: function () {
         this._super();
@@ -54,7 +54,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
         animData["follow"] = animData["walk"];
         animData["attack"] = animData["hurt"];
 
-        this.sprite = new waw.AnimatedSprite(waw.gfx.Bat, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.bat, animData);
         this.calcDirection(0,0);
         this.sprite.playAnimation(this.getAnimationName());
 
@@ -64,7 +64,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow12x6);
+        this.shadowSprite = new cc.Sprite(waw.gfx.shadow12x6);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     getAnimationName: function() {

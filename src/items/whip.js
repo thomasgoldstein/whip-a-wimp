@@ -101,11 +101,11 @@ waw.Whip = waw.Unit.extend({
         var sprite;
         for (var i = 0; i < this.chainLengthMax; i++) {
             if (i === 0)
-                sprite = new cc.Sprite(waw.gfx.Weapons, cc.rect(0, 0, 7, 15));
+                sprite = new cc.Sprite(waw.gfx.weapons, cc.rect(0, 0, 7, 15));
             else if (i >= this.chainLengthMax - 1)
-                sprite = new cc.Sprite(waw.gfx.Weapons, cc.rect(0, 16 * 2, 7, 15));
+                sprite = new cc.Sprite(waw.gfx.weapons, cc.rect(0, 16 * 2, 7, 15));
             else
-                sprite = new cc.Sprite(waw.gfx.Weapons, cc.rect(0, 16 * 1, 7, 15));
+                sprite = new cc.Sprite(waw.gfx.weapons, cc.rect(0, 16 * 1, 7, 15));
             //sprite.setAnchorPoint(0.5, 0);
             if (i > 0)
                 sprite.setPosition(3.5, 1);

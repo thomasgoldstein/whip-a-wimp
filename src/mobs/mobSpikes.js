@@ -43,7 +43,7 @@ waw.MobSpikes = waw.Enemy.extend({
             }
         };
 
-        this.sprite = new waw.AnimatedSprite(waw.gfx.Spikes, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.spikes, animData);
         this.calcDirection(0, 0);
         this.sprite.playAnimation(this.getAnimationName());
 
@@ -53,7 +53,7 @@ waw.MobSpikes = waw.Enemy.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow24x12);
+        this.shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
         this.shadowSprite.visible = false;  //no shadow
     },

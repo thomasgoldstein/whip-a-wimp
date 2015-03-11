@@ -8,9 +8,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
     spriteYoffset: -4,
     HP: 3,
     state: "idle",
-    sfx_hurt01: waw.sfx.PigHurt01,
-    sfx_hurt02: waw.sfx.PigHurt02,
-    sfx_death: waw.sfx.PigDeath,
+    sfx_hurt01: waw.sfx.pigHurt01,
+    sfx_hurt02: waw.sfx.pigHurt02,
+    sfx_death: waw.sfx.pigDeath,
 
     ctor: function () {
         this._super();
@@ -187,7 +187,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         animData["hurt_up_left"] = animData["hurt_down_left"];
         animData["hurt_up_right"] = animData["hurt_down_right"];
 
-        this.sprite = new waw.AnimatedSprite(waw.gfx.Pig, animData);
+        this.sprite = new waw.AnimatedSprite(waw.gfx.pig, animData);
         this.calcDirection(0,0);
         this.sprite.playAnimation(this.getAnimationName());
 
@@ -197,7 +197,7 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
         this.debugCross.setAnchorPoint(0.5, 0);
 
         //create monsters shadow sprite
-        this.shadowSprite = new cc.Sprite(waw.gfx.Shadow32x16);
+        this.shadowSprite = new cc.Sprite(waw.gfx.shadow32x16);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
     update: function () {

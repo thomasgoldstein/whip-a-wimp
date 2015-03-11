@@ -1,99 +1,99 @@
 "use strict";
 var themeDir = "res/Themes/Temple/";
 waw.gfx = {
-    Barrel: themeDir + "Barrel.png",
-    Bat: themeDir + "Bat.png",
-    Cherub: "res/Common/Cherub.png",
-    Chest: themeDir + "Chest.png",
-    Doors: themeDir + "Doors.png",
-    Floor: themeDir + "Floor.png",
-    Items: themeDir + "Items.png",
-    Jesus: "res/Common/Jesus.png",
-    JesusCloth: "res/Common/JesusCloth.png",
-    Kiwi: "res/Common/Kiwi.png",
-    LightSpot: "res/Common/LightSpot.png",
-    Map: themeDir + "Map.png",
-    Merchant: themeDir + "Merchant.png",
-    MiddleWalls: themeDir + "MiddleWalls.png",
-    Pig: themeDir + "Pig.png",
-    Pillar: themeDir + "Pillar.png",
-    Shadow12x6: "res/Common/Shadow12x6.png",
-    Shadow24x12: "res/Common/Shadow24x12.png",
-    Shadow32x16: "res/Common/Shadow32x16.png",
-    Sparkle: "res/Common/Sparkle.png",
-    Spikes: themeDir + "Spikes.png",
-    Textures: themeDir + "Textures.png",
-    TitleGFX: themeDir + "TitleGFX.png",
-    TouchControls: "res/UI/TouchControls.png",
-    UpperWalls: themeDir + "UpperWalls.png",
-    Weapons: "res/Common/Weapons.png"
+    barrel: themeDir + "Barrel.png",
+    bat: themeDir + "Bat.png",
+    cherub: "res/Common/Cherub.png",
+    chest: themeDir + "Chest.png",
+    doors: themeDir + "Doors.png",
+    floor: themeDir + "Floor.png",
+    items: themeDir + "Items.png",
+    jesus: "res/Common/Jesus.png",
+    jesusCloth: "res/Common/JesusCloth.png",
+    kiwi: "res/Common/Kiwi.png",
+    lightSpot: "res/Common/LightSpot.png",
+    map: themeDir + "Map.png",
+    merchant: themeDir + "Merchant.png",
+    middleWalls: themeDir + "MiddleWalls.png",
+    pig: themeDir + "Pig.png",
+    pillar: themeDir + "Pillar.png",
+    shadow12x6: "res/Common/Shadow12x6.png",
+    shadow24x12: "res/Common/Shadow24x12.png",
+    shadow32x16: "res/Common/Shadow32x16.png",
+    sparkle: "res/Common/Sparkle.png",
+    spikes: themeDir + "Spikes.png",
+    textures: themeDir + "Textures.png",
+    titleGFX: themeDir + "TitleGFX.png",
+    touchControls: "res/UI/TouchControls.png",
+    upperWalls: themeDir + "UpperWalls.png",
+    weapons: "res/Common/Weapons.png"
 };
 
 //gfx for debug
 waw.gfx.dbg = {
-    HitBoxGrid: "res/DBG/hbGrid.png",
-    HitBoxGridBlue: "res/DBG/hbGridBlue.png"
+    hitBoxGrid: "res/DBG/hbGrid.png",
+    hitBoxGridBlue: "res/DBG/hbGridBlue.png"
 };
 
 //music
 waw.bgm = {
-    Level1: "res/Music/ingame01.mp3"
+    level1: "res/Music/ingame01.mp3"
 };
 
 //SFX
 waw.sfx = {
-    Candelabre01: "res/SFX/Candelabre01.ogg",
-    Coin01: "res/SFX/Coin01.ogg",
-    Door01: "res/SFX/Door01.ogg",
-    MerchDeath: "res/SFX/MerchDeath.ogg",
-    MerchHurt01: "res/SFX/MerchHurt01.ogg",
-    MerchHurt02: "res/SFX/MerchHurt02.ogg",
-    Ouch01: "res/SFX/Ouch01.ogg",
-    Ouch02: "res/SFX/Ouch02.ogg",
-    Ouch03: "res/SFX/Ouch03.ogg",
-    PigDeath: "res/SFX/PigDeath.ogg",
-    PigHurt01: "res/SFX/PigHurt01.ogg",
-    PigHurt02: "res/SFX/PigHurt02.ogg",
-    Punch01: "res/SFX/Punch01.ogg",
-    Whip01: "res/SFX/Whip01.ogg",
-    Whip02: "res/SFX/Whip02.ogg"
+    candelabre01: "res/SFX/Candelabre01.ogg",
+    coin01: "res/SFX/Coin01.ogg",
+    door01: "res/SFX/Door01.ogg",
+    merchDeath: "res/SFX/MerchDeath.ogg",
+    merchHurt01: "res/SFX/MerchHurt01.ogg",
+    merchHurt02: "res/SFX/MerchHurt02.ogg",
+    ouch01: "res/SFX/Ouch01.ogg",
+    ouch02: "res/SFX/Ouch02.ogg",
+    ouch03: "res/SFX/Ouch03.ogg",
+    pigDeath: "res/SFX/PigDeath.ogg",
+    pigHurt01: "res/SFX/PigHurt01.ogg",
+    pigHurt02: "res/SFX/PigHurt02.ogg",
+    punch01: "res/SFX/Punch01.ogg",
+    whip01: "res/SFX/Whip01.ogg",
+    whip02: "res/SFX/Whip02.ogg"
 };
 
 var g_resources = [
     //bgm
-    {src:waw.bgm.Level1},
+    {src:waw.bgm.level1},
 
     //image
-    {src:waw.gfx.Barrel},
-    {src:waw.gfx.Bat},
-    {src:waw.gfx.Cherub},
-    {src:waw.gfx.Chest},
-    {src:waw.gfx.Doors},
-    {src:waw.gfx.Floor},
-    {src:waw.gfx.Items},
-    {src:waw.gfx.Jesus},
-    {src:waw.gfx.JesusCloth},
-    {src:waw.gfx.Kiwi},
-    {src:waw.gfx.LightSpot},
-    {src:waw.gfx.Map},
-    {src:waw.gfx.Merchant},
-    {src:waw.gfx.MiddleWalls},
-    {src:waw.gfx.Pig},
-    {src:waw.gfx.Pillar},
-    {src:waw.gfx.Shadow12x6},
-    {src:waw.gfx.Shadow24x12},
-    {src:waw.gfx.Shadow32x16},
-    {src:waw.gfx.Sparkle},
-    {src:waw.gfx.Spikes},
-    {src:waw.gfx.Textures},
-    {src:waw.gfx.TitleGFX},
-    {src:waw.gfx.TouchControls},
-    {src:waw.gfx.UpperWalls},
-    {src:waw.gfx.Weapons},
+    {src:waw.gfx.barrel},
+    {src:waw.gfx.bat},
+    {src:waw.gfx.cherub},
+    {src:waw.gfx.chest},
+    {src:waw.gfx.doors},
+    {src:waw.gfx.floor},
+    {src:waw.gfx.items},
+    {src:waw.gfx.jesus},
+    {src:waw.gfx.jesusCloth},
+    {src:waw.gfx.kiwi},
+    {src:waw.gfx.lightSpot},
+    {src:waw.gfx.map},
+    {src:waw.gfx.merchant},
+    {src:waw.gfx.middleWalls},
+    {src:waw.gfx.pig},
+    {src:waw.gfx.pillar},
+    {src:waw.gfx.shadow12x6},
+    {src:waw.gfx.shadow24x12},
+    {src:waw.gfx.shadow32x16},
+    {src:waw.gfx.sparkle},
+    {src:waw.gfx.spikes},
+    {src:waw.gfx.textures},
+    {src:waw.gfx.titleGFX},
+    {src:waw.gfx.touchControls},
+    {src:waw.gfx.upperWalls},
+    {src:waw.gfx.weapons},
 
     //gfx for debug
-    {src:waw.gfx.dbg.HitBoxGrid},
-    {src:waw.gfx.dbg.HitBoxGridBlue},
+    {src:waw.gfx.dbg.hitBoxGrid},
+    {src:waw.gfx.dbg.hitBoxGridBlue},
 
     //plist
 
@@ -102,19 +102,19 @@ var g_resources = [
     //tmx
 
     //effect
-    {src:waw.sfx.Candelabre01},
-    {src:waw.sfx.Coin01},
-    {src:waw.sfx.Door01},
-    {src:waw.sfx.MerchDeath},
-    {src:waw.sfx.MerchHurt01},
-    {src:waw.sfx.MerchHurt02},
-    {src:waw.sfx.Ouch01},
-    {src:waw.sfx.Ouch02},
-    {src:waw.sfx.Ouch03},
-    {src:waw.sfx.PigDeath},
-    {src:waw.sfx.PigHurt01},
-    {src:waw.sfx.PigHurt02},
-    {src:waw.sfx.Punch01},
-    {src:waw.sfx.Whip01},
-    {src:waw.sfx.Whip02}
+    {src:waw.sfx.candelabre01},
+    {src:waw.sfx.coin01},
+    {src:waw.sfx.door01},
+    {src:waw.sfx.merchDeath},
+    {src:waw.sfx.merchHurt01},
+    {src:waw.sfx.merchHurt02},
+    {src:waw.sfx.ouch01},
+    {src:waw.sfx.ouch02},
+    {src:waw.sfx.ouch03},
+    {src:waw.sfx.pigDeath},
+    {src:waw.sfx.pigHurt01},
+    {src:waw.sfx.pigHurt02},
+    {src:waw.sfx.punch01},
+    {src:waw.sfx.whip01},
+    {src:waw.sfx.whip02}
 ];

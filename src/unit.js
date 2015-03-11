@@ -11,7 +11,7 @@ waw.Unit = cc.Node.extend({
         this._super();
         if(this.width <= 0 )    //default size for a unit
             this.setContentSize(16,16);
-        this.debugCross = new cc.Sprite(waw.gfx.dbg.HitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
+        this.debugCross = new cc.Sprite(waw.gfx.dbg.hitBoxGridBlue, cc.rect(0, 0, this.width, this.height));
         this.debugCross.setAnchorPoint(0.5, 0);
         this.addChild(this.debugCross, 25, TAG_HITBOXSPRITE);
         this.debugCross.setVisible(showDebugInfo);
