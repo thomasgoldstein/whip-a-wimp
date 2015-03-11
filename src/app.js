@@ -4,6 +4,7 @@ waw.oldLayer = null;
 waw.currentLayer = null;
 waw.currentScene = null;
 waw.scrollActionDone = true; //isDone scrolling between rooms
+waw.menu = null;
 
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
@@ -45,6 +46,7 @@ waw.MainScene = cc.Scene.extend({
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
         waw.whip = new waw.Whip();
+        waw.menu = waw.ItemMenu();
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -142,6 +144,10 @@ waw.MainLayer = cc.Layer.extend({
 
         waw.player.addChild(waw.whip,10);
         waw.whip.init();
+
+        waw.menu = waw.ItemMenu();
+        this.addChild(waw.menu, 300);
+        waw.menu.setPosition(24,224);
 
         //put items on the layer
         this.items = waw.spawnItems(this);

@@ -1,3 +1,55 @@
+"use strict";
+
+waw.ItemMenu = function (layer) {
+    //create items list
+    var itemsPassive = [];
+    var items = [];
+    //
+    if(waw.keys>0)
+        itemsPassive.push({name:"key",
+            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16)),
+            usage:function(){console.log(this.name+" is used automatically")},
+            update:function(){}
+        });
+    if(waw.whip.chainLength>0)
+        itemsPassive.push({name:"whip",
+            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 4, 1, 16, 16)),
+            usage:function(){console.log(this.name+" is used automatically")},
+            update:function(){}
+        });
+    if(waw.coins>0)
+        itemsPassive.push({name:"coin",
+            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
+            usage:function(){console.log(this.name+" is used automatically")},
+            update:function(){}
+        });
+    if(waw.gems>0)
+        itemsPassive.push({name:"gem",
+            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
+            usage:function(){console.log(this.name+" is used automatically")},
+            update:function(){}
+        });
+
+    var bottomLayer = new cc.Node();
+    for(var i=0; i<itemsPassive.length; i++){
+        var t = itemsPassive[i];
+        bottomLayer.addChild(t.sprite);
+        t.sprite.setPosition(i*14, 0);
+
+        if(i === 2) {
+            t.sprite.runAction(
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.FadeOut(0.5),
+                        new cc.FadeIn(0.5)
+                    )
+                )
+            );
+        }
+    }
+    return  bottomLayer;
+};
+
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
     labelDebug = new cc.LabelTTF("Spawn", "System", 12);
