@@ -160,4 +160,14 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugSpawnChest.setPosition(16, 126);
 
+    labelDebug = new cc.LabelTTF("Key+", "System", 12);
+    var debugGetKey = new cc.MenuItemLabel(labelDebug,
+        function () {
+            waw.keys ++;
+        }, layer);
+
+    menu = new cc.Menu(debugGetKey);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugGetKey.setPosition(16, 116);
 };
