@@ -27,7 +27,7 @@ waw.gfx = {
     touchControls: "res/UI/TouchControls.png",
     upperWalls: themeDir + "UpperWalls.png",
     weapons: "res/Common/Weapons.png",
-	
+    
     //gfx for debug
     hitBoxGrid: "res/DBG/hbGrid.png",
     hitBoxGridBlue: "res/DBG/hbGridBlue.png"
@@ -57,62 +57,22 @@ waw.sfx = {
     whip02: "res/SFX/Whip02.ogg"
 };
 
-var g_resources = [
-    //bgm
-    {src:waw.bgm.level1},
+var g_resources = [];
 
-    //image
-    {src:waw.gfx.barrel},
-    {src:waw.gfx.bat},
-    {src:waw.gfx.cherub},
-    {src:waw.gfx.chest},
-    {src:waw.gfx.doors},
-    {src:waw.gfx.floor},
-    {src:waw.gfx.items},
-    {src:waw.gfx.jesus},
-    {src:waw.gfx.jesusCloth},
-    {src:waw.gfx.kiwi},
-    {src:waw.gfx.lightSpot},
-    {src:waw.gfx.map},
-    {src:waw.gfx.merchant},
-    {src:waw.gfx.middleWalls},
-    {src:waw.gfx.pig},
-    {src:waw.gfx.pillar},
-    {src:waw.gfx.shadow12x6},
-    {src:waw.gfx.shadow24x12},
-    {src:waw.gfx.shadow32x16},
-    {src:waw.gfx.sparkle},
-    {src:waw.gfx.spikes},
-    {src:waw.gfx.textures},
-    {src:waw.gfx.titleGFX},
-    {src:waw.gfx.touchControls},
-    {src:waw.gfx.upperWalls},
-    {src:waw.gfx.weapons},
+for (var key in waw.gfx) {
+    if (waw.gfx.hasOwnProperty(key)) {
+        g_resources.push({src:waw.gfx[key]});
+    }
+}
 
-    //gfx for debug
-    {src:waw.gfx.hitBoxGrid},
-    {src:waw.gfx.hitBoxGridBlue},
+for (var key in waw.bgm) {
+    if (waw.bgm.hasOwnProperty(key)) {
+        g_resources.push({src:waw.bgm[key]});
+    }
+}
 
-    //plist
-
-    //fnt
-
-    //tmx
-
-    //effect
-    {src:waw.sfx.candelabre01},
-    {src:waw.sfx.coin01},
-    {src:waw.sfx.door01},
-    {src:waw.sfx.merchDeath},
-    {src:waw.sfx.merchHurt01},
-    {src:waw.sfx.merchHurt02},
-    {src:waw.sfx.ouch01},
-    {src:waw.sfx.ouch02},
-    {src:waw.sfx.ouch03},
-    {src:waw.sfx.pigDeath},
-    {src:waw.sfx.pigHurt01},
-    {src:waw.sfx.pigHurt02},
-    {src:waw.sfx.punch01},
-    {src:waw.sfx.whip01},
-    {src:waw.sfx.whip02}
-];
+for (var key in waw.sfx) {
+    if (waw.sfx.hasOwnProperty(key)) {
+        g_resources.push({src:waw.sfx[key]});
+    }
+}
