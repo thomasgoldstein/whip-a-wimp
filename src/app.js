@@ -4,8 +4,8 @@ waw.oldLayer = null;
 waw.currentLayer = null;
 waw.currentScene = null;
 waw.scrollActionDone = true; //isDone scrolling between rooms
-waw.menu = null;
-waw.score = null;
+//waw.menu = null;
+waw.scoreMenu = null;
 
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
@@ -37,8 +37,9 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        cc.audioEngine.playMusic(waw.bgm.level1, true);
+        //cc.audioEngine.playMusic(waw.bgm.level1, true);
 
+        waw.initScore();
         rooms.initLevel();
         rooms.genLevel();
         rooms.initNeighbours();
@@ -47,7 +48,6 @@ waw.MainScene = cc.Scene.extend({
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
         waw.whip = new waw.Whip();
-        waw.menu = waw.ItemMenu();
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -130,6 +130,8 @@ waw.MainLayer = cc.Layer.extend({
         this.lightspot4.visible = waw.curRoom.dark;
 
         this.scheduleUpdate();
+
+        waw.scoreMenu = new waw.Score();
         //TODO Remove Debug menu
         waw.MenuDebug(this);
     },
@@ -146,13 +148,9 @@ waw.MainLayer = cc.Layer.extend({
         waw.player.addChild(waw.whip,10);
         waw.whip.init();
 
-        waw.menu = waw.ItemMenu();
-        this.addChild(waw.menu, 300);
-        waw.menu.setPosition(24,224);
-
-        waw.score = new waw.Score();
-        this.addChild(waw.score, 300);
-        waw.score.setPosition(24,204);
+        //waw.score = new waw.Score();
+        this.addChild(waw.scoreMenu, 300);
+        waw.scoreMenu.setPosition(24,224);
 
         //put items on the layer
         this.items = waw.spawnItems(this);
@@ -185,6 +183,7 @@ waw.MainLayer = cc.Layer.extend({
         waw.player.unscheduleUpdate();
         this.unscheduleUpdate();
         waw.player.removeTempSprites();
+        waw.scoreMenu.unscheduleUpdate();
 
         var room = null;
         switch (key) {

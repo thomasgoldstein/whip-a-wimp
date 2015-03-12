@@ -7,7 +7,7 @@ waw.Score = cc.Node.extend({
 
     ctor: function () {
         this._super();
-        this.setAnchorPoint(0,0.5);
+        this.setAnchorPoint(0, 0.5);
 
         this.items = {
             keys: {
@@ -22,33 +22,63 @@ waw.Score = cc.Node.extend({
                 //hide:function(){ this.items.keys.sprite.visible = false;}
             },
             coins: {
-                sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
+                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
                 oldValue: 0,
-                usage:function(){console.log(this.name+" is used automatically")},
-                update:function(){}
+                usage: function () {
+                    console.log(this.name + " is used automatically")
+                },
+                update: function () {
+                }
                 //show:function(){ this.items.coins.sprite.visible = true; },
                 //hide:function(){ this.items.coins.sprite.visible = false;}
             },
             gems: {
-                sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
+                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
                 oldValue: 0,
-                usage:function(){console.log(this.name+" is used automatically")},
-                update:function(){}
+                usage: function () {
+                    console.log(this.name + " is used automatically")
+                },
+                update: function () {
+                }
                 //show:function(){ this.items.gems.sprite.visible = true; },
                 //hide:function(){ this.items.gems.sprite.visible = false;}
             }
         };
 
-        this.items.keys.sprite.visible = false;
-        this.items.coins.sprite.visible = false;
-        this.items.gems.sprite.visible = false;
-
         this.addChild(this.items.keys.sprite);
-        this.items.keys.sprite.setPosition(0*16, 0);
+        this.items.keys.sprite.setPosition(0 * 16, 0);
+        if (waw.keys > 1){
+            var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+            this.items.keys.sprite.removeAllChildren();
+            this.items.keys.sprite.addChild(keySpr, -1);
+            keySpr.setAnchorPoint(0, 0);
+            keySpr.setPosition(2, 2);
+            keySpr.opacity = 200;
+            waw.makeSpriteJump(keySpr);
+        }
+        if(waw.keys > 2){
+            var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+            this.items.keys.sprite.addChild(keySpr, -2);
+            keySpr.setAnchorPoint(0, 0);
+            keySpr.setPosition(4, 4);
+            keySpr.opacity = 127;
+            waw.makeSpriteJump(keySpr);
+        }
+        if(waw.keys<=0)
+            this.items.keys.sprite.visible = false;
+        this.items.keys.oldValue = waw.keys;
+
         this.addChild(this.items.coins.sprite);
         this.items.coins.sprite.setPosition(1*16, 0);
+        if(waw.coins<=0)
+            this.items.coins.sprite.visible = false;
+        this.items.coins.oldValue = waw.coins;
+
         this.addChild(this.items.gems.sprite);
         this.items.gems.sprite.setPosition(2*16, 0);
+        if(waw.gems<=0)
+            this.items.gems.sprite.visible = false;
+        this.items.gems.oldValue = waw.gems;
 
         this.scheduleUpdate();
 
@@ -71,29 +101,27 @@ waw.Score = cc.Node.extend({
                     var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
                     if(this.items.keys.oldValue === 1){
                         this.items.keys.sprite.addChild(keySpr, -1);
-                        keySpr.setAnchorPoint(0.5, 0.5);
-                        keySpr.setPosition(1+Math.random()*2, 1+Math.random()*2);
+                        keySpr.setAnchorPoint(0, 0);
+                        keySpr.setPosition(2, 2);
                         keySpr.opacity = 200;
+                        waw.makeSpriteJump(keySpr);
                     } else {
                         this.items.keys.sprite.removeAllChildren();
                         this.items.keys.sprite.addChild(keySpr, -1);
-                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setAnchorPoint(0, 0);
                         keySpr.setPosition(2, 2);
                         keySpr.opacity = 200;
-                        keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
-                        this.items.keys.sprite.addChild(keySpr, -2);
-                        keySpr.setAnchorPoint(0.5, 0.5);
-                        keySpr.setPosition(4, 4);
-                        keySpr.opacity = 127;
+                        waw.makeSpriteJump(keySpr);
                     }
                     break;
                 case 3:
                     var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
                     if(this.items.keys.oldValue === 2){
                         this.items.keys.sprite.addChild(keySpr, -2);
-                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setAnchorPoint(0, 0);
                         keySpr.setPosition(4, 4);
                         keySpr.opacity = 127;
+                        waw.makeSpriteJump(keySpr);
                     }
                     break;
             }
@@ -112,58 +140,9 @@ waw.Score = cc.Node.extend({
 }
 );
 
-waw.ItemMenu = function (layer) {
-    //create items list
-    var itemsPassive = [];
-    //
-    if(waw.keys>0)
-        itemsPassive.push({name:"key",
-            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16)),
-            usage:function(){console.log(this.name+" is used automatically")},
-            update:function(){}
-        });
-    if(waw.whip.chainLength>0)
-        itemsPassive.push({name:"whip",
-            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 4, 1, 16, 16)),
-            usage:function(){console.log(this.name+" is used automatically")},
-            update:function(){}
-        });
-    if(waw.coins>0)
-        itemsPassive.push({name:"coin",
-            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
-            usage:function(){console.log(this.name+" is used automatically")},
-            update:function(){}
-        });
-    if(waw.gems>0)
-        itemsPassive.push({name:"gem",
-            sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
-            usage:function(){console.log(this.name+" is used automatically")},
-            update:function(){}
-        });
-
-    var bottomLayer = new cc.Node();
-    for(var i=0; i<itemsPassive.length; i++){
-        var t = itemsPassive[i];
-        bottomLayer.addChild(t.sprite);
-        t.sprite.setPosition(i*14, 0);
-
-        if(i === 2) {
-            t.sprite.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.FadeOut(0.5),
-                        new cc.FadeIn(0.5)
-                    )
-                )
-            );
-        }
-    }
-    return  bottomLayer;
-};
-
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
-    labelDebug = new cc.LabelTTF("Spawn", "System", 12);
+    labelDebug = new cc.LabelTTF("spawn", "System", 12);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
@@ -202,7 +181,7 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16+2, 239 - 28);
+    debugOnOffItem.setPosition(16+2, 208);
 
     labelDebug = new cc.LabelTTF("HitBox", "System", 10);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,

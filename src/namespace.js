@@ -25,6 +25,12 @@ var waw = {
         this.score += n;
         if(this.score > this.hiScore )
             this.hiScore = this.score;
+    },
+    initScore: function() {
+        this.score = 0;
+        this.keys = 0;
+        this.coins = 0;
+        this.gems = 0;
     }
 };
 //waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[cc.KEY.right] = false;
