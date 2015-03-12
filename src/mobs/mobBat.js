@@ -83,11 +83,35 @@ waw.MobBat = waw.MobRandomWalker.extend({
             }
         //}
     },
-
+    pickAISchedule: function () {
+        switch (this.state) {
+            case "idle":
+                this.state = "walk";
+                this.stateSchedule = this.SCHEDULE_WALK;
+                break;
+            case "attack":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                //console.log("mob attacks player end");
+                break;
+            case "walk":
+                if (Math.random() < 0.2) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                } else {
+                    this.state = "walk";
+                    this.stateSchedule = this.SCHEDULE_WALK;
+                }
+                break;
+            default:
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+        }
+    },
     initIdle: function () {
         var currentTime = new Date();
         //stop
-        this.timeToThink = currentTime.getTime() + 100 + Math.random() * 500;
+        this.timeToThink = currentTime.getTime() + 1500 + Math.random() * 1500;
         this.targetX = this.targetY = 0;
         var x, y;
 
@@ -107,17 +131,18 @@ waw.MobBat = waw.MobRandomWalker.extend({
             this.setZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
-        //TODO it doesnt slow
-        //this.direction
-        this.sprite.playAnimation(this.getAnimationName());
 
-        //this.sprite.setPosition(0,this.spriteYoffset);
-        this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset*3));
-        if(Math.random()<0.5)
-            this.sprite.runAction(new cc.RotateTo(0.25, -180));
-        else
-            this.sprite.runAction(new cc.RotateTo(0.25, 180));
-        this.shadowSprite.runAction(new cc.ScaleTo(0.5, 0.7));
+        this.sprite.playAnimation(this.getAnimationName());
+        this.sprite.runAction(
+            new cc.Sequence(
+                new cc.MoveBy(0.15, 0,this.spriteYoffset),
+                new cc.Spawn(
+                    new cc.RotateTo(0.15, (Math.random()<0.5 ? 1 : -1) *180),
+                    new cc.MoveBy(0.15, 0,this.spriteYoffset)
+                )
+            )
+        );
+        this.shadowSprite.runAction(new cc.ScaleTo(0.3, 0.7));
         return true;
     },
     initWalk: function () {
@@ -135,7 +160,8 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.sprite.playAnimation(this.getAnimationName());
 
         this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset));
-        this.sprite.runAction(new cc.RotateTo(0.25, 0));
+        //this.sprite.runAction(new cc.RotateTo(0.25, 0));
+        this.sprite.runAction(new cc.RotateTo(0.15, (Math.random()<0.5 ? 1 : -1) *0));
         this.shadowSprite.runAction(new cc.ScaleTo(0.5, 1.0));
         return true;
     },
@@ -161,8 +187,10 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.sprite.playAnimation(this.getAnimationName());
 
         this.sprite.runAction(new cc.MoveTo(0.5, 0,this.spriteYoffset));
-        this.sprite.runAction(new cc.RotateTo(0.25, 0));
-        this.shadowSprite.runAction(new cc.ScaleTo(0.5, 1.0));
+        //this.sprite.runAction(new cc.RotateTo(0.25, 0));
+        this.sprite.runAction(new cc.RotateTo(0.15, (Math.random()<0.5 ? 1 : -1) *0));
+
+            this.shadowSprite.runAction(new cc.ScaleTo(0.5, 1.0));
         return true;
     },
     onGetDamage : function (killer) {
