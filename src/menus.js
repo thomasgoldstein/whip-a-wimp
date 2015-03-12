@@ -1,9 +1,120 @@
 "use strict";
+waw.Score = cc.Node.extend({
+    shadowSprite: null,
+    label: null,
+
+    items: {},
+
+    ctor: function () {
+        this._super();
+        this.setAnchorPoint(0,0.5);
+
+        this.items = {
+            keys: {
+                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16)),
+                oldValue: 0,
+                usage: function () {
+                    console.log(this.name + " is used automatically")
+                },
+                update: function () {
+                }
+                //show:function(){ this.items.keys.sprite.visible = true; },
+                //hide:function(){ this.items.keys.sprite.visible = false;}
+            },
+            coins: {
+                sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
+                oldValue: 0,
+                usage:function(){console.log(this.name+" is used automatically")},
+                update:function(){}
+                //show:function(){ this.items.coins.sprite.visible = true; },
+                //hide:function(){ this.items.coins.sprite.visible = false;}
+            },
+            gems: {
+                sprite:new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
+                oldValue: 0,
+                usage:function(){console.log(this.name+" is used automatically")},
+                update:function(){}
+                //show:function(){ this.items.gems.sprite.visible = true; },
+                //hide:function(){ this.items.gems.sprite.visible = false;}
+            }
+        };
+
+        this.items.keys.sprite.visible = false;
+        this.items.coins.sprite.visible = false;
+        this.items.gems.sprite.visible = false;
+
+        this.addChild(this.items.keys.sprite);
+        this.items.keys.sprite.setPosition(0*16, 0);
+        this.addChild(this.items.coins.sprite);
+        this.items.coins.sprite.setPosition(1*16, 0);
+        this.addChild(this.items.gems.sprite);
+        this.items.gems.sprite.setPosition(2*16, 0);
+
+        this.scheduleUpdate();
+
+    },
+    update: function(){
+        if(waw.keys !== this.items.keys.oldValue){
+            switch(waw.keys){
+                case 0:
+                    //this.items.keys.sprite.removeAllChildren();
+                    this.items.keys.sprite.visible = false;
+                    break;
+                case 1:
+                    if(this.items.keys.oldValue === 0){
+                        this.items.keys.sprite.visible = true;
+                    } else {
+                        this.items.keys.sprite.removeAllChildren();
+                    }
+                    break;
+                case 2:
+                    var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                    if(this.items.keys.oldValue === 1){
+                        this.items.keys.sprite.addChild(keySpr, -1);
+                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setPosition(1+Math.random()*2, 1+Math.random()*2);
+                        keySpr.opacity = 200;
+                    } else {
+                        this.items.keys.sprite.removeAllChildren();
+                        this.items.keys.sprite.addChild(keySpr, -1);
+                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setPosition(2, 2);
+                        keySpr.opacity = 200;
+                        keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                        this.items.keys.sprite.addChild(keySpr, -2);
+                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setPosition(4, 4);
+                        keySpr.opacity = 127;
+                    }
+                    break;
+                case 3:
+                    var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                    if(this.items.keys.oldValue === 2){
+                        this.items.keys.sprite.addChild(keySpr, -2);
+                        keySpr.setAnchorPoint(0.5, 0.5);
+                        keySpr.setPosition(4, 4);
+                        keySpr.opacity = 127;
+                    }
+                    break;
+            }
+            this.items.keys.oldValue = waw.keys;
+        }
+        if(waw.coins !== this.items.coins.oldValue){
+            this.items.coins.sprite.visible = (waw.coins>0);
+            this.items.coins.oldValue = waw.coins;
+        }
+        if(waw.gems !== this.items.gems.oldValue){
+            this.items.gems.sprite.visible = (waw.gems>0);
+            this.items.gems.oldValue = waw.gems;
+        }
+
+    }
+}
+);
 
 waw.ItemMenu = function (layer) {
     //create items list
     var itemsPassive = [];
-    var items = [];
     //
     if(waw.keys>0)
         itemsPassive.push({name:"key",
