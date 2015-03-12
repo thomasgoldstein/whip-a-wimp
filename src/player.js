@@ -658,6 +658,7 @@ waw.Player = waw.Unit.extend({
         this.sprite2.visible = false;
         var sprite = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 601, 52, 61));
         waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
+        waw.player.setZOrder(500);
         sprite.setAnchorPoint(0.5, 0);
         sprite.runAction(
             new cc.Sequence(
