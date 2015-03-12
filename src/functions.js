@@ -19,3 +19,15 @@ waw.SpriteRect = function(w, h) {
         return cc.rect(1+(w+2)*x, 1+(h+2)*y, w, h);
     };
 };
+
+waw.makeSpriteJump = function(sprite) {
+    sprite.runAction(
+        new cc.RepeatForever(
+            new cc.Sequence(
+                new cc.JumpBy(0.3, 0, 0, 2, 1),
+                new cc.JumpBy(0.2, 0, 0, 1, 1),
+                new cc.DelayTime(1 + Math.random() * 3)
+            )
+        )
+    )
+};

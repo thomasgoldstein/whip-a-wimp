@@ -3,13 +3,6 @@
 waw.Item = waw.Unit.extend({
     itemType: "unknown",
     sprite: null,
-    //speed: 1,
-    //movement: null,
-    //direction: null,
-    //dx: 0,
-    //dy: 0,
-    //targetX: 160,
-    //targetY: 110,
     shadowYoffset: 0,
     spriteYoffset: 0,
     ctor: function (itemT) {
@@ -46,15 +39,7 @@ waw.Item = waw.Unit.extend({
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite, 0, TAG_SPRITE);
-        this.sprite.runAction(
-            new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.JumpBy(0.3, 0,0, 2, 1),
-                    new cc.JumpBy(0.2, 0,0, 1, 1),
-                    new cc.DelayTime(1+ Math.random()*3)
-                )
-            )
-        );
+        waw.makeSpriteJump(this.sprite);
 
         //create shadow sprite
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow12x6);
