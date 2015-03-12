@@ -32,22 +32,14 @@ waw.TitleLayer = cc.Layer.extend({
         this._super();
         console.info("init layer Title");
 
+        var s = waw.SpriteRect(32,48);
         var animData =
         {
-             "walk_right":
-            {
-                frameRects:
-                    [
-                        cc.rect(0*34+1, 5*50+1, 32, 48),
-                        cc.rect(1*34+1, 5*50+1, 32, 48),
-                        cc.rect(0*34+1, 5*50+1, 32, 48),
-                        cc.rect(0*34+1, 2*50+1, 32, 48),
-                        cc.rect(0*34+1, 6*50+1, 32, 48),
-                        cc.rect(1*34+1, 6*50+1, 32, 48),
-                        cc.rect(0*34+1, 6*50+1, 32, 48),
-                        cc.rect(0*34+1, 2*50+1, 32, 48)
-                    ],
-                delay: 0.08
+            "walk_right": {
+                frameRects: [
+                    s(0,5), s(1,5), s(0,5), s(0,2), s(0,6), s(1,6), s(0,6), s(0,2)
+                ],
+                delay: 0.1
             }
         };
 
