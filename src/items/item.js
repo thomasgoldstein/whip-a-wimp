@@ -10,31 +10,32 @@ waw.Item = waw.Unit.extend({
         //console.info("Item ctor "+itemT);
         this.itemType = itemT;
         this.setContentSize(8, 8);
+        var s = waw.SpriteRect(16,16);
         switch (this.itemType) {
             case "key":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(0, 0));
                 break;
             case "coin":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(1, 0));
                 break;
             case "gem":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(2, 0));
                 break;
             case "map":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 3, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(3, 0));
                 break;
             case "rope":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 4, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(4, 0));
                 break;
             case "cloth":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 5, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(5, 0));
                 this.spriteYoffset = -1;
                 break;
             case "invincibility":
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 6, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(6, 0));
                 break;
             default:    //unknown
-                this.sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 7, 1, 16, 16));
+                this.sprite = new cc.Sprite(waw.gfx.items, s(7, 0));
         }
         this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
         this.sprite.setAnchorPoint(0.5, 0);
@@ -135,7 +136,8 @@ waw.Item = waw.Unit.extend({
                     waw.addScore(50);
 
                     //
-                    var sprite = new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 6, 1, 16, 16));
+                    var s = waw.SpriteRect(16,16);
+                    var sprite = new cc.Sprite(waw.gfx.items, s(6, 0));
                     waw.player.addChild(sprite, -20, TAG_SPRITE_TEMP);
                     sprite.setScale(2);
                     sprite.setPosition(0, 0);

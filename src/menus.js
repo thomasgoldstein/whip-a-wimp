@@ -8,10 +8,10 @@ waw.Score = cc.Node.extend({
     ctor: function () {
         this._super();
         this.setAnchorPoint(0, 0.5);
-
+        var s = waw.SpriteRect(16,16);
         this.items = {
             keys: {
-                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16)),
+                sprite: new cc.Sprite(waw.gfx.items, s(0, 0)),
                 oldValue: 0,
                 usage: function () {
                     console.log(this.name + " is used automatically")
@@ -22,7 +22,7 @@ waw.Score = cc.Node.extend({
                 //hide:function(){ this.items.keys.sprite.visible = false;}
             },
             coins: {
-                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 1, 1, 16, 16)),
+                sprite: new cc.Sprite(waw.gfx.items, s(1, 0)),
                 oldValue: 0,
                 usage: function () {
                     console.log(this.name + " is used automatically")
@@ -33,7 +33,7 @@ waw.Score = cc.Node.extend({
                 //hide:function(){ this.items.coins.sprite.visible = false;}
             },
             gems: {
-                sprite: new cc.Sprite(waw.gfx.items, cc.rect(1 + 18 * 2, 1, 16, 16)),
+                sprite: new cc.Sprite(waw.gfx.items, s(2, 0)),
                 oldValue: 0,
                 usage: function () {
                     console.log(this.name + " is used automatically")
@@ -48,7 +48,7 @@ waw.Score = cc.Node.extend({
         this.addChild(this.items.keys.sprite);
         this.items.keys.sprite.setPosition(0 * 16, 0);
         if (waw.keys > 1){
-            var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+            var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
             this.items.keys.sprite.removeAllChildren();
             this.items.keys.sprite.addChild(keySpr, -1);
             keySpr.setAnchorPoint(0, 0);
@@ -57,7 +57,7 @@ waw.Score = cc.Node.extend({
             waw.makeSpriteJump(keySpr);
         }
         if(waw.keys > 2){
-            var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+            var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
             this.items.keys.sprite.addChild(keySpr, -2);
             keySpr.setAnchorPoint(0, 0);
             keySpr.setPosition(4, 4);
@@ -85,6 +85,7 @@ waw.Score = cc.Node.extend({
     },
     update: function(){
         if(waw.keys !== this.items.keys.oldValue){
+            var s = waw.SpriteRect(16,16);
             switch(waw.keys){
                 case 0:
                     //this.items.keys.sprite.removeAllChildren();
@@ -98,7 +99,7 @@ waw.Score = cc.Node.extend({
                     }
                     break;
                 case 2:
-                    var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                    var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
                     if(this.items.keys.oldValue === 1){
                         this.items.keys.sprite.addChild(keySpr, -1);
                         keySpr.setAnchorPoint(0, 0);
@@ -115,7 +116,7 @@ waw.Score = cc.Node.extend({
                     }
                     break;
                 case 3:
-                    var keySpr = new cc.Sprite(waw.gfx.items, cc.rect(1 + 19 * 0, 0, 16, 16));
+                    var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
                     if(this.items.keys.oldValue === 2){
                         this.items.keys.sprite.addChild(keySpr, -2);
                         keySpr.setAnchorPoint(0, 0);
