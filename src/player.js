@@ -26,7 +26,7 @@ waw.Player = waw.Unit.extend({
             },
             "dead": {
                 frameRects: [
-                    s(0,10), s(1,10), s(1,10), s(0,10), s(1,11), s(0,11), s(2,11), s(1,11), s(0,11), s(1,11)
+                    s(0,10), s(1,10), s(0,10), s(0,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11)
                 ],
                 delay: 0.15,
                 mirrorX: true
@@ -651,21 +651,7 @@ waw.Player = waw.Unit.extend({
     onDeath: function (killer) {
         if (this.subState === "dead")
             return;
-
-        this.subState = "dead";
-        waw.whip.visible = false; //hide Whip
-        this.sprite.visible = false;
-        this.sprite2.visible = false;
-        var sprite = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 601, 52, 61));
-        waw.player.addChild(sprite, 0, TAG_SPRITE_TEMP);
-        waw.player.setZOrder(500);
-        sprite.setAnchorPoint(0.5, 0);
-        sprite.runAction(
-            new cc.Sequence(
-                new cc.DelayTime(2),
-                new cc.MoveBy(3, 0, 240)
-            )
-        );
+        this.unscheduleAllCallbacks();
 
         //Cherub anim
         var s = waw.SpriteRect(24,32);
@@ -686,37 +672,101 @@ waw.Player = waw.Unit.extend({
             }
         };
         var cherubSprite1 = new waw.AnimatedSprite(waw.gfx.cherub, animDataChe);
-        cherubSprite1.playAnimation("left");
-        waw.player.addChild(cherubSprite1, -1, TAG_SPRITE_TEMP);
-        cherubSprite1.setPosition(280,100);
-        cherubSprite1.runAction(
-            new cc.Sequence(
-                new cc.MoveTo(1.5, 26, 56),
-                new cc.DelayTime(0.5),
-                new cc.MoveBy(3, 0, 240)
+        var cherubSprite2 = new waw.AnimatedSprite(waw.gfx.cherub, animDataChe);
+        var spriteCross = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 664, 50, 61)); //crs
+        var spriteJh = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 605, 52, 55)); //J hang
+
+        this.subState = "dead";
+
+        //cut-scene 1
+        waw.whip.visible = false; //hide Whip
+        //this.sprite.visible = false;
+        this.sprite2.visible = false;
+        this.sprite.playAnimation("dead");
+        this.sprite.runAction(new cc.Sequence(
+            new cc.DelayTime(0.4),
+            new cc.MoveBy(0.4, 0,-20)
             )
         );
 
-        var cherubSprite2 = new waw.AnimatedSprite(waw.gfx.cherub, animDataChe);
-        cherubSprite2.playAnimation("right");
-        waw.player.addChild(cherubSprite2, -1, TAG_SPRITE_TEMP);
-        cherubSprite2.setPosition(-280,100);
-        cherubSprite2.runAction(
-            new cc.Sequence(
-                new cc.MoveTo(1.5, -26, 56),
-                new cc.DelayTime(0.5),
-                new cc.MoveBy(3, 0, 240)
-            )
-        );
-        //sprite.runAction(new cc.FadeOut(3));
-/*        this.sprite.playAnimation("dead");
-        this.sprite2.playAnimation("dead");
-        this.sprite.runAction(new cc.MoveBy(3, 0, 240));
-        this.sprite.runAction(new cc.FadeOut(3));
-        this.sprite2.runAction(new cc.MoveBy(3, 0, 240));
-        this.sprite2.runAction(new cc.FadeOut(3));*/
-        this.shadowSprite.runAction(new cc.FadeOut(3));
-        this.shadowSprite.runAction(new cc.ScaleTo(3, 0.3));
+        //cut-scene 2
+        this.scheduleOnce(function () {
+            waw.player.setZOrder(500);  //whole overlays all the other gfx
+
+            //fade out fallen body
+            this.sprite.stopAllActions();
+            this.sprite.runAction(new cc.FadeOut(0.6));
+            //this.sprite.runAction(new cc.MoveBy(0.5, 0,-16));
+
+            //added transp hanged
+            waw.player.addChild(spriteJh, 0, TAG_SPRITE_TEMP);
+            spriteJh.setAnchorPoint(0.5, 0);
+            spriteJh.opacity = 0;
+            spriteJh.setPosition(0,3);
+            spriteJh.runAction(new cc.Sequence(
+                    new cc.DelayTime(1),
+                    new cc.FadeIn(2)
+                )
+            );
+
+            //erect cross
+            waw.player.addChild(spriteCross, -2, TAG_SPRITE_TEMP);
+            spriteCross.setAnchorPoint(0.5, 0);
+            spriteCross.opacity = 0;
+            spriteCross.setPosition(-1,0);
+            spriteCross.setScaleY(0.6);
+            spriteCross.runAction(new cc.FadeIn(1));
+            spriteCross.runAction(new cc.ScaleTo(1, 1));
+
+        }, 0.8);
+
+        //cut-scene 3
+        this.scheduleOnce(function () {
+            spriteJh.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(2),
+                    new cc.MoveBy(3, 0, 240)
+                )
+            );
+            spriteCross.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(2),
+                    new cc.MoveBy(3, 0, 240)
+                )
+            );
+
+            //Cherubs fly
+            cherubSprite1.playAnimation("left");
+            waw.player.addChild(cherubSprite1, -1, TAG_SPRITE_TEMP);
+            cherubSprite1.setPosition(280,100);
+            cherubSprite1.runAction(
+                new cc.Sequence(
+                    new cc.MoveTo(1.5, 26, 56),
+                    new cc.DelayTime(0.5),
+                    new cc.MoveBy(3, 0, 240)
+                )
+            );
+            cherubSprite2.playAnimation("right");
+            waw.player.addChild(cherubSprite2, -1, TAG_SPRITE_TEMP);
+            cherubSprite2.setPosition(-280,100);
+            cherubSprite2.runAction(
+                new cc.Sequence(
+                    new cc.MoveTo(1.5, -26, 56),
+                    new cc.DelayTime(0.5),
+                    new cc.MoveBy(3, 0, 240)
+                )
+            );
+
+            this.shadowSprite.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(2),
+                    new cc.Spawn(
+                        new cc.FadeOut(3),
+                        new cc.ScaleTo(3, 0.3)
+                    )
+                )
+            );
+        }, 4);
 
         if(killer){
             //mob.sprite.visible = false;
@@ -727,10 +777,9 @@ waw.Player = waw.Unit.extend({
             //runAction(new cc.TintTo(0, 255, 0, 0));
         }
 
-        this.unscheduleAllCallbacks();
         this.scheduleOnce(function () {
             var transition = cc.TransitionRotoZoom;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 5);
+        }, 7);
     }
 });
