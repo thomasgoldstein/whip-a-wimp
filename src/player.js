@@ -693,7 +693,13 @@ waw.Player = waw.Unit.extend({
         this.sprite.runAction(new cc.Sequence(
             new cc.jumpBy(0.35, 0, 0, 8, 1),
             //new cc.DelayTime(0.2),
-            new cc.MoveBy(0.4, xs,-20)
+                new cc.Spawn(
+                    new cc.Sequence(
+                        new cc.DelayTime(0.25),
+                        new cc.RotateBy(0, -xs*3)
+                    ),
+                    new cc.MoveBy(0.4, xs*2,-20)
+                )
             )
         );
 
@@ -703,7 +709,11 @@ waw.Player = waw.Unit.extend({
 
             //fade out fallen body
             this.sprite.stopAllActions();
-            this.sprite.runAction(new cc.FadeOut(2));
+            this.sprite.runAction(new cc.Sequence(
+                    new cc.DelayTime(1),
+                    new cc.FadeOut(2)
+                )
+            );
             //this.sprite.runAction(new cc.MoveBy(0.5, 0,-16));
 
             //added transp hanged
@@ -725,7 +735,7 @@ waw.Player = waw.Unit.extend({
             //spriteCross.setPosition(-1,0);
             //spriteCross.setScaleY(0.6);
             spriteCross.runAction(new cc.Sequence(
-                    new cc.MoveTo(1, -1+xs,0),
+                    new cc.MoveTo(1, -1+xs*2,0),
                     new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
                     new cc.JumpTo(0.4, -1, 0, 4, 2)
                 )
