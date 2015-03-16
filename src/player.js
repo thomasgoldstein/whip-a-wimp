@@ -26,7 +26,7 @@ waw.Player = waw.Unit.extend({
             },
             "dead": {
                 frameRects: [
-                    s(0,10), s(1,10), s(0,10), s(0,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11)
+                    s(0,10), s(1,10), s(0,10), s(0,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11), s(1,11)
                 ],
                 delay: 0.15,
                 mirrorX: true
@@ -683,9 +683,17 @@ waw.Player = waw.Unit.extend({
         //this.sprite.visible = false;
         this.sprite2.visible = false;
         this.sprite.playAnimation("dead");
+        //decide X shift due to the killer's pos
+        var xs =0;
+        if(killer.x > this.x+2)
+            xs = -2 - Math.random()*2;
+        else if(killer.x < this.x-2)
+            xs = 2 + Math.random()*2;
+
         this.sprite.runAction(new cc.Sequence(
-            new cc.DelayTime(0.4),
-            new cc.MoveBy(0.4, 0,-20)
+            new cc.jumpBy(0.35, 0, 0, 8, 1),
+            //new cc.DelayTime(0.2),
+            new cc.MoveBy(0.4, xs,-20)
             )
         );
 
@@ -695,7 +703,7 @@ waw.Player = waw.Unit.extend({
 
             //fade out fallen body
             this.sprite.stopAllActions();
-            this.sprite.runAction(new cc.FadeOut(0.6));
+            this.sprite.runAction(new cc.FadeOut(2));
             //this.sprite.runAction(new cc.MoveBy(0.5, 0,-16));
 
             //added transp hanged
@@ -712,13 +720,19 @@ waw.Player = waw.Unit.extend({
             //erect cross
             waw.player.addChild(spriteCross, -2, TAG_SPRITE_TEMP);
             spriteCross.setAnchorPoint(0.5, 0);
-            spriteCross.opacity = 0;
-            spriteCross.setPosition(-1,0);
-            spriteCross.setScaleY(0.6);
-            spriteCross.runAction(new cc.FadeIn(1));
-            spriteCross.runAction(new cc.ScaleTo(1, 1));
+            //spriteCross.opacity = 0;
+            spriteCross.setPosition(-1+xs*3,240);
+            //spriteCross.setPosition(-1,0);
+            //spriteCross.setScaleY(0.6);
+            spriteCross.runAction(new cc.Sequence(
+                    new cc.MoveTo(1, -1+xs,0),
+                    new cc.JumpTo(0.4, -1, 0, 4, 2)
+                )
+            );
+            //spriteCross.runAction(new cc.FadeIn(1));
+            //spriteCross.runAction(new cc.ScaleTo(1, 1));
 
-        }, 0.8);
+        }, 1.4);
 
         //cut-scene 3
         this.scheduleOnce(function () {
@@ -766,7 +780,7 @@ waw.Player = waw.Unit.extend({
                     )
                 )
             );
-        }, 4);
+        }, 2);
 
         if(killer){
             //mob.sprite.visible = false;
