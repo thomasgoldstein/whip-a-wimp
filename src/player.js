@@ -6,7 +6,7 @@ waw.Player = waw.Unit.extend({
     weaponSprite: null,
     sprite: null,
     sprite2: null,
-    sfx_hurt: waw.sfx.punch01,
+    //sfx_hurt: waw.sfx.punch01,
 
     ctor: function() {
         this._super();
@@ -726,6 +726,7 @@ waw.Player = waw.Unit.extend({
             //spriteCross.setScaleY(0.6);
             spriteCross.runAction(new cc.Sequence(
                     new cc.MoveTo(1, -1+xs,0),
+                    new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
                     new cc.JumpTo(0.4, -1, 0, 4, 2)
                 )
             );
