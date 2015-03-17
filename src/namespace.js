@@ -73,3 +73,10 @@ var TAG_SUBSTATE_ANIMATION = 400+0;
 
 //instance of the audio
 //var audioEngine = cc.AudioEngine.getInstance();
+
+// Disable anti-aliasing
+waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;
+cc.Texture2D.prototype.handleLoadedTexture = function() {
+    waw.ccTexture2D_handleLoadedTexture.apply(this, arguments);
+    this.setAliasTexParameters();
+};
