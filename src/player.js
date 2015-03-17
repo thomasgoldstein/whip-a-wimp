@@ -682,6 +682,7 @@ waw.Player = waw.Unit.extend({
         waw.whip.visible = false; //hide Whip
         //this.sprite.visible = false;
         this.sprite2.visible = false;
+        this.sprite.opacity = 255;
         this.sprite.playAnimation("dead");
         //decide X shift due to the killer's pos
         var xs =0;
@@ -705,11 +706,11 @@ waw.Player = waw.Unit.extend({
         //cut-scene 2
         this.scheduleOnce(function () {
             waw.player.setZOrder(500);  //whole overlays all the other gfx
-
+            this.sprite.setZOrder(-10);
             //fade out fallen body
             this.sprite.stopAllActions();
             this.sprite.runAction(new cc.Sequence(
-                    new cc.DelayTime(1),
+                    new cc.DelayTime(1.5),
                     new cc.FadeOut(1.5)
                 )
             );
