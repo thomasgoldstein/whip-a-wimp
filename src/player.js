@@ -673,7 +673,7 @@ waw.Player = waw.Unit.extend({
         };
         var cherubSprite1 = new waw.AnimatedSprite(waw.gfx.cherub, animDataChe);
         var cherubSprite2 = new waw.AnimatedSprite(waw.gfx.cherub, animDataChe);
-        var spriteCross = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 664, 50, 61)); //crs
+        var spriteCross = new cc.Sprite(waw.gfx.jesus, cc.rect(2, 664, 50, 61)); //crs
         var spriteJh = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 605, 52, 55)); //J hang
 
         this.subState = "dead";
@@ -714,16 +714,6 @@ waw.Player = waw.Unit.extend({
                     new cc.FadeOut(1.5)
                 )
             );
-            //added transp hanged
-            waw.player.addChild(spriteJh, 0, TAG_SPRITE_TEMP);
-            spriteJh.setAnchorPoint(0.5, 0);
-            spriteJh.opacity = 0;
-            spriteJh.setPosition(0,3);
-            spriteJh.runAction(new cc.Sequence(
-                    new cc.DelayTime(1),
-                    new cc.FadeIn(2)
-                )
-            );
 
             xs = Math.random()<0.5 ? -2 : 2;
             //erect cross
@@ -739,16 +729,22 @@ waw.Player = waw.Unit.extend({
                     //new cc.JumpTo(0.4, -1, 0, 4, 2)
                 )
             );
+
+            //added transp hanged
+            spriteCross.addChild(spriteJh, 0, TAG_SPRITE_TEMP);
+            spriteJh.setAnchorPoint(0.5, 0);
+            spriteJh.opacity = 0;
+            spriteJh.setPosition(25,2);
+            spriteJh.runAction(new cc.Sequence(
+                    new cc.DelayTime(1),
+                    new cc.FadeIn(2)
+                )
+            );
+
         }, 1.2);
 
         //cut-scene 3
         this.scheduleOnce(function () {
-            spriteJh.runAction(
-                new cc.Sequence(
-                    new cc.DelayTime(2),
-                    new cc.MoveBy(3, 0, 240)
-                )
-            );
             spriteCross.runAction(
                 new cc.Sequence(
                     new cc.DelayTime(2),
@@ -758,21 +754,21 @@ waw.Player = waw.Unit.extend({
 
             //Cherubs fly
             cherubSprite1.playAnimation("left");
-            waw.player.addChild(cherubSprite1, -1, TAG_SPRITE_TEMP);
+            waw.player.addChild(cherubSprite1, -3, TAG_SPRITE_TEMP);
             cherubSprite1.setPosition(280,100);
             cherubSprite1.runAction(
                 new cc.Sequence(
-                    new cc.MoveTo(1.5, 26, 56),
+                    new cc.MoveTo(1.5, 25, 54),
                     new cc.DelayTime(0.5),
                     new cc.MoveBy(3, 0, 240)
                 )
             );
             cherubSprite2.playAnimation("right");
-            waw.player.addChild(cherubSprite2, -1, TAG_SPRITE_TEMP);
+            waw.player.addChild(cherubSprite2, -3, TAG_SPRITE_TEMP);
             cherubSprite2.setPosition(-280,100);
             cherubSprite2.runAction(
                 new cc.Sequence(
-                    new cc.MoveTo(1.5, -26, 56),
+                    new cc.MoveTo(1.5, -26, 54),
                     new cc.DelayTime(0.5),
                     new cc.MoveBy(3, 0, 240)
                 )
