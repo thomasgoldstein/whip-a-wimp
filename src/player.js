@@ -692,7 +692,6 @@ waw.Player = waw.Unit.extend({
 
         this.sprite.runAction(new cc.Sequence(
             new cc.jumpBy(0.35, 0, 0, 8, 1),
-            //new cc.DelayTime(0.2),
                 new cc.Spawn(
                     new cc.Sequence(
                         new cc.DelayTime(0.25),
@@ -711,11 +710,9 @@ waw.Player = waw.Unit.extend({
             this.sprite.stopAllActions();
             this.sprite.runAction(new cc.Sequence(
                     new cc.DelayTime(1),
-                    new cc.FadeOut(2)
+                    new cc.FadeOut(1.5)
                 )
             );
-            //this.sprite.runAction(new cc.MoveBy(0.5, 0,-16));
-
             //added transp hanged
             waw.player.addChild(spriteJh, 0, TAG_SPRITE_TEMP);
             spriteJh.setAnchorPoint(0.5, 0);
@@ -727,23 +724,21 @@ waw.Player = waw.Unit.extend({
                 )
             );
 
+            xs = Math.random()<0.5 ? -2 : 2;
             //erect cross
             waw.player.addChild(spriteCross, -2, TAG_SPRITE_TEMP);
             spriteCross.setAnchorPoint(0.5, 0);
-            //spriteCross.opacity = 0;
-            spriteCross.setPosition(-1+xs*3,240);
-            //spriteCross.setPosition(-1,0);
-            //spriteCross.setScaleY(0.6);
+            spriteCross.setPosition(-1+xs*8,240);
             spriteCross.runAction(new cc.Sequence(
-                    new cc.MoveTo(1, -1+xs*2,0),
+                    new cc.MoveTo(0.7, -1,0),
                     new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
-                    new cc.JumpTo(0.4, -1, 0, 4, 2)
+                    new cc.SkewTo(0, xs, 0),
+                    new cc.SkewTo(0.2, -xs, 0),
+                    new cc.SkewTo(0.2, 0, 0)
+                    //new cc.JumpTo(0.4, -1, 0, 4, 2)
                 )
             );
-            //spriteCross.runAction(new cc.FadeIn(1));
-            //spriteCross.runAction(new cc.ScaleTo(1, 1));
-
-        }, 1.4);
+        }, 1.2);
 
         //cut-scene 3
         this.scheduleOnce(function () {
@@ -805,6 +800,6 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionRotoZoom;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 7);
+        }, 6.5);
     }
 });
