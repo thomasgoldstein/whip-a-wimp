@@ -313,4 +313,15 @@ waw.MenuDebug = function (layer) {
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugGetKey.setPosition(16, 116);
+
+    labelDebug = new cc.LabelTTF("K.O.", "System", 12);
+    var debugInstaKill = new cc.MenuItemLabel(labelDebug,
+        function () {
+            waw.player.onDeath(waw.player);
+        }, layer);
+
+    menu = new cc.Menu(debugInstaKill);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugInstaKill.setPosition(16, 106);
 };
