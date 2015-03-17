@@ -1,3 +1,4 @@
+"use strict";
 window.onload = function () {
     cc.game.onStart = function () {
         var designSize = cc.size(320, 240);
