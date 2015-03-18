@@ -22,6 +22,8 @@ rooms.initNeighbours = function () {
     rooms[4][4].doors = 0;
 
     real_rooms = []; // the start room goes 1st
+/*    real_rooms.maxDistance = 0;
+    real_rooms.maxDoors = 0;*/
     real_rooms.push(rooms[4][4]);
     for (y = 0; y < 9; y++) {
         for (x = 0; x < 9; x++) {
@@ -89,5 +91,17 @@ rooms.calcDistance = function () {
             rooms.countDoors(r, r.left_room, r.walls.left);
             rooms.countDoors(r, r.right_room, r.walls.right);
         }
+    }
+};
+
+rooms.calcFinalStats = function () {
+    real_rooms.maxDistance = 0;
+    real_rooms.maxDoors = 0;
+
+    console.log("Calc Final Stats");
+    for (var i = 0; i < real_rooms.length; i++) {
+        var r = real_rooms[i];
+        real_rooms.maxDistance = Math.max(real_rooms.maxDistance, r.distance);
+        real_rooms.maxDoors = Math.max(real_rooms.maxDoors, r.doors);
     }
 };

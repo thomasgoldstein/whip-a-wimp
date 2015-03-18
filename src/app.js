@@ -44,6 +44,8 @@ waw.MainScene = cc.Scene.extend({
         rooms.genLevel();
         rooms.initNeighbours();
         rooms.calcDistance();
+        rooms.calcFinalStats();
+        waw.generateItems();
 
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);

@@ -81,8 +81,9 @@ rooms.genLevel = function() {
             else
                 r.type = 0;
             //gen spawn coords for items
-            r.items = waw.generateItems(r.type);
+            //r.items = waw.generateItems(r.type);
             //gen spawn coords for mobs
+            //TODO remove from here
             r.mobs = waw.generateMobs(r.type);
 
 			//make connection between previous and current rooms
