@@ -96,6 +96,26 @@ waw.putKeys = function() {
     }
 };
 
+waw.putRopes = function() {
+    for(var n = 1; n<4; n++) {
+        var rooms = real_rooms.filter(
+            function (room) {
+                if (room.distance >= real_rooms.maxDistance / n)
+                    return true;
+                return false;
+            }
+        );
+        if(rooms.length<1)
+            continue;
+        var room = rooms[Math.round(Math.random() * (rooms.length - 1))];
+        var t = "";
+        for (var i = 0; i < rooms.length; i++)
+            t = t + " " + rooms[i].name + ":" + rooms[i].distance;
+        console.info(t, "put Rope into any of it. Current dist:", room.distance);
+        waw.addItemToRoom(room, "rope");
+    }
+};
+
 waw.putExit = function() {
     var rooms = real_rooms.filter(
         function(room) {
@@ -135,6 +155,7 @@ waw.generateItems = function(){
     waw.putExit();
     waw.putMap();
     waw.putKeys();
+    waw.putRopes();
     waw.putRedCloth();
 
     return items;
