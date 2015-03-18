@@ -77,6 +77,23 @@ waw.putRedCloth = function() {
 
 waw.putKeys = function() {
 
+    for(var doors = 0; doors<real_rooms.maxDoors; doors++) {
+        var rooms = real_rooms.filter(
+            function (room) {
+                if (room.doors == doors)
+                    return true;
+                return false;
+            }
+        );
+        if(rooms.length<1)
+            continue;
+        var room = rooms[Math.round(Math.random() * (rooms.length - 1))];
+        var t = "";
+        for (var i = 0; i < rooms.length; i++)
+            t = t + " " + rooms[i].name + ":" + rooms[i].distance;
+        console.info(t, "put Key into any of it. Current doors #:", room.doors);
+        waw.addItemToRoom(room, "key");
+    }
 };
 
 waw.putExit = function() {
