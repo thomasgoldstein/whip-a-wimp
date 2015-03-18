@@ -109,6 +109,23 @@ waw.putExit = function() {
     for(var i=0; i<rooms.length; i++)
         t = t + " " + rooms[i].name + ":" + rooms[i].distance;
     console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
+    //replace empty walls to exit door
+    if(room.walls.up === "wall"){
+        room.walls.up = "exit";
+        return;
+    }
+    if(room.walls.left === "wall"){
+        room.walls.left = "exit";
+        return;
+    }
+    if(room.walls.right === "wall"){
+        room.walls.right = "exit";
+        return;
+    }
+    if(room.walls.down === "wall"){
+        room.walls.down = "exit";
+        return;
+    }
 };
 
 waw.generateItems = function(){
