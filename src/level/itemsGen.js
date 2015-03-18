@@ -49,7 +49,6 @@ waw.addItemToRoom = function(room, itemName){
 };
 
 waw.putMap = function() {
-
     var rooms = real_rooms.filter(
       function(room) {
           if (room.distance >= 2 && room.distance < real_rooms.maxDistance / 2)
@@ -62,9 +61,18 @@ waw.putMap = function() {
     for(var i=0; i<rooms.length; i++)
         t = t + " " + rooms[i].name + ":" + rooms[i].distance;
     console.info(t, "put Map into any of it. Max distance:", real_rooms.maxDistance);
-
     waw.addItemToRoom(room, "map");
+};
 
+waw.putRedCloth = function() {
+    var room;
+    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
+    waw.addItemToRoom(room, "cloth");
+    //misc items temp
+    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
+    waw.addItemToRoom(room, "coin");
+    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
+    waw.addItemToRoom(room, "gem");
 };
 
 waw.putKeys = function() {
@@ -72,7 +80,18 @@ waw.putKeys = function() {
 };
 
 waw.putExit = function() {
-
+    var rooms = real_rooms.filter(
+        function(room) {
+            if (room.distance >= real_rooms.maxDistance )
+                return true;
+            return false;
+        }
+    );
+    var room = rooms[Math.round(Math.random()*(rooms.length-1))];
+    var t="";
+    for(var i=0; i<rooms.length; i++)
+        t = t + " " + rooms[i].name + ":" + rooms[i].distance;
+    console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
 };
 
 waw.generateItems = function(){
@@ -82,6 +101,7 @@ waw.generateItems = function(){
     waw.putExit();
     waw.putMap();
     waw.putKeys();
+    waw.putRedCloth();
 
     return items;
 };
