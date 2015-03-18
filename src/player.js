@@ -676,6 +676,69 @@ waw.Player = waw.Unit.extend({
         var spriteCross = new cc.Sprite(waw.gfx.jesus, cc.rect(2, 664, 50, 61)); //crs
         var spriteJh = new cc.Sprite(waw.gfx.jesus, cc.rect(1, 605, 52, 55)); //J hang
 
+        var light = new cc.Node();
+        //var lightRayBlack = new cc.Sprite(waw.gfx.lightRayTop, cc.rect(8, 8, 8, 8));
+        //lightRayBlack.setAnchorPoint(0.5, 1);
+        //lightRayBlack.setScale(120);
+        var lightRayTopL = new cc.Sprite(waw.gfx.lightRayTop, cc.rect(0, 0, 320, 240));
+        lightRayTopL.setAnchorPoint(1,0);
+        var lightRayTopR = new cc.Sprite(waw.gfx.lightRayTop, cc.rect(0, 0, 320, 240));
+        lightRayTopR.setAnchorPoint(0,0);
+        lightRayTopR.flippedX = true;
+
+        var lightRayBotL = new cc.Sprite(waw.gfx.lightRayBot, cc.rect(0, 0, 320, 240));
+        lightRayBotL.setAnchorPoint(1,1);
+        var lightRayBotR = new cc.Sprite(waw.gfx.lightRayBot, cc.rect(0, 0, 320, 240));
+        lightRayBotR.setAnchorPoint(0,1);
+        lightRayBotR.flippedX = true;
+
+        light.addChild(lightRayTopL);
+        lightRayTopL.setPosition(0, 0);
+        light.addChild(lightRayTopR);
+        lightRayTopR.setPosition(0, 0);
+        light.addChild(lightRayBotL);
+        lightRayBotL.setPosition(0, 0);
+        light.addChild(lightRayBotR);
+        lightRayBotR.setPosition(0, 0);
+        //light.addChild(lightRayBlack);
+        //lightRayBlack.setPosition(0, 0);
+        this.addChild(light, -5);
+        //light.setPosition(this.x, this.y-100);
+
+        lightRayTopR.opacity = 0;
+        lightRayTopL.opacity = 0;
+        lightRayBotR.opacity = 0;
+        lightRayBotL.opacity = 0;
+        //lightRayBlack.opacity = 0;
+        lightRayTopL.runAction(new cc.Sequence(
+                new cc.DelayTime(0.5),
+                new cc.FadeIn(2.5)
+            )
+        );
+        lightRayTopR.runAction(new cc.Sequence(
+                new cc.DelayTime(0.5),
+                new cc.FadeIn(2.5)
+            )
+        );
+        lightRayBotL.runAction(new cc.Sequence(
+                new cc.DelayTime(0.5),
+                new cc.FadeIn(2.5)
+            )
+        );
+        lightRayBotR.runAction(new cc.Sequence(
+                new cc.DelayTime(0.5),
+                new cc.FadeIn(2.5)
+            )
+        );
+/*
+        lightRayBlack.runAction(new cc.Sequence(
+                new cc.DelayTime(0.5),
+                new cc.FadeIn(2.5)
+            )
+        );
+*/
+
+
         this.subState = "dead";
 
         //cut-scene 1
