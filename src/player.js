@@ -696,9 +696,9 @@ waw.Player = waw.Unit.extend({
         lightRayBlack2.setAnchorPoint(1, 0);
         lightRayBlack3.setAnchorPoint(0, 0);
         
-        var lightRayL = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 240));
+        var lightRayL = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 282));
         lightRayL.setAnchorPoint(1,0);
-        var lightRayR = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 240));
+        var lightRayR = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 282));
         lightRayR.setAnchorPoint(0,0);
         lightRayR.flippedX = true;
 
