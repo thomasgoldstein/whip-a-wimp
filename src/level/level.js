@@ -578,7 +578,10 @@ waw.prepareRoomLayer = function(room) {
 
 waw.openDoor = function (doorTag, layer) {
     if(waw.keys<=0) {
-        cc.audioEngine.playEffect(waw.sfx.pigDeath);
+        if(Math.random()<0.5)
+            cc.audioEngine.playEffect(waw.sfx.nah01);
+        else
+            cc.audioEngine.playEffect(waw.sfx.nah02);
         console.log("You have no a key to open the door");
         return;
     }

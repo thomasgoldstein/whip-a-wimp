@@ -8,9 +8,10 @@ waw.MobBat = waw.MobRandomWalker.extend({
     spriteYoffset: 24,
     HP: 1,
     state: "idle",
-    sfx_hurt01: waw.sfx.merchHurt01,
-    sfx_hurt02: waw.sfx.merchHurt02,
-    sfx_death: waw.sfx.ouch03,
+    sfx_hurt01: null,
+    sfx_hurt02: null,
+    sfx_death: waw.sfx.batDeath01,
+    sfx_death02: waw.sfx.batDeath02,
 
     ctor: function () {
         this._super();
@@ -19,6 +20,9 @@ waw.MobBat = waw.MobRandomWalker.extend({
         //this.setAnchorPoint(0.5, 0);
         this.speed = 3+Math.random()*2;
         this.safePos = cc.p(0, 0);
+
+        if(Math.random()<0.5)
+            this.sfx_death = this.sfx_death02;
 
         var animData =
         {
@@ -210,12 +214,12 @@ waw.MobBat = waw.MobRandomWalker.extend({
 
         if(this.HP <= 0)
             this.onDeath(killer);
-        else {
+/*        else {
             if(Math.random()<0.5)
                 cc.audioEngine.playEffect(this.sfx_hurt01);
             else
                 cc.audioEngine.playEffect(this.sfx_hurt02);
-        }
+        }*/
     },
     update: function () {
         var currentTime = new Date();

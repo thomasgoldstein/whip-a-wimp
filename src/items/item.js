@@ -57,7 +57,12 @@ waw.Item = waw.Unit.extend({
     cleanUp: function () {
         var i;
         this.unscheduleUpdate();
-        cc.audioEngine.playEffect(waw.sfx.coin01);
+        if(Math.random()<0.5)
+            cc.audioEngine.playEffect(waw.sfx.good01);
+        else if(Math.random()<0.5)
+            cc.audioEngine.playEffect(waw.sfx.good02);
+        else
+            cc.audioEngine.playEffect(waw.sfx.good03);
         this.setZOrder(300); //make item over player
         this.getParent().removeChild(this.sprite);   //remove item sprite
         this.sprite.runAction(new cc.Sequence(
