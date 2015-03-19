@@ -12,9 +12,7 @@ waw.TitleScene = cc.Scene.extend({
         this.addChild(layer);
 
         this.scheduleOnce(function(){
-            var transition = cc.TransitionProgressRadialCW;
-            //var transition = cc.TransitionRotoZoom;
-            //var transition = cc.TransitionProgressVertical;
+            var transition = cc.TransitionFade;
 
             waw.currentScene = new waw.MainScene();
 

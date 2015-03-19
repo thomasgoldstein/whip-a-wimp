@@ -57,7 +57,7 @@ waw.Item = waw.Unit.extend({
     cleanUp: function () {
         var i;
         this.unscheduleUpdate();
-        if(Math.random()<0.5)
+        if(Math.random()<0.2)
             cc.audioEngine.playEffect(waw.sfx.good01);
         else if(Math.random()<0.5)
             cc.audioEngine.playEffect(waw.sfx.good02);

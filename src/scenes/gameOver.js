@@ -12,11 +12,11 @@ waw.GameOverScene = cc.Scene.extend({
         this.addChild(layer);
 
         this.scheduleOnce(function () {
-
+            var transition = cc.TransitionFade;
             rooms.initLevel();
             //cc.director.runScene(new transition(1, new waw.MainScene()));  //1st arg = in seconds duration of t
             waw.currentScene = new waw.MainScene();
-            cc.director.runScene(waw.currentScene);
+            cc.director.runScene(new transition(1,waw.currentScene));
         }, 3);
     }
 });

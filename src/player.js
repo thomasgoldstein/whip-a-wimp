@@ -866,7 +866,7 @@ waw.Player = waw.Unit.extend({
         }
 
         this.scheduleOnce(function () {
-            var transition = cc.TransitionRotoZoom;
+            var transition = cc.TransitionFade;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
         }, 6.5);
     }
