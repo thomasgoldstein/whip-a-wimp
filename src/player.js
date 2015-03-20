@@ -651,6 +651,10 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         waw.player.setZOrder(500);  //whole overlays all the other gfx
+        //shift Y to hit the back
+        var backY = 12;
+        this.y += backY;
+        this.sprite.y -= backY;
 
         this.unscheduleAllCallbacks();
         this.unscheduleUpdate();
@@ -701,6 +705,7 @@ waw.Player = waw.Unit.extend({
         lightRayBlack2.setScale(120);
         lightRayBlack3.setScale(120);
         blackScreen.setScale(120);
+        blackScreen.setScale(120);
         lightRayBlack1.setAnchorPoint(0.5, 1);
         lightRayBlack2.setAnchorPoint(1, 0);
         lightRayBlack3.setAnchorPoint(0, 0);
@@ -727,6 +732,7 @@ waw.Player = waw.Unit.extend({
         this.getParent().addChild(light, 480);
         light.setPosition(this.x, this.y-48);
         light.visible = false;
+        light.scaleX = 0.3;
 
         this.getParent().addChild(blackScreen, 490);
         blackScreen.setPosition(0, 0);
@@ -770,6 +776,8 @@ waw.Player = waw.Unit.extend({
 
         //cut-scene 2
         this.scheduleOnce(function () {
+            waw.curRoom.dark = false;
+            this.shadowSprite.y += backY; //the hit-back shift. move the shadow under the cross
 
             this.sprite.setZOrder(-10);
             //fade out fallen body
@@ -785,8 +793,8 @@ waw.Player = waw.Unit.extend({
             spriteCross.setAnchorPoint(0.5, 0);
             spriteCross.setPosition(-1+xs*8,240);
             spriteCross.runAction(new cc.Sequence(
-                    new cc.MoveTo(0.7, -1,0),
-                    new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
+                    new cc.MoveTo(0.7, 0,0),
+                    new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02); this.sprite.rotation -= xs;}, this),
                     new cc.SkewTo(0, xs, 0),
                     new cc.SkewTo(0.2, -xs, 0),
                     new cc.SkewTo(0.2, 0, 0)
@@ -797,10 +805,13 @@ waw.Player = waw.Unit.extend({
             spriteCross.addChild(spriteJh, 0, TAG_SPRITE_TEMP);
             spriteJh.setAnchorPoint(0.5, 0);
             spriteJh.opacity = 0;
-            spriteJh.setPosition(25,2);
+            spriteJh.setPosition(25,2-12);
             spriteJh.runAction(new cc.Sequence(
                     new cc.DelayTime(2),
-                    new cc.FadeIn(2)
+                    new cc.Spawn(
+                        new cc.FadeIn(2),
+                        new cc.MoveTo(1, 25,2)
+                    )
                 )
             );
 
@@ -810,6 +821,8 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
 
             light.visible = true;
+            light.runAction(new cc.ScaleTo(0.7, 1,1));
+
             blackScreen.runAction(
                 new cc.Sequence(
                     new cc.FadeOut(3)
