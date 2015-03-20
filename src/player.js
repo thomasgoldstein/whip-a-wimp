@@ -651,18 +651,21 @@ waw.Player = waw.Unit.extend({
     onDeath: function (killer) {
         if (this.subState === "dead")
             return;
+        waw.player.setZOrder(500);  //whole overlays all the other gfx
+
         this.unscheduleAllCallbacks();
         this.unscheduleUpdate();
         this.getParent().unscheduleUpdate(); //for the Scene (with mobs loop)
+
         var c = this.getParent().getChildren();
         for(var i=0; i<c.length; i++){
             if(c[i] !== this){
                 c[i].unscheduleUpdate();
-                c[i].runAction(new cc.FadeOut(2));
-                if(c[i].sprite) {
-                    c[i].sprite.runAction(new cc.FadeOut(2));
-                    c[i].shadowSprite.runAction(new cc.FadeOut(2));
-                }
+                //c[i].runAction(new cc.FadeOut(2));
+                //if(c[i].sprite) {
+                //    c[i].sprite.runAction(new cc.FadeOut(2));
+                //    c[i].shadowSprite.runAction(new cc.FadeOut(2));
+                //}
             }
         }
 
@@ -700,18 +703,21 @@ waw.Player = waw.Unit.extend({
         var lightRayBlack1 = new cc.Sprite(waw.gfx.lightRay, cc.rect(8, 8, 8, 8));
         var lightRayBlack2 = new cc.Sprite(waw.gfx.lightRay, cc.rect(8, 8, 8, 8));
         var lightRayBlack3 = new cc.Sprite(waw.gfx.lightRay, cc.rect(8, 8, 8, 8));
-        //var lightRayBlack4 = new cc.Sprite(waw.gfx.lightRay, cc.rect(8, 8, 8, 8));
+
+        var blackScreen = new cc.Sprite(waw.gfx.lightRay, cc.rect(8, 8, 8, 8));
+
         lightRayBlack1.setScale(120);
         lightRayBlack2.setScale(120);
         lightRayBlack3.setScale(120);
-        //lightRayBlack4.setScale(120);
+        blackScreen.setScale(120);
         lightRayBlack1.setAnchorPoint(0.5, 1);
         lightRayBlack2.setAnchorPoint(1, 0);
         lightRayBlack3.setAnchorPoint(0, 0);
-        
-        var lightRayL = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 282));
+        blackScreen.setAnchorPoint(0, 0);
+
+        var lightRayL = new cc.Sprite(waw.gfx.lightRay);
         lightRayL.setAnchorPoint(1,0);
-        var lightRayR = new cc.Sprite(waw.gfx.lightRay, cc.rect(0, 0, 74, 282));
+        var lightRayR = new cc.Sprite(waw.gfx.lightRay);
         lightRayR.setAnchorPoint(0,0);
         lightRayR.flippedX = true;
 
@@ -727,15 +733,27 @@ waw.Player = waw.Unit.extend({
         light.addChild(lightRayBlack3);
         lightRayBlack3.setPosition(74, 0);
 
-        this.addChild(light, -5);
-        light.setPosition(0, -48);
+        this.getParent().addChild(light, 480);
+        //light.setPosition(0, -48);
+        light.setPosition(this.x, this.y-48);
+        light.visible = false;
 
-        lightRayR.opacity = 0;
-        lightRayL.opacity = 0;
-        lightRayBlack1.opacity = 0;
-        lightRayBlack2.opacity = 0;
-        lightRayBlack3.opacity = 0;
-        lightRayL.runAction(new cc.Sequence(
+        this.getParent().addChild(blackScreen, 490);
+        blackScreen.setPosition(0, 0);
+
+        //lightRayR.opacity = 0;
+        //lightRayL.opacity = 0;
+        //lightRayBlack1.opacity = 0;
+        //lightRayBlack2.opacity = 0;
+        //lightRayBlack3.opacity = 0;
+        blackScreen.opacity = 0;
+
+        blackScreen.runAction(new cc.Sequence(
+                new cc.DelayTime(2),
+                new cc.FadeIn(2.5)
+            )
+        );
+/*        lightRayL.runAction(new cc.Sequence(
                 new cc.DelayTime(0.5),
                 new cc.FadeIn(2.5)
             )
@@ -759,11 +777,11 @@ waw.Player = waw.Unit.extend({
                 new cc.DelayTime(0.5),
                 new cc.FadeIn(2.5)
             )
-        );
+        );*/
 
         this.subState = "dead";
 
-        //cut-scene 1
+        //cut-scene 1   - fall on the floor
         waw.whip.visible = false; //hide Whip
         this.sprite2.visible = false;
         this.sprite.opacity = 255;
@@ -786,15 +804,17 @@ waw.Player = waw.Unit.extend({
                 )
             )
         );
+        this.scheduleOnce(function () {
+            this.sprite.stopAllActions();   //stop body fall animation
+        }, 1);
 
         //cut-scene 2
         this.scheduleOnce(function () {
-            waw.player.setZOrder(500);  //whole overlays all the other gfx
+
             this.sprite.setZOrder(-10);
             //fade out fallen body
-            this.sprite.stopAllActions();
             this.sprite.runAction(new cc.Sequence(
-                    new cc.DelayTime(1.5),
+                    new cc.DelayTime(3.5),
                     new cc.FadeOut(1.5)
                 )
             );
@@ -805,6 +825,7 @@ waw.Player = waw.Unit.extend({
             spriteCross.setAnchorPoint(0.5, 0);
             spriteCross.setPosition(-1+xs*8,240);
             spriteCross.runAction(new cc.Sequence(
+                    new cc.DelayTime(2),
                     new cc.MoveTo(0.7, -1,0),
                     new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
                     new cc.SkewTo(0, xs, 0),
@@ -820,15 +841,24 @@ waw.Player = waw.Unit.extend({
             spriteJh.opacity = 0;
             spriteJh.setPosition(25,2);
             spriteJh.runAction(new cc.Sequence(
-                    new cc.DelayTime(1),
+                    new cc.DelayTime(3.5),
                     new cc.FadeIn(2)
                 )
             );
 
-        }, 1.2);
+        }, 4);
 
         //cut-scene 3
         this.scheduleOnce(function () {
+
+            light.visible = true;
+            blackScreen.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(0.5),
+                    new cc.FadeOut(3)
+                )
+            );
+
             spriteCross.runAction(
                 new cc.Sequence(
                     new cc.DelayTime(2),
@@ -867,7 +897,7 @@ waw.Player = waw.Unit.extend({
                     )
                 )
             );
-        }, 2);
+        }, 8);
 
         if(killer){
             //mob.sprite.visible = false;
@@ -881,6 +911,6 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionFade;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 6.5);
+        }, 13);
     }
 });
