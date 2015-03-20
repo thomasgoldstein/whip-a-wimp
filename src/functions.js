@@ -31,3 +31,20 @@ waw.makeSpriteJump = function(sprite) {
         )
     )
 };
+
+waw.wipeMobsItemsOffScreen = function() {
+    for (var i = 0; i < waw.mobs.length; i++) {
+        if (waw.mobs) {
+            waw.mobs[i].shadowSprite.visible = false;
+            waw.mobs[i].sprite.runAction(new cc.MoveTo(0.5 + Math.random(), waw.mobs[i].x < 160 ? -40 : 360, waw.mobs[i].y < 120 ? -40 : 280));
+            waw.mobs[i].runAction(new cc.RotateBy(0.5 + Math.random(), Math.random() < 0.5 ? -180 : 180));
+        }
+    }
+    for (var i = 0; i < waw.items.length; i++) {
+        if (waw.items) {
+            waw.items[i].shadowSprite.visible = false;
+            waw.items[i].sprite.runAction(new cc.MoveTo(0.5 + Math.random(), waw.items[i].x < 160 ? -40 : 360, waw.items[i].y < 120 ? -40 : 280));
+            waw.items[i].runAction(new cc.RotateBy(0.5 + Math.random(), Math.random() < 0.5 ? -180 : 180));
+        }
+    }
+};

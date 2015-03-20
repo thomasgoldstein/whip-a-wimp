@@ -652,6 +652,19 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         this.unscheduleAllCallbacks();
+        this.unscheduleUpdate();
+        this.getParent().unscheduleUpdate(); //for the Scene (with mobs loop)
+        var c = this.getParent().getChildren();
+        for(var i=0; i<c.length; i++){
+            if(c[i] !== this){
+                c[i].unscheduleUpdate();
+                c[i].runAction(new cc.FadeOut(2));
+                if(c[i].sprite) {
+                    c[i].sprite.runAction(new cc.FadeOut(2));
+                    c[i].shadowSprite.runAction(new cc.FadeOut(2));
+                }
+            }
+        }
 
         if(Math.random()<0.2)
             cc.audioEngine.playEffect(waw.sfx.ouch03);
@@ -715,7 +728,7 @@ waw.Player = waw.Unit.extend({
         lightRayBlack3.setPosition(74, 0);
 
         this.addChild(light, -5);
-        light.setPosition(0, -42);
+        light.setPosition(0, -48);
 
         lightRayR.opacity = 0;
         lightRayL.opacity = 0;
