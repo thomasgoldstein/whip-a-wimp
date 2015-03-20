@@ -12,7 +12,7 @@ waw.gfx = {
     jesusCloth: "res/Common/JesusCloth.png",
     kiwi: "res/Common/Kiwi.png",
     lightSpot: "res/Common/LightSpot.png",
-    lightRay: "res/Common/lightRay.png",
+    lightRay: "res/Common/LightRay.png",
     map: themeDir + "Map.png",
     merchant: themeDir + "Merchant.png",
     middleWalls: themeDir + "MiddleWalls.png",
