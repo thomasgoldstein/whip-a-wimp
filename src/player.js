@@ -616,12 +616,11 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         this.HP--;
-        if(Math.random()<0.2)
-            cc.audioEngine.playEffect(waw.sfx.ouch03);
-        else if(Math.random()<0.5)
-            cc.audioEngine.playEffect(waw.sfx.ouch02);
-        else
-            cc.audioEngine.playEffect(waw.sfx.ouch01);
+
+        var random = Math.random();
+        var sound = random >= 0.5 ? waw.sfx.ouch01 : random >= 0.2 ? waw.sfx.ouch02 : waw.sfx.ouch03;
+        cc.audioEngine.playEffect(sound);
+
         this.setSubState("hurt", 500);
         this.sprite.playAnimation("hurt");
         this.sprite2.playAnimation("hurt");
@@ -664,12 +663,9 @@ waw.Player = waw.Unit.extend({
             }
         }
 
-        if(Math.random()<0.2)
-            cc.audioEngine.playEffect(waw.sfx.ouch03);
-        else if(Math.random()<0.5)
-            cc.audioEngine.playEffect(waw.sfx.ouch02);
-        else
-            cc.audioEngine.playEffect(waw.sfx.ouch01);
+        var random = Math.random();
+        var sound = random >= 0.5 ? waw.sfx.ouch01 : random >= 0.2 ? waw.sfx.ouch02 : waw.sfx.ouch03;
+        cc.audioEngine.playEffect(sound);
 
         //Cherub anim
         var s = waw.SpriteRect(24,32);
