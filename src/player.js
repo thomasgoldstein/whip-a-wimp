@@ -782,8 +782,11 @@ waw.Player = waw.Unit.extend({
             this.sprite.setZOrder(-10);
             //fade out fallen body
             this.sprite.runAction(new cc.Sequence(
-                    new cc.DelayTime(1.5),
-                    new cc.FadeOut(1.5)
+                new cc.DelayTime(0.7),
+                new cc.ScaleTo(0, 1.07,1),
+                new cc.ScaleTo(0.3,1),
+                new cc.DelayTime(0.5),
+                new cc.FadeOut(1.5)
                 )
             );
 
@@ -794,7 +797,7 @@ waw.Player = waw.Unit.extend({
             spriteCross.setPosition(-1+xs*8,240);
             spriteCross.runAction(new cc.Sequence(
                     new cc.MoveTo(0.7, 0,0),
-                    new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02); this.sprite.rotation -= xs;}, this),
+                    new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
                     new cc.SkewTo(0, xs, 0),
                     new cc.SkewTo(0.2, -xs, 0),
                     new cc.SkewTo(0.2, 0, 0)
