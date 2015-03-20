@@ -738,8 +738,8 @@ waw.Player = waw.Unit.extend({
         blackScreen.opacity = 0;
 
         blackScreen.runAction(new cc.Sequence(
-                new cc.DelayTime(2),
-                new cc.FadeIn(2.5)
+                new cc.DelayTime(1.2),
+                new cc.FadeIn(1.2)
             )
         );
 
@@ -778,7 +778,7 @@ waw.Player = waw.Unit.extend({
             this.sprite.setZOrder(-10);
             //fade out fallen body
             this.sprite.runAction(new cc.Sequence(
-                    new cc.DelayTime(3.5),
+                    new cc.DelayTime(2),
                     new cc.FadeOut(1.5)
                 )
             );
@@ -789,7 +789,6 @@ waw.Player = waw.Unit.extend({
             spriteCross.setAnchorPoint(0.5, 0);
             spriteCross.setPosition(-1+xs*8,240);
             spriteCross.runAction(new cc.Sequence(
-                    new cc.DelayTime(2),
                     new cc.MoveTo(0.7, -1,0),
                     new cc.callFunc(function(){cc.audioEngine.playEffect(waw.sfx.ouch02);}, this),
                     new cc.SkewTo(0, xs, 0),
@@ -804,12 +803,12 @@ waw.Player = waw.Unit.extend({
             spriteJh.opacity = 0;
             spriteJh.setPosition(25,2);
             spriteJh.runAction(new cc.Sequence(
-                    new cc.DelayTime(3.5),
+                    new cc.DelayTime(2),
                     new cc.FadeIn(2)
                 )
             );
 
-        }, 4);
+        }, 2.5);
 
         //cut-scene 3
         this.scheduleOnce(function () {
@@ -817,7 +816,6 @@ waw.Player = waw.Unit.extend({
             light.visible = true;
             blackScreen.runAction(
                 new cc.Sequence(
-                    new cc.DelayTime(0.5),
                     new cc.FadeOut(3)
                 )
             );
@@ -853,14 +851,13 @@ waw.Player = waw.Unit.extend({
 
             this.shadowSprite.runAction(
                 new cc.Sequence(
-                    new cc.DelayTime(2),
                     new cc.Spawn(
                         new cc.FadeOut(3),
                         new cc.ScaleTo(3, 0.3)
                     )
                 )
             );
-        }, 8);
+        }, 6);
 
         if(killer){
             //mob.sprite.visible = false;
@@ -874,6 +871,6 @@ waw.Player = waw.Unit.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionFade;
             cc.director.runScene(new transition(1, new waw.GameOverScene()));  //1st arg = in seconds duration of t
-        }, 13);
+        }, 11);
     }
 });
