@@ -661,11 +661,6 @@ waw.Player = waw.Unit.extend({
         for(var i=0; i<c.length; i++){
             if(c[i] !== this){
                 c[i].unscheduleUpdate();
-                //c[i].runAction(new cc.FadeOut(2));
-                //if(c[i].sprite) {
-                //    c[i].sprite.runAction(new cc.FadeOut(2));
-                //    c[i].shadowSprite.runAction(new cc.FadeOut(2));
-                //}
             }
         }
 
@@ -734,18 +729,12 @@ waw.Player = waw.Unit.extend({
         lightRayBlack3.setPosition(74, 0);
 
         this.getParent().addChild(light, 480);
-        //light.setPosition(0, -48);
         light.setPosition(this.x, this.y-48);
         light.visible = false;
 
         this.getParent().addChild(blackScreen, 490);
         blackScreen.setPosition(0, 0);
 
-        //lightRayR.opacity = 0;
-        //lightRayL.opacity = 0;
-        //lightRayBlack1.opacity = 0;
-        //lightRayBlack2.opacity = 0;
-        //lightRayBlack3.opacity = 0;
         blackScreen.opacity = 0;
 
         blackScreen.runAction(new cc.Sequence(
@@ -753,31 +742,6 @@ waw.Player = waw.Unit.extend({
                 new cc.FadeIn(2.5)
             )
         );
-/*        lightRayL.runAction(new cc.Sequence(
-                new cc.DelayTime(0.5),
-                new cc.FadeIn(2.5)
-            )
-        );
-        lightRayR.runAction(new cc.Sequence(
-                new cc.DelayTime(0.5),
-                new cc.FadeIn(2.5)
-            )
-        );
-        lightRayBlack1.runAction(new cc.Sequence(
-                new cc.DelayTime(0.5),
-                new cc.FadeIn(2.5)
-            )
-        );
-        lightRayBlack2.runAction(new cc.Sequence(
-                new cc.DelayTime(0.5),
-                new cc.FadeIn(2.5)
-            )
-        );
-        lightRayBlack3.runAction(new cc.Sequence(
-                new cc.DelayTime(0.5),
-                new cc.FadeIn(2.5)
-            )
-        );*/
 
         this.subState = "dead";
 
@@ -831,7 +795,6 @@ waw.Player = waw.Unit.extend({
                     new cc.SkewTo(0, xs, 0),
                     new cc.SkewTo(0.2, -xs, 0),
                     new cc.SkewTo(0.2, 0, 0)
-                    //new cc.JumpTo(0.4, -1, 0, 4, 2)
                 )
             );
 
