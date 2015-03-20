@@ -774,7 +774,7 @@ waw.Player = waw.Unit.extend({
             this.sprite.setZOrder(-10);
             //fade out fallen body
             this.sprite.runAction(new cc.Sequence(
-                    new cc.DelayTime(2),
+                    new cc.DelayTime(1.9),
                     new cc.FadeOut(1.5)
                 )
             );
