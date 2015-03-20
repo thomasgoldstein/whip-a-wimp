@@ -847,6 +847,7 @@ waw.Player = waw.Unit.extend({
 
             this.shadowSprite.runAction(
                 new cc.Sequence(
+                    new cc.DelayTime(2),
                     new cc.Spawn(
                         new cc.FadeOut(3),
                         new cc.ScaleTo(3, 0.3)
