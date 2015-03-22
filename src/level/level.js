@@ -403,6 +403,7 @@ waw.prepareRoomLayer = function(room) {
     layer.addChild(middleWalls, -20);
     layer.addChild(upperWalls, 280); //255
 
+    var s = waw.SpriteRect(16,16); //for lock sprite
     //add doors
     switch (room.walls.up) {    //FAT upper wall
         case "door":
@@ -418,6 +419,13 @@ waw.prepareRoomLayer = function(room) {
                         new cc.SkewTo(1, 4,0)
                     )
                 ));
+            //add lock
+            var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
+            l.setAnchorPoint(0.5, 0.5);
+            d.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40, 55);
+            waw.makeSpriteJump(l);
+
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -459,6 +467,13 @@ waw.prepareRoomLayer = function(room) {
                         new cc.SkewTo(1, 0,4)
                     )
                 ));
+            var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
+            l.setAnchorPoint(0.5, 0.5);
+            d.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40+8, 55-15);
+            l.setRotation(90);
+            waw.makeSpriteJump(l);
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -498,6 +513,13 @@ waw.prepareRoomLayer = function(room) {
                         new cc.SkewTo(1, 4,0)
                     )
                 ));
+            var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
+            l.setAnchorPoint(0.5, 0.5);
+            d.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(41, 55-24);
+            l.setRotation(180);
+            waw.makeSpriteJump(l);
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -532,10 +554,17 @@ waw.prepareRoomLayer = function(room) {
             if(room.walls.left === "exit")
                 d.runAction(new cc.RepeatForever(
                     new cc.Sequence(
-                        new cc.SkewTo(1, 0,-4),
-                        new cc.SkewTo(1, 0,4)
+                        new cc.SkewTo(0.5, 0,-4),
+                        new cc.SkewTo(0.5, 0,4)
                     )
                 ));
+            var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
+            l.setAnchorPoint(0.5, 0.5);
+            d.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40-8, 55-15);
+            l.setRotation(-90);
+            waw.makeSpriteJump(l);
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -621,6 +650,11 @@ waw.openDoor = function (doorTag, layer) {
                 new cc.ScaleTo(0.1, 1.2, 1),
                 new cc.ScaleTo(0.1, 1)
             ));
+            node.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
+                new cc.MoveBy(0.3, 0, -8),
+                new cc.FadeOut(0.3)
+            ));
+
             break;
         case TAG_RIGHT_DOOR:
             node.setTextureRect(cc.rect(80 * 2, 0, 80, 80));
@@ -628,6 +662,10 @@ waw.openDoor = function (doorTag, layer) {
             node.runAction(new cc.Sequence(
                 new cc.ScaleTo(0.1, 1, 1.2),
                 new cc.ScaleTo(0.1, 1)
+            ));
+            node.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
+                new cc.MoveBy(0.3, 0, -8),
+                new cc.FadeOut(0.3)
             ));
             break;
         case TAG_DOWN_DOOR:
@@ -637,6 +675,10 @@ waw.openDoor = function (doorTag, layer) {
                 new cc.ScaleTo(0.1, 1.2, 1),
                 new cc.ScaleTo(0.1, 1)
             ));
+            node.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
+                new cc.MoveBy(0.3, 0, -8),
+                new cc.FadeOut(0.3)
+            ));
             break;
         case TAG_LEFT_DOOR:
             node.setTextureRect(cc.rect(80 * 1, 0, 80, 80));
@@ -644,6 +686,10 @@ waw.openDoor = function (doorTag, layer) {
             node.runAction(new cc.Sequence(
                 new cc.ScaleTo(0.1, 1, 1.2),
                 new cc.ScaleTo(0.1, 1)
+            ));
+            node.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
+                new cc.MoveBy(0.3, 0, -8),
+                new cc.FadeOut(0.3)
             ));
             break;
     }
