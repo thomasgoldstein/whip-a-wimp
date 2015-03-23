@@ -47,15 +47,20 @@ waw.TitleLayer = cc.Layer.extend({
         var bgLayer  = new cc.LayerColor(cc.color(191,239,255,255), 320, 240);
         this.addChild(bgLayer, -100);
 
-/*        var gameTitle = new cc.LabelTTF("Whip-a-Wimp", "System", 32);
-        gameTitle.setAnchorPoint(0.5, 0.5);
-        gameTitle.setFontFillColor( cc.color(255,30,0,50));
-        this.addChild(gameTitle, 299 + 5);
-        gameTitle.setPosition(320/2, 240/2+80);*/
-        var gameTitle = new cc.Sprite(waw.gfx.title);
-        gameTitle.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitle, 299 + 5);
-        gameTitle.setPosition(320/2, 240);
+        var gameTitleWhip = new cc.Sprite(waw.gfx.title, cc.rect(0,0,124,44));
+        gameTitleWhip.setAnchorPoint(0.5, 0);
+        this.addChild(gameTitleWhip, 299 + 5);
+        gameTitleWhip.setPosition(320/2, 240);
+
+        var gameTitleA = new cc.Sprite(waw.gfx.title, cc.rect(41,45,42,24));
+        gameTitleA.setAnchorPoint(0.5, 0);
+        this.addChild(gameTitleA, 299 + 6);
+        gameTitleA.setPosition(320/2, 240);
+
+        var gameTitleWimp = new cc.Sprite(waw.gfx.title, cc.rect(0,70,124,46));
+        gameTitleWimp.setAnchorPoint(0.5, 0);
+        this.addChild(gameTitleWimp, 299 + 4);
+        gameTitleWimp.setPosition(320/2, 240);
 
         var parallax0 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
         parallax0.setAnchorPoint(0, 0);
@@ -81,13 +86,61 @@ waw.TitleLayer = cc.Layer.extend({
         parallax0.addChild(tower);
         tower.setPosition(220, 20);
 
-        gameTitle.runAction(
+        gameTitleWhip.runAction(
             new cc.Sequence(
-                new cc.MoveTo(1, 320/2, 80),
-                new cc.ScaleTo(0.1, 1.1, 0.9),
-                new cc.ScaleTo(0.1, 1, 1)
+                new cc.DelayTime(1),
+                new cc.EaseElasticOut(
+                    new cc.MoveTo(1, 320 / 2, 140),
+                    0.33),
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.MoveBy(0.2, 0, 4),
+                        new cc.MoveBy(0.2, 0, -4)
+                    )
+                )
             )
         );
+        gameTitleA.runAction(
+            new cc.Sequence(
+                new cc.DelayTime(1.25),
+                new cc.EaseElasticOut(
+                    new cc.MoveTo(1, 320 / 2, 120),
+                    0.32)
+            )
+        );
+        gameTitleWimp.runAction(
+            new cc.Sequence(
+                new cc.DelayTime(1.5),
+                new cc.EaseElasticOut(
+                    new cc.MoveTo(1, 320 / 2, 80),
+                    0.33),
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.MoveBy(0.2, 0, -3),
+                        new cc.MoveBy(0.2, -20, 3)
+                    )
+                )
+            )
+        );
+        this.scheduleOnce(function () {
+            gameTitleWhip.runAction(
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.MoveBy(0.5, 0, 2),
+                        new cc.MoveBy(0.4, 0, -2)
+                    )
+                )
+            );
+            gameTitleWimp.runAction(
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.MoveBy(0.4, 0, -2),
+                        new cc.MoveBy(0.5, 0, 2)
+                    )
+                )
+            );
+
+        }, 2);
 
         parallax0.runAction(new cc.MoveBy(5, -20, -24));
         parallax1.runAction(new cc.MoveBy(5, -60, -16));
