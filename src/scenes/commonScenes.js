@@ -49,12 +49,12 @@ waw.TitleLayer = cc.Layer.extend({
 
         var gameTitleWhip = new cc.Sprite(waw.gfx.title, cc.rect(0,0,124,44));
         gameTitleWhip.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitleWhip, 299 + 5);
+        this.addChild(gameTitleWhip, 299 + 6);
         gameTitleWhip.setPosition(320/2, 240);
 
         var gameTitleA = new cc.Sprite(waw.gfx.title, cc.rect(41,45,42,24));
         gameTitleA.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitleA, 299 + 6);
+        this.addChild(gameTitleA, 299 + 5);
         gameTitleA.setPosition(320/2, 240);
 
         var gameTitleWimp = new cc.Sprite(waw.gfx.title, cc.rect(0,70,124,46));
@@ -123,6 +123,7 @@ waw.TitleLayer = cc.Layer.extend({
             )
         );
         this.scheduleOnce(function () {
+/*
             gameTitleWhip.runAction(
                 new cc.RepeatForever(
                     new cc.Sequence(
@@ -139,6 +140,7 @@ waw.TitleLayer = cc.Layer.extend({
                     )
                 )
             );
+*/
 
         }, 2);
 
