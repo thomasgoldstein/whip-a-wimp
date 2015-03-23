@@ -35,6 +35,7 @@
         "src/mobs/mobBarrel.js",
         "src/mobs/nomobChest.js",
         "src/scenes/commonScenes.js",
+        "src/scenes/gotoNextLevel.js",
         "src/scenes/gameOver.js",
         "src/app.js"
         ]

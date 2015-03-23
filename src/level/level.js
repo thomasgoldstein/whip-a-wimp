@@ -406,26 +406,38 @@ waw.prepareRoomLayer = function(room) {
     var s = waw.SpriteRect(16,16); //for lock sprite
     //add doors
     switch (room.walls.up) {    //FAT upper wall
-        case "door":
         case "exit":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(0, 80, 80, 80)); //closed door
+            d.setAnchorPoint(0.5, 0);
+            layer.addChild(d, -18, TAG_EXIT);
+            d.setPosition(160 + room.walls.up_d, 240 - 88);
+            d.runAction(new cc.RepeatForever(
+                new cc.Sequence(
+                    new cc.SkewTo(1, -4, 0),
+                    new cc.SkewTo(1, 4, 0)
+                )
+            ));
+            //we set here obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(80, 80));
+            wall.setAnchorPoint(0.5, 0);
+            wall.setPosition(160 + room.walls.up_d, 240 - 48 + 4);
+            wall.setTag(TAG_EXIT);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
+            break;
+        case "door":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(0,80,80,80)); //closed door
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_UP_DOOR);
             d.setPosition(160+room.walls.up_d,240-88);
-            if(room.walls.up === "exit")
-                d.runAction(new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.SkewTo(1, -4,0),
-                        new cc.SkewTo(1, 4,0)
-                    )
-                ));
             //add lock
             var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
             l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40, 55);
             waw.makeSpriteJump(l);
-
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -454,26 +466,38 @@ waw.prepareRoomLayer = function(room) {
             break;
     }
     switch (room.walls.right) {
-        case "door":
         case "exit":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 2, 80, 80, 80)); //closed door
+            layer.addChild(d, -18, TAG_EXIT);
+            d.setPosition(320 - 32, 120 - 40 + room.walls.right_d);
+            d.setAnchorPoint(0.5, 0);
+            d.runAction(new cc.RepeatForever(
+                new cc.Sequence(
+                    new cc.SkewTo(1, 0, -4),
+                    new cc.SkewTo(1, 0, 4)
+                )
+            ));
+            // obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(320, 120 - 32 + room.walls.right_d);
+            wall.setAnchorPoint(0.5, 0);
+            wall.setTag(TAG_EXIT);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
+            break;
+        case "door":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*2,80,80,80)); //closed door
             layer.addChild(d,-18,TAG_RIGHT_DOOR);
             d.setPosition(320-32,120-40+room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
-            if(room.walls.right === "exit")
-                d.runAction(new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.SkewTo(1, 0,-4),
-                        new cc.SkewTo(1, 0,4)
-                    )
-                ));
             var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
             l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40+8, 55-15);
             l.setRotation(90);
             waw.makeSpriteJump(l);
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -501,25 +525,35 @@ waw.prepareRoomLayer = function(room) {
             break;
     }
     switch (room.walls.down) {
-        case "door":
         case "exit":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 80, 80, 80)); //closed door
+            d.setPosition(160 + room.walls.down_d, 32);
+            layer.addChild(d, -18, TAG_EXIT);
+            d.runAction(new cc.RepeatForever(
+                new cc.Sequence(
+                    new cc.SkewTo(1, -4, 0),
+                    new cc.SkewTo(1, 4, 0)
+                )
+            ));
+            // obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(160 + room.walls.down_d, 0 - 32);
+            wall.setTag(TAG_EXIT);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
+            break;
+        case "door":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*3,80,80,80)); //closed door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18, TAG_DOWN_DOOR);
-            if(room.walls.down === "exit")
-                d.runAction(new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.SkewTo(1, -4,0),
-                        new cc.SkewTo(1, 4,0)
-                    )
-                ));
             var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
             l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(41, 55-24);
             l.setRotation(180);
             waw.makeSpriteJump(l);
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -545,26 +579,38 @@ waw.prepareRoomLayer = function(room) {
             break;
     }
     switch (room.walls.left) {
-        case "door":
         case "exit":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 1, 80, 80, 80)); //closed door
+            d.setPosition(32, 120 - 40 + room.walls.left_d);
+            d.setAnchorPoint(0.5, 0);
+            layer.addChild(d, -18, TAG_EXIT);
+            d.runAction(new cc.RepeatForever(
+                new cc.Sequence(
+                    new cc.SkewTo(0.5, 0, -4),
+                    new cc.SkewTo(0.5, 0, 4)
+                )
+            ));
+            // obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(0, 120 - 32 + room.walls.left_d);
+            wall.setAnchorPoint(0.5, 0);
+            wall.setTag(TAG_EXIT);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
+            break;
+        case "door":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*1,80,80,80)); //closed door
             d.setPosition(32,120-40+room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18, TAG_LEFT_DOOR);
-            if(room.walls.left === "exit")
-                d.runAction(new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.SkewTo(0.5, 0,-4),
-                        new cc.SkewTo(0.5, 0,4)
-                    )
-                ));
             var l = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
             l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40-8, 55-15);
             l.setRotation(-90);
             waw.makeSpriteJump(l);
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));

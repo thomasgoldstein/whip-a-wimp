@@ -38,7 +38,11 @@ waw.MainScene = cc.Scene.extend({
         this._super();
 
         //cc.audioEngine.playMusic(waw.bgm.level1, true);
-
+        waw.KEYS[cc.KEY.left] =
+        waw.KEYS[cc.KEY.right] =
+        waw.KEYS[cc.KEY.down] =
+        waw.KEYS[cc.KEY.up] =
+        waw.KEYS[cc.KEY.space] = false;
         waw.initScore();
         rooms.initLevel();
         rooms.genLevel();

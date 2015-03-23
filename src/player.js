@@ -310,6 +310,11 @@ waw.Player = waw.Unit.extend({
             case TAG_CHEST:
                 unit.onOpen(this);
                 break;
+            case TAG_EXIT:
+                //var transition = cc.TransitionFade;
+                var transition = cc.TransitionZoomFlipAngular;
+                cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
+                break;
             case TAG_ENEMY:
                 //TODO temp. remove later
                 //unit.onGetDamage(this);
