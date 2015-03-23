@@ -47,11 +47,15 @@ waw.TitleLayer = cc.Layer.extend({
         var bgLayer  = new cc.LayerColor(cc.color(191,239,255,255), 320, 240);
         this.addChild(bgLayer, -100);
 
-        var gameTitle = new cc.LabelTTF("Whip-a-Wimp", "System", 32);
+/*        var gameTitle = new cc.LabelTTF("Whip-a-Wimp", "System", 32);
         gameTitle.setAnchorPoint(0.5, 0.5);
         gameTitle.setFontFillColor( cc.color(255,30,0,50));
         this.addChild(gameTitle, 299 + 5);
-        gameTitle.setPosition(320/2, 240/2+80);
+        gameTitle.setPosition(320/2, 240/2+80);*/
+        var gameTitle = new cc.Sprite(waw.gfx.title);
+        gameTitle.setAnchorPoint(0.5, 0);
+        this.addChild(gameTitle, 299 + 5);
+        gameTitle.setPosition(320/2, 240);
 
         var parallax0 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
         parallax0.setAnchorPoint(0, 0);
@@ -77,7 +81,13 @@ waw.TitleLayer = cc.Layer.extend({
         parallax0.addChild(tower);
         tower.setPosition(220, 20);
 
-        gameTitle.runAction(new cc.MoveBy(2, 0, 10));
+        gameTitle.runAction(
+            new cc.Sequence(
+                new cc.MoveTo(1, 320/2, 80),
+                new cc.ScaleTo(0.1, 1.1, 0.9),
+                new cc.ScaleTo(0.1, 1, 1)
+            )
+        );
 
         parallax0.runAction(new cc.MoveBy(5, -20, -24));
         parallax1.runAction(new cc.MoveBy(5, -60, -16));

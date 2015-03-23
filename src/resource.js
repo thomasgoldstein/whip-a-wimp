@@ -28,7 +28,8 @@ waw.gfx = {
     touchControls: "res/UI/TouchControls.png",
     upperWalls: themeDir + "UpperWalls.png",
     weapons: "res/Common/Weapons.png",
-    
+    title: "res/Common/Title.png",
+
     //gfx for debug
     hitBoxGrid: "res/DBG/hbGrid.png",
     hitBoxGridBlue: "res/DBG/hbGridBlue.png"
