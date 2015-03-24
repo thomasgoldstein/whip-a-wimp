@@ -25,14 +25,15 @@ waw.GameOverLayer = cc.Layer.extend({
     init: function () {
         this._super();
         console.info("init layer GO");
+        cc.audioEngine.stopAllEffects();
+        cc.audioEngine.stopMusic();
+
+        waw.theme.gotoNextTheme();  //TODO add reset level / theme
 
         var label = new cc.LabelTTF("GAME OVER", "System", 32);
         label.setAnchorPoint(0.5, 0.5);
         this.addChild(label, 299 + 5);
         label.setPosition(320/2, 240/2);
-
-        cc.audioEngine.stopAllEffects();
-        cc.audioEngine.stopMusic();
     },
     onEnter: function () {
         this._super();

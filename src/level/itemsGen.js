@@ -56,6 +56,8 @@ waw.putMap = function() {
           return false;
       }
     );
+    if(rooms.length<1)
+        rooms = real_rooms;
     var room = rooms[Math.round(Math.random()*(rooms.length-1))];
     var t="";
     for(var i=0; i<rooms.length; i++)

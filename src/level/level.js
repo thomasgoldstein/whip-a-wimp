@@ -61,7 +61,7 @@ rooms.genLevel = function() {
     var temp = "empty";
     var maxDy = 36; //+- max vertical shift of left + right doors
     var maxDx = 90; //+- max horizontal shift of up + down doors
-    var max_rooms_N = 15;
+    var max_rooms_N = waw.theme.rules.max_rooms[waw.theme.levelN];   //15;
 	do {
 		noCycle++;
 		if(!rooms[y][x]) {
@@ -71,7 +71,7 @@ rooms.genLevel = function() {
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
 			} else {
-                if(Math.random() <= 0.05)
+                if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN])
                     r.dark = true;
             }
 

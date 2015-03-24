@@ -10,13 +10,13 @@ waw.theme = {
         this.name = "Temple";
         this.themeDir = "res/Themes/" + this.name + "/";
         this.rules = this.temple_rules;
-        this.levelN = 1;
+        this.levelN = 0;
     },
     gotoNextLevel: function(){
         //this.init();    //replace to pick next theme
         //this.loadResources();
         this.levelN ++;
-        if(this.levelN > 5)
+        if(this.levelN > 4)
             this.gotoNextTheme();
     },
     gotoNextTheme: function(){
@@ -114,6 +114,9 @@ waw.theme = {
 
     temple_rules: {
         name: "Temple",
+
+        max_rooms: [3,5,9,13,15],
+
         room_set: [
             [1],
             [1, 2],
@@ -127,7 +130,7 @@ waw.theme = {
         ],
 
         dark_chance: [
-            0, 0, 0, 0.1, 0.2
+            0, 0, 0, 0.05, 0.1
         ],
 
         has_redCloth: [

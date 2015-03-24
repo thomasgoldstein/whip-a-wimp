@@ -21,16 +21,15 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
     init: function () {
         this._super();
 
-        waw.theme.gotoNextLevel();
-
-        var label = new cc.LabelTTF(waw.theme.name+"\nNEXT LEVEL "+waw.theme.levelN, "System", 32);
-        label.setAnchorPoint(0.5, 0.5);
-        this.addChild(label, 299 + 5);
-        label.setPosition(320/2, 240/2);
-
         cc.audioEngine.stopAllEffects();
         cc.audioEngine.stopMusic();
 
+        waw.theme.gotoNextLevel();
+
+        var label = new cc.LabelTTF(waw.theme.name+"\nNEXT LEVEL "+(waw.theme.levelN+1), "System", 32);
+        label.setAnchorPoint(0.5, 0.5);
+        this.addChild(label, 299 + 5);
+        label.setPosition(320/2, 240/2);
     },
     onEnter: function () {
         this._super();
