@@ -88,7 +88,7 @@ rooms.genLevel = function() {
 
 			//make connection between previous and current rooms
 			if(oldx < x){
-                if(Math.random()<0.2)   //20% chance for a closed door
+                if(Math.random()<waw.theme.rules.doors_chance[waw.theme.levelN])   //20% chance for a closed door
                     temp = "door";
                 else
                     temp = "empty";     //80% - passage

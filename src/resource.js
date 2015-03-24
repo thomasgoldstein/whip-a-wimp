@@ -126,11 +126,11 @@ waw.theme = {
         ],
 
         doors_chance: [
-            0, 0.2, 0.3, 0.4, 0.5
+            0, 0.1, 0.15, 0.2, 0.3
         ],
 
         dark_chance: [
-            0, 0, 0, 0.05, 0.1
+            0, 0, 0, 0.01, 0.05
         ],
 
         has_redCloth: [
@@ -138,11 +138,15 @@ waw.theme = {
         ],
 
         has_miniMap: [
-            false, true, true, true, true
+            false, false, false, true, true
         ],
 
         has_extraKeys: [
             2, 1, 0, 0, 0
+        ],
+
+        has_ropes: [
+            0, 0, 1, 2, 3
         ],
 
         mob_group: [

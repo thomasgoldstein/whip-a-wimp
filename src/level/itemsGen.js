@@ -49,6 +49,8 @@ waw.addItemToRoom = function(room, itemName){
 };
 
 waw.putMap = function() {
+    if(!waw.theme.rules.has_miniMap[waw.theme.levelN])
+        return;
     var rooms = real_rooms.filter(
       function(room) {
           if (room.distance >= 2 && room.distance < real_rooms.maxDistance / 2)
@@ -68,8 +70,10 @@ waw.putMap = function() {
 
 waw.putRedCloth = function() {
     var room;
-    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
-    waw.addItemToRoom(room, "cloth");
+    if(waw.theme.rules.has_redCloth[waw.theme.levelN]) {
+        room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
+        waw.addItemToRoom(room, "cloth");
+    }
     //misc items temp
     room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
     waw.addItemToRoom(room, "coin");
@@ -77,9 +81,11 @@ waw.putRedCloth = function() {
     waw.addItemToRoom(room, "gem");
 };
 
-waw.putKeys = function() {
+waw.putKeys = function () {
+    if (waw.theme.rules.doors_chance[waw.theme.levelN] <= 0)
+        return; //no keys for doorless level
 
-    for(var doors = 0; doors<real_rooms.maxDoors; doors++) {
+    for (var doors = 0; doors < real_rooms.maxDoors; doors++) {
         var rooms = real_rooms.filter(
             function (room) {
                 if (room.doors == doors)
@@ -87,7 +93,7 @@ waw.putKeys = function() {
                 return false;
             }
         );
-        if(rooms.length<1)
+        if (rooms.length < 1)
             continue;
         var room = rooms[Math.round(Math.random() * (rooms.length - 1))];
         var t = "";
@@ -99,7 +105,7 @@ waw.putKeys = function() {
 };
 
 waw.putRopes = function() {
-    for(var n = 1; n<4; n++) {
+    for(var n = 1; n<waw.theme.rules.has_ropes[waw.theme.levelN]; n++) {
         var rooms = real_rooms.filter(
             function (room) {
                 if (room.distance >= real_rooms.maxDistance / n)
