@@ -3,12 +3,21 @@ var g_resources = [];
 
 waw.theme = {
     name: "",
+    levelN: 0,
     rules: {},
     themeDir: "",
     init: function() {
         this.name = "Temple";
         this.themeDir = "res/Themes/" + this.name + "/";
         this.rules = this.temple_rules;
+        this.levelN = 1;
+    },
+    gotoNextLevel: function(){
+        //this.init();    //replace to pick next theme
+        //this.loadResources();
+        this.levelN ++;
+        if(this.levelN > 5)
+            this.gotoNextTheme();
     },
     gotoNextTheme: function(){
         this.init();    //replace to pick next theme
