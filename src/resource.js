@@ -1,15 +1,17 @@
 "use strict";
 var g_resources = [];
+
 waw.theme = {
     name: "",
+    rules: {},
     themeDir: "",
     init: function() {
         this.name = "Temple";
         this.themeDir = "res/Themes/" + this.name + "/";
+        this.rules = this.temple_rules;
     },
     gotoNextTheme: function(){
-        //
-        this.init();
+        this.init();    //replace to pick next theme
         this.loadResources();
     },
     loadResources: function(){
@@ -99,7 +101,61 @@ waw.theme = {
                 g_resources.push({src:waw.sfx[key]});
             }
         }
+    },
 
+    temple_rules: {
+        name: "Temple",
+        room_set: [
+            [1],
+            [1, 2],
+            [1, 2, 3],
+            [1, 2, 3, 4],
+            [1, 2, 3, 4, 5, 6]
+        ],
+
+        doors_chance: [
+            0, 0.2, 0.3, 0.4, 0.5
+        ],
+
+        dark_chance: [
+            0, 0, 0, 0.1, 0.2
+        ],
+
+        has_redCloth: [
+            false, false, true, true, true
+        ],
+
+        has_miniMap: [
+            false, true, true, true, true
+        ],
+
+        has_extraKeys: [
+            2, 1, 0, 0, 0
+        ],
+
+        mob_group: [
+            [],
+            ["Merch1", "Merch1"],
+            ["Merch1", "Merch1", "Merch1"],
+            ["Merch1", "Merch1", "Merch2"],
+            ["Merch1", "Merch2", "Merch2"],
+            ["Merch2", "Merch2", "Merch2"],
+            ["Merch2", "Merch2", "Merch2", "Merch1"],
+            ["Merch1", "Merch2", "Merch2", "Merch2"],
+            ["Merch2", "Merch2", "Merch2", "Merch2", "Merch1"]
+        ],
+
+        boss_group: [
+            "Merch1", "Merch2", "Lilith"
+        ],
+
+        mob_set: [
+            [],
+            [1, 2],
+            [1, 2, 3],
+            [1, 2, 3, 4],
+            [1, 2, 3, 4, 5, 6]
+        ]
     }
 };
 
