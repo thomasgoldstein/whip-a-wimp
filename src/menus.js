@@ -143,7 +143,7 @@ waw.Score = cc.Node.extend({
 
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
-    labelDebug = new cc.LabelTTF("spawn", "System", 12);
+    labelDebug = new cc.LabelTTF("Kiwi", "System", 12);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
 //        debugger;
@@ -232,10 +232,15 @@ waw.MenuDebug = function (layer) {
     debugMusicOnOff.setPosition(16, 239 - 7 - 48);
 
 
-    labelDebug = new cc.LabelTTF("N/A", "System", 10);
+    labelDebug = new cc.LabelTTF("Items+", "System", 10);
     var debugDoors = new cc.MenuItemLabel(labelDebug,
         function () {
-            //
+            waw.keys += 3;
+            waw.coins += 3;
+            waw.gems += 3;
+            waw.player.HP = 2; waw.player.sprite2.visible = true;
+            rooms.foundMap = true;
+            waw.whip.addLink();waw.whip.addLink();waw.whip.addLink();
         }, layer);
     menu = new cc.Menu(debugDoors);
     menu.setPosition(0, 0);
@@ -243,7 +248,7 @@ waw.MenuDebug = function (layer) {
     debugDoors.setPosition(16, 160);
 
 
-    labelDebug = new cc.LabelTTF("Ch.Weapon", "System", 10);
+    labelDebug = new cc.LabelTTF("Weapon+", "System", 10);
     var debugMenu10 = new cc.MenuItemLabel(labelDebug,
         function () {
             switch(waw.player.currentWeapon){
@@ -303,10 +308,11 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugSpawnChest.setPosition(16, 126);
 
-    labelDebug = new cc.LabelTTF("Key+", "System", 12);
+    labelDebug = new cc.LabelTTF("LVL+", "System", 12);
     var debugGetKey = new cc.MenuItemLabel(labelDebug,
         function () {
-            waw.keys ++;
+            var transition = cc.TransitionZoomFlipAngular;
+            cc.director.runScene(new transition(1, new waw.gotoNextLevel()));
         }, layer);
 
     menu = new cc.Menu(debugGetKey);
@@ -323,5 +329,5 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugInstaKill);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugInstaKill.setPosition(16, 106);
+    debugInstaKill.setPosition(16, 102);
 };
