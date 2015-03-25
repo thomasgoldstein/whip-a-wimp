@@ -115,38 +115,38 @@ waw.theme = {
     temple_rules: {
         name: "Temple",
 
-        max_rooms: [3,5,9,13,15],
+        max_rooms: [3,5,9,13,15],   //rooms per level
 
-        room_set: [
+        room_set: [ //possible room type
             [1],
-            [1, 2],
-            [1, 2, 3],
+            [2],
+            [3, 4],
             [1, 2, 3, 4],
             [1, 2, 3, 4, 5, 6]
         ],
 
-        doors_chance: [
+        doors_chance: [ //chance to have a door in a room
             0, 0.1, 0.15, 0.2, 0.3
         ],
 
-        dark_chance: [
+        dark_chance: [  //darkness in the room
             0, 0, 0, 0.01, 0.05
         ],
 
-        has_redCloth: [
+        has_redCloth: [  //has spawn of this item
             false, false, true, true, true
         ],
 
-        has_miniMap: [
+        has_miniMap: [ //has spawn of this item
             false, false, false, true, true
-        ],
-
-        has_extraKeys: [
-            2, 1, 0, 0, 0
         ],
 
         has_ropes: [
             0, 0, 1, 2, 3
+        ],
+
+        has_extraKeys: [ //spawn extra items and how much
+            2, 1, 0, 0, 0
         ],
 
         mob_group: [
@@ -175,4 +175,4 @@ waw.theme = {
     }
 };
 
-waw.theme.gotoNextTheme();
+waw.theme.gotoNextTheme();  //initial init of the level
