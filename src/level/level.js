@@ -836,50 +836,34 @@ waw.GetRoomSpawnCoords = function (roomType) {
             }
             break;
         case 1:
-            //1 obstacle in the middle of the room
-            a.push({x: 50 + Math.round(Math.random() * 60), y: 50 + Math.round(Math.random() * 40)});
-            a.push({x: 50 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
-            a.push({x: 210 + Math.round(Math.random() * 60), y: 140 + Math.round(Math.random() * 40)});
-            a.push({x: 210 + Math.round(Math.random() * 60), y: 50 + Math.round(Math.random() * 40)});
+            //. 1 obstacle in the middle of the room
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 50 + Math.round(Math.random() * 40)});
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 120 + Math.round(Math.random() * 40)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 120 + Math.round(Math.random() * 40)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 50 + Math.round(Math.random() * 40)});
             break;
         case 2:
-            //4 obstacles around the middle of the room
-            for (var y = 48; y < 170; y += 40) {
-                a.push({x: 50 + Math.round(Math.random() * 30), y: y});
-                a.push({x: 145 + Math.round(Math.random() * 30), y: y});
-                a.push({x: 240 + Math.round(Math.random() * 30), y: y});
-            }
-            break;
+            //.. 2 obstacles horizontally
         case 3:
-            //4 obstacles wide around the middle of the room
-            //TODO ajdust
-            for (var y = 48; y < 170; y += 40) {
-                a.push({x: 40 + Math.round(Math.random() * 20), y: y});
-                a.push({x: 110 + Math.round(Math.random() * 100), y: y});
-                a.push({x: 260 + Math.round(Math.random() * 20), y: y});
-            }
-            break;
+            //2 obstacles TL BR
         case 4:
-            //1 obstacle in the middle of the room
-            //4 obstacles wide around the middle of the room
-            a.push({x: 40 + Math.round(Math.random() * 16), y: 40 + Math.round(Math.random() * 18)});
-            a.push({x: 40 + Math.round(Math.random() * 16), y: 171 + Math.round(Math.random() * 18)});
-            a.push({x: 262 + Math.round(Math.random() * 16), y: 171 + Math.round(Math.random() * 18)});
-            a.push({x: 262 + Math.round(Math.random() * 16), y: 40 + Math.round(Math.random() * 18)});
-            a.push({x: 140 + Math.round(Math.random() * 40), y: 60 + Math.round(Math.random() * 30)});
-            break;
+            //2 obstacle BL TR
         case 5:
-            //horizontal line of obstacles in the room
+            //.:
+        case 6:
+            //:.
+        case 8:
+            //::
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 44 + Math.round(Math.random() * 15), y: y});
+                a.push({x: 115 + Math.round(Math.random() * 90), y: y});
+                a.push({x: 256 + Math.round(Math.random() * 10), y: y});
+            }
+        case 7:
+            //. . .horizontal line of obstacles in the room
             for (var x = 58; x < 280; x += 40) {
                 a.push({x: x, y: 45 + Math.round(Math.random() * 40)});
-                a.push({x: x, y: 145 + Math.round(Math.random() * 35)});
-            }
-            break;
-        case 6:
-            //vertical line of obstacles in the room
-            for (var y = 48; y < 170; y += 40) {
-                a.push({x: 50 + Math.round(Math.random() * 60), y: y});
-                a.push({x: 210 + Math.round(Math.random() * 60), y: y});
+                a.push({x: x, y: 130 + Math.round(Math.random() * 45)});
             }
             break;
     }
