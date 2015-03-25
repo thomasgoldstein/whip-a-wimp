@@ -98,7 +98,7 @@ rooms.genLevel = function() {
                     r.walls.left_d = rooms[oldy][oldx].walls.right_d = Math.round(maxDy - Math.random()*(maxDy*2)); // -maxDy .. maxDy
             }
 			if(oldx > x){
-                if(Math.random()<0.2)
+                if(Math.random()<<waw.theme.rules.doors_chance[waw.theme.levelN])
                     temp = "door";
                 else
                     temp = "empty";
@@ -107,7 +107,7 @@ rooms.genLevel = function() {
                     r.walls.right_d = rooms[oldy][oldx].walls.left_d = Math.round(maxDy - Math.random()*(maxDy*2)); // // -maxDy .. maxDy
 			}
 			if(oldy < y){
-                if(Math.random()<0.2)
+                if(Math.random()<<waw.theme.rules.doors_chance[waw.theme.levelN])
                     temp = "door";
                 else
                     temp = "empty";
@@ -116,7 +116,7 @@ rooms.genLevel = function() {
                     r.walls.up_d = rooms[oldy][oldx].walls.down_d = Math.round(maxDx - Math.random()*(maxDx*2)); // -maxDx .. maxDx
 			}
 			if(oldy > y){
-                if(Math.random()<0.2)
+                if(Math.random()<<waw.theme.rules.doors_chance[waw.theme.levelN])
                     temp = "door";
                 else
                     temp = "empty";
