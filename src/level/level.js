@@ -242,13 +242,13 @@ waw.GenerateMiniMap = function() {
             r = rooms[y][x];
             if(r) {	//is it a Room
                 //4 passages
-                if(r.walls.up == "wall")
+                if(r.walls.up !== "empty")
                     w |= 1;
-                if(r.walls.right == "wall")
+                if(r.walls.right !== "empty")
                     w |= 2;
-                if(r.walls.down == "wall")
+                if(r.walls.down !== "empty")
                     w |= 4;
-                if(r.walls.left == "wall")
+                if(r.walls.left !== "empty")
                     w |= 8;
                 //the room
                 m = new cc.Sprite(waw.gfx.map,
@@ -261,7 +261,7 @@ waw.GenerateMiniMap = function() {
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
-                    m = new cc.Sprite(waw.gfx.map, cc.rect(90, 0, 5, 5)); //red dot - players pos
+                    m = new cc.Sprite(waw.gfx.map, cc.rect(90, 6, 5, 5)); //red dot - players pos
                     layerMapSprite.addChild(m);
                     m.setPositionX(x*5+3 +mapXOffset);
                     m.setPositionY((8-y)*5+2 +mapYOffset);
