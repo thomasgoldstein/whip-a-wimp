@@ -77,7 +77,7 @@ rooms.countDoors = function (r, r2, d) {
 };
 
 rooms.calcDistance = function () {
-    for (var pass = 1; pass <= 5; pass++) {
+    for (var pass = 1; pass <= 9; pass++) {
         console.log("Calc Distance pass " + pass);
         for (var i = 0; i < real_rooms.length; i++) {
             var r = real_rooms[i];
@@ -105,3 +105,77 @@ rooms.calcFinalStats = function () {
         real_rooms.maxDoors = Math.max(real_rooms.maxDoors, r.doors);
     }
 };
+
+//check room connections or so for better items placement
+rooms.isDeadEnd = function (r) {
+    //has 1 door
+    if (!r)
+        throw "No room found";
+    var n = 0;
+    if (r.walls.up !== "empty")
+        n++;
+    if (r.walls.right !== "empty")
+        n++;
+    if (r.walls.left !== "empty")
+        n++;
+    if (r.walls.down !== "empty")
+        n++;
+    if (n === 3)
+        return true;
+    return false;
+};
+
+rooms.isPassage = function (r) {
+    //has 2 entrances
+    if (!r)
+        throw "No room found";
+    var n = 0;
+    if (r.walls.up !== "empty")
+        n++;
+    if (r.walls.right !== "empty")
+        n++;
+    if (r.walls.left !== "empty")
+        n++;
+    if (r.walls.down !== "empty")
+        n++;
+    if (n === 2)
+        return true;
+    return false;
+};
+
+rooms.isTLike = function (r) {
+    //has 3 entrances
+    if (!r)
+        throw "No room found";
+    var n = 0;
+    if (r.walls.up !== "empty")
+        n++;
+    if (r.walls.right !== "empty")
+        n++;
+    if (r.walls.left !== "empty")
+        n++;
+    if (r.walls.down !== "empty")
+        n++;
+    if (n === 1)
+        return true;
+    return false;
+};
+
+rooms.hasNoItems = function (r) {
+    //has no items
+    if (!r)
+        throw "No room found";
+    if (r.items.length < 1)
+        return true;
+    return false;
+};
+
+rooms.hasNoMobs = function (r) {
+    //has no monsters
+    if (!r)
+        throw "No room found";
+    if (r.mobs.length < 1)
+        return true;
+    return false;
+};
+
