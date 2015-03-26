@@ -69,15 +69,47 @@ waw.putMap = function() {
 };
 
 waw.putRedCloth = function() {
-    var room;
+    var filtered_rooms, room;
     if(waw.theme.rules.has_redCloth[waw.theme.levelN]) {
-        room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
+
+        filtered_rooms = real_rooms.filter(
+            function(r) {
+                if (rooms.isDeadEnd(r) && rooms.isPassage(r))
+                    return true;
+                return false;
+            }
+        );
+        if(filtered_rooms.length > 0)
+            room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+        else
+            room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
         waw.addItemToRoom(room, "cloth");
     }
     //misc items temp
-    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
+    filtered_rooms = real_rooms.filter(
+        function(r) {
+            if (rooms.isDeadEnd(r) && rooms.hasNoItems(r))
+                return true;
+            return false;
+        }
+    );
+    if(filtered_rooms.length > 0)
+        room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+    else
+        room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
     waw.addItemToRoom(room, "coin");
-    room = real_rooms[Math.round(Math.random()*(real_rooms.length-1))];
+
+    filtered_rooms = real_rooms.filter(
+        function(r) {
+            if (rooms.isPassage(r) && rooms.hasNoItems(r))
+                return true;
+            return false;
+        }
+    );
+    if(filtered_rooms.length > 0)
+        room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+    else
+        room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
     waw.addItemToRoom(room, "gem");
 };
 
