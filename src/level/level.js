@@ -777,7 +777,7 @@ waw.prepareRoomPattern = function(room) {
             break;
         case 1:
             //. 1 obstacle in the middle of the room
-            waw.putRoomObstacle(new cc.Point(320/2,240/2), new cc.Size(32,16), hitboxOffsetY);
+            waw.putRoomObstacle(new cc.Point(160,105), new cc.Size(32,16), hitboxOffsetY);
             break;
         case 2:
             //.. 2 obstacles horizontally
@@ -823,51 +823,6 @@ waw.prepareRoomPattern = function(room) {
             waw.putRoomObstacle(new cc.Point(88,137), new cc.Size(32,16), hitboxOffsetY);
             break;
     }
-};
-
-
-waw.GetRoomSpawnCoords = function (roomType) {
-    var a = [];
-    switch (roomType) {
-        case 0:
-            //no obstacles
-            for (var y = 48; y < 170; y += 40) {
-                a.push({x: 50 + Math.round(Math.random() * 220), y: y});
-            }
-            break;
-        case 1:
-            //. 1 obstacle in the middle of the room
-            a.push({x: 50 + Math.round(Math.random() * 80), y: 50 + Math.round(Math.random() * 40)});
-            a.push({x: 50 + Math.round(Math.random() * 80), y: 120 + Math.round(Math.random() * 40)});
-            a.push({x: 185 + Math.round(Math.random() * 86), y: 120 + Math.round(Math.random() * 40)});
-            a.push({x: 185 + Math.round(Math.random() * 86), y: 50 + Math.round(Math.random() * 40)});
-            break;
-        case 2:
-            //.. 2 obstacles horizontally
-        case 3:
-            //2 obstacles TL BR
-        case 4:
-            //2 obstacle BL TR
-        case 5:
-            //.:
-        case 6:
-            //:.
-        case 8:
-            //::
-            for (var y = 48; y < 170; y += 40) {
-                a.push({x: 44 + Math.round(Math.random() * 15), y: y});
-                a.push({x: 115 + Math.round(Math.random() * 90), y: y});
-                a.push({x: 256 + Math.round(Math.random() * 10), y: y});
-            }
-        case 7:
-            //. . .horizontal line of obstacles in the room
-            for (var x = 58; x < 280; x += 40) {
-                a.push({x: x, y: 45 + Math.round(Math.random() * 40)});
-                a.push({x: x, y: 130 + Math.round(Math.random() * 45)});
-            }
-            break;
-    }
-    return a;
 };
 
 //adds grid sprite to show hit Box

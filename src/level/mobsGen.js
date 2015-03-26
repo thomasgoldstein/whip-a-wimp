@@ -6,7 +6,7 @@ waw.generateMobs = function(roomType){
     var n = Math.round(Math.random()*5);    //max mobs in the room
     var mob = null;
     var pickMobType = ["PigWalker", "PigBouncer", "Merchant", "Bat", "Spikes"];
-    var mobCoord = waw.GetRoomSpawnCoords(roomType);
+    var mobCoord = waw.GetMobSpawnCoords(roomType);
     var cr;
     if(n>mobCoord.length)
         n = mobCoord.length;
@@ -105,4 +105,51 @@ waw.updateSpawnMobs = function(layer) {
             layer.mobs[i].update();
         }
     }
+};
+
+waw.GetMobSpawnCoords = function (roomType) {
+    var a = [];
+    switch (roomType) {
+        case 0:
+            //no obstacles
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 220), y: y});
+            }
+            break;
+        case 1:
+            //. 1 obstacle in the middle of the room
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 45 + Math.round(Math.random() * 30)});
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 90 + Math.round(Math.random() * 20)});
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 130 + Math.round(Math.random() * 30)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 130 + Math.round(Math.random() * 30)});
+            a.push({x: 185 + Math.round(Math.random() * 80), y: 90 + Math.round(Math.random() * 20)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 45 + Math.round(Math.random() * 30)});
+            break;
+        case 2:
+        //.. 2 obstacles horizontally
+        case 3:
+        //2 obstacles TL BR
+        case 4:
+        //2 obstacle BL TR
+        case 5:
+        //.:
+        case 6:
+        //:.
+        case 8:
+            //::
+            for (var y = 45; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 10), y: y});
+                a.push({x: 120 + Math.round(Math.random() * 50), y: y});
+                a.push({x: 256 + Math.round(Math.random() * 10), y: y});
+            }
+            break;
+        case 7:
+            //. . .horizontal line of obstacles in the room
+            for (var x = 58; x < 280; x += 40) {
+                a.push({x: x, y: 45 + Math.round(Math.random() * 30)});
+                a.push({x: x, y: 140 + Math.round(Math.random() * 30)});
+            }
+            break;
+    }
+    return a;
 };

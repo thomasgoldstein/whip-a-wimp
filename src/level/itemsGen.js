@@ -6,7 +6,7 @@ waw._old_generateItems = function(roomType){
     var n = Math.round(Math.random()*5);    //TODO max items in the room
     var item = null;
     var pickItemType = ["key", "coin", "gem", "map", "rope", "cloth", "invincibility", "unknown"];
-    var itemCoord = waw.GetRoomSpawnCoords(roomType);
+    var itemCoord = waw.GetItemSpawnCoords(roomType);
     var cr;
     if(n>itemCoord.length)
         n = itemCoord.length;
@@ -27,7 +27,7 @@ waw._old_generateItems = function(roomType){
 waw.addItemSpawnCoordsToRooms = function(){
     for(var i = 0; i<real_rooms.length; i++){
         var room = real_rooms[i];
-        room.itemCoord = waw.GetRoomSpawnCoords(room.type);
+        room.itemCoord = waw.GetItemSpawnCoords(room.type);
         //console.info("Item coords ", room.itemCoord.length ,"into",room.name);
     }
 };
@@ -169,7 +169,6 @@ waw.generateItems = function(){
     return items;
 };
 
-
 //put items on the layer
 waw.spawnItems = function(layer) {
     var items = [];
@@ -190,4 +189,49 @@ waw.spawnItems = function(layer) {
     }
     waw.items = items;
     return items;
+};
+
+waw.GetItemSpawnCoords = function (roomType) {
+    var a = [];
+    switch (roomType) {
+        case 0:
+            //no obstacles
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 50 + Math.round(Math.random() * 220), y: y});
+            }
+            break;
+        case 1:
+            //. 1 obstacle in the middle of the room
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 50 + Math.round(Math.random() * 40)});
+            a.push({x: 50 + Math.round(Math.random() * 80), y: 120 + Math.round(Math.random() * 40)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 120 + Math.round(Math.random() * 40)});
+            a.push({x: 185 + Math.round(Math.random() * 86), y: 50 + Math.round(Math.random() * 40)});
+            break;
+        case 2:
+        //.. 2 obstacles horizontally
+        case 3:
+        //2 obstacles TL BR
+        case 4:
+        //2 obstacle BL TR
+        case 5:
+        //.:
+        case 6:
+        //:.
+        case 8:
+            //::
+            for (var y = 48; y < 170; y += 40) {
+                a.push({x: 44 + Math.round(Math.random() * 15), y: y});
+                a.push({x: 115 + Math.round(Math.random() * 90), y: y});
+                a.push({x: 256 + Math.round(Math.random() * 10), y: y});
+            }
+            break;
+        case 7:
+            //. . .horizontal line of obstacles in the room
+            for (var x = 58; x < 280; x += 40) {
+                a.push({x: x, y: 45 + Math.round(Math.random() * 40)});
+                a.push({x: x, y: 130 + Math.round(Math.random() * 45)});
+            }
+            break;
+    }
+    return a;
 };
