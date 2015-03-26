@@ -81,9 +81,6 @@ rooms.genLevel = function() {
                 r.type = a[Math.round(Math.random()*(a.length-1))];
             } else
                 r.type = 0;
-            //gen spawn coords for mobs
-            //TODO remove from here
-            r.mobs = waw.generateMobs(r.type);
 
 			//make connection between previous and current rooms
 			if(oldx < x){

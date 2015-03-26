@@ -157,16 +157,12 @@ waw.putExit = function() {
 };
 
 waw.generateItems = function(){
-    var items = [];
-
     waw.addItemSpawnCoordsToRooms();
     waw.putExit();
     waw.putMap();
     waw.putKeys();
     waw.putRopes();
     waw.putRedCloth();
-
-    return items;
 };
 
 //put items on the layer

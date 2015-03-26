@@ -50,6 +50,7 @@ waw.MainScene = cc.Scene.extend({
         rooms.calcDistance();
         rooms.calcFinalStats();
         waw.generateItems();
+        waw.generateMobs();
 
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
