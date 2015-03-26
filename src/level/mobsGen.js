@@ -12,16 +12,18 @@ waw.generateMobs = function(){
 //initially generate mobs in the room
 waw.generateMobsRoom = function (roomType) {
     var mobs = [];
-    var n = Math.round(Math.random() * 5);    //max mobs in the room
     var mob = null;
-    var pickMobType = ["PigWalker", "PigBouncer", "Merchant", "Bat", "Spikes"];
+    var i;
+
+    var mob_set = waw.theme.rules.mob_set[waw.theme.levelN];
+    i = mob_set[Math.round(Math.random() * (mob_set.length - 1))];
+    var pickMobType = waw.theme.rules.mob_group[i];
+
     var mobCoord = waw.GetMobSpawnCoords(roomType);
     var cr;
-    if (n > mobCoord.length)
-        n = mobCoord.length;
-    for (var i = 0; i < n; ++i) {
+    for (i = 0; i < pickMobType.length; ++i) {
         mob = {x: 160, y: 110, mobType: "unknown"};
-        mob.mobType = pickMobType[Math.round(Math.random() * (pickMobType.length - 1))]; //TODO replace temp mob TYPE according to the room type etc
+        mob.mobType = pickMobType[i];
         cr = Math.round(Math.random() * (mobCoord.length - 1));
         mob.x = mobCoord[cr].x;
         mob.y = mobCoord[cr].y;
@@ -67,7 +69,7 @@ waw.spawnMobs = function(layer){
                 e = new waw.MobBarrel();
                 break;
             default:
-                throw "Wrong mob type";
+                throw "Wrong mob type "+m.mobType;
         }
         pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
         e.setPosition(pos);

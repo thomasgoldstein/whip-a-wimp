@@ -150,27 +150,27 @@ waw.theme = {
         ],
 
         mob_group: [
-            [],
-            ["Merch1", "Merch1"],
-            ["Merch1", "Merch1", "Merch1"],
-            ["Merch1", "Merch1", "Merch2"],
-            ["Merch1", "Merch2", "Merch2"],
-            ["Merch2", "Merch2", "Merch2"],
-            ["Merch2", "Merch2", "Merch2", "Merch1"],
-            ["Merch1", "Merch2", "Merch2", "Merch2"],
-            ["Merch2", "Merch2", "Merch2", "Merch2", "Merch1"]
+            ["Spikes"],
+            ["Spikes", "Merchant"],
+            ["Spikes", "Merchant", "Merchant"],
+            ["Spikes", "Merchant", "Bat"],
+            ["Spikes", "Bat", "Bat"],
+            ["Bat", "Bat", "Bat"],
+            ["Spikes", "Bat", "Bat", "Merchant"],
+            ["Merchant", "Bat", "Bat", "Bat","Spikes"],
+            ["Bat", "Bat", "Bat", "Bat", "Merchant"]
         ],
 
         boss_group: [
-            "Merch1", "Merch2", "Lilith"
+            "Merchant", "Bat", "Lilith"
         ],
 
         mob_set: [
-            [],
-            [1, 2],
-            [1, 2, 3],
-            [1, 2, 3, 4],
-            [1, 2, 3, 4, 5, 6]
+            [0],
+            [0, 1, 2],
+            [0, 1, 2, 3],
+            [0, 1, 2, 3, 4],
+            [0, 1, 2, 3, 4, 5, 6]
         ]
     }
 };
