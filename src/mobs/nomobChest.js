@@ -90,6 +90,10 @@ waw.NoMobChest = waw.Unit.extend({
             }, 0.6);
         }
         this.scheduleOnce(function () {
+            cc.audioEngine.playEffect(waw.sfx.coin01);
+            waw.spawnItem(Math.random()<0.5?"coin":(Math.random()<0.5?"gem":"key"), this.x, this.y, this.getParent());
+        }, 1);
+        this.scheduleOnce(function () {
             this.cleanRefs();   //TODO should remove it from room spawn instantly to prevent cheating
 
             this.scheduleOnce(function () {

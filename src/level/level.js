@@ -236,7 +236,7 @@ waw.initWalls = function(room) {
         verticalWall_upY: 240/2+64/2,
         verticalWall_downY: -240/2 + 64/2,
         horizontalWall_leftX: -240/2 + 64/2,
-        horizontalWall_rightX: -240/2 + 64/2,
+        horizontalWall_rightX: -240/2 + 64/2
     };
 
     // Left wall upper
