@@ -311,8 +311,8 @@ waw.Player = waw.Unit.extend({
                 unit.onOpen(this);
                 break;
             case TAG_EXIT:
-                //var transition = cc.TransitionFade;
-                var transition = cc.TransitionZoomFlipAngular;
+                var transition = cc.TransitionFade;
+                //var transition = cc.TransitionZoomFlipAngular;
                 cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
                 break;
             case TAG_ENEMY:
@@ -339,7 +339,8 @@ waw.Player = waw.Unit.extend({
         //cool down time 1 sec
         //this.timeToThink = currentTime.getTime() + 1000;
 
-        var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
+        //var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
+        var playerBiggerRect = cc.rect(this.x-10, this.y- 2, this.width + 4, this.height + 4);
 
         for (var i = 0; i < waw.units.length; i++) {
             var unit = waw.units[i];

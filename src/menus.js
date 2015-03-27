@@ -311,7 +311,8 @@ waw.MenuDebug = function (layer) {
     labelDebug = new cc.LabelTTF("LVL+", "System", 12);
     var debugGetKey = new cc.MenuItemLabel(labelDebug,
         function () {
-            var transition = cc.TransitionZoomFlipAngular;
+            //var transition = cc.TransitionZoomFlipAngular;
+            var transition = cc.TransitionFade;
             cc.director.runScene(new transition(1, new waw.gotoNextLevel()));
         }, layer);
 

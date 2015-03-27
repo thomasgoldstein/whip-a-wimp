@@ -166,6 +166,10 @@ waw.MainLayer = cc.Layer.extend({
         this.mobs = waw.spawnMobs(this);
 
         waw.player.becomeInvincible();
+        //fix de-sync
+        //var animKey = waw.player.getState() + "_" + waw.player.direction;
+        //waw.player.sprite.playAnimation(animKey);
+        //waw.player.sprite2.playAnimation(animKey);
     },
     onEnterTransitionDidFinish: function () {
         this._super();
@@ -173,12 +177,10 @@ waw.MainLayer = cc.Layer.extend({
         waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
-        var m,pos;
         this._super();
         //console.info("onExitTransitionDidStart ROOM",waw.curRoomX,waw.curRoomY);
 
         this.removeChild(waw.player.shadowSprite);
-
         waw.cleanSpawnMobs(this);
 
         this.cleanup();
@@ -243,6 +245,13 @@ waw.MainLayer = cc.Layer.extend({
 
         var nextLayer = new waw.MainLayer();
         nextLayer.init();
+        //sync player + cloth
+        //var animKey = "idle_" + waw.player.direction;
+        //waw.player.sprite.playAnimation(animKey);
+        //waw.player.sprite2.playAnimation(animKey);
+        //animKey = waw.player.getState() + "_" + waw.player.direction;
+        //waw.player.sprite.playAnimation(animKey);
+        //waw.player.sprite2.playAnimation(animKey);
 
         switch (direction) {
             case cc.KEY.up:
@@ -332,7 +341,8 @@ waw.MainLayer = cc.Layer.extend({
             }
         }
         //update all monsters in the room
-        waw.updateSpawnMobs(this);
+        //if(Math.random()<0.5)  //TODO add call 15-30 FPS
+        waw.updateSpawnedMobs(this);
 
         //go to another room?
         var playerPos = waw.player.getPosition();
