@@ -11,6 +11,8 @@ waw.NoMobChest = waw.Unit.extend({
     sfx_hurt02: waw.sfx.punch01,
     sfx_death: waw.sfx.candelabre01,
     topSprite: null,
+    lockSprite: null,
+    locked: true,
 
     ctor: function () {
         this._super();
@@ -26,6 +28,16 @@ waw.NoMobChest = waw.Unit.extend({
         this.topSprite.setPosition(0, 24-10);
         this.sprite.addChild(this.topSprite, 1);
         this.addChild(this.sprite);
+
+        //add lock
+        if(this.locked) {
+            var s = waw.SpriteRect(16,16); //for lock sprite
+            this.lockSprite = new cc.Sprite(waw.gfx.items, s(8, 0)); //lock
+            this.lockSprite.setAnchorPoint(0.5, 0.5);
+            this.sprite.addChild(this.lockSprite, 2, TAG_SPRITE_TEMP);
+            this.lockSprite.setPosition(15, 8);
+            waw.makeSpriteJump(this.lockSprite);
+        }
 
         this.debugCross.setAnchorPoint(0.5, 0);
 
@@ -43,9 +55,18 @@ waw.NoMobChest = waw.Unit.extend({
             }
         }
     },
-    onOpen : function (killer) {
-        if (this.subState === "open")
+    onOpen: function (killer) {
+        if (this.locked) {
+            if (waw.keys > 0) {
+                this.locked = false;
+                waw.keys--;
+                this.sprite.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
+                    new cc.MoveBy(0.3, 0, -8),
+                    new cc.FadeOut(0.3)
+                ));
+            }
             return;
+        }
         if (this.subState === "open")
             return;
         this.unscheduleAllCallbacks();
