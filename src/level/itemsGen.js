@@ -1,33 +1,11 @@
 "use strict";
 
-//initially generate items in the room
-waw._old_generateItems = function(roomType){
-    var items = [];
-    var n = Math.round(Math.random()*5);    //TODO max items in the room
-    var item = null;
-    var pickItemType = ["key", "coin", "gem", "map", "rope", "cloth", "invincibility", "unknown"];
-    var itemCoord = waw.GetItemSpawnCoords(roomType);
-    var cr;
-    if(n>itemCoord.length)
-        n = itemCoord.length;
-    for(var i=0; i<n; ++i){
-        item = {x:160, y:110, itemType:"unknown"};
-        item.itemType = pickItemType[Math.round(Math.random()*(pickItemType.length-1))]; //TODO replace temp item TYPE with real
-        cr =  Math.round(Math.random()*(itemCoord.length-1));
-        item.x = itemCoord[cr].x;
-        item.y = itemCoord[cr].y;
-        itemCoord.splice(cr,1);
-        items.push(item);
-    }
-    return items;
-};
-
 //real_rooms - all rooms we have
 
 waw.addItemSpawnCoordsToRooms = function(){
     for(var i = 0; i<real_rooms.length; i++){
         var room = real_rooms[i];
-        room.itemCoord = waw.GetItemSpawnCoords(room.type);
+        room.itemCoord = waw.GetCoords2SpawnItem(room.type);
         //console.info("Item coords ", room.itemCoord.length ,"into",room.name);
     }
 };
@@ -197,29 +175,32 @@ waw.generateItems = function(){
     waw.putRedCloth();
 };
 
-//put items on the layer
+//put rooms items on the layer
 waw.spawnItems = function(layer) {
     var items = [];
-    var n, item, i;
+    var n, i;
     for (n = 0; n < waw.curRoom.items.length; n++) {
-        i = waw.curRoom.items[n];
-        if (i === null) {
+        if(i = waw.curRoom.items[n])
+            items.push(waw.spawnItem(i.itemType, i.x, i.y, layer));
+        else
             items.push(null);
-            continue;   //replace deleted items with null to keep the order
-        }
-        //TODO choose i.itemType
-        item = new waw.Item(i.itemType);
-        item.setPosition(i.x, i.y);
-        layer.addChild(item, 250 - i.y);
-        layer.addChild(item.shadowSprite, -14);
-        item.shadowSprite.setPosition(i.x, i.y - 0);
-        items.push(item);
     }
     waw.items = items;
     return items;
 };
 
-waw.GetItemSpawnCoords = function (roomType) {
+waw.spawnItem = function (itemType, x, y, layer) {
+    if(itemType === null)
+        return;
+    var item = new waw.Item(itemType);
+    item.setPosition(x, y);
+    layer.addChild(item, 250 - y);
+    layer.addChild(item.shadowSprite, -14);
+    item.shadowSprite.setPosition(x, y - 0);
+    return item;
+};
+
+waw.GetCoords2SpawnItem = function (roomType) {
     var a = [];
     switch (roomType) {
         case 0:

@@ -19,7 +19,7 @@ waw.generateMobsRoom = function (roomType) {
     i = mob_set[Math.round(Math.random() * (mob_set.length - 1))];
     var pickMobType = waw.theme.rules.mob_group[i];
 
-    var mobCoord = waw.GetMobSpawnCoords(roomType);
+    var mobCoord = waw.GetCoords2SpawnMob(roomType);
     var cr;
     for (i = 0; i < pickMobType.length; ++i) {
         mob = {x: 160, y: 110, mobType: "unknown"};
@@ -114,7 +114,7 @@ waw.cleanSpawnMobs = function(layer) {
     layer.units = [];
 };
 
-waw.updateSpawnMobs = function(layer) {
+waw.updateSpawnedMobs = function(layer) {
     for(var i=0; i<layer.mobs.length; ++i){
         if(layer.mobs[i]) {
             layer.mobs[i].update();
@@ -122,7 +122,7 @@ waw.updateSpawnMobs = function(layer) {
     }
 };
 
-waw.GetMobSpawnCoords = function (roomType) {
+waw.GetCoords2SpawnMob = function (roomType) {
     var a = [];
     switch (roomType) {
         case 0:
