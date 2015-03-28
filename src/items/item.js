@@ -5,10 +5,12 @@ waw.Item = waw.Unit.extend({
     sprite: null,
     shadowYoffset: 0,
     spriteYoffset: 0,
-    ctor: function (itemT) {
+    cleanItemIndex: 0,
+    ctor: function (itemT, n) {
         this._super();
         //console.info("Item ctor "+itemT);
         this.itemType = itemT;
+        this.cleanItemIndex = n;
         this.setContentSize(8, 8);
         var s = waw.SpriteRect(16,16);
         switch (this.itemType) {
@@ -81,13 +83,14 @@ waw.Item = waw.Unit.extend({
             new cc.RemoveSelf()
         ));
 
-        for (i = 0; i < waw.items.length; i++) { //remove from current items array
+/*        for (i = 0; i < waw.items.length; i++) { //remove from current items array
             if (waw.items[i] === this) {
                 waw.items[i] = null;
                 waw.curRoom.items[i] = null;
                 break;
             }
-        }
+        }*/
+        waw.items[this.cleanItemIndex] = waw.curRoom.items[this.cleanItemIndex] = null;
     },
     update: function () {
         //check conditions

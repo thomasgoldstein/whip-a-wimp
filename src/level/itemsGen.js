@@ -17,7 +17,7 @@ waw.addItemToRoom = function(room, itemName){
     if(!room.itemCoord || room.itemCoord.length < 1)
         throw "Nowhere to fit item";
 
-    var item = {x:160, y:110, itemType:itemName};
+    var item = {x:160, y:110, itemType:itemName, inChest:false, locked:false};
     var cr =  Math.round(Math.random()*(room.itemCoord.length-1));
     item.x = room.itemCoord[cr].x;
     item.y = room.itemCoord[cr].y;
@@ -180,8 +180,12 @@ waw.spawnItems = function(layer) {
     var items = [];
     var n, i;
     for (n = 0; n < waw.curRoom.items.length; n++) {
-        if(i = waw.curRoom.items[n])
-            items.push(waw.spawnItem(i.itemType, i.x, i.y, layer));
+        if (i = waw.curRoom.items[n]) {
+            if(i.inChest)
+                items.push(waw.spawnItemInChest(i.locked, i.itemType, i.x, i.y, n, layer));
+            else
+                items.push(waw.spawnItem(i.itemType, i.x, i.y, n, layer));
+        }
         else
             items.push(null);
     }
@@ -189,14 +193,32 @@ waw.spawnItems = function(layer) {
     return items;
 };
 
-waw.spawnItem = function (itemType, x, y, layer) {
+waw.spawnItem = function (itemType, x, y, n, layer) {
     if(itemType === null)
         return;
-    var item = new waw.Item(itemType);
+    var item = new waw.Item(itemType, n);
     item.setPosition(x, y);
     layer.addChild(item, 250 - y);
     layer.addChild(item.shadowSprite, -14);
     item.shadowSprite.setPosition(x, y - 0);
+    return item;
+};
+
+waw.spawnItemInChest = function (locked, itemType, x, y, n, layer) {
+    if(itemType === null)
+        return;
+    var item = {
+        x: x,
+        y: y,
+        itemType: itemType, inChest: true, locked: locked
+    };
+    var e = new waw.NoMobChest(item.locked, item.itemType, n);
+    e.setPosition(x, y);
+    layer.addChild(e, 250 - y);
+    layer.addChild(e.shadowSprite, -14);
+    e.shadowSprite.setPosition(x, y - 0);
+    e.setTag(TAG_CHEST);
+    waw.units.push(e);   //to make it obstacle&
     return item;
 };
 

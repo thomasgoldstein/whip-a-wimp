@@ -1,144 +1,144 @@
 "use strict";
 waw.Score = cc.Node.extend({
-    shadowSprite: null,
-    label: null,
+        shadowSprite: null,
+        label: null,
 
-    items: {},
+        items: {},
 
-    ctor: function () {
-        this._super();
-        this.setAnchorPoint(0, 0.5);
-        var s = waw.SpriteRect(16,16);
-        this.items = {
-            keys: {
-                sprite: new cc.Sprite(waw.gfx.items, s(0, 0)),
-                oldValue: 0,
-                usage: function () {
-                    console.log(this.name + " is used automatically")
+        ctor: function () {
+            this._super();
+            this.setAnchorPoint(0, 0.5);
+            var s = waw.SpriteRect(16, 16);
+            this.items = {
+                keys: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(0, 0)),
+                    oldValue: 0,
+                    usage: function () {
+                        console.log(this.name + " is used automatically")
+                    },
+                    update: function () {
+                    }
+                    //show:function(){ this.items.keys.sprite.visible = true; },
+                    //hide:function(){ this.items.keys.sprite.visible = false;}
                 },
-                update: function () {
-                }
-                //show:function(){ this.items.keys.sprite.visible = true; },
-                //hide:function(){ this.items.keys.sprite.visible = false;}
-            },
-            coins: {
-                sprite: new cc.Sprite(waw.gfx.items, s(1, 0)),
-                oldValue: 0,
-                usage: function () {
-                    console.log(this.name + " is used automatically")
+                coins: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(1, 0)),
+                    oldValue: 0,
+                    usage: function () {
+                        console.log(this.name + " is used automatically")
+                    },
+                    update: function () {
+                    }
+                    //show:function(){ this.items.coins.sprite.visible = true; },
+                    //hide:function(){ this.items.coins.sprite.visible = false;}
                 },
-                update: function () {
+                gems: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(2, 0)),
+                    oldValue: 0,
+                    usage: function () {
+                        console.log(this.name + " is used automatically")
+                    },
+                    update: function () {
+                    }
+                    //show:function(){ this.items.gems.sprite.visible = true; },
+                    //hide:function(){ this.items.gems.sprite.visible = false;}
                 }
-                //show:function(){ this.items.coins.sprite.visible = true; },
-                //hide:function(){ this.items.coins.sprite.visible = false;}
-            },
-            gems: {
-                sprite: new cc.Sprite(waw.gfx.items, s(2, 0)),
-                oldValue: 0,
-                usage: function () {
-                    console.log(this.name + " is used automatically")
-                },
-                update: function () {
-                }
-                //show:function(){ this.items.gems.sprite.visible = true; },
-                //hide:function(){ this.items.gems.sprite.visible = false;}
+            };
+
+            this.addChild(this.items.keys.sprite);
+            this.items.keys.sprite.setPosition(0 * 16, 0);
+            if (waw.keys > 1) {
+                var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
+                this.items.keys.sprite.removeAllChildren();
+                this.items.keys.sprite.addChild(keySpr, -1);
+                keySpr.setAnchorPoint(0, 0);
+                keySpr.setPosition(2, 2);
+                keySpr.opacity = 200;
+                waw.makeSpriteJump(keySpr);
             }
-        };
-
-        this.addChild(this.items.keys.sprite);
-        this.items.keys.sprite.setPosition(0 * 16, 0);
-        if (waw.keys > 1){
-            var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
-            this.items.keys.sprite.removeAllChildren();
-            this.items.keys.sprite.addChild(keySpr, -1);
-            keySpr.setAnchorPoint(0, 0);
-            keySpr.setPosition(2, 2);
-            keySpr.opacity = 200;
-            waw.makeSpriteJump(keySpr);
-        }
-        if(waw.keys > 2){
-            var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
-            this.items.keys.sprite.addChild(keySpr, -2);
-            keySpr.setAnchorPoint(0, 0);
-            keySpr.setPosition(4, 4);
-            keySpr.opacity = 127;
-            waw.makeSpriteJump(keySpr);
-        }
-        if(waw.keys<=0)
-            this.items.keys.sprite.visible = false;
-        this.items.keys.oldValue = waw.keys;
-
-        this.addChild(this.items.coins.sprite);
-        this.items.coins.sprite.setPosition(1*16, 0);
-        if(waw.coins<=0)
-            this.items.coins.sprite.visible = false;
-        this.items.coins.oldValue = waw.coins;
-
-        this.addChild(this.items.gems.sprite);
-        this.items.gems.sprite.setPosition(2*16, 0);
-        if(waw.gems<=0)
-            this.items.gems.sprite.visible = false;
-        this.items.gems.oldValue = waw.gems;
-
-        this.scheduleUpdate();
-
-    },
-    update: function(){
-        if(waw.keys !== this.items.keys.oldValue){
-            var s = waw.SpriteRect(16,16);
-            switch(waw.keys){
-                case 0:
-                    //this.items.keys.sprite.removeAllChildren();
-                    this.items.keys.sprite.visible = false;
-                    break;
-                case 1:
-                    if(this.items.keys.oldValue === 0){
-                        this.items.keys.sprite.visible = true;
-                    } else {
-                        this.items.keys.sprite.removeAllChildren();
-                    }
-                    break;
-                case 2:
-                    var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
-                    if(this.items.keys.oldValue === 1){
-                        this.items.keys.sprite.addChild(keySpr, -1);
-                        keySpr.setAnchorPoint(0, 0);
-                        keySpr.setPosition(2, 2);
-                        keySpr.opacity = 200;
-                        waw.makeSpriteJump(keySpr);
-                    } else {
-                        this.items.keys.sprite.removeAllChildren();
-                        this.items.keys.sprite.addChild(keySpr, -1);
-                        keySpr.setAnchorPoint(0, 0);
-                        keySpr.setPosition(2, 2);
-                        keySpr.opacity = 200;
-                        waw.makeSpriteJump(keySpr);
-                    }
-                    break;
-                case 3:
-                    var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
-                    if(this.items.keys.oldValue === 2){
-                        this.items.keys.sprite.addChild(keySpr, -2);
-                        keySpr.setAnchorPoint(0, 0);
-                        keySpr.setPosition(4, 4);
-                        keySpr.opacity = 127;
-                        waw.makeSpriteJump(keySpr);
-                    }
-                    break;
+            if (waw.keys > 2) {
+                var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
+                this.items.keys.sprite.addChild(keySpr, -2);
+                keySpr.setAnchorPoint(0, 0);
+                keySpr.setPosition(4, 4);
+                keySpr.opacity = 127;
+                waw.makeSpriteJump(keySpr);
             }
+            if (waw.keys <= 0)
+                this.items.keys.sprite.visible = false;
             this.items.keys.oldValue = waw.keys;
-        }
-        if(waw.coins !== this.items.coins.oldValue){
-            this.items.coins.sprite.visible = (waw.coins>0);
-            this.items.coins.oldValue = waw.coins;
-        }
-        if(waw.gems !== this.items.gems.oldValue){
-            this.items.gems.sprite.visible = (waw.gems>0);
-            this.items.gems.oldValue = waw.gems;
-        }
 
+            this.addChild(this.items.coins.sprite);
+            this.items.coins.sprite.setPosition(1 * 16, 0);
+            if (waw.coins <= 0)
+                this.items.coins.sprite.visible = false;
+            this.items.coins.oldValue = waw.coins;
+
+            this.addChild(this.items.gems.sprite);
+            this.items.gems.sprite.setPosition(2 * 16, 0);
+            if (waw.gems <= 0)
+                this.items.gems.sprite.visible = false;
+            this.items.gems.oldValue = waw.gems;
+
+            this.scheduleUpdate();
+
+        },
+        update: function () {
+            if (waw.keys !== this.items.keys.oldValue) {
+                var s = waw.SpriteRect(16, 16);
+                switch (waw.keys) {
+                    case 0:
+                        //this.items.keys.sprite.removeAllChildren();
+                        this.items.keys.sprite.visible = false;
+                        break;
+                    case 1:
+                        if (this.items.keys.oldValue === 0) {
+                            this.items.keys.sprite.visible = true;
+                        } else {
+                            this.items.keys.sprite.removeAllChildren();
+                        }
+                        break;
+                    case 2:
+                        var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
+                        if (this.items.keys.oldValue === 1) {
+                            this.items.keys.sprite.addChild(keySpr, -1);
+                            keySpr.setAnchorPoint(0, 0);
+                            keySpr.setPosition(2, 2);
+                            keySpr.opacity = 200;
+                            waw.makeSpriteJump(keySpr);
+                        } else {
+                            this.items.keys.sprite.removeAllChildren();
+                            this.items.keys.sprite.addChild(keySpr, -1);
+                            keySpr.setAnchorPoint(0, 0);
+                            keySpr.setPosition(2, 2);
+                            keySpr.opacity = 200;
+                            waw.makeSpriteJump(keySpr);
+                        }
+                        break;
+                    case 3:
+                        var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
+                        if (this.items.keys.oldValue === 2) {
+                            this.items.keys.sprite.addChild(keySpr, -2);
+                            keySpr.setAnchorPoint(0, 0);
+                            keySpr.setPosition(4, 4);
+                            keySpr.opacity = 127;
+                            waw.makeSpriteJump(keySpr);
+                        }
+                        break;
+                }
+                this.items.keys.oldValue = waw.keys;
+            }
+            if (waw.coins !== this.items.coins.oldValue) {
+                this.items.coins.sprite.visible = (waw.coins > 0);
+                this.items.coins.oldValue = waw.coins;
+            }
+            if (waw.gems !== this.items.gems.oldValue) {
+                this.items.gems.sprite.visible = (waw.gems > 0);
+                this.items.gems.oldValue = waw.gems;
+            }
+
+        }
     }
-}
 );
 
 waw.MenuDebug = function (layer) {
@@ -182,7 +182,7 @@ waw.MenuDebug = function (layer) {
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16+2, 208);
+    debugOnOffItem.setPosition(16 + 2, 208);
 
     labelDebug = new cc.LabelTTF("HitBox", "System", 10);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
@@ -218,11 +218,11 @@ waw.MenuDebug = function (layer) {
     labelDebug = new cc.LabelTTF("Music", "System", 10);
     var debugMusicOnOff = new cc.MenuItemLabel(labelDebug,
         function () {
-          if(cc.audioEngine.isMusicPlaying()){
-              cc.audioEngine.pauseMusic();
-              //cc.audioEngine.stopAllEffects();
-          } else {
-              cc.audioEngine.resumeMusic();
+            if (cc.audioEngine.isMusicPlaying()) {
+                cc.audioEngine.pauseMusic();
+                //cc.audioEngine.stopAllEffects();
+            } else {
+                cc.audioEngine.resumeMusic();
             }
         }, layer
     );
@@ -238,20 +238,22 @@ waw.MenuDebug = function (layer) {
             waw.keys += 3;
             waw.coins += 3;
             waw.gems += 3;
-            waw.player.HP = 2; waw.player.sprite2.visible = true;
+            waw.player.HP = 2;
+            waw.player.sprite2.visible = true;
             rooms.foundMap = true;
-            waw.whip.addLink();waw.whip.addLink();waw.whip.addLink();
+            waw.whip.addLink();
+            waw.whip.addLink();
+            waw.whip.addLink();
         }, layer);
     menu = new cc.Menu(debugDoors);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugDoors.setPosition(16, 160);
 
-
     labelDebug = new cc.LabelTTF("Weapon+", "System", 10);
     var debugMenu10 = new cc.MenuItemLabel(labelDebug,
         function () {
-            switch(waw.player.currentWeapon){
+            switch (waw.player.currentWeapon) {
                 case "":
                 case "punch":
                     waw.player.currentWeapon = "whip";
@@ -281,27 +283,38 @@ waw.MenuDebug = function (layer) {
 
     labelDebug = new cc.LabelTTF("Chest", "System", 12);
     var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
-       function () {
-            var e = new waw.NoMobChest();
-            var pos = waw.player.getPosition();
-            e.setPosition(pos);
-            e.setScale(0.1);
-            e.runAction(new cc.ScaleTo(0.5, 1));
-            this.addChild(e, 6);
-            this.addChild(e.shadowSprite, -14);
-            e.setZOrder(250 - pos.y);
-            e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
-            e.setTag(TAG_CHEST);
-            console.log(waw.units.length);
-            //waw.mobs.push(e);
-            //waw.units[waw.mobs.length-1] = e;   //to make it obstacle&
+            function () {
+                var itemType = Math.random() < 0.5 ? "coin" : Math.random() < 0.5 ? "gem" : "key";
+                var locked = Math.random() < 0.5 ? true : false;
+                var item = {
+                    x: waw.player.x,
+                    y: waw.player.y,
+                    itemType: itemType, inChest: true, locked: locked
+                };
+                waw.curRoom.items.push(item);   //TODO isnt it extra stuff?
+                waw.items[waw.curRoom.items.length-1] = item;
 
-            this.scheduleOnce(function () {
-                waw.units.push(e);   //to make it obstacle&
+                var e = new waw.NoMobChest(item.locked, item.itemType, waw.curRoom.items.length - 1);
+                var pos = waw.player.getPosition();
+                e.setPosition(pos);
+                e.setScale(0.1);
+                e.runAction(new cc.ScaleTo(0.5, 1));
+                this.addChild(e, 6);
+                this.addChild(e.shadowSprite, -14);
+                e.setZOrder(250 - pos.y);
+                e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
+                e.setTag(TAG_CHEST);
                 console.log(waw.units.length);
-            }, 1);
+                //waw.mobs.push(e);
+                //waw.units[waw.mobs.length-1] = e;   //to make it obstacle&
 
-    }, layer);
+                this.scheduleOnce(function () {
+                    waw.units.push(e);   //to make it obstacle&
+                    console.log(waw.units.length);
+                }, 1);
+
+            }, layer
+        );
 
     menu = new cc.Menu(debugSpawnChest);
     menu.setPosition(0, 0);

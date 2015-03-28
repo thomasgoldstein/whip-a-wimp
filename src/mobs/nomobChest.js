@@ -13,10 +13,16 @@ waw.NoMobChest = waw.Unit.extend({
     topSprite: null,
     lockSprite: null,
     locked: true,
+    itemType: "unknown",
+    cleanItemIndex: 0,
 
-    ctor: function () {
+    ctor: function (locked, itemT, n) {
         this._super();
         //console.info("Chest ctor");
+        this.locked = locked;
+        this.itemType = itemT;
+        this.cleanItemIndex = n;
+
         this.setContentSize(32, 16);
 
         this.sprite = new cc.Sprite(waw.gfx.chest, new cc.rect(0, 5, 32, 24));
@@ -60,6 +66,7 @@ waw.NoMobChest = waw.Unit.extend({
             if (waw.keys > 0) {
                 this.locked = false;
                 waw.keys--;
+                waw.items[this.cleanItemIndex].locked = waw.curRoom.items[this.cleanItemIndex].locked = false;
                 this.sprite.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
                     new cc.MoveBy(0.3, 0, -8),
                     new cc.FadeOut(0.3)
@@ -71,6 +78,7 @@ waw.NoMobChest = waw.Unit.extend({
             return;
         this.unscheduleAllCallbacks();
         this.subState = "open";
+        waw.items[this.cleanItemIndex].inChest = waw.curRoom.items[this.cleanItemIndex].inChest = false;
 
         if (Math.random() < 0.5) {
             this.scheduleOnce(function () {
@@ -91,7 +99,8 @@ waw.NoMobChest = waw.Unit.extend({
         }
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(waw.sfx.coin01);
-            waw.spawnItem(Math.random()<0.5?"coin":(Math.random()<0.5?"gem":"key"), this.x, this.y, this.getParent());
+            //waw.spawnItem(this.itemType, this.cleanItemIndex);
+            waw.spawnItem(this.itemType, this.x, this.y, this.cleanItemIndex, this.getParent());
         }, 1);
         this.scheduleOnce(function () {
             this.cleanRefs();   //TODO should remove it from room spawn instantly to prevent cheating
