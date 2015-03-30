@@ -39,6 +39,7 @@ waw.theme = {
             lightRay: "res/Common/LightRay.png",
             map: this.themeDir + "Map.png",
             merchant: this.themeDir + "Merchant.png",
+            doveSeller: this.themeDir + "DoveSeller.png",
             middleWalls: this.themeDir + "MiddleWalls.png",
             pig: this.themeDir + "Pig.png",
             pillar: this.themeDir + "Pillar.png",
@@ -153,12 +154,12 @@ waw.theme = {
             ["Spikes"],
             ["Spikes", "Merchant"],
             ["Spikes", "Merchant", "Merchant"],
-            ["Spikes", "Merchant", "Bat"],
+            ["DoveSeller", "Merchant", "Merchant"],
             ["Spikes", "Bat", "Bat"],
-            ["Bat", "Bat", "Bat"],
-            ["Spikes", "Bat", "Bat", "Merchant"],
-            ["Merchant", "Bat", "Bat", "Bat","Spikes"],
-            ["Bat", "Bat", "Bat", "Bat", "Merchant"]
+            ["Bat", "Bat", "Bat", "Spikes", "Spikes"],
+            ["Spikes", "Bat", "Bat", "DoveSeller"],
+            ["Merchant", "Bat", "Bat", "Bat","DoveSeller"],
+            ["Bat", "Bat", "Bat", "Bat", "DoveSeller", "Merchant"]
         ],
 
         boss_group: [
