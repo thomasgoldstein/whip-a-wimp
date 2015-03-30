@@ -166,6 +166,25 @@ waw.putExit = function() {
     }
 };
 
+waw.putItemsIntoChests = function() {
+    var rooms = real_rooms.filter(
+        function(room) {
+            if (room.distance >= real_rooms.maxDistance/2 )
+                return true;
+            return false;
+        }
+    );
+    for(var i=0; i<rooms.length; i++) {
+        var r = rooms[i];
+        for(var n=0; n < r.items.length; n++) {
+            if(Math.random()<0.5) {
+                r.items[n].inChest = true;
+                console.info("Item wrapped in the chest", r.name);
+            }
+        }
+    }
+};
+
 waw.generateItems = function(){
     waw.addItemSpawnCoordsToRooms();
     waw.putExit();
@@ -173,6 +192,7 @@ waw.generateItems = function(){
     waw.putKeys();
     waw.putRopes();
     waw.putRedCloth();
+    waw.putItemsIntoChests();
 };
 
 //put rooms items on the layer
