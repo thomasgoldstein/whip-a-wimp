@@ -156,10 +156,10 @@ waw.theme = {
             ["Spikes", "Merchant", "Merchant"],
             ["DoveSeller", "Merchant", "Merchant"],
             ["Spikes", "Bat", "Bat"],
-            ["Bat", "Bat", "Bat", "Spikes", "Spikes"],
+            ["Bat", "Bat", "Bat", "Spikes"],
             ["Spikes", "Bat", "Bat", "DoveSeller"],
             ["Merchant", "Bat", "Bat", "Bat","DoveSeller"],
-            ["Bat", "Bat", "Bat", "Bat", "DoveSeller", "Merchant"]
+            ["Bat", "Bat", "Bat", "DoveSeller", "Merchant"]
         ],
 
         boss_group: [

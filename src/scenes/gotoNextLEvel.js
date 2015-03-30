@@ -11,6 +11,10 @@ waw.gotoNextLevel = cc.Scene.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionFade;
 
+            //load + calc new levels
+            waw.theme.gotoNextLevel();
+            rooms.initLevel();
+
             waw.currentScene = new waw.MainScene();
             cc.director.runScene(new transition(3,waw.currentScene));
         }, 2);
@@ -42,13 +46,13 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
             )
         );
         label.rotation = -5;
-        label2.runAction(
+        /*label2.runAction(
             new cc.RepeatForever(
                 new cc.Sequence(
                     new cc.FadeIn(0.1),
                     new cc.FadeOut(0.1)
                 ))
-        );
+        );*/
         label2.runAction(
             new cc.Sequence(
                 new cc.DelayTime(1),
@@ -65,9 +69,6 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
     onEnterTransitionDidFinish: function () {
         this._super();
         console.info("onEnterTransitionDidFinish GO");
-        //load + calc new levels
-        waw.theme.gotoNextLevel();
-        rooms.initLevel();
     },
     onExitTransitionDidStart: function () {
         this._super();
