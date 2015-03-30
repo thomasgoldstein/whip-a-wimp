@@ -60,7 +60,7 @@ waw.spawnMobs = function(layer){
                 e = new waw.MobMerchant();
                 break;
             case "DoveSeller":
-                e = new waw.MobMerchant();
+                e = new waw.MobDoveSeller();
                 break;
             case "Spikes":
                 e = new waw.MobSpikes();
