@@ -125,6 +125,24 @@ rooms.isDeadEnd = function (r) {
     return false;
 };
 
+rooms.hasExit = function (r) {
+    //has Exit door
+    if (!r)
+        throw "No room found";
+    if (r.walls.up === "exit" || r.walls.right === "exit" || r.walls.left === "exit" || r.walls.down === "exit")
+        return true;
+    return false;
+};
+
+rooms.isEntrance = function (r) {
+    //is the start point of the level
+    if (!r)
+        throw "No room found";
+    if (r.x === 4 && r.y === 4)
+        return true;
+    return false;
+};
+
 rooms.isPassage = function (r) {
     //has 2 entrances
     if (!r)
