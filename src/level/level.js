@@ -49,6 +49,10 @@ rooms.initLevel = function() {
 		}
 	}
     rooms.foundMap = false; //player found no map yet
+    if(waw.keys > 3)
+        waw.keys = 0;
+    waw.coins = 0;
+    waw.gems = 0;
 };
 
 rooms.genLevel = function() {

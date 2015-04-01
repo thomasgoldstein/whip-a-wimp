@@ -22,6 +22,7 @@ waw.theme = {
     gotoNextTheme: function(){
         this.init();    //replace to pick next theme
         this.loadResources();
+        waw.initScoreAndItems();
     },
     loadResources: function(){
         waw.gfx = {

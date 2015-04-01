@@ -1,6 +1,3 @@
-/**
- * @namespace
- */
 "use strict";
 //our singleton
 var waw = {
@@ -14,7 +11,6 @@ var waw = {
     mobs: [],        //enemy units
     items: [],        //items
 
-    //hitBoxField: [], // [320][240] of passable/not of the current level
     KEYS: [], // list of pressed keys. bool
     score: 0,
     hiScore: 100,
@@ -26,21 +22,18 @@ var waw = {
         if(this.score > this.hiScore )
             this.hiScore = this.score;
     },
-    initScore: function() {
+    initScoreAndItems: function() {
         this.score = 0;
         this.keys = 0;
         this.coins = 0;
         this.gems = 0;
     }
 };
-//waw.KEYS[cc.KEY.up] = waw.KEYS[cc.KEY.down] = waw.KEYS[cc.KEY.left] = waw.KEYS[cc.KEY.right] = false;
 
 //Global vars
 var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
 var rooms = []; //2d 9x9 array of the level rooms
 var real_rooms = []; //1d array with all generated rooms
-
-//console.log(cc.Director.getInstance().waw);
 
 //debug vars
 var showDebugInfo = false;
@@ -70,10 +63,6 @@ var TAG_ENEMY= 300+0;
 var TAG_BOSS= 300+1;
 
 var TAG_SUBSTATE_ANIMATION = 400+0;
-
-
-//instance of the audio
-//var audioEngine = cc.AudioEngine.getInstance();
 
 // Disable anti-aliasing
 waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;

@@ -43,7 +43,7 @@ waw.MainScene = cc.Scene.extend({
         waw.KEYS[cc.KEY.down] =
         waw.KEYS[cc.KEY.up] =
         waw.KEYS[cc.KEY.space] = false;
-        waw.initScore();
+
         rooms.initLevel();
         rooms.genLevel();
         rooms.initNeighbours();

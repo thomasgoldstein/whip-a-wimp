@@ -28,7 +28,7 @@ waw.GameOverLayer = cc.Layer.extend({
         cc.audioEngine.stopAllEffects();
         cc.audioEngine.stopMusic();
 
-        waw.theme.gotoNextTheme();  //TODO add reset level / theme
+        //waw.theme.gotoNextTheme();  //TODO add reset level / theme
 
         var label = new cc.LabelTTF("GAME OVER", "System", 32);
         label.setAnchorPoint(0.5, 0.5);
