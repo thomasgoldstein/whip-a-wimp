@@ -123,7 +123,8 @@ waw.Score = cc.Node.extend({
                             keySpr.setPosition(4, 4);
                             keySpr.opacity = 127;
                             waw.makeSpriteJump(keySpr);
-                        }
+                        } else
+                            this.items.keys.sprite.visible = true;  //TODO its a hack for items+ to show any keys
                         break;
                 }
                 this.items.keys.oldValue = waw.keys;
@@ -240,7 +241,10 @@ waw.MenuDebug = function (layer) {
             waw.gems += 3;
             waw.player.HP = 2;
             waw.player.sprite2.visible = true;
-            rooms.foundMap = true;
+            if (rooms.foundMap === false) {
+                waw.AddMiniMap(waw.layer, waw.curRoom, true);
+                rooms.foundMap = true;
+            }
             waw.whip.addLink();
             waw.whip.addLink();
             waw.whip.addLink();
