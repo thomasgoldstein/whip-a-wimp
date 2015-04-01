@@ -623,7 +623,6 @@ waw.prepareRoomLayer = function(room) {
     //put obstacles in the room
     waw.prepareRoomPattern(room);
 
-    //print room coords X,Y at the upper left corner
     if(showDebugInfo) {
         var label = new cc.LabelTTF("ROOM: "+waw.curRoomX+","+waw.curRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
         layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
@@ -724,6 +723,23 @@ waw.openDoor = function (doorTag, layer) {
     //we need 2 tags _DOOR and _DOORD that's why -4
     layer.removeChildByTag(doorTag);
     cc.audioEngine.playEffect(waw.sfx.door01);
+};
+
+waw.openExitDoor = function (layer) {
+    if(waw.coins<=0 || waw.gems<=0) {
+        if(Math.random()<0.5)
+            cc.audioEngine.playEffect(waw.sfx.nah01);
+        else
+            cc.audioEngine.playEffect(waw.sfx.nah02);
+        console.log("You must have Coin+Gem to open the exit door");
+        return;
+    }
+    waw.coins--;
+    waw.gems--;
+    cc.audioEngine.playEffect(waw.sfx.door01);
+    var transition = cc.TransitionFade;
+    //var transition = cc.TransitionZoomFlipAngular;
+    cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
 };
 
 //adds obstacles of a room onto existing layer

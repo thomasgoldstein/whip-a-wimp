@@ -6,7 +6,6 @@ waw.Player = waw.Unit.extend({
     weaponSprite: null,
     sprite: null,
     sprite2: null,
-    //sfx_hurt: waw.sfx.punch01,
 
     ctor: function() {
         this._super();
@@ -167,8 +166,7 @@ waw.Player = waw.Unit.extend({
         this.shadowSprite.setAnchorPoint(0.5 , 0.5);
     },
     getNextPosition: function() {
-        var //p = this.getPositionF(),
-            x = this.x,
+        var x = this.x,
             y = this.y;
 
         var fps = cc.director.getAnimationInterval();
@@ -266,9 +264,6 @@ waw.Player = waw.Unit.extend({
                 }
             }
         });
-//        if(oldPos.x == nextPos.x || oldPos.y == nextPos.y ){
-//            waw.player.runAction(cc.Blink.create(0.5, 2)); //Blink Foe sprite
-//        }
         return nextPos;
     },
 
@@ -277,9 +272,7 @@ waw.Player = waw.Unit.extend({
             waw.KEYS[cc.KEY.left] ||
             waw.KEYS[cc.KEY.right] ||
             waw.KEYS[cc.KEY.up] ||
-            waw.KEYS[cc.KEY.down] ? "walk" :
-                //waw.KEYS[cc.KEY.space] ? "punch" : "idle";
-                "idle";
+            waw.KEYS[cc.KEY.down] ? "walk" : "idle";
         return state;
     },
     interactWithUnit: function (unit) {
@@ -291,7 +284,6 @@ waw.Player = waw.Unit.extend({
             case TAG_UP_DOORD:
             case TAG_LEFT_DOORD:
             case TAG_RIGHT_DOORD:
-                waw.whip.visible = false;
                 waw.openDoor(t, this.getParent());
                 return true;
                 break;
@@ -300,14 +292,10 @@ waw.Player = waw.Unit.extend({
                 return true;
                 break;
             case TAG_EXIT:
-                waw.whip.visible = false;
-                var transition = cc.TransitionFade;
-                //var transition = cc.TransitionZoomFlipAngular;
-                cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
+                waw.openExitDoor();
                 break;
             case TAG_ENEMY:
                 //TODO temp. remove later
-                //unit.onGetDamage(this);
                 break;
             default:
                 if(t>0)
@@ -317,8 +305,6 @@ waw.Player = waw.Unit.extend({
     },
     doCheckAction: function () {
         var currentTime = new Date();
-        //var t, x = this.x-16, y = this.y- 8;
-        //if (!waw.KEYS[cc.KEY.space] || currentTime.getTime() < this.timeToThink)
         if (!waw.KEYS[cc.KEY.space]
             || this.subState === "whip"
             || this.subState === "punch"
@@ -327,10 +313,7 @@ waw.Player = waw.Unit.extend({
             || this.subState === "hurt"
         )
             return;
-        //cool down time 1 sec
-        //this.timeToThink = currentTime.getTime() + 1000;
 
-        //var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
         var playerBiggerRect = cc.rect(this.x-10, this.y- 2, this.width + 4, this.height + 4);
 
         var interactions= 0;
@@ -338,7 +321,6 @@ waw.Player = waw.Unit.extend({
             var unit = waw.units[i];
             if(!unit)
                 continue;
-            //console.log(unit.getTag());
             var unitRect = unit.collideRect();
             if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
                 if(this.interactWithUnit(unit))
@@ -597,12 +579,6 @@ waw.Player = waw.Unit.extend({
     },
     becomeInvincible: function() {
         this.setSubState("invincible", 2000);
-        //var action = new cc.Blink(10,30);
-        //var action = new cc.FadeTo(0.1,  128);
-        //var action2 = new cc.FadeTo(0.1,  128);
-        //action.setTag(TAG_SUBSTATE_ANIMATION);
-        //this.sprite.runAction(action);
-        //this.shadowSprite.runAction(action2);
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
 
@@ -629,8 +605,6 @@ waw.Player = waw.Unit.extend({
             this.onDeath(killer);
         if (this.HP === 1) {
             this.sprite2.visible = false;
-            //this.sprite2.runAction(new cc.Blink(3,9));
-            //this.sprite2.runAction(new cc.FadeIn(3));
             this.runAction(new cc.jumpBy(0.35, 0, 0, 8, 1));
 
             var redCloth = new cc.Sprite(waw.gfx.jesusCloth,
@@ -873,12 +847,8 @@ waw.Player = waw.Unit.extend({
         }, 6);
 
         if(killer){
-            //mob.sprite.visible = false;
             //TODO actions dont work. I make mob transparent for debug
-            //killer.sprite.opacity = 200;
-            //killer.shadowSprite.opacity = 100;
             //console.log("You were killed by "+killer.mobType+"'s touch");
-            //runAction(new cc.TintTo(0, 255, 0, 0));
         }
 
         this.scheduleOnce(function () {
