@@ -33,8 +33,29 @@ waw.generateMobsRoom = function (roomType) {
     return mobs;
 };
 
+
 waw.putBossMob = function () {
     
+};
+
+waw.fixOverlappingPos = function(x,y, m) {
+    //check and fix spawn coords if they overlap other units
+    var curRect = cc.rect(x - m.width/2, y, m.width, m.height);
+    var flag = true;
+    while (flag) {
+        flag = false;
+        for (var unit in waw.units) {
+            if(!waw.units[unit])
+                continue;
+            if(cc.rectIntersectsRect(curRect, waw.units[unit].collideRect())){
+                curRect.x = 40+Math.round(Math.random()*225);
+                curRect.y = 40+Math.round(Math.random()*150);
+                flag = true;
+                break;
+            }
+        }
+    }
+    return cc.p(curRect.x + m.width/2, curRect.y);
 };
 
 waw.spawnMobs = function(layer){
@@ -74,22 +95,16 @@ waw.spawnMobs = function(layer){
             default:
                 throw "Wrong mob type "+m.mobType;
         }
-        pos = cc.p(e.toSafeXCoord(m.x), e.toSafeYCoord(m.y));
+        pos = waw.fixOverlappingPos(m.x, m.y, e);   //TODO make it run only once
         e.setPosition(pos);
         m.mob = e; //to get some params of the mob later, when u exit the room
         e.setZOrder(250 - pos.y);
-        e.setScale(0.1);
-        e.runAction(new cc.ScaleTo(0.5, 1));
-        //e.runAction(cc.Blink.create(1, 4)); //Blink Foe sprite
         layer.addChild(e, 250 - pos.y);
         //attach monsters shadow to layer OVER BG floor (its Z index = -15)
         layer.addChild(e.shadowSprite,-14);
-        //position shadow
         e.shadowSprite.setPosition(pos.x, pos.y-0);
         foes.push(e);
-
         waw.units[200+n] = e;   //to make it obstacle
-
         e.becomeInvincible();
     }
     waw.mobs = foes;
