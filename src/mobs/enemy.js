@@ -19,6 +19,7 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
+    itemsDrop: ["key","rope","cloth"],
     sfx_hurt01: waw.sfx.pigHurt01,
     sfx_hurt02: waw.sfx.pigHurt02,
     sfx_death: waw.sfx.pigDeath,
@@ -518,6 +519,12 @@ waw.Enemy = waw.Unit.extend({
         cc.audioEngine.playEffect(this.sfx_death);
         this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
+        this.scheduleOnce(function () {
+            if(this.itemsDrop.length > 0 && Math.random() < 0.1)
+                waw.curRoom.items.push(
+                    waw.spawnItem(this.itemsDrop[Math.round(Math.random()*(this.itemsDrop.length-1))], this.x, this.y, waw.curRoom.items.length, this.getParent())
+                );
+        }, 0.3);
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_death);
             //this.sprite.setAnchorPoint(0.5, 1);

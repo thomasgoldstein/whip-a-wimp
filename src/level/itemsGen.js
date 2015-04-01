@@ -134,6 +134,24 @@ waw.putRopes = function() {
     }
 };
 
+waw.putUselessItems = function () {
+    var filtered_rooms = real_rooms.filter(
+        function (r) {
+            if (!rooms.isEntrance(r) && !rooms.hasExit(r))
+                return true;
+            return false;
+        }
+    );
+    if (filtered_rooms.length < 1)
+        filtered_rooms = real_rooms;
+    for (var i = 0; i < filtered_rooms.length; i++) {
+        var room = filtered_rooms[i];
+        if (room && rooms.hasNoItems(room)) {
+            waw.addItemToRoom(room, "unknown");
+        }
+    }
+};
+
 waw.putExit = function() {
     var rooms = real_rooms.filter(
         function(room) {
@@ -177,6 +195,8 @@ waw.putItemsIntoChests = function() {
     for(var i=0; i<rooms.length; i++) {
         var r = rooms[i];
         for(var n=0; n < r.items.length; n++) {
+            if(r.items[n].itemType === "unknown")
+                continue;
             if(Math.random()<0.5) {
                 r.items[n].inChest = true;
                 console.info("Item wrapped in the chest", r.name);
@@ -192,6 +212,7 @@ waw.generateItems = function(){
     waw.putKeys();
     waw.putRopes();
     waw.putRedCloth();
+    waw.putUselessItems();
     waw.putItemsIntoChests();
 };
 
@@ -248,7 +269,8 @@ waw.GetCoords2SpawnItem = function (roomType) {
         case 0:
             //no obstacles
             for (var y = 48; y < 170; y += 40) {
-                a.push({x: 50 + Math.round(Math.random() * 220), y: y});
+                a.push({x: 50 + Math.round(Math.random() * 90), y: y});
+                a.push({x: 160 + Math.round(Math.random() * 110), y: y});
             }
             break;
         case 1:
@@ -257,6 +279,8 @@ waw.GetCoords2SpawnItem = function (roomType) {
             a.push({x: 50 + Math.round(Math.random() * 80), y: 120 + Math.round(Math.random() * 40)});
             a.push({x: 185 + Math.round(Math.random() * 86), y: 120 + Math.round(Math.random() * 40)});
             a.push({x: 185 + Math.round(Math.random() * 86), y: 50 + Math.round(Math.random() * 40)});
+            a.push({x: 134, y: 91});
+            a.push({x: 170, y: 91});
             break;
         case 2:
         //.. 2 obstacles horizontally

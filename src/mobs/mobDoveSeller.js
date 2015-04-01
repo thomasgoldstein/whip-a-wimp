@@ -11,6 +11,7 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
     spriteYoffset: 0,
     HP: 2,
     state: "idle",
+    itemsDrop: ["key","unknown","unknown"],
     sfx_hurt01: waw.sfx.merchHurt01,
     sfx_hurt02: waw.sfx.merchHurt02,
     sfx_death: waw.sfx.merchDeath,

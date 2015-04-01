@@ -305,12 +305,8 @@ waw.MenuDebug = function (layer) {
                 e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
                 e.setTag(TAG_CHEST);
                 console.log(waw.units.length);
-                //waw.mobs.push(e);
-                //waw.units[waw.mobs.length-1] = e;   //to make it obstacle&
-
                 this.scheduleOnce(function () {
                     waw.units.push(e);   //to make it obstacle&
-                    console.log(waw.units.length);
                 }, 1);
 
             }, layer

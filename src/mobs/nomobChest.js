@@ -67,6 +67,7 @@ waw.NoMobChest = waw.Unit.extend({
                 this.locked = false;
                 waw.keys--;
                 waw.items[this.cleanItemIndex].locked = waw.curRoom.items[this.cleanItemIndex].locked = false;
+                waw.makeSpriteJump(this);
                 this.sprite.getChildByTag(TAG_SPRITE_TEMP).runAction(new cc.Spawn( //animate the lock
                     new cc.MoveBy(0.3, 0, -8),
                     new cc.FadeOut(0.3)

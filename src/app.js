@@ -170,19 +170,17 @@ waw.MainLayer = cc.Layer.extend({
         //var animKey = waw.player.getState() + "_" + waw.player.direction;
         //waw.player.sprite.playAnimation(animKey);
         //waw.player.sprite2.playAnimation(animKey);
+        waw.player.scheduleUpdate();
     },
     onEnterTransitionDidFinish: function () {
         this._super();
 //      console.info("onEnterTransitionDidFinish ROOM:",waw.curRoomX,waw.curRoomY);
-        waw.player.scheduleUpdate();
     },
     onExitTransitionDidStart: function () {
         this._super();
         //console.info("onExitTransitionDidStart ROOM",waw.curRoomX,waw.curRoomY);
-
-        this.removeChild(waw.player.shadowSprite);
+        //this.removeChild(waw.player.shadowSprite);
         waw.cleanSpawnMobs(this);
-
         this.cleanup();
     },
     onGotoNextRoom: function (key, playerPos) {

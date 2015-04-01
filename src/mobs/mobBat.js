@@ -8,6 +8,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
     spriteYoffset: 24,
     HP: 1,
     state: "idle",
+    itemsDrop: [],
     sfx_hurt01: null,
     sfx_hurt02: null,
     sfx_death: waw.sfx.batDeath01,

@@ -282,35 +282,25 @@ waw.Player = waw.Unit.extend({
                 "idle";
         return state;
     },
-    shakePillar: function (unit) {
-        //TODO move it to another file
-        console.log("shake pillar");
-        /*var r = Math.random() * 3 + 2;
-        if (Math.random() < 0.5)
-            r = -r;
-        unit.sprite.runAction(
-            cc.sequence(
-                cc.skewBy(0.3, -r, 0),
-                cc.skewBy(0.3, r, 0)
-            )
-        );*/
-    },
     interactWithUnit: function (unit) {
         var t = unit.getTag();
         switch(t) {
             case TAG_PILLAR:
-                this.shakePillar(unit);
                 break;
             case TAG_DOWN_DOORD:
             case TAG_UP_DOORD:
             case TAG_LEFT_DOORD:
             case TAG_RIGHT_DOORD:
+                waw.whip.visible = false;
                 waw.openDoor(t, this.getParent());
+                return true;
                 break;
             case TAG_CHEST:
                 unit.onOpen(this);
+                return true;
                 break;
             case TAG_EXIT:
+                waw.whip.visible = false;
                 var transition = cc.TransitionFade;
                 //var transition = cc.TransitionZoomFlipAngular;
                 cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
@@ -323,6 +313,7 @@ waw.Player = waw.Unit.extend({
                 if(t>0)
                    console.log("Wrong Unit Tag 4interaction: "+t);
         }
+        return false;
     },
     doCheckAction: function () {
         var currentTime = new Date();
@@ -342,6 +333,7 @@ waw.Player = waw.Unit.extend({
         //var playerBiggerRect = cc.rect(this.x-16, this.y- 8, this.width + 16, this.height + 16);
         var playerBiggerRect = cc.rect(this.x-10, this.y- 2, this.width + 4, this.height + 4);
 
+        var interactions= 0;
         for (var i = 0; i < waw.units.length; i++) {
             var unit = waw.units[i];
             if(!unit)
@@ -349,7 +341,8 @@ waw.Player = waw.Unit.extend({
             //console.log(unit.getTag());
             var unitRect = unit.collideRect();
             if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
-                this.interactWithUnit(unit);
+                if(this.interactWithUnit(unit))
+                    interactions++;
             }
         }
 
@@ -359,7 +352,8 @@ waw.Player = waw.Unit.extend({
             case "idle":
             case "walk":
                 this.setSubState(this.currentWeapon,600);   //whip, punch, candelabre, etc
-
+                if(interactions>0) //TODO hack  to open chests/doors w/o whip
+                    this.subState = "punch";
                 switch (this.subState) {
                     case "punch":
                         cc.audioEngine.playEffect(waw.sfx.punch01);
