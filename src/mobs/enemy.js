@@ -520,7 +520,7 @@ waw.Enemy = waw.Unit.extend({
         this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
         this.scheduleOnce(function () {
-            if(this.itemsDrop.length > 0)
+            if(this.itemsDrop.length > 0 && Math.random() < 0.1)
                 waw.curRoom.items.push(
                     waw.spawnItem(this.itemsDrop[Math.round(Math.random()*(this.itemsDrop.length-1))], this.x, this.y, waw.curRoom.items.length, this.getParent())
                 );
