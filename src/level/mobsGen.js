@@ -1,8 +1,8 @@
 "use strict";
 
 waw.generateMobs = function(){
-
-    for (var i = 0; i < real_rooms.length; i++) {
+    for (var i = 1; i < real_rooms.length; i++) {
+        //start from i = 1, because 0 - start room w/o mobs
         var r = real_rooms[i];
         r.mobs = waw.generateMobsRoom(r.type);
     }
