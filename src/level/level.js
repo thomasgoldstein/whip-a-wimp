@@ -166,43 +166,69 @@ rooms.genLevel = function() {
 };
 
 //Generate Mini Map Layer
-waw.GenerateMiniMap = function() {
+waw.GenerateMiniMap = function () {
     var m = null;
-    var r,w;
+    var r, w, x, y;
     var mapXOffset = 15, mapYOffset = 5;
     var layerMapSprite = new cc.Sprite(waw.gfx.map,
         cc.rect(0, 6, 64, 56));
     layerMapSprite.opacity = 200;
     //cc.LayerColor(cc.color(0,0,0,24), 45, 45);   //dark BG
-    for(var y = 0; y < 9 ; y++) {
-        for(var x = 0; x < 9; x++) {
+
+    //calc filled rooms to center mini-map
+    var minX = 4, minY = 4, maxX = 4, maxY = 4;
+    for (y = 0; y < 9; y++) {
+        for (x = 0; x < 9; x++) {
+            r = rooms[y][x];
+            if (r) {	//is it a Room
+                if (x < minX)
+                    minX = x;
+                if (y < minY)
+                    minY = y;
+                if (x > maxX)
+                    maxX = x;
+                if (y > maxY)
+                    maxY = y;
+            }
+        }
+    }
+    console.log("$$$$ min max X:", minX, maxX, "min max Y", minY, maxY);
+    var realW = maxX - minX + 1;
+    var realH = maxY - minY + 1;
+    realW = (45 - realW * 5)/2;
+    realH = (45 - realH * 5)/2;
+    mapXOffset += realH/2;
+    mapYOffset += realW/2;
+
+    for (y = 0; y < 9; y++) {
+        for (x = 0; x < 9; x++) {
             w = 0; //walls-doors counter
             r = rooms[y][x];
-            if(r) {	//is it a Room
+            if (r) {	//is it a Room
                 //4 passages
-                if(r.walls.up !== "empty")
+                if (r.walls.up !== "empty")
                     w |= 1;
-                if(r.walls.right !== "empty")
+                if (r.walls.right !== "empty")
                     w |= 2;
-                if(r.walls.down !== "empty")
+                if (r.walls.down !== "empty")
                     w |= 4;
-                if(r.walls.left !== "empty")
+                if (r.walls.left !== "empty")
                     w |= 8;
                 //the room
                 m = new cc.Sprite(waw.gfx.map,
                     cc.rect(w * 6, 0, 5, 5));
                 m.setOpacity(r.visited ? 255 : 63);
                 layerMapSprite.addChild(m);
-                m.setPositionX(x*5+3 +mapXOffset);
-                m.setPositionY((8-y)*5+2 +mapYOffset);
-                if(waw.curRoomX === x && waw.curRoomY === y){
+                m.setPositionX(x * 5 + 3 + mapXOffset);
+                m.setPositionY((8 - y) * 5 + 2 + mapYOffset);
+                if (waw.curRoomX === x && waw.curRoomY === y) {
                     m.setScale(2);
                     m.runAction(new cc.ScaleTo(2, 1));
                     m.runAction(new cc.Blink(1, 2)); //Blink sprite
                     m = new cc.Sprite(waw.gfx.map, cc.rect(90, 6, 5, 5)); //red dot - players pos
                     layerMapSprite.addChild(m);
-                    m.setPositionX(x*5+3 +mapXOffset);
-                    m.setPositionY((8-y)*5+2 +mapYOffset);
+                    m.setPositionX(x * 5 + 3 + mapXOffset);
+                    m.setPositionY((8 - y) * 5 + 2 + mapYOffset);
                     m.setOpacity(127);
                 }
             }
