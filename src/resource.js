@@ -3,20 +3,22 @@ var g_resources = [];
 
 waw.theme = {
     name: "",
-    levelN: 0,
-    rules: {},
     themeDir: "",
+    levelN: 0,
+    maxLevelN: 4,
+    rules: {},
+
     init: function() {
-        this.name = "Temple";
-        this.themeDir = "res/Themes/" + this.name + "/";
+        //load current theme settings
         this.rules = this.temple_rules;
+        this.name = this.rules.name;
+        this.themeDir = this.rules.themeDir;
         this.levelN = 0;
+        this.maxLevelN = this.rules.max_rooms.length-1; //Max LVL -1
     },
     gotoNextLevel: function(){
-        //this.init();    //replace to pick next theme
-        //this.loadResources();
         this.levelN ++;
-        if(this.levelN > 4)
+        if(this.levelN > this.maxLevelN)
             this.gotoNextTheme();
     },
     gotoNextTheme: function(){
@@ -116,51 +118,59 @@ waw.theme = {
 
     temple_rules: {
         name: "Temple",
+        themeDir: "res/Themes/Temple/",
 
-        max_rooms: [3,5,9,13,15],   //rooms per level
+        max_rooms: [3,5,6,7,8, 9,10,12,13,15],   //rooms per level
 
         room_set: [ //possible room type
             [1],
             [2],
             [3, 4],
             [1, 2, 3, 4],
-            [1, 2, 3, 4, 5, 6]
+            [5, 6],
+
+            [3, 4],
+            [1, 2, 3, 4],
+            [5, 6],
+            [2, 3, 4, 5, 6],
+            [1, 7, 8]
         ],
 
         doors_chance: [ //chance to have a door in a room
-            0, 0.1, 0.15, 0.2, 0.3
+            0, 0.1, 0.15, 0.2, 0.25,  0.3, 0.3, 0.35, 0.4, 0.5
         ],
 
         dark_chance: [  //darkness in the room
-            0, 0, 0, 0.01, 0.05
+            0, 0, 0, 0.01, 0.02, 0.02, 0.03, 0.04, 0.05, 0.10
         ],
 
         has_redCloth: [  //has spawn of this item
-            false, false, true, true, true
+            0,0,0.5,1,1, 1,1,1,1,0
         ],
 
         has_miniMap: [ //has spawn of this item
-            false, false, false, true, true
+            0,0,0,1,1, 1,1,1,1,0
         ],
 
         has_ropes: [
-            0, 0, 1, 2, 3
+            0, 0, 0.2, 0, 0.3,  0, 0.5, 0, 1, 0
         ],
 
         has_extraKeys: [ //spawn extra items and how much
-            2, 1, 0, 0, 0
+            0, 0, 0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 0.3, 0.5
         ],
 
         mob_group: [
-            ["Spikes"],
             ["Spikes", "Merchant"],
+            ["Merchant", "Merchant"],
             ["Spikes", "Merchant", "Merchant"],
             ["DoveSeller", "Merchant", "Merchant"],
             ["Spikes", "Bat", "Bat"],
             ["Bat", "Bat", "Bat", "Spikes"],
             ["Spikes", "Bat", "Bat", "DoveSeller"],
             ["Merchant", "Bat", "Bat", "Bat","DoveSeller"],
-            ["Bat", "Bat", "Bat", "DoveSeller", "Merchant"]
+            ["Bat", "Bat", "Bat", "DoveSeller", "Merchant"],
+            ["DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "Merchant"]
         ],
 
         boss_group: [
@@ -169,10 +179,15 @@ waw.theme = {
 
         mob_set: [
             [0],
-            [0, 1, 2],
-            [0, 1, 2, 3],
-            [0, 1, 2, 3, 4],
-            [0, 1, 2, 3, 4, 5, 6]
+            [1, 2],
+            [2, 3],
+            [3, 4, 5],
+            [4, 5, 6],
+            [2, 5, 6],
+            [3, 5, 6],
+            [4, 6, 7],
+            [6, 7, 8],
+            [6, 7, 8, 9]
         ]
     }
 };
