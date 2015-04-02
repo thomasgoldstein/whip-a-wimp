@@ -20,7 +20,7 @@ waw.Unit = cc.Node.extend({
         return (x<50 ? 50 : (x>270 ? 270 : x));
     },
     toSafeYCoord: function (y) {
-        return (y<50 ? 50 : (y>180 ? 180 : y));
+        return (y<40 ? 40 : (y>170 ? 170 : y));
     },
     removeTempSprites: function() {
         this.removeChildByTag(TAG_SPRITE_TEMP, true);

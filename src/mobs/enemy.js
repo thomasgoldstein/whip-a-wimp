@@ -304,7 +304,7 @@ waw.Enemy = waw.Unit.extend({
         if (this.targetX == 0 || this.targetY == 0) {
             //random point to go
             this.targetX = this.toSafeXCoord( Math.round(50 + Math.random() * 220) );
-            this.targetY = this.toSafeYCoord( Math.round(50 + Math.random() * 130) );
+            this.targetY = this.toSafeYCoord( Math.round(40 + Math.random() * 130) );
         } else {
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
@@ -335,12 +335,12 @@ waw.Enemy = waw.Unit.extend({
         //if(x<50 || x>270 || this.doesCollide(waw.units)) {
         if(x<50 || x>270 || (crX = this.getObstacleRect(waw.units))) {
             x = this.x = oldPos.x;
-            y = this.y = oldPos.y;
+            //y = this.y = oldPos.y;
             this.conditions.push("feelObstacle");
         }
 
         if(crX) {
-            if(y <= crX.y+crX.height/2){
+            if(y + this.height/2 <= crX.y+crX.height/2){
                 shiftY = -32;
             } else {
                 shiftY = 32;
@@ -355,7 +355,7 @@ waw.Enemy = waw.Unit.extend({
         //if(y<40 || y>180 || this.doesCollide(waw.units)) {
         if(y<40 || y>180 || (crY = this.doesCollide(waw.units))) {
             y = this.y = oldPos.y;
-            x = this.x = oldPos.x;
+            //x = this.x = oldPos.x;
             this.conditions.push("feelObstacle");
         }
         //TODO move around obstacles
@@ -367,13 +367,13 @@ waw.Enemy = waw.Unit.extend({
             }
             // 2nd time!!! by X if need
             if (this.targetX + shiftX < x)
-                x -= speed;
+                x -= speed*0.5;
             else if (this.targetX + shiftX > x)
-                x += speed;
+                x += speed*0.5;
             this.x = x;
             if(x<50 || x>270 || (crX = this.getObstacleRect(waw.units))) {
                 x = this.x = oldPos.x;
-                y = this.y = oldPos.y;
+                //y = this.y = oldPos.y;
                 //this.conditions.push("feelObstacle");
             }
         }
