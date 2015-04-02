@@ -195,10 +195,10 @@ waw.GenerateMiniMap = function () {
     console.log("$$$$ min max X:", minX, maxX, "min max Y", minY, maxY);
     var realW = maxX - minX + 1;
     var realH = maxY - minY + 1;
-    realW = (45 - realW * 5)/2;
-    realH = (45 - realH * 5)/2;
-    mapXOffset += realH/2;
-    mapYOffset += realW/2;
+    realW = (45 - realW * 5)/2 - minX*5;
+    realH = (45 - realH * 5)/2 - minY*5;
+    mapXOffset += realW;
+    mapYOffset -= realH;
 
     for (y = 0; y < 9; y++) {
         for (x = 0; x < 9; x++) {
