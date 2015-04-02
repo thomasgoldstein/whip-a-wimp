@@ -36,16 +36,27 @@ waw.Unit = cc.Node.extend({
         return cc.rect(pos.x - this.width / 2, pos.y , this.width, this.height);
     },
     doesCollide: function (_units) {
-        //if(!_units) throw "must be an array in the arg";
+        var cr = this.collideRect();
         for (var unit in _units) {
             if(!unit || !_units[unit] || _units[unit] === this)    //do not compare with self
-            //if(!unit || unit === this)    //do not compare with self
                 continue;
             //TODO this is Better check. but glitches when u enter right room with pressed UP
-            if(cc.rectIntersectsRect(this.collideRect(), _units[unit].collideRect())){
+            if(cc.rectIntersectsRect(cr, _units[unit].collideRect())){
                 return true;
             }
         }
         return false;
+    },
+    getObstacleRect: function (_units) {
+        var cr = this.collideRect();
+        for (var unit in _units) {
+            if(!unit || !_units[unit] || _units[unit] === this)    //do not compare with self
+                continue;
+            //TODO this is Better check. but glitches when u enter right room with pressed UP
+            if(cc.rectIntersectsRect(cr, _units[unit].collideRect())){
+                return _units[unit].collideRect();
+            }
+        }
+        return null;
     }
 });
