@@ -29,10 +29,12 @@ waw.generateMobsRoom = function (roomType) {
         mob.y = mobCoord[cr].y;
         mobCoord.splice(cr, 1);
         mobs.push(mob);
+
+        if(mobCoord.length<1) //add exta mob spawn coords
+            mobCoord = waw.GetCoords2SpawnMob(0);
     }
     return mobs;
 };
-
 
 waw.putBossMob = function () {
     
