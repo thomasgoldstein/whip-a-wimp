@@ -26,38 +26,34 @@ waw.addItemToRoom = function(room, itemName){
     console.info("Put ", item.itemType, "into",room.name);
 };
 
-waw.putMap = function() {
-    if(!waw.theme.rules.has_miniMap[waw.theme.levelN])
-        return;
-    var rooms = real_rooms.filter(
-      function(room) {
-          if (room.distance >= 2 && room.distance < real_rooms.maxDistance / 2)
-              return true;
-          return false;
-      }
-    );
-    if(rooms.length<1)
-        rooms = real_rooms;
-    var room = rooms[Math.round(Math.random()*(rooms.length-1))];
-    var t="";
-    for(var i=0; i<rooms.length; i++)
-        t = t + " " + rooms[i].name + ":" + rooms[i].distance;
-    console.info(t, "put Map into any of it. Max distance:", real_rooms.maxDistance);
-    waw.addItemToRoom(room, "map");
+waw.putMap = function () {
+    if (Math.random() < waw.theme.rules.has_miniMap[waw.theme.levelN]) {
+        var filtered_rooms = real_rooms.filter(
+            function (room) {
+                if (room.distance >= 2 && room.distance < real_rooms.maxDistance / 2)
+                    return true;
+                return false;
+            }
+        );
+        if (filtered_rooms.length < 1)
+            filtered_rooms = real_rooms;
+        var room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+        waw.addItemToRoom(room, "map");
+    }
 };
 
-waw.putRedCloth = function() {
+waw.putRedCloth = function () {
     var filtered_rooms, room;
-    if(waw.theme.rules.has_redCloth[waw.theme.levelN]) {
+    if (Math.random() < waw.theme.rules.has_redCloth[waw.theme.levelN]) {
 
         filtered_rooms = real_rooms.filter(
-            function(r) {
+            function (r) {
                 if (rooms.isDeadEnd(r) && rooms.isPassage(r))
                     return true;
                 return false;
             }
         );
-        if(filtered_rooms.length > 0)
+        if (filtered_rooms.length > 0)
             room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
         else
             room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
@@ -65,26 +61,26 @@ waw.putRedCloth = function() {
     }
     //misc items temp
     filtered_rooms = real_rooms.filter(
-        function(r) {
+        function (r) {
             if (rooms.isDeadEnd(r) && rooms.hasNoItems(r))
                 return true;
             return false;
         }
     );
-    if(filtered_rooms.length > 0)
+    if (filtered_rooms.length > 0)
         room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
     else
         room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
     waw.addItemToRoom(room, "coin");
 
     filtered_rooms = real_rooms.filter(
-        function(r) {
+        function (r) {
             if (rooms.isPassage(r) && rooms.hasNoItems(r))
                 return true;
             return false;
         }
     );
-    if(filtered_rooms.length > 0)
+    if (filtered_rooms.length > 0)
         room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
     else
         room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
@@ -114,22 +110,27 @@ waw.putKeys = function () {
     }
 };
 
-waw.putRopes = function() {
-    for(var n = 1; n<waw.theme.rules.has_ropes[waw.theme.levelN]; n++) {
-        var rooms = real_rooms.filter(
+waw.putRopes = function () {
+    if (Math.random() < waw.theme.rules.has_ropes[waw.theme.levelN]) {
+        var filtered_rooms = real_rooms.filter(
             function (room) {
-                if (room.distance >= real_rooms.maxDistance / n)
+                if (room.distance >= real_rooms.maxDistance / 3 && rooms.isDeadEnd(room))
                     return true;
                 return false;
             }
         );
-        if(rooms.length<1)
-            continue;
-        var room = rooms[Math.round(Math.random() * (rooms.length - 1))];
-        var t = "";
-        for (var i = 0; i < rooms.length; i++)
-            t = t + " " + rooms[i].name + ":" + rooms[i].distance;
-        console.info(t, "put Rope into any of it. Current dist:", room.distance);
+        if (filtered_rooms.length < 1)
+            filtered_rooms = real_rooms.filter(
+                function (room) {
+                    if (room.distance >= real_rooms.maxDistance / 2)
+                        return true;
+                    return false;
+                }
+            );
+        if (filtered_rooms.length < 1)
+            filtered_rooms = real_rooms;
+        var room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+        console.info("Put Rope to ", room.name, " Dist:", room.distance);
         waw.addItemToRoom(room, "rope");
     }
 };
@@ -153,17 +154,17 @@ waw.putUselessItems = function () {
 };
 
 waw.putExit = function() {
-    var rooms = real_rooms.filter(
+    var filtered_rooms = real_rooms.filter(
         function(room) {
             if (room.distance >= real_rooms.maxDistance )
                 return true;
             return false;
         }
     );
-    var room = rooms[Math.round(Math.random()*(rooms.length-1))];
+    var room = filtered_rooms[Math.round(Math.random()*(filtered_rooms.length-1))];
     var t="";
-    for(var i=0; i<rooms.length; i++)
-        t = t + " " + rooms[i].name + ":" + rooms[i].distance;
+    for(var i=0; i<filtered_rooms.length; i++)
+        t = t + " " + filtered_rooms[i].name + ":" + filtered_rooms[i].distance;
     console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
     //replace empty walls to exit door
     if(room.walls.up === "wall"){
@@ -185,15 +186,15 @@ waw.putExit = function() {
 };
 
 waw.putItemsIntoChests = function() {
-    var rooms = real_rooms.filter(
+    var fRooms = real_rooms.filter(
         function(room) {
             if (room.distance >= real_rooms.maxDistance/2 )
                 return true;
             return false;
         }
     );
-    for(var i=0; i<rooms.length; i++) {
-        var r = rooms[i];
+    for(var i=0; i<fRooms.length; i++) {
+        var r = fRooms[i];
         for(var n=0; n < r.items.length; n++) {
             if(r.items[n].itemType === "unknown")
                 continue;
@@ -203,6 +204,7 @@ waw.putItemsIntoChests = function() {
             }
         }
     }
+    //TODO add locks to some chests
 };
 
 waw.generateItems = function(){
