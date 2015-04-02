@@ -315,6 +315,7 @@ waw.Enemy = waw.Unit.extend({
     },
     onWalk: function () {
         var currentTime = new Date();
+        var crX, crY, shiftX = 0,shiftY = 0;
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
@@ -331,22 +332,51 @@ waw.Enemy = waw.Unit.extend({
         else if (this.targetX > x)
             x += speed;
         this.x = x;
-        if(x<50 || x>270 || this.doesCollide(waw.units)) {
+        //if(x<50 || x>270 || this.doesCollide(waw.units)) {
+        if(x<50 || x>270 || (crX = this.getObstacleRect(waw.units))) {
             x = this.x = oldPos.x;
             y = this.y = oldPos.y;
             this.conditions.push("feelObstacle");
         }
-        if (this.targetY < y)
+
+        if(crX) {
+            if(y <= crX.y+crX.height/2){
+                shiftY = -32;
+            } else {
+                shiftY = 32;
+            }
+        }
+
+        if (this.targetY+shiftY < y)
             y -= speed;
-        else if (this.targetY > y)
+        else if (this.targetY+shiftY > y)
             y += speed;
         this.y = y;
-        if(y<40 || y>180 || this.doesCollide(waw.units)) {
+        //if(y<40 || y>180 || this.doesCollide(waw.units)) {
+        if(y<40 || y>180 || (crY = this.doesCollide(waw.units))) {
             y = this.y = oldPos.y;
             x = this.x = oldPos.x;
             this.conditions.push("feelObstacle");
         }
-        //TODO add move around obstacles
+        //TODO move around obstacles
+        if(crY) {
+            if(x <= crY.x){
+                shiftX = -32;
+            } else {
+                shiftX = 32;
+            }
+            // 2nd time!!! by X if need
+            if (this.targetX + shiftX < x)
+                x -= speed;
+            else if (this.targetX + shiftX > x)
+                x += speed;
+            this.x = x;
+            if(x<50 || x>270 || (crX = this.getObstacleRect(waw.units))) {
+                x = this.x = oldPos.x;
+                y = this.y = oldPos.y;
+                //this.conditions.push("feelObstacle");
+            }
+        }
 
         this.setPosition(x, y);
         this.setZOrder(250 - this.y);
