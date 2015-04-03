@@ -434,16 +434,16 @@ waw.Enemy = waw.Unit.extend({
             if (crX && !crY) {
                 //can move Y
                 if (y + this.height / 2 <= crX.y + crX.height / 2) {
-                    this.targetY -= 32;
+                    this.targetY -= 32 + Math.round(Math.random()*16);
                 } else {
-                    this.targetY += 32;
+                    this.targetY += 32 + Math.round(Math.random()*16);
                 }
             } else if (!crX && crY) {
                 //can move X
                 if (x <= crY.x) {
-                    this.targetX -= 32;
+                    this.targetX -= 32 + Math.round(Math.random()*16);
                 } else {
-                    this.targetX += 32;
+                    this.targetX += 32 + Math.round(Math.random()*16);
                 }
             } else {
                 //stuck
