@@ -48,17 +48,12 @@ waw.Item = waw.Unit.extend({
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow12x6);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
 
-        //add debug text info under an item
-        this.label = new cc.LabelTTF("Item", "System", 9);
-        this.addChild(this.label, 299, TAG_LABELSPRITE);
-        this.label.setPosition(0, -8 + this.shadowYoffset);
-        this.label.setVisible(showDebugInfo);
-
         this.scheduleUpdate();
     },
     cleanUp: function () {
         var i;
         this.unscheduleUpdate();
+        this.debugCross.visible = false;
         if(Math.random()<0.2)
             cc.audioEngine.playEffect(waw.sfx.good01);
         else if(Math.random()<0.5)
@@ -98,10 +93,6 @@ waw.Item = waw.Unit.extend({
         var pos = this.getPosition();
         if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 200) {
             this.onTake();
-        }
-        if (showDebugInfo && this.label) {
-//            this.label.setString(""+this.state + " "+ cc.pDistanceSQ(pPos, pos) );
-            this.label.setString(this.itemType); //+":"+pos.x.toFixed(2)+","+pos.y.toFixed(2) );
         }
     },
     onTake: function () {

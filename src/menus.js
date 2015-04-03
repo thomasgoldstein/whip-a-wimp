@@ -189,27 +189,26 @@ waw.MenuDebug = function (layer) {
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
             showDebugInfo = !showDebugInfo;
-            waw.player.label.setVisible(showDebugInfo);
-            waw.player.debugCross.setVisible(showDebugInfo);
+            waw.player.label.visible = showDebugInfo;
+            waw.player.debugCross.visible = showDebugInfo;
             for (var i in waw.mobs) {
                 if (!waw.mobs[i])
                     continue;
-                waw.mobs[i].label.setVisible(showDebugInfo);
-                waw.mobs[i].debugCross.setVisible(showDebugInfo);
+                waw.mobs[i].label.visible = showDebugInfo;
+                waw.mobs[i].debugCross.visible = showDebugInfo;
             }
             for (var i in waw.units) {
                 if (!waw.units[i])
                     continue;
-                waw.units[i].debugCross.setVisible(showDebugInfo);
+                waw.units[i].debugCross.visible = showDebugInfo;
             }
-            for (var i in waw.items) {
+            /*for (var i in waw.items) {
                 if (!waw.items[i])
                     continue;
-                waw.items[i].debugCross.setVisible(showDebugInfo);
-                waw.items[i].label.setVisible(showDebugInfo);
-            }
+                //waw.items[i].debugCross.visible = showDebugInfo;
+                waw.items[i].label.visible = showDebugInfo;
+            }*/
         }, layer);
-    //debugOnOffItem.setAnchorPoint(0.5, 0.5);
     menu = new cc.Menu(debugOnOffItem);
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
@@ -307,6 +306,7 @@ waw.MenuDebug = function (layer) {
                 this.addChild(e.shadowSprite, -14);
                 e.setZOrder(250 - pos.y);
                 e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
+                e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
                 e.setTag(TAG_CHEST);
                 console.log(waw.units.length);
                 this.scheduleOnce(function () {

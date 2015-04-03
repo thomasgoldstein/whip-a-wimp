@@ -261,6 +261,7 @@ waw.spawnItemInChest = function (locked, itemType, x, y, n, layer) {
     layer.addChild(e.shadowSprite, -14);
     e.shadowSprite.setPosition(x, y - 0);
     e.setTag(TAG_CHEST);
+    e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
     waw.units.push(e);   //to make it obstacle&
     return item;
 };

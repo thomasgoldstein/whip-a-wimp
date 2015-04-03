@@ -45,7 +45,7 @@ waw.NoMobChest = waw.Unit.extend({
             waw.makeSpriteJump(this.lockSprite);
         }
 
-        this.debugCross.setAnchorPoint(0.5, 0);
+        //this.debugCross.setAnchorPoint(0.5, 0);
 
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
@@ -55,6 +55,7 @@ waw.NoMobChest = waw.Unit.extend({
         for (var n = 0; n < waw.units.length; n++) {
             var m = waw.units[n];
             if (this === m) {
+                waw.units[n].debugCross.visible = false;
                 waw.units[n] = null;
                 //TODO instantly remove from room spawn?
                 break;

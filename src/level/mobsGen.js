@@ -105,6 +105,7 @@ waw.spawnMobs = function(layer){
         //attach monsters shadow to layer OVER BG floor (its Z index = -15)
         layer.addChild(e.shadowSprite,-14);
         e.shadowSprite.setPosition(pos.x, pos.y-0);
+        e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
         foes.push(e);
         waw.units[200+n] = e;   //to make it obstacle
         e.becomeInvincible();
