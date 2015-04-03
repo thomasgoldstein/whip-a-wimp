@@ -455,7 +455,7 @@ waw.Enemy = waw.Unit.extend({
     },
     initFollowEnemy: function () {
         var currentTime = new Date();
-        this.timeToThink = currentTime.getTime() + 3500 + Math.random() * 2500;
+        this.timeToThink = currentTime.getTime() + 6500 + Math.random() * 2500;
         this.targetX = waw.player.x;
         this.targetY = waw.player.y;
         this.dx = 0;
@@ -466,12 +466,13 @@ waw.Enemy = waw.Unit.extend({
     },
     onFollowEnemy: function () {
         var currentTime = new Date();
+        var crX, crY, shiftX = 0,shiftY = 0;
         if (currentTime.getTime() > this.timeToThink) {
             return true;
         }
-        var pos = this.getPosition(),
-            x = pos.x,
-            y = pos.y;
+        var oldPos = this.getPosition(),
+            x = oldPos.x,
+            y = oldPos.y;
         var fps = cc.director.getAnimationInterval();
         var speed = this.speed * fps * 10;
 
@@ -480,17 +481,56 @@ waw.Enemy = waw.Unit.extend({
             x -= speed;
         else if (this.targetX > x)
             x += speed;
-        if (this.targetY < y)
-            y -= speed;
-        else if (this.targetY > y)
-            y += speed;
+        this.x = x;
+        if((crX = this.getObstacleRect(waw.units))) {
+            x = this.x = oldPos.x;
+            //y = this.y = oldPos.y;
+            this.conditions.push("feelObstacle");
+        }
 
+        if(crX) {
+            if(y + this.height/2 <= crX.y+crX.height/2){
+                shiftY = -32;
+            } else {
+                shiftY = 32;
+            }
+        }
+
+        if (this.targetY+shiftY < y)
+            y -= speed;
+        else if (this.targetY+shiftY > y)
+            y += speed;
+        this.y = y;
+        if((crY = this.doesCollide(waw.units))) {
+            y = this.y = oldPos.y;
+            //x = this.x = oldPos.x;
+            this.conditions.push("feelObstacle");
+        }
+        //TODO move around obstacles
+        if(crY) {
+            if(x <= crY.x){
+                shiftX = -32;
+            } else {
+                shiftX = 32;
+            }
+            // 2nd time!!! by X if need
+            if (this.targetX + shiftX < x)
+                x -= speed*0.5;
+            else if (this.targetX + shiftX > x)
+                x += speed*0.5;
+            this.x = x;
+            if((crX = this.getObstacleRect(waw.units))) {
+                x = this.x = oldPos.x;
+                //y = this.y = oldPos.y;
+                //this.conditions.push("feelObstacle");
+            }
+        }
         this.setPosition(x, y);
         this.setZOrder(250 - y);
         //position shadow
-        this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
+        this.shadowSprite.setPosition(this.x, this.y + this.shadowYoffset);
 
-        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), pos) < 32) {
+        if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), oldPos) < 32) {
             return true; //get to the target x,y
         }
         return false;

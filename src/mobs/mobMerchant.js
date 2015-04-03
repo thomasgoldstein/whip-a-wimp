@@ -2,7 +2,7 @@
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
-waw.MobMerchant = waw.MobRandomWalker.extend({
+waw.MobMerchant = waw.MobFollower.extend({
     mobType: "Merchant",
     shadowYoffset: 0,
     spriteYoffset: 0,
