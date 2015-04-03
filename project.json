@@ -26,6 +26,7 @@
         "src/mobs/enemy.js",
         "src/mobs/mobRandomBouncer.js",
         "src/mobs/mobRandomWalker.js",
+        "src/mobs/mobFollower.js",
         "src/mobs/mobMerchant.js",
         "src/mobs/mobDoveSeller.js",
         "src/mobs/mobKiwi.js",

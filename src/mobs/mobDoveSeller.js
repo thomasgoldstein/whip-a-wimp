@@ -1,11 +1,8 @@
-/**
- * Created by BMV on 31.03.2015.
- */
 "use strict";
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
-waw.MobDoveSeller = waw.MobRandomWalker.extend({
+waw.MobDoveSeller = waw.MobFollower.extend({
     mobType: "DoveSeller",
     shadowYoffset: 0,
     spriteYoffset: 0,
@@ -189,5 +186,4 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
             "\n"+this.mobType+" "+this.state+" "+this.subState+" "+this.direction );
         }
     }
-})
-;
+});
