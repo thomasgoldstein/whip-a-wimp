@@ -203,6 +203,7 @@ waw.Enemy = waw.Unit.extend({
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
+        this.debugCross.visible = false;
         for (var n = 0; n < waw.mobs.length; n++) {
             var m = waw.mobs[n];
             if (this === m) {
