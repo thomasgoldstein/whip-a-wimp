@@ -370,6 +370,7 @@ waw.prepareRoomLayer = function(room) {
 
     var s = waw.SpriteRect(16,16); //for lock sprite
     //add doors
+    d = null;
     switch (room.walls.up) {    //FAT upper wall
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(0, 80, 80, 80)); //closed door
@@ -442,6 +443,9 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer);
             break;
     }
+    if(d)   //keep sprite ref for trap rooms
+        room.up_sprite = d;
+    d = null;
     switch (room.walls.right) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 2, 80, 80, 80)); //closed door
@@ -513,6 +517,9 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer);
             break;
     }
+    if(d)   //keep sprite ref for trap rooms
+        room.right_sprite = d;
+    d = null;
     switch (room.walls.down) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 80, 80, 80)); //closed door
@@ -579,6 +586,9 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer);
             break;
     }
+    if(d)   //keep sprite ref for trap rooms
+        room.down_sprite = d;
+    d = null;
     switch (room.walls.left) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 1, 80, 80, 80)); //closed door
@@ -651,6 +661,9 @@ waw.prepareRoomLayer = function(room) {
             waw.AddHitBoxSprite(wall, layer);
             break;
     }
+    if(d)   //keep sprite ref for trap rooms
+        room.left_sprite = d;
+    d = null;
     //put obstacles in the room
     waw.prepareRoomPattern(room);
 
@@ -927,6 +940,7 @@ waw.activateTrapRoom = function() {
     var units = waw.units;
     var layer = waw.layer;
     var wall;
+    var r = waw.curRoom;
 
     var wp = {
         wallSize: 32, //thickness of the border walls
@@ -938,9 +952,26 @@ waw.activateTrapRoom = function() {
     };
 
     console.log("activate trap room");
-    //waw.curRoom.trap = false;
-    waw.curRoom.trapActive = true;
+    r.trapActive = true;
     cc.audioEngine.playEffect(waw.sfx.laugh01);
+
+    //hide doors - entrances
+    if(r.up_sprite)
+        r.up_sprite.runAction(
+                new cc.FadeOut(0.5)
+        );
+    if(r.right_sprite)
+        r.right_sprite.runAction(
+                new cc.FadeOut(0.5)
+        );
+    if(r.down_sprite)
+        r.down_sprite.runAction(
+                new cc.FadeOut(0.5)
+        );
+    if(r.left_sprite)
+        r.left_sprite.runAction(
+                new cc.FadeOut(0.5)
+        );
 
     // Left wall
     wall = new waw.Unit();
@@ -951,7 +982,7 @@ waw.activateTrapRoom = function() {
     wall.y = 0;
     units.push(wall);
     waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
-    waw.curRoom.left_trap = wall;
+    r.left_trap = wall;
 
     // Right wall
     wall = new waw.Unit();
@@ -961,7 +992,7 @@ waw.activateTrapRoom = function() {
     wall.y = 0;
     units.push(wall);
     waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
-    waw.curRoom.right_trap = wall;
+    r.right_trap = wall;
 
     // Top wall
     wall = new waw.Unit();
@@ -971,7 +1002,7 @@ waw.activateTrapRoom = function() {
     wall.y = 240 - 24 - wp.wallSize2/2 + 4;
     units.push(wall);
     waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
-    waw.curRoom.up_trap = wall;
+    r.up_trap = wall;
 
     // Bottom wall
     wall = new waw.Unit();
@@ -981,18 +1012,38 @@ waw.activateTrapRoom = function() {
     wall.y = 0;
     units.push(wall);
     waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
-    waw.curRoom.down_trap = wall;
+    r.down_trap = wall;
 };
 
 //unblock exits
 waw.deactivateTrapRoom = function () {
+    var r = waw.curRoom;
+    waw.curRoom.trap = false;
+    waw.curRoom.trapActive = false;
+
     console.log("open exits in trap room");
     waw.player.scheduleOnce(function () {
-        waw.curRoom.trap = false;
-        waw.curRoom.trapActive = false;
 
         cc.audioEngine.playEffect(waw.sfx.cough01);
         waw.layer.removeChildByTag(TAG_TRAP, true);
+
+        //hide doors - entrances
+        if(r.up_sprite)
+            r.up_sprite.runAction(
+                new cc.FadeIn(0.5)
+            );
+        if(r.right_sprite)
+            r.right_sprite.runAction(
+                new cc.FadeIn(0.5)
+            );
+        if(r.down_sprite)
+            r.down_sprite.runAction(
+                new cc.FadeIn(0.5)
+            );
+        if(r.left_sprite)
+            r.left_sprite.runAction(
+                new cc.FadeIn(0.5)
+            );
 
         for (var i = 0; i < waw.units.length; i++) {
             var w = waw.units[i];
