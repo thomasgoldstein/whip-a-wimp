@@ -344,4 +344,16 @@ waw.MenuDebug = function (layer) {
     menu.setPosition(0, 0);
     layer.addChild(menu, 300);
     debugInstaKill.setPosition(16, 102);
+
+    labelDebug = new cc.LabelTTF("Trap", "System", 12);
+    var debugTrap = new cc.MenuItemLabel(labelDebug,
+        function () {
+            if(!waw.curRoom.trapActive)
+                waw.curRoom.trap = true;
+        }, layer);
+
+    menu = new cc.Menu(debugTrap);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugTrap.setPosition(16, 90);
 };

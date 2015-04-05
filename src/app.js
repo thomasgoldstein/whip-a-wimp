@@ -338,6 +338,15 @@ waw.MainLayer = cc.Layer.extend({
                             this.lightspot4.visible = false;
             }
         }
+
+        //activate trap room
+        if(waw.curRoom.trap && !waw.curRoom.trapActive){
+            if(waw.player.x > 50 && waw.player.y > 50
+                && waw.player.x < 265 && waw.player.y < 170) {
+                waw.activateTrapRoom();
+            }
+        }
+
         //update all monsters in the room
         //if(Math.random()<0.5)  //TODO add call 15-30 FPS
         waw.updateSpawnedMobs(this);

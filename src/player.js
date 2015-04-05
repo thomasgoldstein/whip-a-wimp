@@ -321,7 +321,7 @@ waw.Player = waw.Unit.extend({
             var unit = waw.units[i];
             if(!unit)
                 continue;
-            var unitRect = unit.collideRect();
+            //var unitRect = unit.collideRect();
             if(cc.rectIntersectsRect(playerBiggerRect, unit.collideRect())){
                 if(this.interactWithUnit(unit))
                     interactions++;
@@ -575,6 +575,10 @@ waw.Player = waw.Unit.extend({
                     //break;
                 }
             }
+        }
+        //last mob killed? open trap room
+        if(waw.curRoom.trapActive && waw.allEnemyKilled()){
+            waw.deactivateTrapRoom();
         }
     },
     becomeInvincible: function() {

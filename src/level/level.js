@@ -21,6 +21,7 @@ function Room(_name,_x,_y) {
 	this.walls = new Walls();
     this.visited = false;
     this.dark = false;
+    this.trap = false;
     this.type = 0; //0 = clean room type
     this.mobs = [];
     this.items = [];
@@ -663,6 +664,8 @@ waw.prepareRoomLayer = function(room) {
 };
 
 waw.openDoor = function (doorTag, layer) {
+    if(waw.curRoom.trapActive)
+        return;
     if(waw.keys<=0) {
         if(Math.random()<0.5)
             cc.audioEngine.playEffect(waw.sfx.nah01);
@@ -756,6 +759,8 @@ waw.openDoor = function (doorTag, layer) {
 };
 
 waw.openExitDoor = function (layer) {
+    if(waw.curRoom.trapActive)
+        return;
     if(waw.coins<=0 || waw.gems<=0) {
         if(Math.random()<0.5)
             cc.audioEngine.playEffect(waw.sfx.nah01);
@@ -914,6 +919,96 @@ waw.prepareRoomPattern = function(room) {
             waw.putRoomObstacle(new cc.Point(88,137), new cc.Size(32,16), hitboxOffsetY);
             break;
     }
+};
+
+
+//block exits
+waw.activateTrapRoom = function() {
+    var units = waw.units;
+    var layer = waw.layer;
+    var wall;
+
+    var wp = {
+        wallSize: 32, //thickness of the border walls
+        wallSize2: 48, //thickness of the TOP walls
+        verticalWall_upY: 240/2+64/2,
+        verticalWall_downY: -240/2 + 64/2,
+        horizontalWall_leftX: -240/2 + 64/2,
+        horizontalWall_rightX: -240/2 + 64/2
+    };
+
+    console.log("activate trap room");
+    //waw.curRoom.trap = false;
+    waw.curRoom.trapActive = true;
+    cc.audioEngine.playEffect(waw.sfx.laugh01);
+
+    // Left wall
+    wall = new waw.Unit();
+    wall.setAnchorPoint(0.5, 0);
+    wall.width = wp.wallSize;
+    wall.height = 240;
+    wall.x = wp.wallSize / 2;
+    wall.y = 0;
+    units.push(wall);
+    waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
+    waw.curRoom.left_trap = wall;
+
+    // Right wall
+    wall = new waw.Unit();
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(wp.wallSize, 240));
+    wall.x = 320-wp.wallSize / 2;
+    wall.y = 0;
+    units.push(wall);
+    waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
+    waw.curRoom.right_trap = wall;
+
+    // Top wall
+    wall = new waw.Unit();
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320, wp.wallSize2));   //fat top wall
+    wall.x = 320/2;
+    wall.y = 240 - 24 - wp.wallSize2/2 + 4;
+    units.push(wall);
+    waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
+    waw.curRoom.up_trap = wall;
+
+    // Bottom wall
+    wall = new waw.Unit();
+    wall.setAnchorPoint(0.5, 0);
+    wall.setContentSize(new cc.Size(320, wp.wallSize));
+    wall.x = 320/2;
+    wall.y = 0;
+    units.push(wall);
+    waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
+    waw.curRoom.down_trap = wall;
+};
+
+//unblock exits
+waw.deactivateTrapRoom = function () {
+    console.log("open exits in trap room");
+    waw.player.scheduleOnce(function () {
+        waw.curRoom.trap = false;
+        waw.curRoom.trapActive = false;
+
+        cc.audioEngine.playEffect(waw.sfx.cough01);
+        waw.layer.removeChildByTag(TAG_TRAP, true);
+
+        for (var i = 0; i < waw.units.length; i++) {
+            var w = waw.units[i];
+            if (!w)
+                continue;
+            if (w === waw.curRoom.left_trap ||
+                w === waw.curRoom.right_trap ||
+                w === waw.curRoom.up_trap ||
+                w === waw.curRoom.down_trap) {
+                w.debugCross.visible = false;
+                waw.units[i] = null;
+            }
+        }
+
+    }, 2);
+
 };
 
 //adds grid sprite to show hit Box
