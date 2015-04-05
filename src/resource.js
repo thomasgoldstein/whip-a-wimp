@@ -144,6 +144,10 @@ waw.theme = {
             0, 0, 0, 0.01, 0.02, 0.02, 0.03, 0.04, 0.05, 0.10
         ],
 
+        trap_chance: [  //trap room (doors are shut up until u kill mobs)
+            0, 0, 0, 0.05, 0.1, 0.1, 0.1, 0.1, 0.15, 0.2
+        ],
+
         has_redCloth: [  //has spawn of this item
             0,0,0.5,1,1, 1,1,1,1,0
         ],

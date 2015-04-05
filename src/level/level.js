@@ -78,6 +78,8 @@ rooms.genLevel = function() {
 			} else {
                 if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN])
                     r.dark = true;
+                if(Math.random() <= waw.theme.rules.trap_chance[waw.theme.levelN])
+                    r.trap = true;
             }
 
             //random type of the room obstacles pattern
