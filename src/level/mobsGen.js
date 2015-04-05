@@ -143,6 +143,17 @@ waw.updateSpawnedMobs = function(layer) {
     }
 };
 
+waw.allEnemyKilled = function () {
+    for (var n = 0; n < waw.mobs.length; n++) {
+        if (waw.mobs[n]) {
+            if(waw.mobs[n].killable) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
 waw.GetCoords2SpawnMob = function (roomType) {
     var a = [];
     switch (roomType) {

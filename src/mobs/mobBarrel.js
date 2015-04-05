@@ -6,6 +6,7 @@ waw.MobBarrel = waw.Enemy.extend({
     shadowYoffset: 0,
     spriteYoffset: 0,
     HP: 100,
+    killable: false,
     state: "idle",
 
     ctor: function () {
