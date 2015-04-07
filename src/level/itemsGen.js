@@ -237,8 +237,10 @@ waw.spawnItems = function(layer) {
 };
 
 waw.spawnItem = function (itemType, x, y, n, layer) {
-    if(itemType === null)
-        return;
+    if(itemType === null) {
+        console.log("null item?");
+        return null;
+    }
     var item = new waw.Item(itemType, n);
     item.setPosition(x, y);
     layer.addChild(item, 250 - y);

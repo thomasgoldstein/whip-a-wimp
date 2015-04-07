@@ -515,12 +515,22 @@ waw.Enemy = waw.Unit.extend({
         cc.audioEngine.playEffect(this.sfx_death);
         this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
-        this.scheduleOnce(function () {
-            if(this.itemsDrop.length > 0 && Math.random() < 0.1)
-                waw.curRoom.items.push(
-                    waw.spawnItem(this.itemsDrop[Math.round(Math.random()*(this.itemsDrop.length-1))], this.x, this.y, waw.curRoom.items.length, this.getParent())
+        if (this.itemsDrop.length > 0 && Math.random() < 0.1) {
+            this.scheduleOnce(function () {
+                var dropItem = waw.spawnItem(this.itemsDrop[Math.round(Math.random() * (this.itemsDrop.length - 1))], this.x, this.y, waw.curRoom.items.length, this.getParent())
+                waw.curRoom.items.push(dropItem);
+                var sx = waw.player.x < this.x ? 2 : -2;
+                dropItem.runAction(
+                        new cc.Sequence(
+                            new cc.JumpBy(0.6, sx*2, 0, 8, 2),
+                            new cc.JumpBy(0.3, sx*2, 0, 4, 1)
+                        )
                 );
-        }, 0.3);
+                dropItem.shadowSprite.runAction(
+                        new cc.MoveBy(0.9, sx*4, 0)
+                );
+            }, 0.3);
+        }
         this.scheduleOnce(function () {
             cc.audioEngine.playEffect(this.sfx_death);
             //this.sprite.setAnchorPoint(0.5, 1);
