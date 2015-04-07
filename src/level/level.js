@@ -1024,44 +1024,39 @@ waw.deactivateTrapRoom = function () {
     waw.curRoom.trapActive = false;
 
     console.log("open exits in trap room");
-    waw.player.scheduleOnce(function () {
+    cc.audioEngine.playEffect(waw.sfx.cough01);
+    waw.layer.removeChildByTag(TAG_TRAP, true);
 
-        cc.audioEngine.playEffect(waw.sfx.cough01);
-        waw.layer.removeChildByTag(TAG_TRAP, true);
+    //hide doors - entrances
+    if (r.up_sprite)
+        r.up_sprite.runAction(
+            new cc.FadeIn(0.5)
+        );
+    if (r.right_sprite)
+        r.right_sprite.runAction(
+            new cc.FadeIn(0.5)
+        );
+    if (r.down_sprite)
+        r.down_sprite.runAction(
+            new cc.FadeIn(0.5)
+        );
+    if (r.left_sprite)
+        r.left_sprite.runAction(
+            new cc.FadeIn(0.5)
+        );
 
-        //hide doors - entrances
-        if(r.up_sprite)
-            r.up_sprite.runAction(
-                new cc.FadeIn(0.5)
-            );
-        if(r.right_sprite)
-            r.right_sprite.runAction(
-                new cc.FadeIn(0.5)
-            );
-        if(r.down_sprite)
-            r.down_sprite.runAction(
-                new cc.FadeIn(0.5)
-            );
-        if(r.left_sprite)
-            r.left_sprite.runAction(
-                new cc.FadeIn(0.5)
-            );
-
-        for (var i = 0; i < waw.units.length; i++) {
-            var w = waw.units[i];
-            if (!w)
-                continue;
-            if (w === waw.curRoom.left_trap ||
-                w === waw.curRoom.right_trap ||
-                w === waw.curRoom.up_trap ||
-                w === waw.curRoom.down_trap) {
-                w.debugCross.visible = false;
-                waw.units[i] = null;
-            }
+    for (var i = 0; i < waw.units.length; i++) {
+        var w = waw.units[i];
+        if (!w)
+            continue;
+        if (w === waw.curRoom.left_trap ||
+            w === waw.curRoom.right_trap ||
+            w === waw.curRoom.up_trap ||
+            w === waw.curRoom.down_trap) {
+            w.debugCross.visible = false;
+            waw.units[i] = null;
         }
-
-    }, 2);
-
+    }
 };
 
 //adds grid sprite to show hit Box
