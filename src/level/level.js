@@ -37,6 +37,16 @@ function Room(_name,_x,_y) {
 // Random Seed to generate the same lists of decorative elements
     this.randomSeedTextures = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
+
+    if(Math.random()<0.5){  //random subtle room color
+        this.floorR = Math.round(Math.random()*25 +230);
+        this.floorG = Math.round(Math.random()*25 +230);
+        this.floorB = Math.round(Math.random()*25 +230);
+    } else {
+        this.floorR = 255;
+        this.floorG = 255;
+        this.floorB = 255;
+    }
 }
 
 rooms.initLevel = function() {
@@ -195,7 +205,6 @@ waw.GenerateMiniMap = function () {
             }
         }
     }
-    console.log("$$$$ min max X:", minX, maxX, "min max Y", minY, maxY);
     var realW = maxX - minX + 1;
     var realH = maxY - minY + 1;
     realW = (45 - realW * 5)/2 - minX*5;
@@ -369,6 +378,11 @@ waw.prepareRoomLayer = function(room) {
     layer.addChild(floor, -21); //Z index the lowest one
     layer.addChild(middleWalls, -20);
     layer.addChild(upperWalls, 280); //255
+
+    //floor.setColor(new cc.Color(155,233,233,255));    //like blue water
+    floor.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
+    middleWalls.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
+    upperWalls.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
 
     var s = waw.SpriteRect(16,16); //for lock sprite
     //add doors
@@ -686,7 +700,7 @@ waw.openDoor = function (doorTag, layer) {
             cc.audioEngine.playEffect(waw.sfx.nah01);
         else
             cc.audioEngine.playEffect(waw.sfx.nah02);
-        console.log("You have no a key to open the door");
+        //console.log("You have no a key to open the door");
         return;
     }
     for (var i = 0; i < waw.units.length; i++) {
@@ -781,7 +795,7 @@ waw.openExitDoor = function (layer) {
             cc.audioEngine.playEffect(waw.sfx.nah01);
         else
             cc.audioEngine.playEffect(waw.sfx.nah02);
-        console.log("You must have Coin+Gem to open the exit door");
+        //console.log("You must have Coin+Gem to open the exit door");
         return;
     }
     waw.coins--;
