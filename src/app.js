@@ -179,7 +179,7 @@ waw.MainLayer = cc.Layer.extend({
     onExitTransitionDidStart: function () {
         this._super();
         //console.info("onExitTransitionDidStart ROOM",waw.curRoomX,waw.curRoomY);
-        //this.removeChild(waw.player.shadowSprite);
+        this.removeChild(waw.player.shadowSprite);
         waw.cleanSpawnMobs(this);
         this.cleanup();
     },
