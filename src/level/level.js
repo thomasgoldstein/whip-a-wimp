@@ -801,6 +801,7 @@ waw.openExitDoor = function (layer) {
     waw.coins--;
     waw.gems--;
     cc.audioEngine.playEffect(waw.sfx.door01);
+
     var transition = cc.TransitionFade;
     //var transition = cc.TransitionZoomFlipAngular;
     cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
@@ -969,7 +970,7 @@ waw.activateTrapRoom = function() {
 
     console.log("activate trap room");
     r.trapActive = true;
-    cc.audioEngine.playEffect(waw.sfx.laugh01);
+    cc.audioEngine.playEffect(waw.sfx.door01);
 
     //hide doors - entrances
     if(r.up_sprite)
@@ -1038,7 +1039,7 @@ waw.deactivateTrapRoom = function () {
     waw.curRoom.trapActive = false;
 
     console.log("open exits in trap room");
-    cc.audioEngine.playEffect(waw.sfx.cough01);
+    cc.audioEngine.playEffect(waw.sfx.door01);
     waw.layer.removeChildByTag(TAG_TRAP, true);
 
     //hide doors - entrances
