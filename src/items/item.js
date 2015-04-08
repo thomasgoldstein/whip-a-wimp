@@ -36,22 +36,21 @@ waw.Item = waw.Unit.extend({
             case "invincibility":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(6, 0));
                 break;
+            case "boots":
+                this.sprite = new cc.Sprite(waw.gfx.items, s(9, 0));
+                break;
             default:    //unknown
                 this.sprite = new cc.Sprite(waw.gfx.items, s(7, 0));
         }
-        this.sprite.setPosition(0, this.spriteYoffset); //pig 48x48
+        this.sprite.setPosition(0, this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
         this.addChild(this.sprite, 0, TAG_SPRITE);
         waw.makeSpriteJump(this.sprite);
-
-        //create shadow sprite
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow12x6);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
-
         this.scheduleUpdate();
     },
     cleanUp: function () {
-        var i;
         this.unscheduleUpdate();
         this.debugCross.visible = false;
         if(Math.random()<0.2)
@@ -77,14 +76,6 @@ waw.Item = waw.Unit.extend({
             ),
             new cc.RemoveSelf()
         ));
-
-/*        for (i = 0; i < waw.items.length; i++) { //remove from current items array
-            if (waw.items[i] === this) {
-                waw.items[i] = null;
-                waw.curRoom.items[i] = null;
-                break;
-            }
-        }*/
         waw.items[this.cleanItemIndex] = waw.curRoom.items[this.cleanItemIndex] = null;
     },
     update: function () {
@@ -150,6 +141,19 @@ waw.Item = waw.Unit.extend({
                     //
 
 
+                } else
+                    return;
+                break;
+            case "boots":
+                if(waw.player.speed < 12) {
+                    waw.player.speed++;
+                    waw.addScore(50);
+                    waw.player.sprite.runAction(
+                        new cc.Sequence(
+                            new cc.ScaleTo(0.5, 1.1),
+                            new cc.ScaleTo(0.5, 1.1)
+                        )
+                    );
                 } else
                     return;
                 break;

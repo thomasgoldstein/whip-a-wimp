@@ -287,7 +287,7 @@ waw.MenuDebug = function (layer) {
     labelDebug = new cc.LabelTTF("Chest", "System", 12);
     var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
             function () {
-                var itemType = Math.random() < 0.5 ? "coin" : Math.random() < 0.5 ? "gem" : "key";
+                var itemType = Math.random() < 0.5 ? "boots" : Math.random() < 0.5 ? "gem" : "key";
                 var locked = Math.random() < 0.5 ? true : false;
                 var item = {
                     x: waw.player.x,
