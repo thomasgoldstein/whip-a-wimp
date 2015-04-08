@@ -1092,8 +1092,10 @@ waw.AddHitBoxSprite = function (unit, layer, tag_) {
 waw.putRoomObstacle = function (pos, hitbox, hitboxYoffset) {
     var units = waw.units;
     var layer = waw.layer;
+    var room = waw.curRoom;
 
     var sprite = new cc.Sprite(waw.gfx.pillar, cc.rect(0, 0, 32, 64));
+    sprite.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
     sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
     //sprite.skewX = -3 + Math.round(6*Math.random());
