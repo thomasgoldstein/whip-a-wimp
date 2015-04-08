@@ -53,17 +53,13 @@ waw.AnimatedSprite = cc.Sprite.extend({
     },
     playAnimation: function(animationKey) {
         if (this.currentAnimationKey === animationKey)
-        {
             return;
-        }
-
-        this.currentAnimationKey = animationKey;
-        this.stopAllActions();
-        this.runAction(this.animations[this.currentAnimationKey]);
+        this.stopActionByTag(TAG_SPRITE_TEMP);
+        this.runAction(this.animations[(this.currentAnimationKey = animationKey)]).setTag(TAG_SPRITE_TEMP);
     },
     onEnter: function () {
         this._super();
-        this.stopAllActions();
-        this.runAction(this.animations[this.currentAnimationKey]);
+        this.stopActionByTag(TAG_SPRITE_TEMP);
+        this.runAction(this.animations[this.currentAnimationKey]).setTag(TAG_SPRITE_TEMP);
     }
 });
