@@ -153,12 +153,17 @@ waw.TitleLayer = cc.Layer.extend({
 
         var sprite = new waw.AnimatedSprite(waw.gfx.jesus, animData);
         sprite.setAnchorPoint(0.5, 0);
-        sprite.setPosition(120, 20);
+        sprite.setPosition(80, 20);
         this.addChild(sprite);
-        sprite.runAction(new cc.MoveBy(3, 16, 16));
         sprite.playAnimation("walk_right");
 
+        var shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
+        shadowSprite.setAnchorPoint(0.5 , 0.5);
+        sprite.addChild(shadowSprite, -10);
+        shadowSprite.setPosition(16, 0);
 
+        sprite.runAction(new cc.MoveTo(5, 260, 50));
+        sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
     },
     createTower: function() {
         var n = new cc.Node();
