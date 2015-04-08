@@ -9,9 +9,9 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
     HP: 2,
     state: "idle",
     itemsDrop: ["key","unknown","unknown"],
-    sfx_hurt01: waw.sfx.merchHurt01,
-    sfx_hurt02: waw.sfx.merchHurt02,
-    sfx_death: waw.sfx.merchDeath,
+    sfx_hurt01: waw.sfx.doveSellerHurt01,
+    sfx_hurt02: waw.sfx.doveSellerHurt02,
+    sfx_death: waw.sfx.doveSellerDeath,
 
     ctor: function () {
         this._super();
