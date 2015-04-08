@@ -135,6 +135,31 @@ waw.putRopes = function () {
     }
 };
 
+waw.putBoots = function () {
+    if (Math.random() < waw.theme.rules.has_boots[waw.theme.levelN]) {
+        var filtered_rooms = real_rooms.filter(
+            function (room) {
+                if (room.distance >= real_rooms.maxDistance / 3 && rooms.hasNoItems(room) && (rooms.isPassage(room) || rooms.isTLike(room)))
+                    return true;
+                return false;
+            }
+        );
+        if (filtered_rooms.length < 1)
+            filtered_rooms = real_rooms.filter(
+                function (room) {
+                    if (room.distance >= real_rooms.maxDistance / 2 && rooms.hasNoItems(room))
+                        return true;
+                    return false;
+                }
+            );
+        if (filtered_rooms.length < 1)
+            filtered_rooms = real_rooms;
+        var room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+        console.info("Put Boots to ", room.name, " Dist:", room.distance);
+        waw.addItemToRoom(room, "boots");
+    }
+};
+
 waw.putUselessItems = function () {
     var filtered_rooms = real_rooms.filter(
         function (r) {
@@ -214,6 +239,7 @@ waw.generateItems = function(){
     waw.putKeys();
     waw.putRopes();
     waw.putRedCloth();
+    waw.putBoots();
     waw.putUselessItems();
     waw.putItemsIntoChests();
 };
