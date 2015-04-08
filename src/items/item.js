@@ -148,10 +148,11 @@ waw.Item = waw.Unit.extend({
                 if(waw.player.speed < 12) {
                     waw.player.speed++;
                     waw.addScore(50);
+                    //waw.player.sprite.setColor(new cc.Color(255,133,133,255));
                     waw.player.sprite.runAction(
                         new cc.Sequence(
-                            new cc.ScaleTo(0.5, 1.1),
-                            new cc.ScaleTo(0.5, 1.1)
+                            new cc.ScaleTo(0.5, 0.6, 1.4),
+                            new cc.ScaleTo(0.5, 1,1)
                         )
                     );
                 } else
