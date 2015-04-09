@@ -20,6 +20,7 @@ function Room(_name,_x,_y) {
 	this.y = _y;
 	this.walls = new Walls();
     this.visited = false;
+    this.secret = false;
     this.dark = false;
     this.trap = false;
     this.type = 0; //0 = clean room type
@@ -38,7 +39,7 @@ function Room(_name,_x,_y) {
     this.randomSeedTextures = Math.round(Math.random()*100000);
     this.randomSeedObstacles = Math.round(Math.random()*100000);
 
-    if(Math.random()<0.5){  //random subtle room color
+    if(Math.random()<0.05){  //random subtle room color
         this.floorR = Math.round(Math.random()*25 +230);
         this.floorG = Math.round(Math.random()*25 +230);
         this.floorB = Math.round(Math.random()*25 +230);
@@ -86,7 +87,7 @@ rooms.genLevel = function() {
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
 			} else {
-                if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN])
+                if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN] * r.secret ? 4 : 1)
                     r.dark = true;
                 if(Math.random() <= waw.theme.rules.trap_chance[waw.theme.levelN])
                     r.trap = true;
