@@ -22,7 +22,7 @@ waw.NoMobChest = waw.Unit.extend({
         this.locked = locked;
         this.itemType = itemT;
         this.cleanItemIndex = n;
-        this.setContentSize(16, 8); //32, 16
+        this.setContentSize(32, 16);
 
         this.sprite = new cc.Sprite(waw.gfx.chest, new cc.rect(0, 5, 32, 24));
         this.sprite.setPosition(0,this.spriteYoffset);
