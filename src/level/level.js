@@ -87,7 +87,7 @@ rooms.genLevel = function() {
 				r.walls.bottom = "start";
                 r.type = 0; //clean room. no obstacles in it
 			} else {
-                if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN] * r.secret ? 4 : 1)
+                if(Math.random() <= waw.theme.rules.dark_chance[waw.theme.levelN] * (r.secret ? 4 : 1))
                     r.dark = true;
                 if(Math.random() <= waw.theme.rules.trap_chance[waw.theme.levelN])
                     r.trap = true;
