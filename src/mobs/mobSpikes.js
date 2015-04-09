@@ -70,7 +70,7 @@ waw.MobSpikes = waw.Enemy.extend({
         if (this.state === "attack" && this.conditions.indexOf("canAttack") >= 0) {
             //console.log("mob attacks player0");
             this.stateSchedule.reset();
-            this.sprite.setColor(new cc.Color(255,10,10,255));
+            //this.sprite.setColor(new cc.Color(255,10,10,255));
             waw.player.onGetDamage(this);
         }
 
