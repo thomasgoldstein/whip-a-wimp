@@ -34,6 +34,7 @@ var waw = {
 var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
 var rooms = []; //2d 9x9 array of the level rooms
 var real_rooms = []; //1d array with all generated rooms
+var secret_rooms = []; //array with all secret rooms
 
 //debug vars
 var showDebugInfo = false;

@@ -21,6 +21,7 @@ function Room(_name,_x,_y) {
 	this.walls = new Walls();
     this.visited = false;
     this.secret = false;
+    this.showSecret = false;
     this.dark = false;
     this.trap = false;
     this.type = 0; //0 = clean room type
@@ -217,7 +218,7 @@ waw.GenerateMiniMap = function () {
         for (x = 0; x < 9; x++) {
             w = 0; //walls-doors counter
             r = rooms[y][x];
-            if (r) {	//is it a Room
+            if (r && (!r.secret || r.showSecret)) {	//is it a Room & not secret
                 //4 passages
                 if (r.walls.up !== "empty")
                     w |= 1;
@@ -231,6 +232,9 @@ waw.GenerateMiniMap = function () {
                 m = new cc.Sprite(waw.gfx.map,
                     cc.rect(w * 6, 0, 5, 5));
                 m.setOpacity(r.visited ? 255 : 63);
+                if(r.secret){
+                    m.runAction(new cc.Blink(20, 20));
+                }
                 layerMapSprite.addChild(m);
                 m.setPositionX(x * 5 + 3 + mapXOffset);
                 m.setPositionY((8 - y) * 5 + 2 + mapYOffset);
