@@ -22,17 +22,83 @@ rooms.initNeighbours = function () {
     rooms[4][4].doors = 0;
 
     real_rooms = []; // the start room goes 1st
-/*    real_rooms.maxDistance = 0;
-    real_rooms.maxDoors = 0;*/
+    secret_rooms = [];
     real_rooms.push(rooms[4][4]);
     for (y = 0; y < 9; y++) {
         for (x = 0; x < 9; x++) {
             r = rooms[y][x];
             if (r && !(x === 4 && y === 4)) {
-                real_rooms.push(r);
+                if(!r.secret)
+                    real_rooms.push(r);
+                else
+                    secret_rooms.push(r);
             }
         }
     }
+};
+
+rooms.addSecretRoom = function() {
+    var i = Math.round(Math.random()*(real_rooms.length-1));
+    var r, r2, n = 0;
+    var roomsToGen = 3;
+    while(n < real_rooms.length && roomsToGen > 0) {
+        if(++i > real_rooms.length-1)
+            i = 0;
+        r = real_rooms[i];
+
+        if(!rooms.isEntrance(r) && !rooms.hasExit(r) && (rooms.isDeadEnd(r) || rooms.isPassage(r))) {
+            var nn = 0;
+            var ii = Math.round(Math.random()*3);
+            while(nn<4) {
+                nn++;
+                if(++ii > 3)
+                    ii = 0;
+                r2 = null;
+                switch(ii){
+                    case 0: //up
+                        r2 = rooms.getFreeRoom(r.y-1, r.x);
+                        if(r2)
+                            nn = 4;
+                        break;
+                    case 1: //right
+                        r2 = rooms.getFreeRoom(r.y, r.x+1);
+                        if(r2)
+                            nn = 4;
+                        break;
+                    case 2: //down
+                        r2 = rooms.getFreeRoom(r.y+1, r.x);
+                        if(r2)
+                            nn = 4;
+                        break;
+                    case 3: //left
+                        r2 = rooms.getFreeRoom(r.y, r.x-1);
+                        if(r2)
+                            nn = 4;
+                        break;
+                }
+            }
+            //mark room as secret
+            if(r2) {
+                r2.secret = true;
+                r2.showSecret = true;
+                roomsToGen--;
+                i = 1 + Math.round(Math.random() * (real_rooms.length - 2));
+                n = 0;
+                console.info("Secret room:", r2.name, ii);
+                //TODO dark?
+            }
+        }
+    }
+};
+
+rooms.getFreeRoom = function (y, x) {
+    if (y < 0 || x < 0 || y >= 9 || x >= 9)
+        return null;
+    if (rooms[y][x])
+        return null;
+
+    rooms[y][x] = new Room("Secret Room "+x+"-"+y,x,y);
+    return rooms[y][x];
 };
 
 rooms.getRoom = function (y, x) {

@@ -49,6 +49,7 @@ waw.MainScene = cc.Scene.extend({
         rooms.initNeighbours();
         rooms.calcDistance();
         rooms.calcFinalStats();
+        rooms.addSecretRoom();
         waw.generateItems();
         waw.generateMobs();
 
