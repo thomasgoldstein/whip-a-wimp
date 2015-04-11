@@ -370,7 +370,7 @@ waw.prepareRoomLayer = function(room) {
     if(!room) throw "unknown room";
     var units = waw.units;
     var layer = waw.layer;
-    var wall, d;
+    var wall, d, g;
 
     //add room Background
     var floor = new cc.Sprite(waw.gfx.floor);
@@ -390,8 +390,8 @@ waw.prepareRoomLayer = function(room) {
     upperWalls.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
 
     var s = waw.SpriteRect(16,16); //for lock sprite
-    //add doors
-    d = null;
+    //add doors and gates
+    d = null; g = null;
     switch (room.walls.up) {    //FAT upper wall
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(0, 80, 80, 80)); //closed door
@@ -402,8 +402,6 @@ waw.prepareRoomLayer = function(room) {
                 new cc.Sequence(
                     new cc.TintTo(1, 0, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
-                    //new cc.SkewTo(1, 0, -4),
-                    //new cc.SkewTo(1, 0, 4)
                 )
             ));
             //add rotating locks
@@ -416,6 +414,15 @@ waw.prepareRoomLayer = function(room) {
             l.runAction(new cc.RepeatForever(
                     new cc.RotateBy(1, -45)
             ));
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(0, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = 40;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -437,6 +444,15 @@ waw.prepareRoomLayer = function(room) {
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40, 55);
             waw.makeSpriteJump(l);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(0, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = 40;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -452,6 +468,14 @@ waw.prepareRoomLayer = function(room) {
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
             d.setPosition(160+room.walls.up_d,240-88);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(0, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = 40;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
@@ -466,7 +490,9 @@ waw.prepareRoomLayer = function(room) {
     }
     if(d)   //keep sprite ref for trap rooms
         room.up_sprite = d;
-    d = null;
+    if(g)   //keep sprite ref for trap rooms
+        room.up_gate = g;
+    d = null; g = null;
     switch (room.walls.right) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 2, 80, 80, 80)); //closed door
@@ -477,8 +503,6 @@ waw.prepareRoomLayer = function(room) {
                 new cc.Sequence(
                     new cc.TintTo(1, 0, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
-                    //new cc.SkewTo(1, 0, -4),
-                    //new cc.SkewTo(1, 0, 4)
                 )
             ));
             //add rotating locks
@@ -491,6 +515,15 @@ waw.prepareRoomLayer = function(room) {
             l.runAction(new cc.RepeatForever(
                 new cc.RotateBy(1, -45)
             ));
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(160, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -512,6 +545,15 @@ waw.prepareRoomLayer = function(room) {
             l.setPosition(40+8, 55-15);
             l.setRotation(90);
             waw.makeSpriteJump(l);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(160, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -527,6 +569,14 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d,-18);
             d.setPosition(320-32,120-40+room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(160, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
@@ -540,7 +590,9 @@ waw.prepareRoomLayer = function(room) {
     }
     if(d)   //keep sprite ref for trap rooms
         room.right_sprite = d;
-    d = null;
+    if(g)   //keep sprite ref for trap rooms
+        room.right_gate = g;
+    d = null; g = null;
     switch (room.walls.down) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 80, 80, 80)); //closed door
@@ -550,8 +602,6 @@ waw.prepareRoomLayer = function(room) {
                 new cc.Sequence(
                     new cc.TintTo(1, 0, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
-                    //new cc.SkewTo(1, 0, -4),
-                    //new cc.SkewTo(1, 0, 4)
                 )
             ));
             //add rotating locks
@@ -564,6 +614,15 @@ waw.prepareRoomLayer = function(room) {
             l.runAction(new cc.RepeatForever(
                 new cc.RotateBy(1, -45)
             ));
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(240, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = -20;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -583,6 +642,15 @@ waw.prepareRoomLayer = function(room) {
             l.setPosition(41, 55-24);
             l.setRotation(180);
             waw.makeSpriteJump(l);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(240, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = -20;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -596,6 +664,14 @@ waw.prepareRoomLayer = function(room) {
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*3,0,80,80)); //open door
             d.setPosition(160+room.walls.down_d,32);
             layer.addChild(d,-18);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(240, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = 0;
+            g.openPosY = -20;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
@@ -609,7 +685,9 @@ waw.prepareRoomLayer = function(room) {
     }
     if(d)   //keep sprite ref for trap rooms
         room.down_sprite = d;
-    d = null;
+    if(g)   //keep sprite ref for trap rooms
+        room.down_gate = g;
+    d = null; g = null;
     switch (room.walls.left) {
         case "exit":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 1, 80, 80, 80)); //closed door
@@ -620,8 +698,6 @@ waw.prepareRoomLayer = function(room) {
                 new cc.Sequence(
                     new cc.TintTo(1, 0, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
-                    //new cc.SkewTo(1, 0, -4),
-                    //new cc.SkewTo(1, 0, 4)
                 )
             ));
             //add rotating locks
@@ -634,6 +710,15 @@ waw.prepareRoomLayer = function(room) {
             l.runAction(new cc.RepeatForever(
                 new cc.RotateBy(1, -45)
             ));
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(80, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = -20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -655,6 +740,15 @@ waw.prepareRoomLayer = function(room) {
             l.setPosition(40-8, 55-15);
             l.setRotation(-90);
             waw.makeSpriteJump(l);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(80, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = -20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
+
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -670,6 +764,14 @@ waw.prepareRoomLayer = function(room) {
             d.setPosition(32,120-40+room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d,-18);
+            //add and hide gates
+            g = new cc.Sprite(waw.gfx.doors, cc.rect(80, 160, 80, 80)); //gate
+            g.setAnchorPoint(0, 0);
+            d.addChild(g, 2);
+            g.openPosX = -20;
+            g.openPosY = 0;
+            g.setPosition(g.openPosX, g.openPosY);
+            g.visible = false;
             break;
         case "wall":
             //we don't draw wall (it's on the bg)
@@ -684,7 +786,9 @@ waw.prepareRoomLayer = function(room) {
     }
     if(d)   //keep sprite ref for trap rooms
         room.left_sprite = d;
-    d = null;
+    if(g)   //keep sprite ref for trap rooms
+        room.left_gate = g;
+    d = null; g = null;
     //put obstacles in the room
     waw.prepareRoomPattern(room);
 
@@ -977,7 +1081,7 @@ waw.activateTrapRoom = function() {
     r.trapActive = true;
     cc.audioEngine.playEffect(waw.sfx.door01);
 
-    //hide doors - entrances
+/*    //hide doors - entrances
     if(r.up_sprite)
         r.up_sprite.runAction(
                 new cc.FadeOut(0.5)
@@ -993,7 +1097,7 @@ waw.activateTrapRoom = function() {
     if(r.left_sprite)
         r.left_sprite.runAction(
                 new cc.FadeOut(0.5)
-        );
+        );*/
 
     // Left wall
     wall = new waw.Unit();
@@ -1035,11 +1139,29 @@ waw.activateTrapRoom = function() {
     units.push(wall);
     waw.AddHitBoxSprite(wall, layer, TAG_TRAP);
     r.down_trap = wall;
+    //close gates
+    var g;
+    if((g = r.up_gate)){
+        g.visible = true;
+        g.runAction(new cc.MoveTo(0.5+Math.random()/2, 0, 0));
+    }
+    if((g = r.right_gate)){
+        g.visible = true;
+        g.runAction(new cc.MoveTo(0.5+Math.random()/2, 0, 0));
+    }
+    if((g = r.down_gate)){
+        g.visible = true;
+        g.runAction(new cc.MoveTo(0.5+Math.random()/2, 0, 0));
+    }
+    if((g = r.left_gate)){
+        g.visible = true;
+        g.runAction(new cc.MoveTo(0.5+Math.random()/2, 0, 0));
+    }
 };
 
 //unblock exits
 waw.deactivateTrapRoom = function () {
-    var r = waw.curRoom;
+    var g, r = waw.curRoom;
     waw.curRoom.trap = false;
     waw.curRoom.trapActive = false;
 
@@ -1047,7 +1169,21 @@ waw.deactivateTrapRoom = function () {
     cc.audioEngine.playEffect(waw.sfx.door01);
     waw.layer.removeChildByTag(TAG_TRAP, true);
 
-    //hide doors - entrances
+    //open gates
+    if((g = r.up_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.right_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.down_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.left_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+
+/*
     if (r.up_sprite)
         r.up_sprite.runAction(
             new cc.FadeIn(0.5)
@@ -1064,6 +1200,7 @@ waw.deactivateTrapRoom = function () {
         r.left_sprite.runAction(
             new cc.FadeIn(0.5)
         );
+*/
 
     for (var i = 0; i < waw.units.length; i++) {
         var w = waw.units[i];
