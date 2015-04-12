@@ -91,6 +91,40 @@ rooms.addSecretRoom = function() {
     }
 };
 
+
+waw.addExitLevelGate = function() {
+    var filtered_rooms = real_rooms.filter(
+        function(room) {
+            if (room.distance >= real_rooms.maxDistance )
+                return true;
+            return false;
+        }
+    );
+    var room = filtered_rooms[Math.round(Math.random()*(filtered_rooms.length-1))];
+    var t="";
+    for(var i=0; i<filtered_rooms.length; i++)
+        t = t + " " + filtered_rooms[i].name + ":" + filtered_rooms[i].distance;
+    console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
+    room.trap = false;  //no trap rooms + exit
+    //replace empty walls to exit door
+    if(room.walls.up === "wall"){
+        room.walls.up = "exit";
+        return;
+    }
+    if(room.walls.left === "wall"){
+        room.walls.left = "exit";
+        return;
+    }
+    if(room.walls.right === "wall"){
+        room.walls.right = "exit";
+        return;
+    }
+    if(room.walls.down === "wall"){
+        room.walls.down = "exit";
+        return;
+    }
+};
+
 rooms.getFreeRoom = function (y, x) {
     if (y < 0 || x < 0 || y >= 9 || x >= 9)
         return null;

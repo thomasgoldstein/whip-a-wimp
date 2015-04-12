@@ -178,38 +178,6 @@ waw.putUselessItems = function () {
     }
 };
 
-waw.putExit = function() {
-    var filtered_rooms = real_rooms.filter(
-        function(room) {
-            if (room.distance >= real_rooms.maxDistance )
-                return true;
-            return false;
-        }
-    );
-    var room = filtered_rooms[Math.round(Math.random()*(filtered_rooms.length-1))];
-    var t="";
-    for(var i=0; i<filtered_rooms.length; i++)
-        t = t + " " + filtered_rooms[i].name + ":" + filtered_rooms[i].distance;
-    console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
-    //replace empty walls to exit door
-    if(room.walls.up === "wall"){
-        room.walls.up = "exit";
-        return;
-    }
-    if(room.walls.left === "wall"){
-        room.walls.left = "exit";
-        return;
-    }
-    if(room.walls.right === "wall"){
-        room.walls.right = "exit";
-        return;
-    }
-    if(room.walls.down === "wall"){
-        room.walls.down = "exit";
-        return;
-    }
-};
-
 waw.putItemsIntoChests = function() {
     var fRooms = real_rooms.filter(
         function(room) {
@@ -234,7 +202,7 @@ waw.putItemsIntoChests = function() {
 
 waw.generateItems = function(){
     waw.addItemSpawnCoordsToRooms();
-    waw.putExit();
+    waw.addExitLevelGate();
     waw.putMap();
     waw.putKeys();
     waw.putRopes();
