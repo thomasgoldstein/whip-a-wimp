@@ -17,11 +17,11 @@ waw.Item = waw.Unit.extend({
             case "key":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(0, 0));
                 break;
-            case "coin":
-                this.sprite = new cc.Sprite(waw.gfx.items, s(1, 0));
+            case "sun":
+                this.sprite = new cc.Sprite(waw.gfx.items, s(0, 1));
                 break;
-            case "gem":
-                this.sprite = new cc.Sprite(waw.gfx.items, s(2, 0));
+            case "moon":
+                this.sprite = new cc.Sprite(waw.gfx.items, s(1, 1));
                 break;
             case "map":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(3, 0));
@@ -93,12 +93,12 @@ waw.Item = waw.Unit.extend({
                 waw.keys += 1;
                 waw.addScore(10);
                 break;
-            case "gem":
-                waw.gems += 1;
+            case "moon":
+                waw.moon += 1;
                 waw.addScore(50);
                 break;
-            case "coin":
-                waw.coins += 1;
+            case "sun":
+                waw.sun += 1;
                 waw.addScore(100);
                 break;
             case "map":

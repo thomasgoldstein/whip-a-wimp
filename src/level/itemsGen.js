@@ -71,7 +71,7 @@ waw.putRedCloth = function () {
         room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
     else
         room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
-    waw.addItemToRoom(room, "coin");
+    waw.addItemToRoom(room, "sun");
 
     filtered_rooms = real_rooms.filter(
         function (r) {
@@ -84,7 +84,7 @@ waw.putRedCloth = function () {
         room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
     else
         room = real_rooms[Math.round(Math.random() * (real_rooms.length - 1))];
-    waw.addItemToRoom(room, "gem");
+    waw.addItemToRoom(room, "moon");
 };
 
 waw.putKeys = function () {

@@ -64,8 +64,8 @@ rooms.initLevel = function() {
     rooms.foundMap = false; //player found no map yet
     if(waw.keys > 3)
         waw.keys = 0;
-    waw.coins = 0;
-    waw.gems = 0;
+    waw.sun = 0;
+    waw.moon = 0;
 };
 
 rooms.genLevel = function() {
@@ -405,9 +405,9 @@ waw.prepareRoomLayer = function(room) {
                 )
             ));
             //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(1, 0));
-            l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0, 0.5);
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40, 55);
             l.scale = 0.5;
@@ -506,9 +506,9 @@ waw.prepareRoomLayer = function(room) {
                 )
             ));
             //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(1, 0));
-            l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0, 0.5);
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40+8, 55-15);
             l.scale = 0.5;
@@ -605,9 +605,9 @@ waw.prepareRoomLayer = function(room) {
                 )
             ));
             //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(1, 0));
-            l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0, 0.5);
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(41, 55-24);
             l.scale = 0.5;
@@ -701,9 +701,9 @@ waw.prepareRoomLayer = function(room) {
                 )
             ));
             //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(1, 0));
-            l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0, 0.5);
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
             d.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40-8, 55-15);
             l.scale = 0.5;
@@ -899,7 +899,7 @@ waw.openDoor = function (doorTag, layer) {
 waw.openExitDoor = function (layer) {
     if(waw.curRoom.trapActive)
         return;
-    if(waw.coins<=0 || waw.gems<=0) {
+    if(waw.sun<=0 || waw.moon<=0) {
         if(Math.random()<0.5)
             cc.audioEngine.playEffect(waw.sfx.nah01);
         else
@@ -907,8 +907,8 @@ waw.openExitDoor = function (layer) {
         //console.log("You must have Coin+Gem to open the exit door");
         return;
     }
-    waw.coins--;
-    waw.gems--;
+    waw.sun--;
+    waw.moon--;
     cc.audioEngine.playEffect(waw.sfx.door01);
 
     var transition = cc.TransitionFade;

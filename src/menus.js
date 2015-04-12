@@ -21,27 +21,27 @@ waw.Score = cc.Node.extend({
                     //show:function(){ this.items.keys.sprite.visible = true; },
                     //hide:function(){ this.items.keys.sprite.visible = false;}
                 },
-                coins: {
-                    sprite: new cc.Sprite(waw.gfx.items, s(1, 0)),
+                sun: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(0, 1)),
                     oldValue: 0,
                     usage: function () {
                         console.log(this.name + " is used automatically")
                     },
                     update: function () {
                     }
-                    //show:function(){ this.items.coins.sprite.visible = true; },
-                    //hide:function(){ this.items.coins.sprite.visible = false;}
+                    //show:function(){ this.items.sun.sprite.visible = true; },
+                    //hide:function(){ this.items.sun.sprite.visible = false;}
                 },
-                gems: {
-                    sprite: new cc.Sprite(waw.gfx.items, s(2, 0)),
+                moon: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(1, 1)),
                     oldValue: 0,
                     usage: function () {
                         console.log(this.name + " is used automatically")
                     },
                     update: function () {
                     }
-                    //show:function(){ this.items.gems.sprite.visible = true; },
-                    //hide:function(){ this.items.gems.sprite.visible = false;}
+                    //show:function(){ this.items.moon.sprite.visible = true; },
+                    //hide:function(){ this.items.moon.sprite.visible = false;}
                 }
             };
 
@@ -68,17 +68,17 @@ waw.Score = cc.Node.extend({
                 this.items.keys.sprite.visible = false;
             this.items.keys.oldValue = waw.keys;
 
-            this.addChild(this.items.coins.sprite);
-            this.items.coins.sprite.setPosition(1 * 16, 0);
-            if (waw.coins <= 0)
-                this.items.coins.sprite.visible = false;
-            this.items.coins.oldValue = waw.coins;
+            this.addChild(this.items.sun.sprite);
+            this.items.sun.sprite.setPosition(1 * 16, 0);
+            if (waw.sun <= 0)
+                this.items.sun.sprite.visible = false;
+            this.items.sun.oldValue = waw.sun;
 
-            this.addChild(this.items.gems.sprite);
-            this.items.gems.sprite.setPosition(2 * 16, 0);
-            if (waw.gems <= 0)
-                this.items.gems.sprite.visible = false;
-            this.items.gems.oldValue = waw.gems;
+            this.addChild(this.items.moon.sprite);
+            this.items.moon.sprite.setPosition(2 * 16, 0);
+            if (waw.moon <= 0)
+                this.items.moon.sprite.visible = false;
+            this.items.moon.oldValue = waw.moon;
 
             this.scheduleUpdate();
 
@@ -129,13 +129,13 @@ waw.Score = cc.Node.extend({
                 }
                 this.items.keys.oldValue = waw.keys;
             }
-            if (waw.coins !== this.items.coins.oldValue) {
-                this.items.coins.sprite.visible = (waw.coins > 0);
-                this.items.coins.oldValue = waw.coins;
+            if (waw.sun !== this.items.sun.oldValue) {
+                this.items.sun.sprite.visible = (waw.sun > 0);
+                this.items.sun.oldValue = waw.sun;
             }
-            if (waw.gems !== this.items.gems.oldValue) {
-                this.items.gems.sprite.visible = (waw.gems > 0);
-                this.items.gems.oldValue = waw.gems;
+            if (waw.moon !== this.items.moon.oldValue) {
+                this.items.moon.sprite.visible = (waw.moon > 0);
+                this.items.moon.oldValue = waw.moon;
             }
 
         }
@@ -236,8 +236,8 @@ waw.MenuDebug = function (layer) {
     var debugDoors = new cc.MenuItemLabel(labelDebug,
         function () {
             waw.keys += 3;
-            waw.coins += 3;
-            waw.gems += 3;
+            waw.sun += 3;
+            waw.moon += 3;
             waw.player.HP = 2;
             waw.player.sprite2.visible = true;
             if (rooms.foundMap === false) {
@@ -287,7 +287,7 @@ waw.MenuDebug = function (layer) {
     labelDebug = new cc.LabelTTF("Chest", "System", 12);
     var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
             function () {
-                var itemType = Math.random() < 0.5 ? "boots" : Math.random() < 0.5 ? "gem" : "key";
+                var itemType = Math.random() < 0.5 ? "boots" : Math.random() < 0.5 ? "moon" : "key";
                 var locked = Math.random() < 0.5 ? true : false;
                 var item = {
                     x: waw.player.x,

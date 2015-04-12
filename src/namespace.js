@@ -15,8 +15,8 @@ var waw = {
     score: 0,
     hiScore: 100,
     keys: 0,
-    coins: 0,
-    gems: 0,
+    sun: 0,
+    moon: 0,
     addScore: function(n) {
         this.score += n;
         if(this.score > this.hiScore )
@@ -25,8 +25,8 @@ var waw = {
     initScoreAndItems: function() {
         this.score = 0;
         this.keys = 0;
-        this.coins = 0;
-        this.gems = 0;
+        this.sun = 0;
+        this.moon = 0;
     }
 };
 
@@ -63,8 +63,6 @@ var TAG_EXIT = 200+9;
 
 var TAG_ENEMY= 300+0;
 var TAG_BOSS= 300+1;
-
-var TAG_SUBSTATE_ANIMATION = 400+0;
 
 // Disable anti-aliasing
 waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;
