@@ -98,7 +98,7 @@ waw.Item = waw.Unit.extend({
             case "moon":
                 waw.moon += 1;
                 waw.addScore(50);
-                waw.scoreMenu.items.moon.sprite.setPosition(waw.player.x-waw.scoreMenu.x, waw.player.y-waw.scoreMenu.y);
+                waw.scoreMenu.items.moon.sprite.setPosition(this.x-waw.scoreMenu.x, this.y-waw.scoreMenu.y);
                 waw.scoreMenu.items.moon.sprite.opacity = 50;
                 waw.scoreMenu.items.moon.sprite.runAction(
                     new cc.Spawn(
@@ -111,7 +111,7 @@ waw.Item = waw.Unit.extend({
             case "sun":
                 waw.sun += 1;
                 waw.addScore(50);
-                waw.scoreMenu.items.sun.sprite.setPosition(waw.player.x-waw.scoreMenu.x, waw.player.y-waw.scoreMenu.y);
+                waw.scoreMenu.items.sun.sprite.setPosition(this.x-waw.scoreMenu.x, this.y-waw.scoreMenu.y);
                 waw.scoreMenu.items.sun.sprite.opacity = 50;
                 waw.scoreMenu.items.sun.sprite.runAction(
                     new cc.Spawn(
