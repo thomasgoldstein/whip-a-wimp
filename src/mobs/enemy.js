@@ -489,7 +489,7 @@ waw.Enemy = waw.Unit.extend({
         if (this.subState === "dead")
             return;
 
-        this.becomeInvincible(1000);
+        this.becomeInvincible(500);
         this.HP--;
 
         this.state = "hurt";

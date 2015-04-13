@@ -312,6 +312,7 @@ waw.Player = waw.Unit.extend({
             || this.subState === "punch"
             || this.subState === "candelabre"
             //|| this.subState === "invincible"
+            || this.subState === "cooldown"
             || this.subState === "hurt"
         )
             return;
@@ -331,8 +332,9 @@ waw.Player = waw.Unit.extend({
         }
 
         switch (this.state) {
+            case "cooldown":
+                break;
             case "invincible":
-                //break;
             case "idle":
             case "walk":
                 this.setSubState(this.currentWeapon,600);   //whip, punch, candelabre, etc
@@ -483,6 +485,11 @@ waw.Player = waw.Unit.extend({
             return;
         //console.log("subact tim: ", this.subState);
         switch(this.subState){
+            case "cooldown":
+                this.setSubState("");
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
+                break;
             case "invincible":
                 //console.log("REMOVE subact tim: ", this.subState);
                 //this.stopActionByTag(TAG_SUBSTATE_ANIMATION);
@@ -495,7 +502,7 @@ waw.Player = waw.Unit.extend({
                 this.sprite.opacity = 255;
                 this.shadowSprite.opacity = 255;
                 this.state = "idle";
-                this.setSubState("");
+                this.setSubState("cooldown",250);
                 break;
             case "hurt":
                 this.state = "idle";
@@ -505,7 +512,7 @@ waw.Player = waw.Unit.extend({
                 this.sprite.opacity = 255;
                 this.shadowSprite.opacity = 255;
                 this.state = "idle";
-                this.setSubState("");
+                this.setSubState("cooldown",400);
                 break;
             case "whip":
                 this.sprite.opacity = 255;
@@ -529,7 +536,7 @@ waw.Player = waw.Unit.extend({
 
                 waw.whip.visible = false;
                 this.state = "idle";
-                this.setSubState("");
+                this.setSubState("cooldown",500);
                 break;
             default:
                 this.setSubState("");
@@ -590,14 +597,14 @@ waw.Player = waw.Unit.extend({
         }
     },
     becomeInvincible: function() {
-        this.setSubState("invincible", 2000);
+        this.setSubState("invincible", 1500);
         this.sprite.opacity = 180;
         this.shadowSprite.opacity = 180;
 
         waw.whip.visible = false; //hide Whip
     },
     onGetDamage : function (killer) {
-        if (this.subState === "invincible" || killer.subState === "invincible")
+        if (this.subState === "invincible"/* || killer.subState === "invincible"*/)
             return;
         if (this.subState === "hurt")
             return;
