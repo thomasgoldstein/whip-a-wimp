@@ -400,7 +400,7 @@ waw.prepareRoomLayer = function(room) {
             d.setPosition(160 + room.walls.up_d, 240 - 88);
             d.runAction(new cc.RepeatForever(
                 new cc.Sequence(
-                    new cc.TintTo(1, 0, 255, 0),
+                    new cc.TintTo(1, 255, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
@@ -419,10 +419,10 @@ waw.prepareRoomLayer = function(room) {
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40, 55);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
+            //l.scale = 0.5;
+            //l.runAction(new cc.RepeatForever(
+            //    new cc.RotateBy(1, -45)
+            //));
 
             //we set here obstacle
             wall = new waw.Unit();
@@ -502,7 +502,7 @@ waw.prepareRoomLayer = function(room) {
             d.setAnchorPoint(0.5, 0);
             d.runAction(new cc.RepeatForever(
                 new cc.Sequence(
-                    new cc.TintTo(1, 0, 255, 0),
+                    new cc.TintTo(1, 255, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
@@ -521,10 +521,10 @@ waw.prepareRoomLayer = function(room) {
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40+8, 55-15);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
+            l.scaleX = 0.5;
+            //l.runAction(new cc.RepeatForever(
+            //    new cc.RotateBy(1, -45)
+            //));
 
             // obstacle
             wall = new waw.Unit();
@@ -602,7 +602,7 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d, -18, TAG_EXIT);
             d.runAction(new cc.RepeatForever(
                 new cc.Sequence(
-                    new cc.TintTo(1, 0, 255, 0),
+                    new cc.TintTo(1, 255, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
@@ -621,10 +621,10 @@ waw.prepareRoomLayer = function(room) {
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(41, 55-24);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
+            l.scaleY = 0.5;
+            //l.runAction(new cc.RepeatForever(
+            //    new cc.RotateBy(1, -45)
+            //));
 
             // obstacle
             wall = new waw.Unit();
@@ -699,7 +699,7 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d, -18, TAG_EXIT);
             d.runAction(new cc.RepeatForever(
                 new cc.Sequence(
-                    new cc.TintTo(1, 0, 255, 0),
+                    new cc.TintTo(1, 255, 255, 0),
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
@@ -718,10 +718,10 @@ waw.prepareRoomLayer = function(room) {
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40-8, 55-15);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
+            l.scaleX = 0.5;
+            //l.runAction(new cc.RepeatForever(
+            //    new cc.RotateBy(1, -45)
+            //));
 
             // obstacle
             wall = new waw.Unit();
