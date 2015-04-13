@@ -62,7 +62,7 @@ waw.putRedCloth = function () {
     //misc items temp
     filtered_rooms = real_rooms.filter(
         function (r) {
-            if (rooms.isDeadEnd(r) && rooms.hasNoItems(r))
+            if (rooms.hasNoItems(r) && r.distance > 1)
                 return true;
             return false;
         }
@@ -75,7 +75,7 @@ waw.putRedCloth = function () {
 
     filtered_rooms = real_rooms.filter(
         function (r) {
-            if (rooms.isPassage(r) && rooms.hasNoItems(r))
+            if (rooms.hasNoItems(r) && r.distance > 0)
                 return true;
             return false;
         }
