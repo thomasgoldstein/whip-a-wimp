@@ -653,9 +653,9 @@ waw.Player = waw.Unit.extend({
             }
         }
 
-        var random = Math.random();
+       /* var random = Math.random();
         var sound = random >= 0.5 ? waw.sfx.ouch01 : random >= 0.2 ? waw.sfx.ouch02 : waw.sfx.ouch03;
-        cc.audioEngine.playEffect(sound);
+        cc.audioEngine.playEffect(sound);*/
 
         //Cherub anim
         var s = waw.SpriteRect(24,32);

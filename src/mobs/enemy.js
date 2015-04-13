@@ -532,7 +532,7 @@ waw.Enemy = waw.Unit.extend({
             }, 0.3);
         }
         this.scheduleOnce(function () {
-            cc.audioEngine.playEffect(this.sfx_death);
+            //cc.audioEngine.playEffect(this.sfx_death);
             //this.sprite.setAnchorPoint(0.5, 1);
             //this.sprite.rotation = 180;
             this.sprite.runAction(new cc.FadeOut(1));
