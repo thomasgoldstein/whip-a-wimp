@@ -179,6 +179,7 @@ waw.theme = {
         ],
 
         mob_group: [
+            [],
             ["Spikes", "Merchant"],
             ["Merchant", "Merchant"],
             ["Spikes", "Merchant", "Merchant"],
@@ -188,7 +189,9 @@ waw.theme = {
             ["Spikes", "Bat", "Bat", "DoveSeller"],
             ["Merchant", "Bat", "Bat", "Bat","DoveSeller"],
             ["Bat", "Bat", "Bat", "DoveSeller", "Merchant"],
-            ["DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "DoveSeller", "Merchant"]
+            ["Pig", "Merchant"],
+            ["Pig", "Pig"],
+            ["Pig", "Pig", "Pig"]
         ],
 
         boss_group: [
@@ -196,16 +199,16 @@ waw.theme = {
         ],
 
         mob_set: [
-            [0],
-            [1, 2],
-            [2, 3],
-            [3, 4, 5],
-            [4, 5, 6],
-            [2, 5, 6],
-            [3, 5, 6],
-            [4, 6, 7],
-            [6, 7, 8],
-            [6, 7, 8, 9]
+            [0, 1],
+            [0, 1, 2],
+            [0, 2, 3],
+            [0, 3, 4, 5],
+            [0, 4, 5, 6, 10],
+            [0, 2, 5, 6, 11],
+            [0, 3, 5, 6, 10, 11],
+            [0, 4, 6, 7, 12, 11],
+            [0, 6, 7, 8, 10, 11, 12],
+            [0, 6, 7, 8, 9, 10, 11, 12]
         ]
     }
 };

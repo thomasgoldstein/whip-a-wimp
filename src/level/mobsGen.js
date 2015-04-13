@@ -73,10 +73,10 @@ waw.spawnMobs = function(layer){
         }
         //TODO choose m.mobType
         switch(m.mobType){
-            case "PigWalker":
-                e = new waw.MobPigWalker();
+            case "Pig":
+                e = new waw.MobPig();
                 break;
-            case "PigBouncer":
+            case "PigBouncer":  //TODO remove
                 e = new waw.MobPigBouncer();
                 break;
             case "Merchant":

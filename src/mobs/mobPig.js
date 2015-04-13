@@ -2,8 +2,8 @@
 //states: idle walk attack
 //conditions canAttck canWalk feelObstacle seePlayer seeItem
 
-waw.MobPigWalker = waw.MobRandomWalker.extend({
-    mobType: "PigWalker",
+waw.MobPig = waw.MobRandomWalker.extend({
+    mobType: "Pig",
     shadowYoffset: 4,
     spriteYoffset: -4,
     HP: 3,
@@ -14,9 +14,9 @@ waw.MobPigWalker = waw.MobRandomWalker.extend({
 
     ctor: function () {
         this._super();
-        //console.info("MobPigWalker ctor");
+        //console.info("MobPig ctor");
         this.setContentSize(16, 16);
-        this.speed = 1+Math.random()*2;
+        this.speed = 1.5+Math.random()*2;
         this.safePos = cc.p(0, 0);
 
         var animData =

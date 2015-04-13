@@ -187,7 +187,7 @@ waw.MenuDebug = function (layer) {
                     var e = new waw.MobPigBouncer();
                     break;
                 case 1:
-                    var e = new waw.MobPigWalker();
+                    var e = new waw.MobPig();
                     break;
                 case 2:
                     var e = new waw.MobMerchant();

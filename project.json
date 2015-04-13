@@ -30,7 +30,7 @@
         "src/mobs/mobMerchant.js",
         "src/mobs/mobDoveSeller.js",
         "src/mobs/mobKiwi.js",
-        "src/mobs/mobPigWalker.js",
+        "src/mobs/mobPig.js",
         "src/mobs/mobPigBouncer.js",
         "src/mobs/mobSpikes.js",
         "src/mobs/mobBat.js",
