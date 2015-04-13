@@ -104,7 +104,7 @@ waw.Item = waw.Unit.extend({
                     new cc.Spawn(
                         new cc.FadeIn(1, 360*3),
                         new cc.RotateBy(1, Math.random()<0.5 ? 360 : -360),
-                        new cc.MoveTo(1, 16*1, 1)
+                        new cc.MoveTo(1, 0*16, 1)
                     )
                 );
                 break;
@@ -117,7 +117,7 @@ waw.Item = waw.Unit.extend({
                     new cc.Spawn(
                         new cc.FadeIn(1, 360*3),
                         new cc.RotateBy(1, Math.random()<0.5 ? 360 : -360),
-                        new cc.MoveTo(1, 16*1, 0)
+                        new cc.MoveTo(1, 0*16, 0)
                     )
                 );
                 break;

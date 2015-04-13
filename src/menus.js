@@ -50,7 +50,7 @@ waw.Score = cc.Node.extend({
             };
 
             this.addChild(this.items.keys.sprite);
-            this.items.keys.sprite.setPosition(0 * 16, 0);
+            this.items.keys.sprite.setPosition(1 * 16, 0);
             if (waw.keys > 1) {
                 var keySpr = new cc.Sprite(waw.gfx.items, s(0, 0));
                 this.items.keys.sprite.removeAllChildren();
@@ -73,13 +73,13 @@ waw.Score = cc.Node.extend({
             this.items.keys.oldValue = waw.keys;
 
             this.addChild(this.items.sun.sprite, 3);
-            this.items.sun.sprite.setPosition(1 * 16, 0);
+            this.items.sun.sprite.setPosition(0 * 16, 0);
             if (waw.sun <= 0)
                 this.items.sun.sprite.visible = false;
             this.items.sun.oldValue = waw.sun;
 
             this.addChild(this.items.moon.sprite, 2);
-            this.items.moon.sprite.setPosition(1 * 16, 1);
+            this.items.moon.sprite.setPosition(0 * 16, 1);
             if (waw.moon <= 0)
                 this.items.moon.sprite.visible = false;
             this.items.moon.oldValue = waw.moon;
@@ -107,7 +107,7 @@ waw.Score = cc.Node.extend({
                 );
             } else {
                 this.addChild(this.items.sunmoon.sprite, 1);
-                this.items.sunmoon.sprite.setPosition(1 * 16, 0);
+                this.items.sunmoon.sprite.setPosition(0 * 16, 0);
                 this.items.sunmoon.sprite.opacity = 200;
             }
             this.scheduleUpdate();
