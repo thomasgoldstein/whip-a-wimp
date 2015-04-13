@@ -22,6 +22,7 @@ waw.Item = waw.Unit.extend({
                 break;
             case "moon":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(1, 1));
+                this.spriteYoffset = -3;
                 break;
             case "map":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(3, 0));
@@ -38,6 +39,7 @@ waw.Item = waw.Unit.extend({
                 break;
             case "boots":
                 this.sprite = new cc.Sprite(waw.gfx.items, s(9, 0));
+                this.spriteYoffset = -2;
                 break;
             default:    //unknown
                 this.sprite = new cc.Sprite(waw.gfx.items, s(7, 0));
