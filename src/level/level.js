@@ -404,24 +404,25 @@ waw.prepareRoomLayer = function(room) {
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
-            //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0.5, 0.5);
-            d.addChild(l,1, TAG_SPRITE_TEMP);
-            l.setPosition(40, 55);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                    new cc.RotateBy(1, -45)
-            ));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(0, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
             d.addChild(g, 2);
             g.openPosX = 0;
             g.openPosY = 40;
-            g.setPosition(g.openPosX, g.openPosY);
-            g.visible = false;
+            //g.setPosition(g.openPosX, g.openPosY);
+            //g.visible = false;
+
+            //add rotating locks
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
+            g.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40, 55);
+            l.scale = 0.5;
+            l.runAction(new cc.RepeatForever(
+                new cc.RotateBy(1, -45)
+            ));
 
             //we set here obstacle
             wall = new waw.Unit();
@@ -505,24 +506,25 @@ waw.prepareRoomLayer = function(room) {
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
-            //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0.5, 0.5);
-            d.addChild(l,1, TAG_SPRITE_TEMP);
-            l.setPosition(40+8, 55-15);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(160, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
             d.addChild(g, 2);
             g.openPosX = 20;
             g.openPosY = 0;
-            g.setPosition(g.openPosX, g.openPosY);
-            g.visible = false;
+            //g.setPosition(g.openPosX, g.openPosY);
+            //g.visible = false;
+
+            //add rotating locks
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
+            g.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40+8, 55-15);
+            l.scale = 0.5;
+            l.runAction(new cc.RepeatForever(
+                new cc.RotateBy(1, -45)
+            ));
 
             // obstacle
             wall = new waw.Unit();
@@ -604,24 +606,25 @@ waw.prepareRoomLayer = function(room) {
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
-            //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0.5, 0.5);
-            d.addChild(l,1, TAG_SPRITE_TEMP);
-            l.setPosition(41, 55-24);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(240, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
             d.addChild(g, 2);
             g.openPosX = 0;
             g.openPosY = -20;
-            g.setPosition(g.openPosX, g.openPosY);
-            g.visible = false;
+            //g.setPosition(g.openPosX, g.openPosY);
+            //g.visible = false;
+
+            //add rotating locks
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
+            g.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(41, 55-24);
+            l.scale = 0.5;
+            l.runAction(new cc.RepeatForever(
+                new cc.RotateBy(1, -45)
+            ));
 
             // obstacle
             wall = new waw.Unit();
@@ -700,24 +703,25 @@ waw.prepareRoomLayer = function(room) {
                     new cc.TintTo(1, 255, 255, 255)
                 )
             ));
-            //add rotating locks
-            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
-            l.setAnchorPoint(0.5, 0.5);
-            d.addChild(l,1, TAG_SPRITE_TEMP);
-            l.setPosition(40-8, 55-15);
-            l.scale = 0.5;
-            l.runAction(new cc.RepeatForever(
-                new cc.RotateBy(1, -45)
-            ));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(80, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
             d.addChild(g, 2);
             g.openPosX = -20;
             g.openPosY = 0;
-            g.setPosition(g.openPosX, g.openPosY);
-            g.visible = false;
+            //g.setPosition(g.openPosX, g.openPosY);
+            //g.visible = false;
+
+            //add rotating locks
+            var l = new cc.Sprite(waw.gfx.items, s(2, 1));
+            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
+            l.setAnchorPoint(0.5, 0.5);
+            g.addChild(l,1, TAG_SPRITE_TEMP);
+            l.setPosition(40-8, 55-15);
+            l.scale = 0.5;
+            l.runAction(new cc.RepeatForever(
+                new cc.RotateBy(1, -45)
+            ));
 
             // obstacle
             wall = new waw.Unit();
