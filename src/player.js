@@ -279,6 +279,7 @@ waw.Player = waw.Unit.extend({
         var t = unit.getTag();
         switch(t) {
             case TAG_PILLAR:
+                return true;
                 break;
             case TAG_DOWN_DOORD:
             case TAG_UP_DOORD:
@@ -293,6 +294,7 @@ waw.Player = waw.Unit.extend({
                 break;
             case TAG_EXIT:
                 waw.openExitDoor();
+                return true;
                 break;
             case TAG_ENEMY:
                 //TODO temp. remove later
