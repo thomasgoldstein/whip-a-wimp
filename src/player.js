@@ -597,7 +597,7 @@ waw.Player = waw.Unit.extend({
         waw.whip.visible = false; //hide Whip
     },
     onGetDamage : function (killer) {
-        if (this.subState === "invincible")
+        if (this.subState === "invincible" || killer.subState === "invincible")
             return;
         if (this.subState === "hurt")
             return;
