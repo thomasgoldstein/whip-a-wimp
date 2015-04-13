@@ -3,7 +3,7 @@ waw.Score = cc.Node.extend({
         shadowSprite: null,
         label: null,
 
-        items: {},
+        items: {sun:null, moon:null},
 
         ctor: function () {
             this._super();
