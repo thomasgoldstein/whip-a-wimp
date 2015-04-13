@@ -311,7 +311,7 @@ waw.Player = waw.Unit.extend({
             || this.subState === "whip"
             || this.subState === "punch"
             || this.subState === "candelabre"
-            || this.subState === "invincible"
+            //|| this.subState === "invincible"
             || this.subState === "hurt"
         )
             return;
@@ -332,7 +332,7 @@ waw.Player = waw.Unit.extend({
 
         switch (this.state) {
             case "invincible":
-                break;
+                //break;
             case "idle":
             case "walk":
                 this.setSubState(this.currentWeapon,600);   //whip, punch, candelabre, etc
@@ -492,6 +492,8 @@ waw.Player = waw.Unit.extend({
                 this.shadowSprite.opacity = 255;
                 break;
             case "punch":
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
                 this.state = "idle";
                 this.setSubState("");
                 break;
@@ -500,10 +502,14 @@ waw.Player = waw.Unit.extend({
                 this.becomeInvincible(500);
                 break;
             case "candelabre":
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
                 this.state = "idle";
                 this.setSubState("");
                 break;
             case "whip":
+                this.sprite.opacity = 255;
+                this.shadowSprite.opacity = 255;
                 //console.log("REMOVE subact tim: ", this.subState);
 
                 var wp =  waw.whip.getHitPosition();
