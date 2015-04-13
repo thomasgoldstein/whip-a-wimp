@@ -64,7 +64,8 @@ waw.theme = {
         };
         //music
         waw.bgm = {
-            level1: "res/Music/ingame01.mp3"
+            level1: "res/Music/01tune.ogg"
+            //level1: "res/Music/ingame01.mp3"
         };
 //SFX
         waw.sfx = {

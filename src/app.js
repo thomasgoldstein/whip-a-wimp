@@ -37,7 +37,8 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        //cc.audioEngine.playMusic(waw.bgm.level1, true);
+        cc.audioEngine.setMusicVolume(0.5);
+        cc.audioEngine.playMusic(waw.bgm.level1, true);
         waw.KEYS[cc.KEY.left] =
         waw.KEYS[cc.KEY.right] =
         waw.KEYS[cc.KEY.down] =
