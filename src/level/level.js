@@ -394,7 +394,7 @@ waw.prepareRoomLayer = function(room) {
     d = null; g = null;
     switch (room.walls.up) {    //FAT upper wall
         case "exit":
-            d = new cc.Sprite(waw.gfx.doors, cc.rect(0, 80, 80, 80)); //closed door
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(0, 0, 80, 80)); //doorway
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d, -18, TAG_EXIT);
             d.setPosition(160 + room.walls.up_d, 240 - 88);
@@ -496,7 +496,7 @@ waw.prepareRoomLayer = function(room) {
     d = null; g = null;
     switch (room.walls.right) {
         case "exit":
-            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 2, 80, 80, 80)); //closed door
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 2, 0, 80, 80)); //doorway
             layer.addChild(d, -18, TAG_EXIT);
             d.setPosition(320 - 32, 120 - 40 + room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
@@ -597,7 +597,7 @@ waw.prepareRoomLayer = function(room) {
     d = null; g = null;
     switch (room.walls.down) {
         case "exit":
-            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 80, 80, 80)); //closed door
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 0, 80, 80)); //doorway
             d.setPosition(160 + room.walls.down_d, 32);
             layer.addChild(d, -18, TAG_EXIT);
             d.runAction(new cc.RepeatForever(
@@ -693,7 +693,7 @@ waw.prepareRoomLayer = function(room) {
     d = null; g = null;
     switch (room.walls.left) {
         case "exit":
-            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 1, 80, 80, 80)); //closed door
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 1, 0, 80, 80)); //doorway
             d.setPosition(32, 120 - 40 + room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d, -18, TAG_EXIT);
@@ -915,9 +915,38 @@ waw.openExitDoor = function (layer) {
     waw.moon--;
     cc.audioEngine.playEffect(waw.sfx.door01);
 
-    var transition = cc.TransitionFade;
-    //var transition = cc.TransitionZoomFlipAngular;
-    cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
+    //stop mobs and stuff
+    waw.player.unscheduleAllCallbacks();
+    waw.player.unscheduleUpdate();
+    waw.player.getParent().unscheduleUpdate(); //for the Scene (with mobs loop)
+    var c = waw.player.getParent().getChildren();
+    for(var i=0; i<c.length; i++){
+        if(c[i] !== this){
+            c[i].unscheduleUpdate();
+        }
+    }
+    //open the EXIT gate
+    //open gates
+    var g, r = waw.curRoom;
+    if((g = r.up_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.right_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.down_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+    if((g = r.left_gate)){
+        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
+    }
+
+    waw.player.scheduleOnce( function() {
+            var transition = cc.TransitionFade;
+            //var transition = cc.TransitionZoomFlipAngular;
+            cc.director.runScene(new transition(1, new waw.gotoNextLevel()));  //1st arg = in seconds duration of t
+        }
+    ,2);
 };
 
 //adds obstacles of a room onto existing layer
