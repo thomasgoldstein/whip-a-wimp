@@ -84,7 +84,7 @@ waw.Item = waw.Unit.extend({
         //check conditions
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
-        if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 200) {
+        if (/*waw.player.subState !== "invincible" && */cc.pDistanceSQ(pPos, pos) < 150) {
             this.onTake();
         }
     },
