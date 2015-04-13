@@ -42,6 +42,10 @@ waw.Score = cc.Node.extend({
                     }
                     //show:function(){ this.items.moon.sprite.visible = true; },
                     //hide:function(){ this.items.moon.sprite.visible = false;}
+                },
+                sunmoon: {
+                    sprite: new cc.Sprite(waw.gfx.items, s(2, 1)),
+                    oldValue: 0
                 }
             };
 
@@ -68,20 +72,45 @@ waw.Score = cc.Node.extend({
                 this.items.keys.sprite.visible = false;
             this.items.keys.oldValue = waw.keys;
 
-            this.addChild(this.items.sun.sprite);
+            this.addChild(this.items.sun.sprite, 3);
             this.items.sun.sprite.setPosition(1 * 16, 0);
             if (waw.sun <= 0)
                 this.items.sun.sprite.visible = false;
             this.items.sun.oldValue = waw.sun;
 
-            this.addChild(this.items.moon.sprite);
-            this.items.moon.sprite.setPosition(2 * 16, 0);
+            this.addChild(this.items.moon.sprite, 2);
+            this.items.moon.sprite.setPosition(1 * 16, 1);
             if (waw.moon <= 0)
                 this.items.moon.sprite.visible = false;
             this.items.moon.oldValue = waw.moon;
 
+            if (waw.sun > 0 && waw.moon > 0) {
+                this.items.sun.sprite.runAction(
+                    new cc.RepeatForever(
+                        new cc.Sequence(
+                            new cc.MoveBy(0, 0, -1),
+                            new cc.DelayTime(0.4),
+                            new cc.MoveBy(0, 0, 1),
+                            new cc.DelayTime(0.4)
+                        )
+                    )
+                );
+                this.items.moon.sprite.runAction(
+                    new cc.RepeatForever(
+                        new cc.Sequence(
+                            new cc.MoveBy(0, 0, 1),
+                            new cc.DelayTime(0.4),
+                            new cc.MoveBy(0, 0, -1),
+                            new cc.DelayTime(0.4)
+                        )
+                    )
+                );
+            } else {
+                this.addChild(this.items.sunmoon.sprite, 1);
+                this.items.sunmoon.sprite.setPosition(1 * 16, 0);
+                this.items.sunmoon.sprite.opacity = 200;
+            }
             this.scheduleUpdate();
-
         },
         update: function () {
             if (waw.keys !== this.items.keys.oldValue) {
@@ -308,7 +337,6 @@ waw.MenuDebug = function (layer) {
                 e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
                 e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
                 e.setTag(TAG_CHEST);
-                console.log(waw.units.length);
                 this.scheduleOnce(function () {
                     waw.units.push(e);   //to make it obstacle&
                 }, 1);
