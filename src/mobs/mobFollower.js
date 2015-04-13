@@ -28,14 +28,14 @@ waw.MobFollower = waw.Enemy.extend({
                 case "attack":
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
-                    console.log("mob attacks player end");
+                    //console.log("mob attacks player end");
                     break;
                 case "hurt":
                     this.state = "follow";
                     this.stateSchedule = this.SCHEDULE_FOLLOW;
                     this.stateSchedule.reset();
                     this.speed += 1;
-                    console.log("mobs hurt stat end");
+                    //console.log("mobs hurt stat end");
                     break;
                 case "follow":
                 case "walk":

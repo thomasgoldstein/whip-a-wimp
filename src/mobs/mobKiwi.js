@@ -172,7 +172,7 @@ waw.MobKiwi = waw.MobRandomBouncer.extend({
         this.conditions = this.getConditions();
 
         if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
-            console.log("mob attacks player0");
+            //console.log("mob attacks player0");
             this.state = "attack";
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();

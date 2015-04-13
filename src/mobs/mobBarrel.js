@@ -76,7 +76,7 @@ waw.MobBarrel = waw.Enemy.extend({
 
         if (this.state !== "attack" && this.conditions.indexOf("canAttack") >= 0) {
             if(this.dx != 0 && this.dy != 0) {
-                console.log("mob Barrel attacks player0");
+                //console.log("mob Barrel attacks player0");
                 this.state = "attack";
                 this.stateSchedule = this.SCHEDULE_ATTACK;
                 this.stateSchedule.reset();

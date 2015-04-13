@@ -228,7 +228,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.conditions = this.getConditions();
 
         if(this.state !== "attack" && this.state !== "idle" && this.conditions.indexOf("canAttack")>=0) {
-            console.log("mob attacks player 0b");
+            //console.log("mob attacks player 0b");
             this.state = "attack";
             this.stateSchedule = this.SCHEDULE_ATTACK;
             this.stateSchedule.reset();
