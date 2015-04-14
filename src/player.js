@@ -787,6 +787,8 @@ waw.Player = waw.Unit.extend({
         //cut-scene 2
         this.scheduleOnce(function () {
             waw.curRoom.dark = false;
+            this.getParent().lightspot.visible = false; //if dark room
+
             this.shadowSprite.y += backY; //the hit-back shift. move the shadow under the cross
 
             this.sprite.setZOrder(-10);
