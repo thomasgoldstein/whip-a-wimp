@@ -91,37 +91,44 @@ rooms.addSecretRoom = function() {
     }
 };
 
-
-waw.addExitLevelGate = function() {
+waw.addExitLevelGate = function () {
     var filtered_rooms = real_rooms.filter(
-        function(room) {
-            if (room.distance >= real_rooms.maxDistance )
+        function (room) {
+            if (room.distance >= real_rooms.maxDistance)
                 return true;
             return false;
         }
     );
-    var room = filtered_rooms[Math.round(Math.random()*(filtered_rooms.length-1))];
-    var t="";
-    for(var i=0; i<filtered_rooms.length; i++)
+    var room = filtered_rooms[Math.round(Math.random() * (filtered_rooms.length - 1))];
+    var t = "";
+    for (var i = 0; i < filtered_rooms.length; i++)
         t = t + " " + filtered_rooms[i].name + ":" + filtered_rooms[i].distance;
     console.info(t, "<- EXIT DOOR:", real_rooms.maxDistance);
     room.trap = false;  //no trap rooms + exit
     //replace empty walls to exit door
-    if(room.walls.up === "wall"){
-        room.walls.up = "exit";
-        return;
-    }
-    if(room.walls.left === "wall"){
-        room.walls.left = "exit";
-        return;
-    }
-    if(room.walls.right === "wall"){
-        room.walls.right = "exit";
-        return;
-    }
-    if(room.walls.down === "wall"){
-        room.walls.down = "exit";
-        return;
+    var whichSide = [];
+    if (room.walls.up === "wall")
+        whichSide.push(0);
+    if (room.walls.right === "wall")
+        whichSide.push(1);
+    if (room.walls.down === "wall")
+        whichSide.push(2);
+    if (room.walls.left === "wall")
+        whichSide.push(3);
+    switch (waw.pickRandomArray(whichSide)) {
+        case 0:
+            room.walls.up = "exit";
+            break;
+        case 1:
+            room.walls.right = "exit";
+            break;
+        default:
+        case 2:
+            room.walls.down = "exit";
+            break;
+        case 3:
+            room.walls.left = "exit";
+            break;
     }
 };
 
