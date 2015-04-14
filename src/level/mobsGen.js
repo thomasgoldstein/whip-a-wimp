@@ -64,51 +64,53 @@ waw.spawnMobs = function(layer){
 //put enemy on the layer
     var foes = [];
     var pos, e, m, n;
-    //TODO Plug. Temp put enemy on the screen
-    for(n=0; n<waw.curRoom.mobs.length; n++){
-        m = waw.curRoom.mobs[n];
-        if(!m) {
-            foes.push(null);
-            continue;
+    if(waw.curRoom.mobs.length < 1) {
+        waw.curRoom.trap = false;   //no mobs? no trap room
+    } else {
+        for (n = 0; n < waw.curRoom.mobs.length; n++) {
+            m = waw.curRoom.mobs[n];
+            if (!m) {
+                foes.push(null);
+                continue;
+            }
+            switch (m.mobType) {
+                case "Pig":
+                    e = new waw.MobPig();
+                    break;
+                case "PigBouncer":  //TODO remove
+                    e = new waw.MobPigBouncer();
+                    break;
+                case "Merchant":
+                    e = new waw.MobMerchant();
+                    break;
+                case "DoveSeller":
+                    e = new waw.MobDoveSeller();
+                    break;
+                case "Spikes":
+                    e = new waw.MobSpikes();
+                    break;
+                case "Bat":
+                    e = new waw.MobBat();
+                    break;
+                case "Barrel":
+                    e = new waw.MobBarrel();
+                    break;
+                default:
+                    throw "Wrong mob type " + m.mobType;
+            }
+            pos = waw.fixOverlappingPos(m.x, m.y, e);   //TODO make it run only once
+            e.setPosition(pos);
+            m.mob = e; //to get some params of the mob later, when u exit the room
+            e.setZOrder(250 - pos.y);
+            layer.addChild(e, 250 - pos.y);
+            //attach monsters shadow to layer OVER BG floor (its Z index = -15)
+            layer.addChild(e.shadowSprite, -14);
+            e.shadowSprite.setPosition(pos.x, pos.y - 0);
+            e.debugCross.setTextureRect(cc.rect(0, 0, e.width, e.height)); //for correct debug grid size
+            foes.push(e);
+            waw.units[200 + n] = e;   //to make it obstacle
+            e.becomeInvincible();
         }
-        //TODO choose m.mobType
-        switch(m.mobType){
-            case "Pig":
-                e = new waw.MobPig();
-                break;
-            case "PigBouncer":  //TODO remove
-                e = new waw.MobPigBouncer();
-                break;
-            case "Merchant":
-                e = new waw.MobMerchant();
-                break;
-            case "DoveSeller":
-                e = new waw.MobDoveSeller();
-                break;
-            case "Spikes":
-                e = new waw.MobSpikes();
-                break;
-            case "Bat":
-                e = new waw.MobBat();
-                break;
-            case "Barrel":
-                e = new waw.MobBarrel();
-                break;
-            default:
-                throw "Wrong mob type "+m.mobType;
-        }
-        pos = waw.fixOverlappingPos(m.x, m.y, e);   //TODO make it run only once
-        e.setPosition(pos);
-        m.mob = e; //to get some params of the mob later, when u exit the room
-        e.setZOrder(250 - pos.y);
-        layer.addChild(e, 250 - pos.y);
-        //attach monsters shadow to layer OVER BG floor (its Z index = -15)
-        layer.addChild(e.shadowSprite,-14);
-        e.shadowSprite.setPosition(pos.x, pos.y-0);
-        e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
-        foes.push(e);
-        waw.units[200+n] = e;   //to make it obstacle
-        e.becomeInvincible();
     }
     waw.mobs = foes;
     return foes;
