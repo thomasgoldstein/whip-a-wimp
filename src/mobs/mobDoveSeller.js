@@ -194,6 +194,7 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
                 if (Math.random() < 0.7) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
+                } else {
                     this.state = "walk";
                     this.stateSchedule = this.SCHEDULE_WALK;
                 }

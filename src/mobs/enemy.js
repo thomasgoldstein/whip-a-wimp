@@ -387,7 +387,8 @@ waw.Enemy = waw.Unit.extend({
         var r = waw.curRoom;
         if(r.trapActive) {
             //all gates closed - run from player
-            this.speed++;
+            if(this.speed<12)
+                this.speed += 0.3;
             if(waw.player.x > 320/2) {
                 this.targetX = 50+Math.round(Math.random()*100);
             } else {
@@ -495,6 +496,17 @@ waw.Enemy = waw.Unit.extend({
                 return true; //change AI
             }
         }
+        //check if mob is out of the room
+        if(this.x < -24 || this.x > 320+24 ||
+            this.y < -48 || this.y > 240
+        ) {
+            //TODO on exit
+            //it dies on exit the room
+            this.unscheduleAllCallbacks();
+            this.cleanRefs();
+            return false;
+        }
+
         if (x !== oldPos.x || y !== oldPos.y) {
             this.setPosition(x, y);
             this.setZOrder(250 - y);
