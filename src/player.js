@@ -313,8 +313,9 @@ waw.Player = waw.Unit.extend({
                 waw.openExitDoor();
                 return true;
                 break;
-            case TAG_ENEMY:
-                //TODO temp. remove later
+            case TAG_SECRET:
+                //TODO
+                waw.openSecretDoor(unit);
                 break;
             default:
                 if(t>0)

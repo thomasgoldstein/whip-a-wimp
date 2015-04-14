@@ -466,6 +466,8 @@ waw.prepareRoomLayer = function(room) {
             wall.setAnchorPoint(0.5, 0);
             wall.setPosition(160+room.walls.up_d,240 - 48 + 4);
             wall.setTag(TAG_SECRET);
+            wall.sprite = d;
+            wall.direction = 0; //up
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
@@ -574,6 +576,8 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(320,120-32+room.walls.right_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_SECRET);
+            wall.sprite = d;
+            wall.direction = 1; //right
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
@@ -675,6 +679,8 @@ waw.prepareRoomLayer = function(room) {
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160+room.walls.down_d,0-32);
             wall.setTag(TAG_SECRET);
+            wall.sprite = d;
+            wall.direction = 2; //down
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
@@ -781,6 +787,8 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(0,120-32+room.walls.left_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_SECRET);
+            wall.sprite = d;
+            wall.direction = 3; //left
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
@@ -919,6 +927,62 @@ waw.openDoor = function (doorTag, layer) {
     //we need 2 tags _DOOR and _DOORD that's why -4
     layer.removeChildByTag(doorTag);
     cc.audioEngine.playEffect(waw.sfx.door01);
+};
+
+waw.openSecretDoor= function (unit) {
+    switch(unit.direction){
+        case 0:
+            if(waw.player.direction !== "up")
+                return;
+            break;
+        case 1:
+            if(waw.player.direction !== "right")
+                return;
+            break;
+        case 2:
+            if(waw.player.direction !== "down")
+                return;
+            break;
+        case 3:
+            if(waw.player.direction !== "left")
+                return;
+            break;
+        defult:
+            throw "wrong secret direction "+unit.direction;
+    }
+    var r2, r = waw.curRoom;
+    switch (unit.direction) {
+        case 0: //up
+            r2 = rooms.getRoom(r.y-1, r.x);
+            r2.walls.down = r.walls.up = "empty";
+            break;
+        case 1: //right
+            r2 = rooms.getRoom(r.y, r.x+1);
+            r2.walls.left = r.walls.right = "empty";
+            break;
+        case 2: //down
+            r2 = rooms.getRoom(r.y+1, r.x);
+            r2.walls.up = r.walls.down = "empty";
+            break;
+        case 3: //left
+            r2 = rooms.getRoom(r.y, r.x-1);
+            r2.walls.right = r.walls.left = "empty";
+            break;
+    }
+    unit.sprite.opacity = 0;
+    unit.sprite.visible = true;
+    unit.sprite.runAction(new cc.Sequence(
+        new cc.FadeIn(0.5)
+    ));
+    for (var i = 0; i < waw.units.length; i++) {
+        if (!waw.units[i])
+            continue;
+        if (waw.units[i] === unit) {
+            waw.units[i] = null;
+            break;
+        }
+    }
+    cc.audioEngine.playEffect(waw.sfx.laugh01);  //TODO replace sfx for secret room opening
 };
 
 waw.openExitDoor = function (layer) {
