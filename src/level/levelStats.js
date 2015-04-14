@@ -81,6 +81,24 @@ rooms.addSecretRoom = function() {
             if(r2) {
                 r2.secret = true;
                 r2.showSecret = true;
+                switch (ii) {
+                    case 0: //up
+                        r.walls.up = "secret";
+                        r2.walls.down = "secret";
+                        break;
+                    case 1: //right
+                        r.walls.right = "secret";
+                        r2.walls.left = "secret";
+                        break;
+                    case 2: //down
+                        r.walls.down = "secret";
+                        r2.walls.up = "secret";
+                        break;
+                    case 3: //left
+                        r.walls.left = "secret";
+                        r2.walls.right = "secret";
+                        break;
+                }
                 roomsToGen--;
                 i = 1 + Math.round(Math.random() * (real_rooms.length - 2));
                 n = 0;

@@ -410,20 +410,11 @@ waw.prepareRoomLayer = function(room) {
             d.addChild(g, 2);
             g.openPosX = 0;
             g.openPosY = 40;
-            //g.setPosition(g.openPosX, g.openPosY);
-            //g.visible = false;
-
-            //add rotating locks
+            //add sun/moon lock
             var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40, 55);
-            //l.scale = 0.5;
-            //l.runAction(new cc.RepeatForever(
-            //    new cc.RotateBy(1, -45)
-            //));
-
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -453,7 +444,6 @@ waw.prepareRoomLayer = function(room) {
             g.openPosY = 40;
             g.setPosition(g.openPosX, g.openPosY);
             g.visible = false;
-
             //we set here obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(80, 80));
@@ -463,6 +453,22 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_UP_DOORD);
+            break;
+        case "secret":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(0,0,80,80));  //open door
+            d.setAnchorPoint(0.5, 0);
+            layer.addChild(d,-18);
+            d.setPosition(160+room.walls.up_d,240-88);
+            d.visible = false;
+            //we set here obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(80, 80));
+            wall.setAnchorPoint(0.5, 0);
+            wall.setPosition(160+room.walls.up_d,240 - 48 + 4);
+            wall.setTag(TAG_SECRET);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
             break;
         case "empty":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(0,0,80,80));  //open door
@@ -479,7 +485,6 @@ waw.prepareRoomLayer = function(room) {
             g.visible = false;
             break;
         case "wall":
-            //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setAnchorPoint(0.5, 0);
             wall.setContentSize(new cc.Size(80, 80));
@@ -512,20 +517,12 @@ waw.prepareRoomLayer = function(room) {
             d.addChild(g, 2);
             g.openPosX = 20;
             g.openPosY = 0;
-            //g.setPosition(g.openPosX, g.openPosY);
-            //g.visible = false;
-
-            //add rotating locks
+            //add sun/moon lock
             var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40+8, 55-15);
             l.scaleX = 0.5;
-            //l.runAction(new cc.RepeatForever(
-            //    new cc.RotateBy(1, -45)
-            //));
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -555,7 +552,6 @@ waw.prepareRoomLayer = function(room) {
             g.openPosY = 0;
             g.setPosition(g.openPosX, g.openPosY);
             g.visible = false;
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -565,6 +561,22 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOORD);
+            break;
+        case "secret":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80*2,0,80,80)); //open door
+            layer.addChild(d,-18);
+            d.setPosition(320-32,120-40+room.walls.right_d);
+            d.setAnchorPoint(0.5, 0);
+            d.visible = false;
+            //we set here obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(320,120-32+room.walls.right_d);
+            wall.setAnchorPoint(0.5, 0);
+            wall.setTag(TAG_SECRET);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
             break;
         case "empty":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*2,0,80,80)); //open door
@@ -581,7 +593,6 @@ waw.prepareRoomLayer = function(room) {
             g.visible = false;
             break;
         case "wall":
-            //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(320,120-32);
@@ -612,20 +623,12 @@ waw.prepareRoomLayer = function(room) {
             d.addChild(g, 2);
             g.openPosX = 0;
             g.openPosY = -20;
-            //g.setPosition(g.openPosX, g.openPosY);
-            //g.visible = false;
-
-            //add rotating locks
+            //add sun/moon lock
             var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(41, 55-24);
             l.scaleY = 0.5;
-            //l.runAction(new cc.RepeatForever(
-            //    new cc.RotateBy(1, -45)
-            //));
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -653,7 +656,6 @@ waw.prepareRoomLayer = function(room) {
             g.openPosY = -20;
             g.setPosition(g.openPosX, g.openPosY);
             g.visible = false;
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -662,6 +664,20 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOORD);
+            break;
+        case "secret":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80*3,0,80,80)); //open door
+            d.setPosition(160+room.walls.down_d,32);
+            layer.addChild(d,-18);
+            d.visible = false;
+            //we set here obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(160+room.walls.down_d,0-32);
+            wall.setTag(TAG_SECRET);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
             break;
         case "empty":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*3,0,80,80)); //open door
@@ -677,7 +693,6 @@ waw.prepareRoomLayer = function(room) {
             g.visible = false;
             break;
         case "wall":
-            //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160,0-32);
@@ -709,20 +724,12 @@ waw.prepareRoomLayer = function(room) {
             d.addChild(g, 2);
             g.openPosX = -20;
             g.openPosY = 0;
-            //g.setPosition(g.openPosX, g.openPosY);
-            //g.visible = false;
-
-            //add rotating locks
+            //add sun/moon lock
             var l = new cc.Sprite(waw.gfx.items, s(2, 1));
-            //l.addChild(new cc.Sprite(waw.gfx.items, s(2, 0)));
             l.setAnchorPoint(0.5, 0.5);
             g.addChild(l,1, TAG_SPRITE_TEMP);
             l.setPosition(40-8, 55-15);
             l.scaleX = 0.5;
-            //l.runAction(new cc.RepeatForever(
-            //    new cc.RotateBy(1, -45)
-            //));
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -752,7 +759,6 @@ waw.prepareRoomLayer = function(room) {
             g.openPosY = 0;
             g.setPosition(g.openPosX, g.openPosY);
             g.visible = false;
-
             // obstacle
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
@@ -762,6 +768,22 @@ waw.prepareRoomLayer = function(room) {
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOORD);
+            break;
+        case "secret":
+            d = new cc.Sprite(waw.gfx.doors, cc.rect(80*1,0,80,80)); //open door
+            d.setPosition(32,120-40+room.walls.left_d);
+            d.setAnchorPoint(0.5, 0);
+            layer.addChild(d,-18);
+            d.visible = false;
+            //we set here obstacle
+            wall = new waw.Unit();
+            wall.setContentSize(new cc.Size(64, 64));
+            wall.setPosition(0,120-32+room.walls.left_d);
+            wall.setAnchorPoint(0.5, 0);
+            wall.setTag(TAG_SECRET);
+            units.push(wall);
+            //debug - shows hit box over the wall
+            waw.AddHitBoxSprite(wall, layer, TAG_SECRET);
             break;
         case "empty":
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80*1,0,80,80)); //open door
@@ -778,7 +800,6 @@ waw.prepareRoomLayer = function(room) {
             g.visible = false;
             break;
         case "wall":
-            //we don't draw wall (it's on the bg)
             wall = new waw.Unit();
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(0,120-32);
@@ -798,7 +819,7 @@ waw.prepareRoomLayer = function(room) {
 
     if(showDebugInfo) {
         var label = new cc.LabelTTF("ROOM: "+waw.curRoomX+","+waw.curRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
-        layer.addChild(label, 300); //, TAG_LABEL_SPRITE1);
+        layer.addChild(label, 300);
         label.setAnchorPoint(0,1);
         label.setPosition(20, 230);
         label.setOpacity(200);
