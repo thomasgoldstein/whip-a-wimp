@@ -40,7 +40,13 @@ rooms.initNeighbours = function () {
 rooms.addSecretRoom = function() {
     var i = Math.round(Math.random()*(real_rooms.length-1));
     var r, r2, n = 0;
-    var roomsToGen = 3;
+    var roomsToGen = waw.theme.rules.secret_chance[waw.theme.levelN];
+    if(roomsToGen < 1){
+        if(Math.random() < roomsToGen)
+            roomsToGen = 1;
+        else
+            return;
+    }
     while(n < real_rooms.length && roomsToGen > 0) {
         if(++i > real_rooms.length-1)
             i = 0;
