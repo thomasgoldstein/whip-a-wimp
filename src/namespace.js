@@ -60,9 +60,11 @@ var TAG_DOWN_DOORD = 200+6;
 var TAG_LEFT_DOORD = 200+7;
 var TAG_TRAP = 200+8;
 var TAG_EXIT = 200+9;
+var TAG_SECRET = 200+10;
 
 var TAG_ENEMY= 300+0;
-var TAG_BOSS= 300+1;
+var TAG_BULLET= 300+1;
+var TAG_BOSS= 300+2;
 
 // Disable anti-aliasing
 waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;

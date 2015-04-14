@@ -36,6 +36,7 @@
         "src/mobs/mobBat.js",
         "src/mobs/mobBarrel.js",
         "src/mobs/nomobChest.js",
+        "src/mobs/bullet.js",
         "src/scenes/commonScenes.js",
         "src/scenes/gotoNextLevel.js",
         "src/scenes/gameOver.js",
