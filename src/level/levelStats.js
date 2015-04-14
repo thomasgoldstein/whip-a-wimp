@@ -40,7 +40,13 @@ rooms.initNeighbours = function () {
 rooms.addSecretRoom = function() {
     var i = Math.round(Math.random()*(real_rooms.length-1));
     var r, r2, n = 0;
-    var roomsToGen = 3;
+    var roomsToGen = waw.theme.rules.secret_chance[waw.theme.levelN];
+    if(roomsToGen < 1){
+        if(Math.random() < roomsToGen)
+            roomsToGen = 1;
+        else
+            return;
+    }
     while(n < real_rooms.length && roomsToGen > 0) {
         if(++i > real_rooms.length-1)
             i = 0;
@@ -80,7 +86,25 @@ rooms.addSecretRoom = function() {
             //mark room as secret
             if(r2) {
                 r2.secret = true;
-                r2.showSecret = true;
+                r2.showSecret = (waw.theme.rules.show_secret[waw.theme.levelN] === 1);  //show secret room only on certain levels
+                switch (ii) {
+                    case 0: //up
+                        r.walls.up = "secret";
+                        r2.walls.down = "secret";
+                        break;
+                    case 1: //right
+                        r.walls.right = "secret";
+                        r2.walls.left = "secret";
+                        break;
+                    case 2: //down
+                        r.walls.down = "secret";
+                        r2.walls.up = "secret";
+                        break;
+                    case 3: //left
+                        r.walls.left = "secret";
+                        r2.walls.right = "secret";
+                        break;
+                }
                 roomsToGen--;
                 i = 1 + Math.round(Math.random() * (real_rooms.length - 2));
                 n = 0;

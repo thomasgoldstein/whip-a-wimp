@@ -37,7 +37,7 @@ waw.MainScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        cc.audioEngine.setMusicVolume(0.5);
+        cc.audioEngine.setMusicVolume(0.2);
         cc.audioEngine.playMusic(waw.bgm.level1, true);
         waw.KEYS[cc.KEY.left] =
         waw.KEYS[cc.KEY.right] =
@@ -92,6 +92,7 @@ waw.MainLayer = cc.Layer.extend({
         } else
             throw "this room coords are out of the grid";
         waw.curRoom.visited = true;
+        waw.curRoom.secret = false;
 
         if(rooms.foundMap)
             waw.AddMiniMap(this, waw.curRoom);
