@@ -16,13 +16,16 @@ waw.generateMobsRoom = function (roomType) {
     var i;
 
     var mob_set = waw.theme.rules.mob_set[waw.theme.levelN];
-    i = mob_set[Math.round(Math.random() * (mob_set.length - 1))];
+    i = waw.pickRandomArray(mob_set);
     var pickMobType = waw.theme.rules.mob_group[i];
 
     var mobCoord = waw.GetCoords2SpawnMob(roomType);
     var cr;
     for (i = 0; i < pickMobType.length; ++i) {
-        mob = {x: 160, y: 110, mobType: "unknown"};
+        if(false)
+            mob = {x: 160, y: 110, mobType: "unknown", itemsDrop: ["invincibility"], itemsDropChance: 1};
+        else
+            mob = {x: 160, y: 110, mobType: "unknown"};
         mob.mobType = pickMobType[i];
         cr = Math.round(Math.random() * (mobCoord.length - 1));
         mob.x = mobCoord[cr].x;
@@ -100,6 +103,10 @@ waw.spawnMobs = function(layer){
             }
             pos = waw.fixOverlappingPos(m.x, m.y, e);   //TODO make it run only once
             e.setPosition(pos);
+            if(m.itemsDrop){
+                e.itemsDrop = m.itemsDrop;
+                e.itemsDropChance = m.itemsDropChance;
+            }
             m.mob = e; //to get some params of the mob later, when u exit the room
             e.setZOrder(250 - pos.y);
             layer.addChild(e, 250 - pos.y);
