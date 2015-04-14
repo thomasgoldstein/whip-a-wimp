@@ -279,14 +279,31 @@ waw.Player = waw.Unit.extend({
         var t = unit.getTag();
         switch(t) {
             case TAG_PILLAR:
-                return true;
+                //return true;
                 break;
             case TAG_DOWN_DOORD:
+                if(this.direction === "down") {
+                    waw.openDoor(t, this.getParent());
+                    return true;
+                }
+                break;
             case TAG_UP_DOORD:
+                if(this.direction === "up") {
+                    waw.openDoor(t, this.getParent());
+                    return true;
+                }
+                break;
             case TAG_LEFT_DOORD:
+                if(this.direction === "left") {
+                    waw.openDoor(t, this.getParent());
+                    return true;
+                }
+                break;
             case TAG_RIGHT_DOORD:
-                waw.openDoor(t, this.getParent());
-                return true;
+                if(this.direction === "right") {
+                    waw.openDoor(t, this.getParent());
+                    return true;
+                }
                 break;
             case TAG_CHEST:
                 unit.onOpen(this);
