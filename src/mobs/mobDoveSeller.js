@@ -133,6 +133,10 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
         animData["follow_up_right"] = animData["walk_up_right"];
         animData["follow_down_left"] = animData["walk_down_left"];
         animData["follow_down_right"] = animData["walk_down_right"];
+        animData["runaway_up_left"] = animData["walk_up_left"];
+        animData["runaway_up_right"] = animData["walk_up_right"];
+        animData["runaway_down_left"] = animData["walk_down_left"];
+        animData["runaway_down_right"] = animData["walk_down_right"];
         animData["bounce_up_left"] = animData["walk_up_left"];
         animData["bounce_up_right"] = animData["walk_up_right"];
         animData["bounce_down_left"] = animData["walk_down_left"];
@@ -160,6 +164,91 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
     },
+
+    pickAISchedule: function () {
+        switch (this.state) {
+            case "runaway":
+                if (Math.random() < 0.7) {
+                    this.state = "runaway";
+                    this.stateSchedule = this.SCHEDULE_RUNAWAY;
+                    this.stateSchedule.reset();
+                } else {
+                    this.state = "walk";
+                    this.stateSchedule = this.SCHEDULE_WALK;
+                    this.stateSchedule.reset();
+                }
+                break;
+            case "idle":
+                if(this.HP <2){
+                    this.state = "runaway";
+                    this.stateSchedule = this.SCHEDULE_RUNAWAY;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                if (Math.random() < 0.7) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                    this.state = "walk";
+                    this.stateSchedule = this.SCHEDULE_WALK;
+                }
+                break;
+            case "attack":
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                //console.log("mob attacks player end");
+                break;
+            case "hurt":
+                this.state = "follow";
+                this.stateSchedule = this.SCHEDULE_FOLLOW;
+                this.stateSchedule.reset();
+                this.speed += 1;
+                //console.log("mobs hurt stat end");
+                break;
+            case "walk":
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    //console.log("seeEnem - follow");
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                if (Math.random() < 0.3) {
+                    this.state = "idle";
+                    this.stateSchedule = this.SCHEDULE_IDLE;
+                } else {
+                    this.state = "walk";
+                    this.stateSchedule = this.SCHEDULE_WALK;
+                }
+                break;
+            case "follow":
+                if(this.conditions.indexOf("canAttack")>=0) {
+                    this.state = "attack";
+                    this.stateSchedule = this.SCHEDULE_ATTACK;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                if(this.conditions.indexOf("seeEnemy")>=0) {
+                    this.state = "follow";
+                    this.stateSchedule = this.SCHEDULE_FOLLOW;
+                    this.stateSchedule.reset();
+                    break;
+                }
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+                break;
+            default:
+                this.state = "idle";
+                this.stateSchedule = this.SCHEDULE_IDLE;
+        }
+    },
+
+
     update: function () {
         var currentTime = new Date();
 

@@ -173,18 +173,16 @@ waw.Score = cc.Node.extend({
 
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
-    labelDebug = new cc.LabelTTF("Kiwi", "System", 12);
+    labelDebug = new cc.LabelTTF("MOB", "System", 12);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
-//        debugger;
             switch (Math.round(Math.random() * 0)) {
-                //switch(0){
                 case 0:
-                default:
-                    var e = new waw.MobKiwi();
+                    var e = new waw.MobDoveSeller();
                     break;
+                default:
                 case 3:
-                    var e = new waw.MobPigBouncer();
+                    var e = new waw.MobKiwi();
                     break;
                 case 1:
                     var e = new waw.MobPig();

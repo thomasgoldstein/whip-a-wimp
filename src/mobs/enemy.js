@@ -34,6 +34,7 @@ waw.Enemy = waw.Unit.extend({
         this.SCHEDULE_WALK = new waw.Schedule([this.initWalk, this.onGotoTargetPos], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_BOUNCE = new waw.Schedule([this.initBounce, this.onBounce], ["feelObstacle","seeEnemy"]);
         this.SCHEDULE_FOLLOW = new waw.Schedule([this.initFollowEnemy, this.onGotoTargetPos], ["feelObstacle"]);
+        this.SCHEDULE_RUNAWAY = new waw.Schedule([this.initRunAway, this.onGotoTargetPos], ["feelObstacle"]);
 
         this.setContentSize(16, 16);
         this.speed = 1+Math.random()*2;
@@ -304,9 +305,8 @@ waw.Enemy = waw.Unit.extend({
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 500 + Math.random() * 1500;
         if (this.targetX == 0 || this.targetY == 0) {
-            //random point to go
-            this.targetX = this.toSafeXCoord( Math.round(50 + Math.random() * 220) );
-            this.targetY = this.toSafeYCoord( Math.round(40 + Math.random() * 130) );
+            this.targetX = waw.pickSafeRandomX();
+            this.targetY = waw.pickSafeRandomY();
         } else {
             this.targetX = this.toSafeXCoord( this.targetX + Math.round(50 - Math.random() * 100));
             this.targetY = this.toSafeYCoord( this.targetY + Math.round(40 - Math.random() * 80));
@@ -379,6 +379,50 @@ waw.Enemy = waw.Unit.extend({
             return true; //get to the target x,y
         }
         return false;
+    },
+    initRunAway: function () {
+        var currentTime = new Date();
+        this.timeToThink = currentTime.getTime() + 6500 + Math.random() * 2500;
+
+        var r = waw.curRoom;
+        if(r.trapActive) {
+            //all gates closed - run from player
+            this.speed++;
+            if(waw.player.x > 320/2) {
+                this.targetX = 50+Math.round(Math.random()*100);
+            } else {
+                this.targetX = 270-Math.round(Math.random()*100);
+            }
+            if(waw.player.y > 100) {
+                this.targetY = 40+Math.round(Math.random()*50);
+            } else {
+                this.targetY = 170-Math.round(Math.random()*50);
+            }
+        } else {
+            var t,crds = [];
+            if (r.walls.up === "empty")
+                crds.push({x: 320/2, y: 240+100});
+            if (r.walls.down !== "wall")
+                crds.push({x: 320/2, y: -100});
+            if (r.walls.left !== "wall")
+                crds.push({x: -100, y: 100});
+            if (r.walls.right !== "wall")
+                crds.push({x: 240+100, y: 100});
+            t = waw.pickRandomArray(crds);
+            if(!t) {
+                this.targetX = waw.pickSafeRandomX();
+                this.targetY = waw.pickSafeRandomY();
+            } else {
+                this.targetX = t.x;
+                this.targetY = t.y;
+            }
+        }
+        this.dx = 0;
+        this.dy = 0;
+
+        this.calcDirection(this.targetX - this.x,this.targetY - this.y);
+        this.sprite.playAnimation(this.getAnimationName());
+        return true;
     },
     initFollowEnemy: function () {
         var currentTime = new Date();
