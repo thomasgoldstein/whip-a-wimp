@@ -20,7 +20,8 @@ waw.Enemy = waw.Unit.extend({
     stateSchedule: null,
     conditions: [],
     timeToThink: 0,
-    itemsDrop: ["key","rope","cloth"],
+    itemsDrop: [],
+    itemsDropChance: 0.1,
     sfx_hurt01: waw.sfx.pigHurt01,
     sfx_hurt02: waw.sfx.pigHurt02,
     sfx_death: waw.sfx.pigDeath,
@@ -571,8 +572,9 @@ waw.Enemy = waw.Unit.extend({
         cc.audioEngine.playEffect(this.sfx_death);
         this.sprite.playAnimation(this.getAnimationNameHurt());
         this.runAction(new cc.jumpBy(0.35, 0, 0, 4, 1));
-        if (this.itemsDrop.length > 0 && Math.random() < 0.1) {
+        if (this.itemsDrop.length > 0 && Math.random() < this.itemsDropChance) {
             this.scheduleOnce(function () {
+                //TODO add sfx of drop
                 var dropItem = waw.spawnItem(this.itemsDrop[Math.round(Math.random() * (this.itemsDrop.length - 1))], this.x, this.y, waw.curRoom.items.length, this.getParent())
                 waw.curRoom.items.push(dropItem);
                 var sx = waw.player.x < this.x ? 2 : -2;
