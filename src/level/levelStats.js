@@ -22,7 +22,6 @@ rooms.initNeighbours = function () {
     rooms[4][4].doors = 0;
 
     real_rooms = []; // the start room goes 1st
-    secret_rooms = [];
     real_rooms.push(rooms[4][4]);
     for (y = 0; y < 9; y++) {
         for (x = 0; x < 9; x++) {
@@ -30,8 +29,6 @@ rooms.initNeighbours = function () {
             if (r && !(x === 4 && y === 4)) {
                 if(!r.secret)
                     real_rooms.push(r);
-                else
-                    secret_rooms.push(r);
             }
         }
     }
@@ -40,6 +37,7 @@ rooms.initNeighbours = function () {
 rooms.addSecretRoom = function() {
     var i = Math.round(Math.random()*(real_rooms.length-1));
     var r, r2, n = 0;
+    secret_rooms = [];
     var roomsToGen = waw.theme.rules.secret_chance[waw.theme.levelN];
     if(roomsToGen < 1){
         if(Math.random() < roomsToGen)
@@ -91,20 +89,33 @@ rooms.addSecretRoom = function() {
                     case 0: //up
                         r.walls.up = "secret";
                         r2.walls.down = "secret";
+                        rooms.putRoom(r.y-1, r.x, r2);
                         break;
                     case 1: //right
                         r.walls.right = "secret";
                         r2.walls.left = "secret";
+                        rooms.putRoom(r.y, r.x+1, r2);
                         break;
                     case 2: //down
                         r.walls.down = "secret";
                         r2.walls.up = "secret";
+                        rooms.putRoom(r.y+1, r.x, r2);
                         break;
                     case 3: //left
                         r.walls.left = "secret";
                         r2.walls.right = "secret";
+                        rooms.putRoom(r.y, r.x-1, r2);
                         break;
                 }
+                //
+                //random type of the room obstacles pattern
+                if(Math.random() <= 0.5) {
+                    var a = waw.theme.rules.room_set[waw.theme.levelN];
+                    r2.type = a[Math.round(Math.random()*(a.length-1))];
+                } else
+                    r2.type = 1;
+
+                secret_rooms.push(r2);
                 roomsToGen--;
                 i = 1 + Math.round(Math.random() * (real_rooms.length - 2));
                 n = 0;
@@ -172,6 +183,13 @@ rooms.getRoom = function (y, x) {
     if (!rooms[y][x])
         return null;
     return rooms[y][x];
+};
+
+rooms.putRoom = function (y, x, r) {
+    if (!r || y < 0 || x < 0 || y >= 9 || x >= 9) {
+        throw "No data to put in room or wrong coords";
+    }
+    rooms[y][x] = r;
 };
 
 rooms.compareDistance = function (r, r2) {

@@ -8,6 +8,11 @@ waw.addItemSpawnCoordsToRooms = function(){
         room.itemCoord = waw.GetCoords2SpawnItem(room.type);
         //console.info("Item coords ", room.itemCoord.length ,"into",room.name);
     }
+    for(var i = 0; i<secret_rooms.length; i++){
+        var room = secret_rooms[i];
+        room.itemCoord = waw.GetCoords2SpawnItem(room.type);
+        //console.info("Item coords ", room.itemCoord.length ,"into",room.name);
+    }
 };
 
 waw.addItemToRoom = function(room, itemName){
@@ -178,6 +183,19 @@ waw.putUselessItems = function () {
     }
 };
 
+waw.putSecretRoomItems = function () {
+    for (var i = 0; i < secret_rooms.length; i++) {
+        var room = secret_rooms[i];
+        if (room) {
+            waw.addItemToRoom(room, "unknown");
+            waw.addItemToRoom(room, "unknown");
+            waw.addItemToRoom(room, "unknown");
+            if(Math.random()<0.5)
+                waw.addItemToRoom(room, "unknown");
+        }
+    }
+};
+
 waw.putItemsIntoChests = function() {
     var fRooms = real_rooms.filter(
         function(room) {
@@ -197,6 +215,16 @@ waw.putItemsIntoChests = function() {
             }
         }
     }
+    //secret rooms
+    for(var i=0; i<secret_rooms.length; i++) {
+        var r = secret_rooms[i];
+        for(var n=0; n < r.items.length; n++) {
+            if(Math.random()<0.5) {
+                r.items[n].inChest = true;
+                console.info("Item wrapped in the chest", r.name);
+            }
+        }
+    }
     //TODO add locks to some chests
 };
 
@@ -209,6 +237,7 @@ waw.generateItems = function(){
     waw.putRedCloth();
     waw.putBoots();
     waw.putUselessItems();
+    waw.putSecretRoomItems();
     waw.putItemsIntoChests();
 };
 
