@@ -80,7 +80,7 @@ rooms.addSecretRoom = function() {
             //mark room as secret
             if(r2) {
                 r2.secret = true;
-                r2.showSecret = true;
+                r2.showSecret = (waw.theme.rules.show_secret[waw.theme.levelN] === 1);  //show secret room only on certain levels
                 switch (ii) {
                     case 0: //up
                         r.walls.up = "secret";
