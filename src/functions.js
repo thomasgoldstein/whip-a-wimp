@@ -12,6 +12,20 @@ waw.deepCopy = function(o) {
     return copy;
 };
 
+//pick random item from array
+waw.pickRandomArray = function(a) {
+    if(a.length<1)
+        return null;
+    return a[Math.round(Math.random()*(a.length-1))];
+};
+//random X Y coords in the room
+waw.pickSafeRandomX = function() {
+    return Math.round(50 + Math.random() * 220);
+};
+waw.pickSafeRandomY = function() {
+    return Math.round(40 + Math.random() * 130);
+};
+
 //prowide width and height of the spritesheet frame
 //and get a function that returns correct frame rect by its COLUMN, ROW
 waw.SpriteRect = function(w, h) {
