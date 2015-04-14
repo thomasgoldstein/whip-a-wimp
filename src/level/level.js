@@ -348,18 +348,18 @@ waw.initWalls = function(room) {
     // Bottom wall left
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize));
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize*2));
     wall.x = 0 + room.walls.down_d;
-    wall.y = 0;
+    wall.y = 0-wp.wallSize;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
     // Bottom wall right
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize));
+    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize*2));
     wall.x = 320 + room.walls.down_d;
-    wall.y = 0;
+    wall.y = 0-wp.wallSize;
     units.push(wall);
     //debug - shows hit box over the wall
     waw.AddHitBoxSprite(wall, layer);
@@ -382,7 +382,7 @@ waw.prepareRoomLayer = function(room) {
     upperWalls.ignoreAnchor = true;
     layer.addChild(floor, -21); //Z index the lowest one
     layer.addChild(middleWalls, -20);
-    layer.addChild(upperWalls, 280); //255
+    layer.addChild(upperWalls, 298); //299  = darkness
 
     //floor.setColor(new cc.Color(155,233,233,255));    //like blue water
     floor.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));

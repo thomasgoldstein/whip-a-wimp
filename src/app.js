@@ -131,7 +131,7 @@ waw.MainLayer = cc.Layer.extend({
             )
         ));
 
-        this.addChild(this.lightspot, 290);
+        this.addChild(this.lightspot, 299);
 
         this.lightspot1.visible =
         this.lightspot2.visible =
