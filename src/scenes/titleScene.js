@@ -1,10 +1,10 @@
 "use strict";
 
-waw.PyramideScene = cc.Scene.extend({
+waw.TitleScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        var layer = new waw.PyramideLayer();
+        var layer = new waw.TitleLayer();
         layer.init();
         this.addChild(layer);
 
@@ -24,10 +24,10 @@ waw.PyramideScene = cc.Scene.extend({
     }
 });
 
-waw.PyramideLayer = cc.Layer.extend({
+waw.TitleLayer = cc.Layer.extend({
     init: function () {
         this._super();
-        console.info("init layer Pyramide");
+        console.info("init layer Title");
 
         var s = waw.SpriteRect(32,48);
         var animData =
@@ -81,10 +81,6 @@ waw.PyramideLayer = cc.Layer.extend({
         parallax3.setPosition(0, 0);
         this.addChild(parallax3, -7);
 
-        var tower = this.createTower();
-        parallax0.addChild(tower);
-        tower.setPosition(220, 20);
-
         gameTitleWhip.runAction(
             new cc.Sequence(
                 new cc.DelayTime(1),
@@ -121,27 +117,6 @@ waw.PyramideLayer = cc.Layer.extend({
                 )
             )
         );
-        this.scheduleOnce(function () {
-/*
-            gameTitleWhip.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.5, 0, 2),
-                        new cc.MoveBy(0.4, 0, -2)
-                    )
-                )
-            );
-            gameTitleWimp.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.4, 0, -2),
-                        new cc.MoveBy(0.5, 0, 2)
-                    )
-                )
-            );
-*/
-
-        }, 2);
 
         parallax0.runAction(new cc.MoveBy(5, -20, -24));
         parallax1.runAction(new cc.MoveBy(5, -60, -16));
@@ -159,30 +134,8 @@ waw.PyramideLayer = cc.Layer.extend({
         sprite.addChild(shadowSprite, -10);
         shadowSprite.setPosition(16, 0);
 
-        sprite.runAction(new cc.MoveTo(5, 260, 50));
-        sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
-    },
-    createTower: function() {
-        var n = new cc.Node();
-        var b = null;
-        for(var y=0; y<7; y++){
-            for(var x=0; x<(10-y); x++){
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(32* Math.round(Math.random()*7),147, 32, 32));
-                b.setAnchorPoint(0, 0);
-                b.setPosition(y * 16 + x * 28 + 2 - Math.round(Math.random()*4), y * 28 - Math.round(Math.random()*4));
-                n.addChild(b);
-            }
-            if(y === 0){
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,179, 32, 32));
-                b.setPosition(10 * 28 / 2, -6);
-            } else {
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(32* Math.round(1+Math.random()*6),178, 32, 32));
-                b.setPosition(y * 16 + 28*(Math.round(Math.random()*(6-y))), y * 28 - Math.round(Math.random()*4));
-            }
-            b.setAnchorPoint(0, 0);
-            n.addChild(b);
-        }
-        return n;
+        sprite.runAction(new cc.MoveTo(5, 340, 20));
+        //sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
     },
     onEnter: function () {
         this._super();

@@ -11,12 +11,17 @@ waw.gotoNextLevel = cc.Scene.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionFade;
 
-            //load + calc new levels
-            waw.theme.gotoNextLevel();
-            rooms.initLevel();
-
-            waw.currentScene = new waw.MainScene();
-            cc.director.runScene(new transition(3,waw.currentScene));
+            if(waw.theme.levelN+1 < 10){
+                //load + calc new levels
+                waw.theme.gotoNextLevel();
+                rooms.initLevel();
+                waw.currentScene = new waw.MainScene();
+                cc.director.runScene(new transition(4, waw.currentScene));
+            } else {
+                // The End of demo
+                waw.currentScene = new waw.TheEndScene();
+                cc.director.runScene(new transition(0.5, waw.currentScene));
+            }
         }, 2);
     }
 });
@@ -28,15 +33,25 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
         cc.audioEngine.stopAllEffects();
         cc.audioEngine.stopMusic();
 
+        if(waw.theme.levelN+1 < 10){
+            var label2 = new cc.LabelTTF(waw.theme.name+" L"+(waw.theme.levelN+2), "System", 32);
+            label2.setAnchorPoint(0.5, 0.5);
+            this.addChild(label2, 299 + 5);
+            label2.setPosition(320+160, 240/2);
+
+            label2.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(1),
+                    new cc.MoveTo(2, 320 / 2, 240 / 2)
+                    //new cc.RemoveSelf()
+                )
+            );
+        }
+
         var label = new cc.LabelTTF(waw.theme.name+" L"+(waw.theme.levelN+1), "System", 32);
         label.setAnchorPoint(0.5, 0.5);
         this.addChild(label, 299 + 5);
         label.setPosition(320/2, 240/2);
-
-        var label2 = new cc.LabelTTF(waw.theme.name+" L"+(waw.theme.levelN+2), "System", 32);
-        label2.setAnchorPoint(0.5, 0.5);
-        this.addChild(label2, 299 + 5);
-        label2.setPosition(320+160, 240/2);
 
         label.runAction(
             new cc.Sequence(
@@ -46,20 +61,6 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
             )
         );
         label.rotation = -5;
-        /*label2.runAction(
-            new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.FadeIn(0.1),
-                    new cc.FadeOut(0.1)
-                ))
-        );*/
-        label2.runAction(
-            new cc.Sequence(
-                new cc.DelayTime(1),
-                new cc.MoveTo(2, 320 / 2, 240 / 2)
-                //new cc.RemoveSelf()
-            )
-        );
 
     },
     onEnter: function () {

@@ -1,10 +1,10 @@
 "use strict";
 
-waw.PyramideScene = cc.Scene.extend({
+waw.TheEndScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
-        var layer = new waw.PyramideLayer();
+        var layer = new waw.TheEndLayer();
         layer.init();
         this.addChild(layer);
 
@@ -13,7 +13,7 @@ waw.PyramideScene = cc.Scene.extend({
         this.scheduleOnce(function(){
             var transition = cc.TransitionFade;
 
-            waw.currentScene = new waw.MainScene();
+            waw.currentScene = new waw.TitleScene();
 
             cc.LoaderScene.preload(g_resources, function () {
                 cc.director.runScene(new transition(0.5, waw.currentScene));
@@ -24,10 +24,10 @@ waw.PyramideScene = cc.Scene.extend({
     }
 });
 
-waw.PyramideLayer = cc.Layer.extend({
+waw.TheEndLayer = cc.Layer.extend({
     init: function () {
         this._super();
-        console.info("init layer Pyramide");
+        console.info("init layer TheEnd");
 
         var s = waw.SpriteRect(32,48);
         var animData =
@@ -43,23 +43,26 @@ waw.PyramideLayer = cc.Layer.extend({
         //var bgLayer = new cc.LayerGradient(cc.color(45,34,0,0), cc.color(0,90,80,0), cc.p(0.5,-1));
         //this.addChild(bgLayer);
 
-        var bgLayer  = new cc.LayerColor(cc.color(191,239,255,255), 320, 240);
+        var bgLayer  = new cc.LayerColor(cc.color(239,191,255,255), 320, 240);
         this.addChild(bgLayer, -100);
 
         var gameTitleWhip = new cc.Sprite(waw.gfx.title, cc.rect(0,0,124,44));
         gameTitleWhip.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleWhip, 299 + 6);
         gameTitleWhip.setPosition(320/2, 240);
+        gameTitleWhip.opacity = 32;
 
         var gameTitleA = new cc.Sprite(waw.gfx.title, cc.rect(41,45,42,24));
         gameTitleA.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleA, 299 + 5);
         gameTitleA.setPosition(320/2, 240);
+        gameTitleA.opacity = 32;
 
         var gameTitleWimp = new cc.Sprite(waw.gfx.title, cc.rect(0,70,124,46));
         gameTitleWimp.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleWimp, 299 + 4);
         gameTitleWimp.setPosition(320/2, 240);
+        gameTitleWimp.opacity = 32;
 
         var parallax0 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
         parallax0.setAnchorPoint(0, 0);
@@ -81,9 +84,11 @@ waw.PyramideLayer = cc.Layer.extend({
         parallax3.setPosition(0, 0);
         this.addChild(parallax3, -7);
 
-        var tower = this.createTower();
-        parallax0.addChild(tower);
-        tower.setPosition(220, 20);
+        var label = new cc.LabelTTF("The End", "System", 64);
+        label.enableShadow(8, -6, 0.5, 8);
+        label.setAnchorPoint(0.5, 0.5);
+        this.addChild(label, 299 + 10);
+        label.setPosition(320/2, 240/2);
 
         gameTitleWhip.runAction(
             new cc.Sequence(
@@ -121,27 +126,6 @@ waw.PyramideLayer = cc.Layer.extend({
                 )
             )
         );
-        this.scheduleOnce(function () {
-/*
-            gameTitleWhip.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.5, 0, 2),
-                        new cc.MoveBy(0.4, 0, -2)
-                    )
-                )
-            );
-            gameTitleWimp.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.4, 0, -2),
-                        new cc.MoveBy(0.5, 0, 2)
-                    )
-                )
-            );
-*/
-
-        }, 2);
 
         parallax0.runAction(new cc.MoveBy(5, -20, -24));
         parallax1.runAction(new cc.MoveBy(5, -60, -16));
@@ -159,30 +143,8 @@ waw.PyramideLayer = cc.Layer.extend({
         sprite.addChild(shadowSprite, -10);
         shadowSprite.setPosition(16, 0);
 
-        sprite.runAction(new cc.MoveTo(5, 260, 50));
-        sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
-    },
-    createTower: function() {
-        var n = new cc.Node();
-        var b = null;
-        for(var y=0; y<7; y++){
-            for(var x=0; x<(10-y); x++){
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(32* Math.round(Math.random()*7),147, 32, 32));
-                b.setAnchorPoint(0, 0);
-                b.setPosition(y * 16 + x * 28 + 2 - Math.round(Math.random()*4), y * 28 - Math.round(Math.random()*4));
-                n.addChild(b);
-            }
-            if(y === 0){
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,179, 32, 32));
-                b.setPosition(10 * 28 / 2, -6);
-            } else {
-                b = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(32* Math.round(1+Math.random()*6),178, 32, 32));
-                b.setPosition(y * 16 + 28*(Math.round(Math.random()*(6-y))), y * 28 - Math.round(Math.random()*4));
-            }
-            b.setAnchorPoint(0, 0);
-            n.addChild(b);
-        }
-        return n;
+        //sprite.runAction(new cc.MoveTo(5, 260, 50));
+        //sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
     },
     onEnter: function () {
         this._super();
