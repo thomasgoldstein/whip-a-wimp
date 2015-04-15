@@ -36,9 +36,9 @@ waw.Bullet= waw.Unit.extend({
             {
                 frameRects:
                     [
-                        s(0,0),s(1,0),s(0,0),s(2,0)
+                        s(0,0),s(1,0),s(2,0),s(1,0)
                     ],
-                delay: 0.09
+                delay: 0.12
             }
         };
         this.sprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
@@ -54,10 +54,14 @@ waw.Bullet= waw.Unit.extend({
         return TAG_BULLET;
     },
     update: function () {
-        var angle = Math.atan2(this.y - this.oldy, this.x - this.oldx);
-        this.sprite.rotation = angle;
-        this.oldx = this.x;
-        this.oldy = this.y;
+        if (this.oldx !== this.x || this.oldy !== this.y) {
+            var angle = Math.atan2(-this.y + this.oldy, this.x - this.oldx) * 180 / Math.PI;
+            //float angle = atan2(-newpos.y + oldpos.y, newpos.x - oldpos.x) * 180 / M_PI;
+            //console.log(angle);
+            this.sprite.rotation = angle - 90;
+            this.oldx = this.x;
+            this.oldy = this.y;
+        }
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {

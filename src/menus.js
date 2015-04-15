@@ -267,7 +267,7 @@ waw.MenuDebug = function (layer) {
             dove.x = Math.round(Math.random()*320);
             dove.y = Math.round(Math.random()*240);
             layer.addChild(dove, 350);
-            var bezier = [cc.p(0, 240 / 2), cc.p(300, -240 / 2), cc.p(300, 100)];
+            var bezier = [cc.p(0, 240 / 2), cc.p(300, -240 / 2), cc.p(Math.round(Math.random()*320), Math.round(Math.random()*240))];
             var bezierTo = new cc.BezierTo(2, bezier);
             dove.runAction(bezierTo);
 
