@@ -258,6 +258,25 @@ waw.MenuDebug = function (layer) {
     layer.addChild(menu, 300);
     debugMusicOnOff.setPosition(16, 239 - 7 - 48);
 
+//---
+    labelDebug = new cc.LabelTTF("Dove", "System", 10);
+    var debugDove = new cc.MenuItemLabel(labelDebug,
+        function () {
+
+            var dove = new waw.Bullet();
+            dove.x = Math.round(Math.random()*320);
+            dove.y = Math.round(Math.random()*240);
+            layer.addChild(dove, 350);
+            var bezier = [cc.p(0, 240 / 2), cc.p(300, -240 / 2), cc.p(300, 100)];
+            var bezierTo = new cc.BezierTo(2, bezier);
+            dove.runAction(bezierTo);
+
+        }, layer
+    );
+    menu = new cc.Menu(debugDove);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    debugDove.setPosition(16, 239 - 7 - 48-10);
 
     labelDebug = new cc.LabelTTF("Items+", "System", 10);
     var debugDoors = new cc.MenuItemLabel(labelDebug,

@@ -24,18 +24,28 @@ waw.Bullet= waw.Unit.extend({
         this._super();
         //console.info("Bullet ctor");
 
+        var s = waw.SpriteRect(24,16);
+
+        var animData =
+        {
+            "fly":
+            {
+                frameRects:
+                    [
+                        s(0,0),s(1,0),s(0,0),s(2,0)
+                    ],
+                delay: 0.09
+            }
+        };
+        this.sprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
+        this.addChild(this.sprite);
+        this.sprite.setAnchorPoint(0.5, 0);
+        this.sprite.playAnimation("fly");
+
         this.setContentSize(16, 16);
         this.speed = 1+Math.random()*2;
-        this.safePos = cc.p(0, 0);
 
-        //add debug text info under a mob
-        this.label = new cc.LabelTTF("Bullet", "System", 9);
-        this.addChild(this.label, 299);
-        this.label.setPosition(0, -16);
-        this.label.setVisible(showDebugInfo);
 
-        this.state = "idle";
-        this.calcDirection(0, 0);
     },
     //mark as an obstacle (some kinds of enemy)
     getTag: function(){
@@ -43,18 +53,38 @@ waw.Bullet= waw.Unit.extend({
     },
     update: function () {
         var currentTime = new Date();
-        this.conditions = this.getConditions();
-
-        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
-            this.state = "attack";
-            this.stateSchedule.reset();
+        if (currentTime.getTime() > this.timeToThink) {
+            return true;
         }
-        if (this.stateSchedule.isDone()) {
-            this.pickAISchedule();
-        }
-        this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
+        var oldPos = this.getPosition(),
+            x = oldPos.x,
+            y = oldPos.y;
+        var fps = cc.director.getAnimationInterval();
+        var speed = this.speed * fps * 10;
 
-        this.checkSubState();
+        //go horizontally and walk around vertically
+        if (this.targetX < x-1)
+            x -= speed;
+        else if (this.targetX > x+1)
+            x += speed;
+        this.x = x;
+
+        if (this.targetY < y-1)
+            y -= speed;
+        else if (this.targetY > y+1)
+            y += speed;
+        this.y = y;
+
+        //check if bullet is out of the room
+        if(this.x < -24 || this.x > 320+24 ||
+            this.y < -48 || this.y > 240
+        ) {
+            //TODO on exit
+            //it dies on exit the room
+            this.unscheduleAllCallbacks();
+            this.cleanRefs();
+            return false;
+        }
 
         if(showDebugInfo && this.label) {
             this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
