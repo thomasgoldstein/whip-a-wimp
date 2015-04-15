@@ -941,6 +941,8 @@ waw.openDoor = function (doorTag, layer) {
 
 waw.openSecretDoor= function (unit) {
     var r2, r = waw.curRoom;
+    if(r.trapActive)
+        return;
     switch (unit.direction) {
         case 0: //up
             if(waw.player.direction !== "up")
