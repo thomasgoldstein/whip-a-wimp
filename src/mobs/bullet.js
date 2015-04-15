@@ -43,9 +43,14 @@ waw.Bullet= waw.Unit.extend({
         };
         this.sprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
         this.addChild(this.sprite);
-        this.sprite.setAnchorPoint(0.5, 0);
+        this.sprite.setAnchorPoint(0.5, 0.5);
         this.sprite.playAnimation("fly");
+        //this.shadowSprite.playAnimation("fly");
 
+        //this.shadowSprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
+        //this.addChild(this.shadowSprite, -14);
+        //this.shadowSprite.setAnchorPoint(0.5, 0);
+        //this.shadowSprite.opacity = 120;
         this.setContentSize(16, 16);
         this.scheduleUpdate();
     },
@@ -61,6 +66,17 @@ waw.Bullet= waw.Unit.extend({
             this.sprite.rotation = angle - 90;
             this.oldx = this.x;
             this.oldy = this.y;
+
+            //this.shadowSprite.x = this.x;
+            //this.shadowSprite.y = this.y-28;
+            //this.shadowSprite.rotation = angle - 90;
+
+        }
+
+        var pPos = waw.player.getPosition();
+        var pos = this.getPosition();
+        if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 150) {
+            waw.player.onGetDamage(this);
         }
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
