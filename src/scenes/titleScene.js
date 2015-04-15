@@ -11,6 +11,27 @@ waw.TitleScene = cc.Scene.extend({
         waw.theme.gotoNextTheme();
 
         this.scheduleOnce(function(){
+
+            var label = new cc.LabelTTF("PRESS SPACE", "System", 20);
+            label.enableShadow(8, -6, 0.5, 8);
+            label.setAnchorPoint(0.5, 0.5);
+            this.addChild(label, 299 + 10);
+            label.setPosition(320/2, 20);
+            label.runAction(
+                    new cc.RepeatForever(
+                        new cc.Sequence(
+                            new cc.DelayTime(0.2),
+                            new cc.FadeOut(0.2),
+                            new cc.FadeIn(0.3)
+                        )
+                    )
+            );
+            //cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t
+        }, 1);
+        this.scheduleUpdate();
+    },
+    update: function() {
+        if (waw.KEYS[cc.KEY.space]) {
             var transition = cc.TransitionFade;
 
             waw.currentScene = new waw.MainScene();
@@ -18,9 +39,7 @@ waw.TitleScene = cc.Scene.extend({
             cc.LoaderScene.preload(g_resources, function () {
                 cc.director.runScene(new transition(0.5, waw.currentScene));
             }, this);
-
-            //cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t
-        }, 5);
+        }
     }
 });
 
@@ -37,11 +56,17 @@ waw.TitleLayer = cc.Layer.extend({
                     s(0,5), s(1,5), s(0,5), s(0,2), s(0,6), s(1,6), s(0,6), s(0,2)
                 ],
                 delay: 0.1
+            },
+            "idle_down": {
+                frameRects: [
+                    s(0,0), s(1,0), s(2,0), s(1,0)
+                ],
+                delay: 0.2
             }
         };
 
         //var bgLayer = new cc.LayerGradient(cc.color(45,34,0,0), cc.color(0,90,80,0), cc.p(0.5,-1));
-        //this.addChild(bgLayer);
+        //this.addChild(bgLayer, -100);
 
         var bgLayer  = new cc.LayerColor(cc.color(191,239,255,255), 320, 240);
         this.addChild(bgLayer, -100);
@@ -125,7 +150,7 @@ waw.TitleLayer = cc.Layer.extend({
 
         var sprite = new waw.AnimatedSprite(waw.gfx.jesus, animData);
         sprite.setAnchorPoint(0.5, 0);
-        sprite.setPosition(80, 20);
+        sprite.setPosition(-30, 30);
         this.addChild(sprite);
         sprite.playAnimation("walk_right");
 
@@ -134,8 +159,12 @@ waw.TitleLayer = cc.Layer.extend({
         sprite.addChild(shadowSprite, -10);
         shadowSprite.setPosition(16, 0);
 
-        sprite.runAction(new cc.MoveTo(5, 340, 20));
-        //sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
+        sprite.runAction(new cc.Sequence(
+                new cc.MoveTo(5, 160, 30),
+                new cc.DelayTime(0.2),
+                new cc.CallFunc(function(){sprite.playAnimation("idle_down")}, this)
+            )
+        );
     },
     onEnter: function () {
         this._super();
