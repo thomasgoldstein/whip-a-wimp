@@ -310,7 +310,7 @@ waw.Player = waw.Unit.extend({
                 return true;
                 break;
             case TAG_EXIT:
-                waw.openExitDoor();
+                waw.openExitDoor(unit);
                 return true;
                 break;
             case TAG_SECRET:

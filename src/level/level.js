@@ -271,7 +271,7 @@ waw.AddMiniMap = function (layer, room, animateTheMapOpening) {
 };
 
 //init 8 pieces of impassable walls
-waw.initWalls = function(room) {
+waw.initWalls = function (room) {
     if(!room) throw "unknown room";
     var units = waw.units;
     var layer = waw.layer;
@@ -281,16 +281,18 @@ waw.initWalls = function(room) {
         wallSize: 32, //thickness of the border walls
         wallSize2: 48, //thickness of the TOP walls
         verticalWall_upY: 240/2+64/2,
-        verticalWall_downY: -240/2 + 64/2,
-        horizontalWall_leftX: -240/2 + 64/2,
-        horizontalWall_rightX: -240/2 + 64/2
+        verticalWall_downY: -240 / 2 + 64 / 2,
+        verticalWallHeight: 240 - 64,
+        horizontalWall_leftX: -240 / 2 + 64 / 2,
+        horizontalWall_rightX: -240 / 2 + 64 / 2,
+        horizontalWallWidth: 320 - 64
     };
 
     // Left wall upper
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
     wall.width = wp.wallSize;
-    wall.height = 240-64;
+    wall.height = wp.verticalWallHeight;
     wall.x = wp.wallSize / 2;
     wall.y = wp.verticalWall_upY + room.walls.left_d;
     units.push(wall);
@@ -300,7 +302,7 @@ waw.initWalls = function(room) {
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
     wall.width = wp.wallSize;
-    wall.height = 240-64;
+    wall.height = wp.verticalWallHeight;
     wall.x = wp.wallSize / 2;
     wall.y = wp.verticalWall_downY + room.walls.left_d;
     units.push(wall);
@@ -310,7 +312,7 @@ waw.initWalls = function(room) {
     // Right wall upper
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(wp.wallSize, 240-64));
+    wall.setContentSize(new cc.Size(wp.wallSize, wp.verticalWallHeight));
     wall.x = 320-wp.wallSize / 2;
     wall.y = wp.verticalWall_upY + room.walls.right_d;
     units.push(wall);
@@ -319,7 +321,7 @@ waw.initWalls = function(room) {
     // Right wall lower
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(wp.wallSize, 240-64));
+    wall.setContentSize(new cc.Size(wp.wallSize, wp.verticalWallHeight));
     wall.x = 320-wp.wallSize / 2;
     wall.y = wp.verticalWall_downY + room.walls.right_d;
     units.push(wall);
@@ -329,7 +331,7 @@ waw.initWalls = function(room) {
     // Top wall. left half
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize2));   //fat top wall
+    wall.setContentSize(new cc.Size(wp.horizontalWallWidth, wp.wallSize2));   //fat top wall
     wall.x = 0+room.walls.up_d;
     wall.y = 240 - 24 - wp.wallSize2/2 + 4;
     units.push(wall);
@@ -338,7 +340,7 @@ waw.initWalls = function(room) {
     // Top wall. right
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize2));
+    wall.setContentSize(new cc.Size(wp.horizontalWallWidth, wp.wallSize2));
     wall.x = 320 + room.walls.up_d;
     wall.y = 240 - 24 - wp.wallSize2/2 +4;
     units.push(wall);
@@ -348,7 +350,7 @@ waw.initWalls = function(room) {
     // Bottom wall left
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize*2));
+    wall.setContentSize(new cc.Size(wp.horizontalWallWidth, wp.wallSize*2));
     wall.x = 0 + room.walls.down_d;
     wall.y = 0-wp.wallSize;
     units.push(wall);
@@ -357,7 +359,7 @@ waw.initWalls = function(room) {
     // Bottom wall right
     wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.setContentSize(new cc.Size(320 - 64, wp.wallSize*2));
+    wall.setContentSize(new cc.Size(wp.horizontalWallWidth, wp.wallSize*2));
     wall.x = 320 + room.walls.down_d;
     wall.y = 0-wp.wallSize;
     units.push(wall);
@@ -421,6 +423,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setAnchorPoint(0.5, 0);
             wall.setPosition(160 + room.walls.up_d, 240 - 48 + 4);
             wall.setTag(TAG_EXIT);
+            wall.direction = 0; //up
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
@@ -450,6 +453,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setAnchorPoint(0.5, 0);
             wall.setPosition(160+room.walls.up_d,240 - 48 + 4);
             wall.setTag(TAG_UP_DOORD);
+            wall.direction = 0; //up
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_UP_DOORD);
@@ -531,6 +535,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(320, 120 - 32 + room.walls.right_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_EXIT);
+            wall.direction = 1; //right
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
@@ -560,6 +565,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(320,120-32+room.walls.right_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_RIGHT_DOORD);
+            wall.direction = 1; //right
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_RIGHT_DOORD);
@@ -638,6 +644,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160 + room.walls.down_d, 0 - 32);
             wall.setTag(TAG_EXIT);
+            wall.direction = 2; //down
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
@@ -665,6 +672,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setContentSize(new cc.Size(64, 64));
             wall.setPosition(160+room.walls.down_d,0-32);
             wall.setTag(TAG_DOWN_DOORD);
+            wall.direction = 2; //down
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer,TAG_DOWN_DOORD);
@@ -742,6 +750,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(0, 120 - 32 + room.walls.left_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_EXIT);
+            wall.direction = 3; //left
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_EXIT);
@@ -771,6 +780,7 @@ waw.prepareRoomLayer = function(room) {
             wall.setPosition(0,120-32+room.walls.left_d);
             wall.setAnchorPoint(0.5, 0);
             wall.setTag(TAG_LEFT_DOORD);
+            wall.direction = 3; //left
             units.push(wall);
             //debug - shows hit box over the wall
             waw.AddHitBoxSprite(wall, layer, TAG_LEFT_DOORD);
@@ -829,7 +839,7 @@ waw.prepareRoomLayer = function(room) {
         var label = new cc.LabelTTF("ROOM: "+waw.curRoomX+","+waw.curRoomY+" Type:"+room.type+" Dist:"+room.distance+" Doors:"+room.doors, "Arial", 12);
         layer.addChild(label, 300);
         label.setAnchorPoint(0,1);
-        label.setPosition(20, 230);
+        label.setPosition(40, 240);
         label.setOpacity(200);
     }
 };
@@ -930,44 +940,34 @@ waw.openDoor = function (doorTag, layer) {
 };
 
 waw.openSecretDoor= function (unit) {
-    switch(unit.direction){
-        case 0:
-            if(waw.player.direction !== "up")
-                return;
-            break;
-        case 1:
-            if(waw.player.direction !== "right")
-                return;
-            break;
-        case 2:
-            if(waw.player.direction !== "down")
-                return;
-            break;
-        case 3:
-            if(waw.player.direction !== "left")
-                return;
-            break;
-        defult:
-            throw "wrong secret direction "+unit.direction;
-    }
     var r2, r = waw.curRoom;
     switch (unit.direction) {
         case 0: //up
+            if(waw.player.direction !== "up")
+                return;
             r2 = rooms.getRoom(r.y-1, r.x);
             r2.walls.down = r.walls.up = "empty";
             break;
         case 1: //right
+            if(waw.player.direction !== "right")
+                return;
             r2 = rooms.getRoom(r.y, r.x+1);
             r2.walls.left = r.walls.right = "empty";
             break;
         case 2: //down
+            if(waw.player.direction !== "down")
+                return;
             r2 = rooms.getRoom(r.y+1, r.x);
             r2.walls.up = r.walls.down = "empty";
             break;
         case 3: //left
+            if(waw.player.direction !== "left")
+                return;
             r2 = rooms.getRoom(r.y, r.x-1);
             r2.walls.right = r.walls.left = "empty";
             break;
+        defult:
+            throw "wrong secret direction "+unit.direction;
     }
     unit.sprite.opacity = 0;
     unit.sprite.visible = true;
@@ -985,9 +985,29 @@ waw.openSecretDoor= function (unit) {
     cc.audioEngine.playEffect(waw.sfx.laugh01);  //TODO replace sfx for secret room opening
 };
 
-waw.openExitDoor = function (layer) {
+waw.openExitDoor = function (unit) {
     if(waw.curRoom.trapActive)
         return;
+    switch (unit.direction) {
+        case 0: //up
+            if(waw.player.direction !== "up")
+                return;
+            break;
+        case 1: //right
+            if(waw.player.direction !== "right")
+                return;
+            break;
+        case 2: //down
+            if(waw.player.direction !== "down")
+                return;
+            break;
+        case 3: //left
+            if(waw.player.direction !== "left")
+                return;
+            break;
+        defult:
+            throw "wrong Exit direction "+unit.direction;
+    }
     if(waw.sun<=0 || waw.moon<=0) {
         if(Math.random()<0.5)
             cc.audioEngine.playEffect(waw.sfx.nah01);
