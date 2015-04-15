@@ -20,6 +20,10 @@ waw.Bullet= waw.Unit.extend({
     sfx_hurt01: waw.sfx.pigHurt01,
     sfx_hurt02: waw.sfx.pigHurt02,
     sfx_death: waw.sfx.pigDeath,
+
+    oldx: 0,
+    oldy: 0,
+
     ctor: function () {
         this._super();
         //console.info("Bullet ctor");
@@ -43,52 +47,17 @@ waw.Bullet= waw.Unit.extend({
         this.sprite.playAnimation("fly");
 
         this.setContentSize(16, 16);
-        this.speed = 1+Math.random()*2;
-
-
+        this.scheduleUpdate();
     },
     //mark as an obstacle (some kinds of enemy)
     getTag: function(){
         return TAG_BULLET;
     },
     update: function () {
-        var currentTime = new Date();
-        if (currentTime.getTime() > this.timeToThink) {
-            return true;
-        }
-        var oldPos = this.getPosition(),
-            x = oldPos.x,
-            y = oldPos.y;
-        var fps = cc.director.getAnimationInterval();
-        var speed = this.speed * fps * 10;
-
-        //go horizontally and walk around vertically
-        if (this.targetX < x-1)
-            x -= speed;
-        else if (this.targetX > x+1)
-            x += speed;
-        this.x = x;
-
-        if (this.targetY < y-1)
-            y -= speed;
-        else if (this.targetY > y+1)
-            y += speed;
-        this.y = y;
-
-        //check if bullet is out of the room
-        if(this.x < -24 || this.x > 320+24 ||
-            this.y < -48 || this.y > 240
-        ) {
-            //TODO on exit
-            //it dies on exit the room
-            this.unscheduleAllCallbacks();
-            this.cleanRefs();
-            return false;
-        }
-
-        if(showDebugInfo && this.label) {
-            this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
-        }
+        var angle = Math.atan2(this.y - this.oldy, this.x - this.oldx);
+        this.sprite.rotation = angle;
+        this.oldx = this.x;
+        this.oldy = this.y;
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
