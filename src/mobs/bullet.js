@@ -20,45 +20,44 @@ waw.Bullet= waw.Unit.extend({
     sfx_hurt01: waw.sfx.pigHurt01,
     sfx_hurt02: waw.sfx.pigHurt02,
     sfx_death: waw.sfx.pigDeath,
+
+    oldx: 0,
+    oldy: 0,
+
     ctor: function () {
         this._super();
         //console.info("Bullet ctor");
 
+        var s = waw.SpriteRect(24,16);
+
+        var animData =
+        {
+            "fly":
+            {
+                frameRects:
+                    [
+                        s(0,0),s(1,0),s(0,0),s(2,0)
+                    ],
+                delay: 0.09
+            }
+        };
+        this.sprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
+        this.addChild(this.sprite);
+        this.sprite.setAnchorPoint(0.5, 0);
+        this.sprite.playAnimation("fly");
+
         this.setContentSize(16, 16);
-        this.speed = 1+Math.random()*2;
-        this.safePos = cc.p(0, 0);
-
-        //add debug text info under a mob
-        this.label = new cc.LabelTTF("Bullet", "System", 9);
-        this.addChild(this.label, 299);
-        this.label.setPosition(0, -16);
-        this.label.setVisible(showDebugInfo);
-
-        this.state = "idle";
-        this.calcDirection(0, 0);
+        this.scheduleUpdate();
     },
     //mark as an obstacle (some kinds of enemy)
     getTag: function(){
         return TAG_BULLET;
     },
     update: function () {
-        var currentTime = new Date();
-        this.conditions = this.getConditions();
-
-        if(this.state !== "attack" && this.conditions.indexOf("canAttack")>=0) {
-            this.state = "attack";
-            this.stateSchedule.reset();
-        }
-        if (this.stateSchedule.isDone()) {
-            this.pickAISchedule();
-        }
-        this.stateSchedule.update(this); //we pass 'this' to make anon funcs in schedule see current monsters vars
-
-        this.checkSubState();
-
-        if(showDebugInfo && this.label) {
-            this.label.setString(this.mobType+"-"+this.x.toFixed(1)+","+this.y.toFixed(1)+"\n "+this.state+" "+this.dx.toFixed(1)+","+this.dy.toFixed(1) );
-        }
+        var angle = Math.atan2(this.y - this.oldy, this.x - this.oldx);
+        this.sprite.rotation = angle;
+        this.oldx = this.x;
+        this.oldy = this.y;
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {

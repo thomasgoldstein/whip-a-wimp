@@ -43,6 +43,7 @@ waw.theme = {
             map: this.themeDir + "Map.png",
             merchant: this.themeDir + "Merchant.png",
             doveSeller: this.themeDir + "DoveSeller.png",
+            dove: this.themeDir + "Dove.png",
             middleWalls: this.themeDir + "MiddleWalls.png",
             pig: this.themeDir + "Pig.png",
             pillar: this.themeDir + "Pillar.png",
