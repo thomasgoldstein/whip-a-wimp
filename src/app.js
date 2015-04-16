@@ -1,7 +1,6 @@
 "use strict";
 
 waw.oldLayer = null;
-waw.currentLayer = null;
 waw.currentScene = null;
 waw.scrollActionDone = true; //isDone scrolling between rooms
 //waw.menu = null;

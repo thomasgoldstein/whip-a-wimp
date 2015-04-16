@@ -661,6 +661,8 @@ waw.Player = waw.Unit.extend({
     onDeath: function (killer) {
         if (this.subState === "dead")
             return;
+        cc.audioEngine.playMusic(waw.bgm.gameOver, false);
+        
         waw.player.setZOrder(500);  //whole overlays all the other gfx
         //shift Y to hit the back
         var backY = 12;
