@@ -1397,9 +1397,9 @@ waw.putPillar = function(pos) {
 
 waw.putBasket = function(pos) {
     if(waw.rand()<0.5)
-        waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 6);
+        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 6);
     else
-        waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 6);
+        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 6);
 };
 
 //adds Pillars obstacles of a room onto existing layer
@@ -1413,6 +1413,8 @@ waw.putRoomObstacle = function (pos, hitbox, spr, sprRect, hitboxYoffset) {
     sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
     //sprite.skewX = -3 + Math.round(6*Math.random());
+    if(waw.rand()<0.5)
+        sprite.flippedX = true;
     layer.addChild(sprite, 250 - pos.y);
     var wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
