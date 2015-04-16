@@ -128,7 +128,10 @@ waw.Item = waw.Unit.extend({
                 waw.addScore(150);
                 break;
             case "rope":
-                waw.whip.addLink();
+                if(waw.whipBonus < waw.whip.chainLengthMax) {
+                    waw.whip.addLink();
+                    waw.whipBonus++;
+                }
                 waw.addScore(50);
                 break;
             case "cloth":
@@ -159,8 +162,8 @@ waw.Item = waw.Unit.extend({
                     return;
                 break;
             case "boots":
-                if(waw.player.speed < 12) {
-                    waw.player.speed++;
+                if(waw.speedBonus < 6) {
+                    waw.speedBonus++;
                     waw.addScore(50);
                     //waw.player.sprite.setColor(new cc.Color(255,133,133,255));
 /*                    waw.player.sprite.runAction(

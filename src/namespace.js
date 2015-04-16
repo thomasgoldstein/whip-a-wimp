@@ -17,6 +17,8 @@ var waw = {
     keys: 0,
     sun: 0,
     moon: 0,
+    speedBonus: 0,
+    whipBonus: 2,
     addScore: function(n) {
         this.score += n;
         if(this.score > this.hiScore )
@@ -27,6 +29,8 @@ var waw = {
         this.keys = 0;
         this.sun = 0;
         this.moon = 0;
+        this.speedBonus = 0;
+        this.whipBonus = 2;
     }
 };
 

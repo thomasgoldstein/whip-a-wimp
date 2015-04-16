@@ -8,7 +8,8 @@ waw.TheEndScene = cc.Scene.extend({
         layer.init();
         this.addChild(layer);
 
-        waw.theme.gotoNextTheme();
+        //init score / items / level
+        //waw.theme.gotoNextTheme();
 
         this.scheduleOnce(function(){
             var transition = cc.TransitionFade;

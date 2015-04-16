@@ -8,7 +8,7 @@ waw.PyramideScene = cc.Scene.extend({
         layer.init();
         this.addChild(layer);
 
-        waw.theme.gotoNextTheme();
+        //waw.theme.gotoNextTheme();
 
         this.scheduleOnce(function(){
             var transition = cc.TransitionFade;

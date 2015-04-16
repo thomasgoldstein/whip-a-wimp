@@ -97,6 +97,11 @@ waw.Whip = waw.Unit.extend({
         //console.info("Whip ctor "+itemT);
         //this.setContentSize(8, 8);
 
+        if(waw.whipBonus > this.chainLength)
+            this.chainLength = waw.whipBonus;
+        else
+            this.chainLength = 2;
+
         var chainBase = this;
         var sprite;
         for (var i = 0; i < this.chainLengthMax; i++) {

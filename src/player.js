@@ -170,7 +170,7 @@ waw.Player = waw.Unit.extend({
             y = this.y;
 
         var fps = cc.director.getAnimationInterval();
-        var speed = this.speed * fps * 10;
+        var speed = (this.speed+waw.speedBonus) * fps * 10;
 
         if ((waw.KEYS[cc.KEY.left] || waw.KEYS[cc.KEY.right]) &&
             (waw.KEYS[cc.KEY.up] || waw.KEYS[cc.KEY.down])) {
