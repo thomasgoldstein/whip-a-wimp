@@ -46,7 +46,7 @@ waw.theme = {
             dove: this.themeDir + "Dove.png",
             middleWalls: this.themeDir + "MiddleWalls.png",
             pig: this.themeDir + "Pig.png",
-            pillar: this.themeDir + "Pillar.png",
+            obstacles: this.themeDir + "Obstacles.png",
             shadow12x6: "res/Common/Shadow12x6.png",
             shadow24x12: "res/Common/Shadow24x12.png",
             shadow32x16: "res/Common/Shadow32x16.png",
@@ -128,11 +128,11 @@ waw.theme = {
         max_rooms: [3,5,6,7,8, 9,10,12,13,15],   //rooms per level
 
         room_set: [ //possible room type
-            [1],
-            [2],
-            [3, 4],
-            [1, 2, 3, 4],
-            [5, 6],
+            [9, 10, 15, 16, 17, 18],
+            [2, 9, 10, 12, 18],
+            [3, 4, 9, 10, 13, 14, 18],
+            [1, 2, 3, 4, 11, 12, 13, 14],
+            [5, 6, 15, 16],
 
             [3, 4],
             [1, 2, 3, 4],

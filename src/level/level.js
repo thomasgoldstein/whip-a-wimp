@@ -1196,6 +1196,67 @@ waw.prepareRoomPattern = function(room) {
             waw.putPillar(new cc.Point(88,67));
             waw.putPillar(new cc.Point(88,137));
             break;
+        case 9:
+            //:: mix
+            waw.putBasket(new cc.Point(232,67));
+            waw.putPillar(new cc.Point(232,137));
+            waw.putPillar(new cc.Point(88,67));
+            waw.putBasket(new cc.Point(88,137));
+            break;
+        case 10:
+            //:: mix mirrir
+            waw.putPillar(new cc.Point(232,67));
+            waw.putBasket(new cc.Point(232,137));
+            waw.putBasket(new cc.Point(88,67));
+            waw.putPillar(new cc.Point(88,137));
+            break;
+        case 11:
+            //. 11 basket in the middle of the room
+            waw.putBasket(new cc.Point(160,105));
+            break;
+        case 12:
+            //.. 2 baskets horizontally
+            waw.putBasket(new cc.Point(88,105));
+            waw.putBasket(new cc.Point(232,105));
+            break;
+        case 13:
+            //2 baskets TL BR
+            waw.putBasket(new cc.Point(88,137));
+            waw.putBasket(new cc.Point(232,67));
+            break;
+        case 14:
+            //2 baskets BL TR
+            waw.putBasket(new cc.Point(232,137));
+            waw.putBasket(new cc.Point(88,67));
+            break;
+        case 15:
+            //.:
+            waw.putBasket(new cc.Point(232,67));
+            waw.putBasket(new cc.Point(232,137));
+            waw.putBasket(new cc.Point(88,105));
+            break;
+        case 16:
+            //:.
+            waw.putBasket(new cc.Point(88,67));
+            waw.putBasket(new cc.Point(88,137));
+            waw.putBasket(new cc.Point(232,105));
+            break;
+        case 17:
+            //. . .horizontal line of baskets in the room
+            var y1 = 105+(Math.round(waw.rand()*8-16));
+            waw.putBasket(new cc.Point(88,y1));
+            y1 = 105+(Math.round(waw.rand()*8-16));
+            waw.putBasket(new cc.Point(160,y1));
+            y1 = 105+(Math.round(waw.rand()*8-16));
+            waw.putBasket(new cc.Point(232,y1));
+            break;
+        case 18:
+            //::
+            waw.putBasket(new cc.Point(232,67));
+            waw.putBasket(new cc.Point(232,137));
+            waw.putBasket(new cc.Point(88,67));
+            waw.putBasket(new cc.Point(88,137));
+            break;
     }
 };
 
@@ -1331,7 +1392,14 @@ waw.AddHitBoxSprite = function (unit, layer, tag_) {
 };
 
 waw.putPillar = function(pos) {
-    waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.pillar, cc.rect(0, 0, 32, 64), 6);
+    waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(0, 0, 32, 64), 6);
+};
+
+waw.putBasket = function(pos) {
+    if(waw.rand()<0.5)
+        waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 6);
+    else
+        waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 6);
 };
 
 //adds Pillars obstacles of a room onto existing layer
@@ -1348,7 +1416,7 @@ waw.putRoomObstacle = function (pos, hitbox, spr, sprRect, hitboxYoffset) {
     layer.addChild(sprite, 250 - pos.y);
     var wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
-    wall.sprite = sprite; //just a ref to put ACTIONS on the pillar spr
+    wall.sprite = sprite; //just a ref to put ACTIONS on the obstacles spr
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(pos.x, pos.y + hitboxYoffset);
     wall.setTag(TAG_OBSTACLE);

@@ -302,6 +302,7 @@ waw.GetCoords2SpawnItem = function (roomType) {
             }
             break;
         case 1:
+        case 11:
             //. 1 obstacle in the middle of the room
             a.push({x: 50 + Math.round(Math.random() * 80), y: 50 + Math.round(Math.random() * 40)});
             a.push({x: 50 + Math.round(Math.random() * 80), y: 120 + Math.round(Math.random() * 40)});
@@ -311,16 +312,24 @@ waw.GetCoords2SpawnItem = function (roomType) {
             a.push({x: 170, y: 91});
             break;
         case 2:
+        case 12:
         //.. 2 obstacles horizontally
         case 3:
+        case 13:
         //2 obstacles TL BR
         case 4:
+        case 14:
         //2 obstacle BL TR
         case 5:
+        case 15:
         //.:
         case 6:
+        case 16:
         //:.
         case 8:
+        case 9:
+        case 10:
+        case 18:
             //::
             for (var y = 48; y < 170; y += 40) {
                 a.push({x: 44 + Math.round(Math.random() * 15), y: y});
@@ -329,6 +338,7 @@ waw.GetCoords2SpawnItem = function (roomType) {
             }
             break;
         case 7:
+        case 17:
             //. . .horizontal line of obstacles in the room
             for (var x = 58; x < 280; x += 40) {
                 a.push({x: x, y: 45 + Math.round(Math.random() * 40)});
