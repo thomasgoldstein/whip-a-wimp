@@ -27,7 +27,7 @@ waw.BulletDove = waw.Bullet.extend({
         this.addChild(this.sprite);
         this.sprite.setAnchorPoint(0.5, 0.5);
         this.sprite.playAnimation("fly");
-        this.sprite.y = 20;
+        this.sprite.y = 48;
         this.scheduleUpdate();
     }
 });

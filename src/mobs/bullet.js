@@ -16,6 +16,13 @@ waw.Bullet= waw.Unit.extend({
     ctor: function () {
         this._super();
         //console.info("Bullet ctor");
+
+        this.shadowSprite = new cc.Sprite(waw.gfx.shadow12x6);
+        this.shadowSprite.setAnchorPoint(0.5, 0.5)
+        this.shadowSprite.opacity = 25;
+        this.shadowSprite.scale = 0.5;
+        this.addChild(this.shadowSprite, -1);
+
         this.scheduleUpdate();
     },
     getTag: function(){

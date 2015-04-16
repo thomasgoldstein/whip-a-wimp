@@ -179,11 +179,10 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
                 }
                 break;
             case "idle":
-                if(this.HP <2){
+                if(this.HP < 2){
                     this.state = "runaway";
                     this.stateSchedule = this.SCHEDULE_RUNAWAY;
                     this.stateSchedule.reset();
-
                     this.throwDove();
                     break;
                 }
@@ -193,6 +192,8 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
                     this.stateSchedule.reset();
                     break;
                 }
+                if(Math.random() < 0.10)
+                    this.throwDove();
                 if (Math.random() < 0.7) {
                     this.state = "idle";
                     this.stateSchedule = this.SCHEDULE_IDLE;
@@ -250,21 +251,22 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
                 this.stateSchedule = this.SCHEDULE_IDLE;
         }
     },
-
     throwDove: function () {
         var dove = new waw.BulletDove();
         waw.layer.addChild(dove, 350);
         dove.setPosition(this.x, this.y);
+        dove.scale = 0.5;
         var bezier = [waw.pickPlayersBackCoord(this, 60), cc.p(waw.player.x, waw.player.y), waw.pickRandomEdgeCoord()];
         var bezierTo = new cc.BezierTo(3, bezier);
-        dove.runAction(
+        dove.runAction( new cc.Spawn(
+            new cc.ScaleTo(0.5, 1),
             new cc.Sequence(
                 bezierTo,
                 new cc.RemoveSelf(true)
             )
+            )
         )
     },
-
     update: function () {
         //var currentTime = new Date();
 
