@@ -79,6 +79,7 @@ waw.NoMobChest = waw.Unit.extend({
             return;
         this.unscheduleAllCallbacks();
         this.subState = "open";
+        this.setTag(0);
         waw.items[this.cleanItemIndex].inChest = waw.curRoom.items[this.cleanItemIndex].inChest = false;
 
         if (Math.random() < 0.5) {
