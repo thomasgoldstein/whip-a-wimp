@@ -12,7 +12,7 @@ waw.TitleScene = cc.Scene.extend({
 
         this.scheduleOnce(function(){
 
-            var label = new cc.LabelTTF("PRESS SPACE", "System", 20);
+            var label = new cc.LabelTTF("PRESS SPACE", "System", 16);
             label.enableShadow(8, -6, 0.5, 8);
             label.setAnchorPoint(0.5, 0.5);
             this.addChild(label, 299 + 10);
