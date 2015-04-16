@@ -278,7 +278,7 @@ waw.Player = waw.Unit.extend({
     interactWithUnit: function (unit) {
         var t = unit.getTag();
         switch(t) {
-            case TAG_PILLAR:
+            case TAG_OBSTACLE:
                 //return true;
                 break;
             case TAG_DOWN_DOORD:

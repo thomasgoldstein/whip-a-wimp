@@ -1145,61 +1145,59 @@ waw.prepareRoomPattern = function(room) {
 
     //now put some obstacles, according to the room.type
     waw.rand = new Math.seedrandom(room.randomSeedObstacles); //a temp Pseudo random func with set seed
-    var hitboxOffsetY = 6;
     switch(room.type){
         case 0:
             //no obstacles
             break;
         case 1:
             //. 1 obstacle in the middle of the room
-            waw.putRoomObstacle(new cc.Point(160,105), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(160,105));
             break;
         case 2:
             //.. 2 obstacles horizontally
-            waw.putRoomObstacle(new cc.Point(88,105), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(232,105), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(88,105));
+            waw.putPillar(new cc.Point(232,105));
             break;
         case 3:
             //2 obstacles TL BR
-            waw.putRoomObstacle(new cc.Point(88,137), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(232,67), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(88,137));
+            waw.putPillar(new cc.Point(232,67));
             break;
         case 4:
             //2 obstacle BL TR
-            waw.putRoomObstacle(new cc.Point(232,137), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(88,67), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(232,137));
+            waw.putPillar(new cc.Point(88,67));
             break;
         case 5:
             //.:
-            waw.putRoomObstacle(new cc.Point(232,67), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(232,137), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(88,105), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(232,67));
+            waw.putPillar(new cc.Point(232,137));
+            waw.putPillar(new cc.Point(88,105));
             break;
         case 6:
             //:.
-            waw.putRoomObstacle(new cc.Point(88,67), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(88,137), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(232,105), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(88,67));
+            waw.putPillar(new cc.Point(88,137));
+            waw.putPillar(new cc.Point(232,105));
             break;
         case 7:
             //. . .horizontal line of obstacles in the room
             var y1 = 105+(Math.round(waw.rand()*8-16));
-            waw.putRoomObstacle(new cc.Point(88,y1), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(88,y1));
             y1 = 105+(Math.round(waw.rand()*8-16));
-            waw.putRoomObstacle(new cc.Point(160,y1), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(160,y1));
             y1 = 105+(Math.round(waw.rand()*8-16));
-            waw.putRoomObstacle(new cc.Point(232,y1), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(232,y1));
             break;
         case 8:
             //::
-            waw.putRoomObstacle(new cc.Point(232,67), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(232,137), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(88,67), new cc.Size(32,16), hitboxOffsetY);
-            waw.putRoomObstacle(new cc.Point(88,137), new cc.Size(32,16), hitboxOffsetY);
+            waw.putPillar(new cc.Point(232,67));
+            waw.putPillar(new cc.Point(232,137));
+            waw.putPillar(new cc.Point(88,67));
+            waw.putPillar(new cc.Point(88,137));
             break;
     }
 };
-
 
 //block exits
 waw.activateTrapRoom = function() {
@@ -1220,24 +1218,6 @@ waw.activateTrapRoom = function() {
     console.log("activate trap room");
     r.trapActive = true;
     cc.audioEngine.playEffect(waw.sfx.door01);
-
-/*    //hide doors - entrances
-    if(r.up_sprite)
-        r.up_sprite.runAction(
-                new cc.FadeOut(0.5)
-        );
-    if(r.right_sprite)
-        r.right_sprite.runAction(
-                new cc.FadeOut(0.5)
-        );
-    if(r.down_sprite)
-        r.down_sprite.runAction(
-                new cc.FadeOut(0.5)
-        );
-    if(r.left_sprite)
-        r.left_sprite.runAction(
-                new cc.FadeOut(0.5)
-        );*/
 
     // Left wall
     wall = new waw.Unit();
@@ -1322,26 +1302,6 @@ waw.deactivateTrapRoom = function () {
     if((g = r.left_gate)){
         g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
     }
-
-/*
-    if (r.up_sprite)
-        r.up_sprite.runAction(
-            new cc.FadeIn(0.5)
-        );
-    if (r.right_sprite)
-        r.right_sprite.runAction(
-            new cc.FadeIn(0.5)
-        );
-    if (r.down_sprite)
-        r.down_sprite.runAction(
-            new cc.FadeIn(0.5)
-        );
-    if (r.left_sprite)
-        r.left_sprite.runAction(
-            new cc.FadeIn(0.5)
-        );
-*/
-
     for (var i = 0; i < waw.units.length; i++) {
         var w = waw.units[i];
         if (!w)
@@ -1370,13 +1330,17 @@ waw.AddHitBoxSprite = function (unit, layer, tag_) {
     unit.debugCross.setVisible(showDebugInfo);
 };
 
+waw.putPillar = function(pos) {
+    waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.pillar, cc.rect(0, 0, 32, 64), 6);
+};
+
 //adds Pillars obstacles of a room onto existing layer
-waw.putRoomObstacle = function (pos, hitbox, hitboxYoffset) {
+waw.putRoomObstacle = function (pos, hitbox, spr, sprRect, hitboxYoffset) {
     var units = waw.units;
     var layer = waw.layer;
     var room = waw.curRoom;
 
-    var sprite = new cc.Sprite(waw.gfx.pillar, cc.rect(0, 0, 32, 64));
+    var sprite = new cc.Sprite(spr, sprRect);
     sprite.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
     sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
@@ -1387,7 +1351,7 @@ waw.putRoomObstacle = function (pos, hitbox, hitboxYoffset) {
     wall.sprite = sprite; //just a ref to put ACTIONS on the pillar spr
     wall.setContentSize(hitbox); //collision box
     wall.setPosition(pos.x, pos.y + hitboxYoffset);
-    wall.setTag(TAG_PILLAR);
+    wall.setTag(TAG_OBSTACLE);
     units.push(wall);
     //debug
     waw.AddHitBoxSprite(wall, layer);
