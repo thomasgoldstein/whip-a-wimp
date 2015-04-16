@@ -1392,14 +1392,14 @@ waw.AddHitBoxSprite = function (unit, layer, tag_) {
 };
 
 waw.putPillar = function(pos) {
-    waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(0, 0, 32, 64), 6);
+    waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(1, 1, 32, 64), 6);
 };
 
 waw.putBasket = function(pos) {
     if(waw.rand()<0.5)
-        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 6);
+        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 0);
     else
-        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 6);
+        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 0);
 };
 
 //adds Pillars obstacles of a room onto existing layer
