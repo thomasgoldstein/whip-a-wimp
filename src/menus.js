@@ -263,13 +263,17 @@ waw.MenuDebug = function (layer) {
     var debugDove = new cc.MenuItemLabel(labelDebug,
         function () {
 
-            var dove = new waw.Bullet();
-            //dove.x = Math.round(Math.random()*320);
-            //dove.y = Math.round(Math.random()*240);
+            var dove = new waw.BulletDove();
             layer.addChild(dove, 350);
-            var bezier = [cc.p(Math.round(Math.random()*320), Math.round(Math.random()*240)), cc.p(160,100) , waw.player.getPosition()];
-            var bezierTo = new cc.BezierTo(5, bezier);
-            dove.runAction(bezierTo);
+            var bezier = [cc.p(160, 100), cc.p(waw.player.x - waw.RandomPlusMinus(30), waw.player.y + waw.RandomPlusMinus(30)), cc.p(waw.player.x, waw.player.y), waw.pickRandomEdgeCoord()];
+
+            var bezierTo = new cc.BezierTo(3, bezier);
+            dove.runAction(
+                new cc.Sequence(
+                    bezierTo,
+                    new cc.RemoveSelf(true)
+                )
+            );
 
         }, layer
     );

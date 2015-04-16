@@ -16,26 +16,6 @@ waw.Bullet= waw.Unit.extend({
     ctor: function () {
         this._super();
         //console.info("Bullet ctor");
-        var s = waw.SpriteRect(24,16);
-        var animData =
-        {
-            "fly": {
-                frameRects: [
-                    s(0, 0), s(1, 0), s(2, 0), s(1, 0)
-                ],
-                delay: 0.12
-            }
-        };
-        this.sprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
-        this.addChild(this.sprite);
-        this.sprite.setAnchorPoint(0.5, 0.5);
-        this.sprite.playAnimation("fly");
-        //this.shadowSprite.playAnimation("fly");
-        //this.shadowSprite = new waw.AnimatedSprite(waw.gfx.dove, animData);
-        //this.addChild(this.shadowSprite, -14);
-        //this.shadowSprite.setAnchorPoint(0.5, 0);
-        //this.shadowSprite.opacity = 120;
-        //this.setContentSize(16, 16);
         this.scheduleUpdate();
     },
     getTag: function(){
@@ -55,7 +35,7 @@ waw.Bullet= waw.Unit.extend({
         }
         var pPos = waw.player.getPosition();
         var pos = this.getPosition();
-        if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 150) {
+        if (waw.player.subState !== "invincible" && cc.pDistanceSQ(pPos, pos) < 250) {
             waw.player.onGetDamage(this);
         }
     }

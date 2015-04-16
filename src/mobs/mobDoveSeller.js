@@ -183,6 +183,8 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
                     this.state = "runaway";
                     this.stateSchedule = this.SCHEDULE_RUNAWAY;
                     this.stateSchedule.reset();
+
+                    this.throwDove();
                     break;
                 }
                 if(this.conditions.indexOf("seeEnemy")>=0) {
@@ -249,9 +251,22 @@ waw.MobDoveSeller = waw.MobRandomWalker.extend({
         }
     },
 
+    throwDove: function () {
+        var dove = new waw.BulletDove();
+        waw.layer.addChild(dove, 350);
+        dove.setPosition(this.x, this.y);
+        var bezier = [waw.pickPlayersBackCoord(this, 60), cc.p(waw.player.x, waw.player.y), waw.pickRandomEdgeCoord()];
+        var bezierTo = new cc.BezierTo(3, bezier);
+        dove.runAction(
+            new cc.Sequence(
+                bezierTo,
+                new cc.RemoveSelf(true)
+            )
+        )
+    },
 
     update: function () {
-        var currentTime = new Date();
+        //var currentTime = new Date();
 
         this.conditions = this.getConditions();
 

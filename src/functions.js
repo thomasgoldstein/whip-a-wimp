@@ -26,6 +26,36 @@ waw.pickSafeRandomY = function() {
     return Math.round(40 + Math.random() * 130);
 };
 
+waw.pickRandomEdgeCoord = function() {
+    var x,y;
+    if(Math.random()<0.5){
+        x = Math.round(Math.random()*320);
+        y = Math.round()<0.5 ? 0 : 240;
+    } else {
+        y = Math.round(Math.random()*240);
+        y = Math.round()<0.5 ? 0 : 320;
+    }
+    return cc.p(x,y);
+};
+
+waw.pickPlayersBackCoord = function(obj, n) {
+    var x = obj.x, y = obj.y;
+    var px = waw.player.x, py = waw.player.y;
+    if(x < px)
+        x = px + n;
+    else
+        x = px - n;
+    if(y < py)
+        y = py + n;
+    else
+        y = py - n;
+    return cc.p(x,y);
+};
+
+waw.RandomPlusMinus = function(n) {
+    return n - Math.round(Math.random()*2*n);
+};
+
 //prowide width and height of the spritesheet frame
 //and get a function that returns correct frame rect by its COLUMN, ROW
 waw.SpriteRect = function(w, h) {
