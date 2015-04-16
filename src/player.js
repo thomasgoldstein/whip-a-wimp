@@ -831,6 +831,32 @@ waw.Player = waw.Unit.extend({
                 )
             );
 
+            //== press SPACE to end
+            this.update = function() {
+                if (waw.KEYS[cc.KEY.space]) {
+                    var transition = cc.TransitionFade;
+                    waw.currentScene = new waw.GameOverScene();
+                    cc.LoaderScene.preload(g_resources, function () {
+                        cc.director.runScene(new transition(0.5, waw.currentScene));
+                    }, this);
+                }
+            };
+            var label = new cc.LabelTTF("PRESS SPACE TO CONTINUE", "System", 16);
+            label.enableShadow(8, -6, 0.5, 8);
+            label.setAnchorPoint(0.5, 0.5);
+            this.getParent().addChild(label, 600);
+            label.setPosition(320/2, 20);
+            label.runAction(
+                new cc.RepeatForever(
+                    new cc.Sequence(
+                        new cc.DelayTime(0.2),
+                        new cc.FadeOut(0.2),
+                        new cc.FadeIn(0.3)
+                    )
+                )
+            );
+            this.scheduleUpdate();
+            //===
         }, 2.5);
 
         //cut-scene 3
