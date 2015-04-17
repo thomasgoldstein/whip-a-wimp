@@ -254,7 +254,7 @@ waw.generateItems = function(){
     waw.putSecretRoomItems();
 
     //if the last level
-    waw.removeItems("moon");
+
     waw.putBossMob();
 
     waw.putItemsIntoChests();

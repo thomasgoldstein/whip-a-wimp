@@ -40,6 +40,9 @@ waw.generateMobsRoom = function (roomType) {
 };
 
 waw.putBossMob = function () {
+    if(waw.theme.levelN+1 < 10){
+        return;
+    }
     var room;
     var filtered_rooms = real_rooms.filter(
         function (r) {
@@ -58,7 +61,11 @@ waw.putBossMob = function () {
             break;
         }
     }
+    waw.removeItems("moon");
+
     room.type = 0;  //boss room has no obstacles
+    room.dark = false;
+    room.trap = true;
     var mobs = [];
     //waw.theme.rules.mob_set[waw.theme.levelN];
     var mob = {x: 160, y: 110, mobType: "Boss", itemsDrop: ["moon"], itemsDropChance: 1};
