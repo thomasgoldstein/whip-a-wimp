@@ -173,6 +173,8 @@ waw.Score = cc.Node.extend({
 
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
+    //if(!waw.KEYS[cc.KEY.down] || !waw.KEYS[cc.KEY.up])
+        return;
     labelDebug = new cc.LabelTTF("MOB", "System", 12);
     var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
         function () {
