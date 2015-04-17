@@ -38,6 +38,7 @@
         "src/mobs/nomobChest.js",
         "src/mobs/bullet.js",
         "src/mobs/bulletDove.js",
+        "src/scenes/commonScenes.js",
         "src/scenes/theEnd.js",
         "src/scenes/titleScene.js",
         "src/scenes/gotoNextLevel.js",

@@ -146,17 +146,5 @@ waw.TheEndLayer = cc.Layer.extend({
 
         //sprite.runAction(new cc.MoveTo(5, 260, 50));
         //sprite.runAction(new cc.ScaleTo(5, 0.5, 0.5));
-    },
-    onEnter: function () {
-        this._super();
-        //console.info("onEnter GO");
-    },
-    onEnterTransitionDidFinish: function () {
-        this._super();
-        //console.info("onEnterTransitionDidFinish Title");
-    },
-    onExitTransitionDidStart: function () {
-        this._super();
-        //console.info("onExitTransitionDidStart Title");
     }
 });

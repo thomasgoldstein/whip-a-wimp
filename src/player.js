@@ -662,7 +662,7 @@ waw.Player = waw.Unit.extend({
         if (this.subState === "dead")
             return;
         cc.audioEngine.playMusic(waw.bgm.gameOver, false);
-        
+
         waw.player.setZOrder(500);  //whole overlays all the other gfx
         //shift Y to hit the back
         var backY = 12;
@@ -833,32 +833,7 @@ waw.Player = waw.Unit.extend({
                 )
             );
 
-            //== press SPACE to end
-            this.update = function() {
-                if (waw.KEYS[cc.KEY.space]) {
-                    var transition = cc.TransitionFade;
-                    waw.currentScene = new waw.GameOverScene();
-                    cc.LoaderScene.preload(g_resources, function () {
-                        cc.director.runScene(new transition(0.5, waw.currentScene));
-                    }, this);
-                }
-            };
-            var label = new cc.LabelTTF("PRESS SPACE TO CONTINUE", "System", 16);
-            label.enableShadow(8, -6, 0.5, 8);
-            label.setAnchorPoint(0.5, 0.5);
-            this.getParent().addChild(label, 600);
-            label.setPosition(320/2, 20);
-            label.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.DelayTime(0.2),
-                        new cc.FadeOut(0.2),
-                        new cc.FadeIn(0.3)
-                    )
-                )
-            );
-            this.scheduleUpdate();
-            //===
+            waw.pressFireAndGotoScene(this.getParent(), waw.GameOverScene, false);
         }, 2.5);
 
         //cut-scene 3

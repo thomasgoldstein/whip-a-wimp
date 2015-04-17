@@ -8,40 +8,14 @@ waw.gotoNextLevel = cc.Scene.extend({
         layer.init();
         this.addChild(layer);
 
-        this.scheduleOnce(function(){
+        if(waw.theme.levelN + 1 < 10) {
+            //load + calc new levels
+            waw.theme.gotoNextLevel();
+            rooms.initLevel();
+            waw.pressFireAndGotoScene(this, waw.MainScene, false);
+        } else
+            waw.pressFireAndGotoScene(this, waw.TheEndScene, false);
 
-            var label = new cc.LabelTTF("PRESS SPACE TO CONTINUE", "System", 16);
-            label.enableShadow(8, -6, 0.5, 8);
-            label.setAnchorPoint(0.5, 0.5);
-            this.addChild(label, 299 + 10);
-            label.setPosition(320/2, 20);
-            label.runAction(
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.DelayTime(0.2),
-                        new cc.FadeOut(0.2),
-                        new cc.FadeIn(0.3)
-                    )
-                )
-            );
-        }, 1);
-        this.scheduleUpdate();
-    },
-    update: function () {
-        if (waw.KEYS[cc.KEY.space]) {
-            var transition = cc.TransitionFade;
-
-            if (waw.theme.levelN + 1 < 10) {
-                //load + calc new levels
-                waw.theme.gotoNextLevel();
-                rooms.initLevel();
-                waw.currentScene = new waw.MainScene();
-                cc.director.runScene(new transition(1, waw.currentScene));
-            } else {
-                // The End of demo
-                waw.currentScene = new waw.TheEndScene();
-                cc.director.runScene(new transition(1, waw.currentScene));            }
-        }
     }
 });
 
