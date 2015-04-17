@@ -82,6 +82,8 @@ waw.theme = {
             doveSellerDeath: "res/SFX/DoveSellerDeath.ogg",
             doveSellerHurt01: "res/SFX/DoveSellerHurt01.ogg",
             doveSellerHurt02: "res/SFX/DoveSellerHurt02.ogg",
+            flap01: "res/SFX/Flap01.ogg",
+            flap02: "res/SFX/Flap02.ogg",
             ouch01: "res/SFX/Ouch01.ogg",
             ouch02: "res/SFX/Ouch02.ogg",
             ouch03: "res/SFX/Ouch03.ogg",

@@ -28,6 +28,11 @@ waw.BulletDove = waw.Bullet.extend({
         this.sprite.setAnchorPoint(0.5, 0.5);
         this.sprite.playAnimation("fly");
         this.sprite.y = 48;
+
+        if(Math.random()<0.5)
+            cc.audioEngine.playEffect(waw.sfx.flap01);
+        else
+            cc.audioEngine.playEffect(waw.sfx.flap02);
         this.scheduleUpdate();
     }
 });
