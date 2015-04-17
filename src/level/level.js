@@ -1352,16 +1352,16 @@ waw.deactivateTrapRoom = function () {
         waw.layer.removeChildByTag(TAG_TRAP, true);
 
         //open gates
-        if ((g = r.up_gate)) {
+        if ((g = r.up_gate) && r.walls.up !== "exit") {
             g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
         }
-        if ((g = r.right_gate)) {
+        if ((g = r.right_gate) && r.walls.right !== "exit") {
             g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
         }
-        if ((g = r.down_gate)) {
+        if ((g = r.down_gate) && r.walls.down !== "exit") {
             g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
         }
-        if ((g = r.left_gate)) {
+        if ((g = r.left_gate) && r.walls.left !== "exit") {
             g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
         }
         for (var i = 0; i < waw.units.length; i++) {
