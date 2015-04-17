@@ -165,5 +165,15 @@ waw.TitleLayer = cc.Layer.extend({
                 )
             )
         );
+
+        var contestLogo = new cc.Sprite(waw.gfx.contest);
+        contestLogo.setAnchorPoint(0.5, 1);
+        contestLogo.opacity = 0;
+        contestLogo.scale = 0.2;
+        this.addChild(contestLogo, 299 + 4);
+        contestLogo.setPosition(320/2, 240-10);
+        contestLogo.runAction(
+                    new cc.FadeIn(7)
+        );
     }
 });
