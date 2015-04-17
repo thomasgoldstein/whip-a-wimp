@@ -400,12 +400,12 @@ waw.prepareRoomLayer = function(room) {
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d, -18, TAG_EXIT);
             d.setPosition(160 + room.walls.up_d, 240 - 88);
-            d.runAction(new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.TintTo(1, 255, 255, 0),
-                    new cc.TintTo(1, 255, 255, 255)
-                )
-            ));
+            //d.runAction(new cc.RepeatForever(
+            //    new cc.Sequence(
+            //        new cc.TintTo(1, 255, 255, 0),
+            //        new cc.TintTo(1, 255, 255, 255)
+            //    )
+            //));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(0, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
@@ -511,12 +511,12 @@ waw.prepareRoomLayer = function(room) {
             layer.addChild(d, -18, TAG_EXIT);
             d.setPosition(320 - 32, 120 - 40 + room.walls.right_d);
             d.setAnchorPoint(0.5, 0);
-            d.runAction(new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.TintTo(1, 255, 255, 0),
-                    new cc.TintTo(1, 255, 255, 255)
-                )
-            ));
+            //d.runAction(new cc.RepeatForever(
+            //    new cc.Sequence(
+            //        new cc.TintTo(1, 255, 255, 0),
+            //        new cc.TintTo(1, 255, 255, 255)
+            //    )
+            //));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(160, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
@@ -621,12 +621,12 @@ waw.prepareRoomLayer = function(room) {
             d = new cc.Sprite(waw.gfx.doors, cc.rect(80 * 3, 0, 80, 80)); //doorway
             d.setPosition(160 + room.walls.down_d, 32);
             layer.addChild(d, -18, TAG_EXIT);
-            d.runAction(new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.TintTo(1, 255, 255, 0),
-                    new cc.TintTo(1, 255, 255, 255)
-                )
-            ));
+            //d.runAction(new cc.RepeatForever(
+            //    new cc.Sequence(
+            //        new cc.TintTo(1, 255, 255, 0),
+            //        new cc.TintTo(1, 255, 255, 255)
+            //    )
+            //));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(240, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
@@ -726,12 +726,12 @@ waw.prepareRoomLayer = function(room) {
             d.setPosition(32, 120 - 40 + room.walls.left_d);
             d.setAnchorPoint(0.5, 0);
             layer.addChild(d, -18, TAG_EXIT);
-            d.runAction(new cc.RepeatForever(
-                new cc.Sequence(
-                    new cc.TintTo(1, 255, 255, 0),
-                    new cc.TintTo(1, 255, 255, 255)
-                )
-            ));
+            //d.runAction(new cc.RepeatForever(
+            //    new cc.Sequence(
+            //        new cc.TintTo(1, 255, 255, 0),
+            //        new cc.TintTo(1, 255, 255, 255)
+            //    )
+            //));
             //add and hide gates
             g = new cc.Sprite(waw.gfx.doors, cc.rect(80, 160, 80, 80)); //gate
             g.setAnchorPoint(0, 0);
