@@ -1346,35 +1346,37 @@ waw.deactivateTrapRoom = function () {
     waw.curRoom.trap = false;
     waw.curRoom.trapActive = false;
 
-    console.log("open exits in trap room");
-    cc.audioEngine.playEffect(waw.sfx.door01);
-    waw.layer.removeChildByTag(TAG_TRAP, true);
+    waw.player.getParent().scheduleOnce(function() {
+        //console.log("open exits in trap room");
+        cc.audioEngine.playEffect(waw.sfx.door01);
+        waw.layer.removeChildByTag(TAG_TRAP, true);
 
-    //open gates
-    if((g = r.up_gate)){
-        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
-    }
-    if((g = r.right_gate)){
-        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
-    }
-    if((g = r.down_gate)){
-        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
-    }
-    if((g = r.left_gate)){
-        g.runAction(new cc.MoveTo(0.5+Math.random(), g.openPosX, g.openPosY));
-    }
-    for (var i = 0; i < waw.units.length; i++) {
-        var w = waw.units[i];
-        if (!w)
-            continue;
-        if (w === waw.curRoom.left_trap ||
-            w === waw.curRoom.right_trap ||
-            w === waw.curRoom.up_trap ||
-            w === waw.curRoom.down_trap) {
-            w.debugCross.visible = false;
-            waw.units[i] = null;
+        //open gates
+        if ((g = r.up_gate)) {
+            g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
         }
-    }
+        if ((g = r.right_gate)) {
+            g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
+        }
+        if ((g = r.down_gate)) {
+            g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
+        }
+        if ((g = r.left_gate)) {
+            g.runAction(new cc.MoveTo(0.5 + Math.random(), g.openPosX, g.openPosY));
+        }
+        for (var i = 0; i < waw.units.length; i++) {
+            var w = waw.units[i];
+            if (!w)
+                continue;
+            if (w === waw.curRoom.left_trap ||
+                w === waw.curRoom.right_trap ||
+                w === waw.curRoom.up_trap ||
+                w === waw.curRoom.down_trap) {
+                w.debugCross.visible = false;
+                waw.units[i] = null;
+            }
+        }
+    }, 2);
 };
 
 //adds grid sprite to show hit Box
