@@ -183,15 +183,29 @@ waw.putUselessItems = function () {
     }
 };
 
+waw.removeItems = function (name) {
+    for (var i = 0; i < real_rooms.length; i++) {
+        var room = real_rooms[i];
+        for(var n = 0; n < room.items.length; n++) {
+            if(!room.items[n])
+                continue;
+            if(room.items[n].itemType === name){
+                console.log("Removed "+name+" item from "+room.name);
+                room.items[n] = null;
+            }
+        }
+    }
+};
+
 waw.putSecretRoomItems = function () {
     for (var i = 0; i < secret_rooms.length; i++) {
         var room = secret_rooms[i];
         if (room) {
             waw.addItemToRoom(room, "unknown");
-            waw.addItemToRoom(room, "unknown");
-            waw.addItemToRoom(room, "unknown");
+            waw.addItemToRoom(room, "cloth");
+            waw.addItemToRoom(room, "key");
             if(Math.random()<0.5)
-                waw.addItemToRoom(room, "unknown");
+                waw.addItemToRoom(room, "rope");
         }
     }
 };
@@ -207,7 +221,7 @@ waw.putItemsIntoChests = function() {
     for(var i=0; i<fRooms.length; i++) {
         var r = fRooms[i];
         for(var n=0; n < r.items.length; n++) {
-            if(r.items[n].itemType === "unknown")
+            if(!r.items[n] || r.items[n].itemType === "unknown")
                 continue;
             if(Math.random()<0.5) {
                 r.items[n].inChest = true;
@@ -238,6 +252,11 @@ waw.generateItems = function(){
     waw.putBoots();
     waw.putUselessItems();
     waw.putSecretRoomItems();
+
+    //if the last level
+    waw.removeItems("moon");
+    waw.putBossMob();
+
     waw.putItemsIntoChests();
 };
 

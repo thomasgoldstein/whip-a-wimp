@@ -178,6 +178,9 @@ waw.MenuDebug = function (layer) {
         function () {
             switch (Math.round(Math.random() * 0)) {
                 case 0:
+                    var e = new waw.BossDoveSeller();
+                    break;
+                case 4:
                     var e = new waw.MobDoveSeller();
                     break;
                 default:

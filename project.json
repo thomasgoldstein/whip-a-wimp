@@ -29,6 +29,7 @@
         "src/mobs/mobFollower.js",
         "src/mobs/mobMerchant.js",
         "src/mobs/mobDoveSeller.js",
+        "src/mobs/bossDoveSeller.js",
         "src/mobs/mobKiwi.js",
         "src/mobs/mobPig.js",
         "src/mobs/mobPigBouncer.js",

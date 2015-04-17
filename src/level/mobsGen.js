@@ -40,7 +40,30 @@ waw.generateMobsRoom = function (roomType) {
 };
 
 waw.putBossMob = function () {
-    
+    var room;
+    var filtered_rooms = real_rooms.filter(
+        function (r) {
+            if (rooms.hasExit(r))
+                return true;
+            return false;
+        }
+    );
+    if (filtered_rooms.length < 1) {
+        filtered_rooms = real_rooms;
+        console.log("No room for Boss");
+    }
+    for (var i = 0; i < filtered_rooms.length; i++) {
+        room = filtered_rooms[i];
+        if (room) {
+            break;
+        }
+    }
+    room.type = 0;  //boss room has no obstacles
+    var mobs = [];
+    //waw.theme.rules.mob_set[waw.theme.levelN];
+    var mob = {x: 160, y: 110, mobType: "Boss", itemsDrop: ["moon"], itemsDropChance: 1};
+    mobs.push(mob);
+    room.mobs = mobs;
 };
 
 waw.fixOverlappingPos = function(x,y, m) {
@@ -97,6 +120,9 @@ waw.spawnMobs = function(layer){
                     break;
                 case "Barrel":
                     e = new waw.MobBarrel();
+                    break;
+                case "Boss":
+                    e = new waw.BossDoveSeller();
                     break;
                 default:
                     throw "Wrong mob type " + m.mobType;
