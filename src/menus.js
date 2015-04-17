@@ -294,6 +294,7 @@ waw.MenuDebug = function (layer) {
                 waw.AddMiniMap(waw.layer, waw.curRoom, true);
                 rooms.foundMap = true;
             }
+            waw.whipBonus = 5;
             waw.whip.addLink();
             waw.whip.addLink();
             waw.whip.addLink();
