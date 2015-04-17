@@ -26,12 +26,13 @@ waw.pressFireAndGotoScene = function (self, newScene, preloadResoucres) {
                 self.scheduleOnce(function() {
                     waw.KEYS[cc.KEY.space] = false;
                     var transition = cc.TransitionFade;
+                    waw.currentScene = new newScene();  //keep current scene ref 4rooms scrolling
                     if (preloadResoucres)
                         cc.LoaderScene.preload(g_resources, function () {
-                            cc.director.runScene(new transition(0.5, new newScene()));
+                            cc.director.runScene(new transition(0.5, waw.currentScene));
                         }, self);
                     else
-                        cc.director.runScene(new transition(0.5, new newScene()));
+                        cc.director.runScene(new transition(0.5,waw.currentScene));
                 }, 1);
             }
         };
