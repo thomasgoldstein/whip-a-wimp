@@ -33,6 +33,12 @@ waw.TitleLayer = cc.Layer.extend({
                     s(0,0), s(1,0), s(2,0), s(1,0)
                 ],
                 delay: 0.2
+            },
+            "punch_down": {
+                frameRects: [
+                    s(0,7), s(1,7), s(2,7), s(2,7), s(2,7), s(2,7), s(2,7), s(0,0)
+                ],
+                delay: 0.1
             }
         };
 
@@ -130,10 +136,29 @@ waw.TitleLayer = cc.Layer.extend({
         sprite.addChild(shadowSprite, -10);
         shadowSprite.setPosition(16, 0);
 
-        sprite.runAction(new cc.Sequence(
-                new cc.MoveTo(5, 160, 30),
-                new cc.DelayTime(0.2),
-                new cc.CallFunc(function(){sprite.playAnimation("idle_down")}, this)
+        sprite.runAction(new cc.RepeatForever(
+                new cc.Sequence(
+                    new cc.MoveTo(5, 160, 30),
+                    new cc.DelayTime(0.2),
+                    new cc.CallFunc(function () {
+                        sprite.playAnimation("idle_down")
+                    }, this),
+                    new cc.DelayTime(5),
+                    new cc.CallFunc(function () {
+                        sprite.playAnimation("punch_down")
+                    }, this),
+                    new cc.DelayTime(0.8),
+                    new cc.CallFunc(function () {
+                        sprite.playAnimation("walk_right");
+                        sprite.skewX = 2;
+                    }, this),
+                    new cc.MoveTo(2, 350, 30),
+                    new cc.DelayTime(2),
+                    new cc.CallFunc(function () {
+                        sprite.x = -20;
+                        sprite.skewX = 0;
+                    }, this)
+                )
             )
         );
     },
