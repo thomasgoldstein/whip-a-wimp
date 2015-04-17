@@ -23,8 +23,8 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
     init: function () {
         this._super();
 
-        cc.audioEngine.stopAllEffects();
-        cc.audioEngine.stopMusic();
+        cc.audioEngine.setMusicVolume(0.2);
+        cc.audioEngine.playMusic(waw.bgm.nextLevel, true);
 
         if(waw.theme.levelN+1 < 10){
             var label2 = new cc.LabelTTF(waw.theme.name+" "+(waw.theme.levelN+2), "System", 32);

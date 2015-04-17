@@ -4,6 +4,9 @@ waw.TitleScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
+        cc.audioEngine.setMusicVolume(0.2);
+        cc.audioEngine.playMusic(waw.bgm.title, true);
+
         var layer = new waw.TitleLayer();
         layer.init();
         this.addChild(layer);
@@ -145,6 +148,7 @@ waw.TitleLayer = cc.Layer.extend({
                     }, this),
                     new cc.DelayTime(5),
                     new cc.CallFunc(function () {
+                        cc.audioEngine.playEffect(waw.sfx.punch01);
                         sprite.playAnimation("punch_down")
                     }, this),
                     new cc.DelayTime(0.8),

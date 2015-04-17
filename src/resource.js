@@ -66,7 +66,9 @@ waw.theme = {
         //music
         waw.bgm = {
             level1: "res/Music/01tune.ogg",
-            gameOver: "res/Music/gameover.ogg"
+            gameOver: "res/Music/gameover.ogg",
+            nextLevel: "res/Music/nextlevel.ogg",
+            title: "res/Music/title.ogg"
             //level1: "res/Music/ingame01.mp3"
         };
 //SFX
