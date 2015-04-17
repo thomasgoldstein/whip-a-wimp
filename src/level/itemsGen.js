@@ -202,10 +202,14 @@ waw.putSecretRoomItems = function () {
         var room = secret_rooms[i];
         if (room) {
             waw.addItemToRoom(room, "unknown");
-            waw.addItemToRoom(room, "cloth");
-            waw.addItemToRoom(room, "key");
+            if(Math.random()<0.7)
+                waw.addItemToRoom(room, "cloth");
             if(Math.random()<0.5)
+                waw.addItemToRoom(room, "key");
+            if(Math.random()<0.3)
                 waw.addItemToRoom(room, "rope");
+            if(Math.random()<0.3)
+                waw.addItemToRoom(room, "boots");
         }
     }
 };
@@ -250,7 +254,7 @@ waw.generateItems = function(){
     waw.putRopes();
     waw.putRedCloth();
     waw.putBoots();
-    waw.putUselessItems();
+    //waw.putUselessItems();
     waw.putSecretRoomItems();
 
     //if the last level

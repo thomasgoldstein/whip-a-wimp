@@ -6,6 +6,8 @@ waw.scrollActionDone = true; //isDone scrolling between rooms
 //waw.menu = null;
 waw.scoreMenu = null;
 
+console.log = console.info = function(){};
+
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
         event: cc.EventListener.KEYBOARD,

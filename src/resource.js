@@ -59,6 +59,7 @@ waw.theme = {
             upperWalls: this.themeDir + "UpperWalls.png",
             weapons: "res/Common/Weapons.png",
             title: "res/Common/Title.png",
+            contest: "res/Common/logo-jam.png",
 
             //gfx for debug
             hitBoxGrid: "res/DBG/hbGrid.png",
