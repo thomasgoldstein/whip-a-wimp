@@ -1033,6 +1033,22 @@ waw.openExitDoor = function (unit) {
         }
     }
     //open the EXIT gate
+    //waw.scoreMenu.items.moon.sprite.setPosition(this.x-waw.scoreMenu.x, this.y-waw.scoreMenu.y);
+    //waw.scoreMenu.items.moon.sprite.opacity = 50;
+    waw.scoreMenu.items.moon.sprite.runAction(
+        new cc.Spawn(
+            new cc.FadeOut(1, 360*3),
+            new cc.RotateBy(1, Math.random()<0.5 ? 360 : -360),
+            new cc.MoveTo(1, waw.player.x-waw.scoreMenu.x, waw.player.y-waw.scoreMenu.y)
+        )
+    );
+    waw.scoreMenu.items.sun.sprite.runAction(
+        new cc.Spawn(
+            new cc.FadeOut(1, 360*3),
+            new cc.RotateBy(1, Math.random()<0.5 ? 360 : -360),
+            new cc.MoveTo(1, waw.player.x-waw.scoreMenu.x, waw.player.y-waw.scoreMenu.y)
+        )
+    );
     //open gates
     var g, r = waw.curRoom;
     if((g = r.up_gate)){
