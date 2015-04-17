@@ -161,10 +161,10 @@ waw.theme = {
         ],
 
         secret_chance: [  //secret room (if > 1, then how many rooms)
-            0, 1, 0, 0.5, 0.5, 0.5, 0.5, 1, 2, 1
+            0, 0, 1, 0.5, 0.5, 0.5, 0.5, 1, 2, 1
         ],
         show_secret: [  //show secret room on the mini-map?
-            0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+            0, 0, 1, 0, 0, 0, 0, 0, 0, 0
         ],
 
         has_redCloth: [  //has spawn of this item
