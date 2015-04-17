@@ -98,7 +98,8 @@ waw.theme = {
             pigHurt02: "res/SFX/PigHurt02.ogg",
             punch01: "res/SFX/Punch01.ogg",
             whip01: "res/SFX/Whip01.ogg",
-            whip02: "res/SFX/Whip02.ogg"
+            whip02: "res/SFX/Whip02.ogg",
+            skipButton: "res/SFX/SkipButton.ogg"
         };
 
         g_resources = [];

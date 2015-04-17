@@ -20,15 +20,19 @@ waw.pressFireAndGotoScene = function (self, newScene, preloadResoucres) {
 
         self.update = function () {
             if (waw.KEYS[cc.KEY.space]) {
-                waw.KEYS[cc.KEY.space] = false;
-                var transition = cc.TransitionFade;
-                if (preloadResoucres)
-                    cc.LoaderScene.preload(g_resources, function () {
-                        cc.director.runScene(new transition(0.5, new newScene()));
-                    }, self);
-                else
-                    cc.director.runScene(new transition(0.5, new newScene()));
+                self.unscheduleUpdate();
+                cc.audioEngine.playEffect(waw.sfx.skipButton);
 
+                self.scheduleOnce(function() {
+                    waw.KEYS[cc.KEY.space] = false;
+                    var transition = cc.TransitionFade;
+                    if (preloadResoucres)
+                        cc.LoaderScene.preload(g_resources, function () {
+                            cc.director.runScene(new transition(0.5, new newScene()));
+                        }, self);
+                    else
+                        cc.director.runScene(new transition(0.5, new newScene()));
+                }, 1);
             }
         };
         self.scheduleUpdate();
