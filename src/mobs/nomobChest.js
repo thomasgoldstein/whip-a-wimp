@@ -43,11 +43,9 @@ waw.NoMobChest = waw.Unit.extend({
             this.lockSprite.setPosition(15, 8);
             waw.makeSpriteJump(this.lockSprite);
         }
-
-        //this.debugCross.setAnchorPoint(0.5, 0);
-
         this.shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
         this.shadowSprite.setAnchorPoint(0.5, 0.5);
+        this.shadowSprite.scaleY = 0.5;
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
