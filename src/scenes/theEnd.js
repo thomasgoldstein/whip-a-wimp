@@ -4,24 +4,14 @@ waw.TheEndScene = cc.Scene.extend({
     onEnter: function () {
         this._super();
 
+        cc.audioEngine.setMusicVolume(0.2);
+        cc.audioEngine.playMusic(waw.bgm.title, true);
+
         var layer = new waw.TheEndLayer();
         layer.init();
         this.addChild(layer);
 
-        //init score / items / level
-        //waw.theme.gotoNextTheme();
-
-        this.scheduleOnce(function(){
-            var transition = cc.TransitionFade;
-
-            waw.currentScene = new waw.TitleScene();
-
-            cc.LoaderScene.preload(g_resources, function () {
-                cc.director.runScene(new transition(0.5, waw.currentScene));
-            }, this);
-
-            //cc.director.runScene(new transition(0.5, new waw.MainScene()));  //1st arg = in seconds duration of t
-        }, 5);
+        waw.pressFireAndGotoScene(this, waw.TitleScene, true);
     }
 });
 
@@ -44,31 +34,46 @@ waw.TheEndLayer = cc.Layer.extend({
         //var bgLayer = new cc.LayerGradient(cc.color(45,34,0,0), cc.color(0,90,80,0), cc.p(0.5,-1));
         //this.addChild(bgLayer);
 
-        var bgLayer  = new cc.LayerColor(cc.color(239,191,255,255), 320, 240);
+        var labelStaff = new cc.LabelTTF("STAFF\nDIRECTORS: DON MIGUEL & STIFU\nMAIN CODER: DON MIGUEL\nASSISTANT CODER: STIFU\nGRAPHICS: STIFU\nMUSIC: MIDWIFE & YKAI", "System", 14);
+        labelStaff.enableShadow(4, -3, 0.5, 4);
+        labelStaff.setAnchorPoint(0.5, 1);
+        this.addChild(labelStaff, 500);
+        labelStaff.setPosition(320 / 2, 240-6);
+        labelStaff.opacity = 0;
+        labelStaff.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(2),
+                    new cc.FadeIn(3)
+                )
+        );
+
+
+        var bgLayer  = new cc.LayerColor(cc.color(33,49,160,255), 320, 240);
         this.addChild(bgLayer, -100);
 
         var gameTitleWhip = new cc.Sprite(waw.gfx.title, cc.rect(0,0,124,44));
         gameTitleWhip.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleWhip, 299 + 6);
         gameTitleWhip.setPosition(320/2, 240);
-        gameTitleWhip.opacity = 32;
+        gameTitleWhip.opacity = 62;
 
         var gameTitleA = new cc.Sprite(waw.gfx.title, cc.rect(41,45,42,24));
         gameTitleA.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleA, 299 + 5);
         gameTitleA.setPosition(320/2, 240);
-        gameTitleA.opacity = 32;
+        gameTitleA.opacity = 62;
 
         var gameTitleWimp = new cc.Sprite(waw.gfx.title, cc.rect(0,70,124,46));
         gameTitleWimp.setAnchorPoint(0.5, 0);
         this.addChild(gameTitleWimp, 299 + 4);
         gameTitleWimp.setPosition(320/2, 240);
-        gameTitleWimp.opacity = 32;
+        gameTitleWimp.opacity = 62;
 
         var parallax0 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
         parallax0.setAnchorPoint(0, 0);
         parallax0.setPosition(-60, 73);
         this.addChild(parallax0, -10);
+        parallax0.opacity = 220;
 
         var parallax1 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
         parallax1.setAnchorPoint(0, 0);
@@ -89,7 +94,7 @@ waw.TheEndLayer = cc.Layer.extend({
         label.enableShadow(8, -6, 0.5, 8);
         label.setAnchorPoint(0.5, 0.5);
         this.addChild(label, 299 + 10);
-        label.setPosition(320/2, 240/2);
+        label.setPosition(320/2, 240/2-10);
 
         gameTitleWhip.runAction(
             new cc.Sequence(

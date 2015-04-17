@@ -39,6 +39,19 @@ waw.gotoNextLevelLayer = cc.Layer.extend({
                     //new cc.RemoveSelf()
                 )
             );
+        } else {
+            var label2 = new cc.LabelTTF("THANK YOU FOR PLAYING!\n \nThis is not the end.\nWe will continue making our game\nafter the contest.", "System", 14);
+            label2.setAnchorPoint(0.5, 0.5);
+            this.addChild(label2, 299 + 5);
+            label2.setPosition(320+160, 240/2);
+
+            label2.runAction(
+                new cc.Sequence(
+                    new cc.DelayTime(1),
+                    new cc.MoveTo(2, 320 / 2, 240 / 2)
+                    //new cc.RemoveSelf()
+                )
+            );
         }
 
         var label = new cc.LabelTTF(waw.theme.name+" "+(waw.theme.levelN+1), "System", 32);

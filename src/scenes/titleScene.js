@@ -165,17 +165,5 @@ waw.TitleLayer = cc.Layer.extend({
                 )
             )
         );
-    },
-    onEnter: function () {
-        this._super();
-        //console.info("onEnter GO");
-    },
-    onEnterTransitionDidFinish: function () {
-        this._super();
-        //console.info("onEnterTransitionDidFinish Title");
-    },
-    onExitTransitionDidStart: function () {
-        this._super();
-        //console.info("onExitTransitionDidStart Title");
     }
 });
