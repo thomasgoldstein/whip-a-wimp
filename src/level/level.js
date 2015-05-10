@@ -1413,11 +1413,20 @@ waw.putPillar = function(pos) {
     waw.putRoomObstacle(pos, new cc.Size(32,16), waw.gfx.obstacles, cc.rect(1, 1, 32, 64), 6);
 };
 
-waw.putBasket = function(pos) {
-    if(waw.rand()<0.5)
-        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 0);
+waw.putBasket = function (pos) {
+    var r = waw.rand();
+    if (r < 0.16)
+        waw.putRoomObstacle(pos, new cc.Size(32, 24), waw.gfx.obstacles, cc.rect(35, 1, 32, 32), 0);
+    else if (r < 0.33)
+        waw.putRoomObstacle(pos, new cc.Size(32, 24), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 0);
+    else if (r < 0.5)
+        waw.putRoomObstacle(pos, new cc.Size(32, 24), waw.gfx.obstacles, cc.rect(69, 1, 32, 32), 0);
+     else if (r < 0.66)
+        waw.putRoomObstacle(pos, new cc.Size(32, 24), waw.gfx.obstacles, cc.rect(69, 35, 32, 32), 0);
+     else if (r < 0.83)
+        waw.putRoomObstacle(pos, new cc.Size(24, 24), waw.gfx.obstacles, cc.rect(103, 1, 24, 32), 0);
     else
-        waw.putRoomObstacle(pos, new cc.Size(32,24), waw.gfx.obstacles, cc.rect(35, 35, 32, 32), 0);
+        waw.putRoomObstacle(pos, new cc.Size(24, 24), waw.gfx.obstacles, cc.rect(103, 35, 24, 32), 0);
 };
 
 //adds Pillars obstacles of a room onto existing layer
@@ -1428,12 +1437,12 @@ waw.putRoomObstacle = function (pos, hitbox, spr, sprRect, hitboxYoffset) {
 
     var sprite = new cc.Sprite(spr, sprRect);
     sprite.setColor(new cc.Color(room.floorR,room.floorG,room.floorB,255));
-    sprite.setPosition(pos);
     sprite.setAnchorPoint(0.5, 0);
     //sprite.skewX = -3 + Math.round(6*Math.random());
     if(waw.rand()<0.5)
         sprite.flippedX = true;
     layer.addChild(sprite, 250 - pos.y);
+    sprite.setPosition(pos);
     var wall = new waw.Unit();
     wall.setAnchorPoint(0.5, 0);
     wall.sprite = sprite; //just a ref to put ACTIONS on the obstacles spr
