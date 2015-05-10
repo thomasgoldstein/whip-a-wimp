@@ -1424,9 +1424,9 @@ waw.putBasket = function (pos) {
      else if (r < 0.66)
         waw.putRoomObstacle(pos, new cc.Size(32, 24), waw.gfx.obstacles, cc.rect(69, 35, 32, 32), 0);
      else if (r < 0.83)
-        waw.putRoomObstacle(pos, new cc.Size(24, 24), waw.gfx.obstacles, cc.rect(103, 1, 24, 32), 0);
+        waw.putRoomObstacle(pos, new cc.Size(24, 16), waw.gfx.obstacles, cc.rect(103, 1, 24, 32), 0);
     else
-        waw.putRoomObstacle(pos, new cc.Size(24, 24), waw.gfx.obstacles, cc.rect(103, 35, 24, 32), 0);
+        waw.putRoomObstacle(pos, new cc.Size(24, 16), waw.gfx.obstacles, cc.rect(103, 35, 24, 32), 0);
 };
 
 //adds Pillars obstacles of a room onto existing layer
