@@ -8,37 +8,39 @@ waw.scoreMenu = null;
 
 //console.log = console.info = function(){};
 
-if (cc.sys.capabilities.hasOwnProperty('keyboard'))
-    cc.eventManager.addListener({
-        event: cc.EventListener.KEYBOARD,
-        onKeyPressed: function (key, event) {
-            console.log(key);
-/*            if(key >= cc.KEY.dpadLeft && key <= cc.KEY.dpadCenter)
-                key -= (cc.KEY.dpadLeft - cc.KEY.left);*/
-            if(key >= 71 && key <= 74)
-                key = cc.KEY.space;
-            waw.KEYS[key] = true;
-            switch (key) {   //clean opposite arrows pressed status
-                case cc.KEY.up:
-                    waw.KEYS[cc.KEY.down] = false;
-                    break;
-                case cc.KEY.down:
-                    waw.KEYS[cc.KEY.up] = false;
-                    break;
-                case cc.KEY.left:
-                    waw.KEYS[cc.KEY.right] = false;
-                    break;
-                case cc.KEY.right:
-                    waw.KEYS[cc.KEY.left] = false;
-                    break;
-            }
-        },
-        onKeyReleased: function (key, event) {
-            if(key >= 71 && key <= 74)
-                key = cc.KEY.space;
-            waw.KEYS[key] = false;
+var keyboardListener = cc.EventListener.create({
+    event: cc.EventListener.KEYBOARD,
+    onKeyPressed: function (key, event) {
+        console.log(key);
+        /*            if(key >= cc.KEY.dpadLeft && key <= cc.KEY.dpadCenter)
+         key -= (cc.KEY.dpadLeft - cc.KEY.left);*/
+        //if(key >= 71 && key <= 74)
+        //    key = cc.KEY.space;
+        waw.KEYS[key] = true;
+        switch (key) {   //clean opposite arrows pressed status
+            case cc.KEY.up:
+                waw.KEYS[cc.KEY.down] = false;
+                break;
+            case cc.KEY.down:
+                waw.KEYS[cc.KEY.up] = false;
+                break;
+            case cc.KEY.left:
+                waw.KEYS[cc.KEY.right] = false;
+                break;
+            case cc.KEY.right:
+                waw.KEYS[cc.KEY.left] = false;
+                break;
         }
-    }, 1);
+    },
+    onKeyReleased: function (key, event) {
+        //if(key >= 71 && key <= 74)
+        //    key = cc.KEY.space;
+        waw.KEYS[key] = false;
+    }
+});
+
+if (cc.sys.capabilities.hasOwnProperty('keyboard'))
+    cc.eventManager.addListener(keyboardListener, 1);
 
 //the Start method
 waw.MainScene = cc.Scene.extend({
