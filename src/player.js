@@ -225,7 +225,7 @@ waw.Player = waw.Unit.extend({
                 this.calcDirection(pos.x - this.x, pos.y - this.y);
                 this.setPosition(pos);
                 //Z Index
-                this.setZOrder(250- pos.y);
+                this.setLocalZOrder(250- pos.y);
                 var animKey = this.getState() + "_" + this.direction;
                 this.sprite.playAnimation(animKey);
                 this.sprite2.playAnimation(animKey);
@@ -663,7 +663,7 @@ waw.Player = waw.Unit.extend({
             return;
         cc.audioEngine.playMusic(waw.bgm.gameOver, false);
 
-        waw.player.setZOrder(500);  //whole overlays all the other gfx
+        waw.player.setLocalZOrder(500);  //whole overlays all the other gfx
         //shift Y to hit the back
         var backY = 12;
         this.y += backY;
@@ -794,7 +794,7 @@ waw.Player = waw.Unit.extend({
 
             this.shadowSprite.y += backY; //the hit-back shift. move the shadow under the cross
 
-            this.sprite.setZOrder(-10);
+            this.sprite.setLocalZOrder(-10);
             //fade out fallen body
             this.sprite.runAction(new cc.Sequence(
                 new cc.DelayTime(0.7),

@@ -131,9 +131,9 @@ waw.MobBat = waw.MobRandomWalker.extend({
         this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
         //not default for bats!
         if(y > 150)
-            this.setZOrder(600 - y);    //to be over the upper wall
+            this.setLocalZOrder(600 - y);    //to be over the upper wall
         else
-            this.setZOrder(250 - y);
+            this.setLocalZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
 
@@ -186,7 +186,7 @@ waw.MobBat = waw.MobRandomWalker.extend({
             y = pos.y;
         }
         this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
-        this.setZOrder(250 - y);
+        this.setLocalZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         this.sprite.playAnimation(this.getAnimationName());

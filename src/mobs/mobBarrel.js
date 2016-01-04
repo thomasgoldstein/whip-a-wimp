@@ -150,7 +150,7 @@ waw.MobBarrel = waw.Enemy.extend({
         return true;
     },
     initIdle: function () {
-        this.setZOrder(250 - this.y - 32);
+        this.setLocalZOrder(250 - this.y - 32);
         return true;
     },
     onIdle: function () {

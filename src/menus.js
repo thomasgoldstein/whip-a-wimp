@@ -203,7 +203,7 @@ waw.MenuDebug = function (layer) {
             e.runAction(new cc.ScaleTo(0.5, 1));
             //e.runAction(new cc.Blink(1, 4)); //Blink Foe sprite
             this.addChild(e, 6);
-            e.setZOrder(250 - pos.y);
+            e.setLocalZOrder(250 - pos.y);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             this.addChild(e.shadowSprite, -14);
             //position shadow
@@ -360,7 +360,7 @@ waw.MenuDebug = function (layer) {
                 e.runAction(new cc.ScaleTo(0.5, 1));
                 this.addChild(e, 6);
                 this.addChild(e.shadowSprite, -14);
-                e.setZOrder(250 - pos.y);
+                e.setLocalZOrder(250 - pos.y);
                 e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
                 e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
                 e.setTag(TAG_CHEST);

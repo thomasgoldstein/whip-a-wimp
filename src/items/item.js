@@ -61,7 +61,7 @@ waw.Item = waw.Unit.extend({
             cc.audioEngine.playEffect(waw.sfx.good02);
         else
             cc.audioEngine.playEffect(waw.sfx.good03);
-        this.setZOrder(300); //make item over player
+        this.setLocalZOrder(300); //make item over player
         this.getParent().removeChild(this.sprite);   //remove item sprite
         this.sprite.runAction(new cc.Sequence(
             new cc.Spawn(

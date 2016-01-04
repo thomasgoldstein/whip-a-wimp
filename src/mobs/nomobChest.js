@@ -86,7 +86,7 @@ waw.NoMobChest = waw.Unit.extend({
                 this.topSprite.runAction(new cc.MoveTo(0.2, 0, 24));
             }, 0.6);
             this.scheduleOnce(function () {
-                this.topSprite.setZOrder(-1);
+                this.topSprite.setLocalZOrder(-1);
                 cc.audioEngine.playEffect(this.sfx_hurt02);
                 this.topSprite.runAction(new cc.MoveTo(0.2, -2 + Math.random() * 4, 3));
             }, 0.8);

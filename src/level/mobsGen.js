@@ -141,7 +141,7 @@ waw.spawnMobs = function(layer){
                 e.itemsDropChance = m.itemsDropChance;
             }
             m.mob = e; //to get some params of the mob later, when u exit the room
-            e.setZOrder(250 - pos.y);
+            e.setLocalZOrder(250 - pos.y);
             layer.addChild(e, 250 - pos.y);
             //attach monsters shadow to layer OVER BG floor (its Z index = -15)
             layer.addChild(e.shadowSprite, -14);

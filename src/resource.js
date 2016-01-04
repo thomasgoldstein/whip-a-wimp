@@ -109,21 +109,23 @@ waw.theme = {
         };
 
         g_resources = [];
-
         for (var key in waw.gfx) {
             if (waw.gfx.hasOwnProperty(key)) {
+                //console.info(waw.gfx[key]);
                 g_resources.push({src:waw.gfx[key]});
             }
         }
 
         for (var key in waw.bgm) {
             if (waw.bgm.hasOwnProperty(key)) {
+                //console.info(waw.bgm[key]);
                 g_resources.push({src:waw.bgm[key]});
             }
         }
 
         for (var key in waw.sfx) {
             if (waw.sfx.hasOwnProperty(key)) {
+                //console.info(waw.sfx[key]);
                 g_resources.push({src:waw.sfx[key]});
             }
         }

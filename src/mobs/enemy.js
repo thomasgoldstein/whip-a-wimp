@@ -239,7 +239,7 @@ waw.Enemy = waw.Unit.extend({
             y = pos.y;
         }
         this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
-        this.setZOrder(250 - y);
+        this.setLocalZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         //TODO it doesnt slow
@@ -271,7 +271,7 @@ waw.Enemy = waw.Unit.extend({
             y = pos.y;
         }
         this.setPosition(x, y);   //was a bug with Y ever shifting down. REMOVE?
-        this.setZOrder(250 - y);
+        this.setLocalZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
         this.sprite.playAnimation(this.getAnimationName());
@@ -372,7 +372,7 @@ waw.Enemy = waw.Unit.extend({
         }
 
         this.setPosition(x, y);
-        this.setZOrder(250 - y);
+        this.setLocalZOrder(250 - y);
         //position shadow
         this.shadowSprite.setPosition(pos.x, pos.y + this.shadowYoffset);
 
@@ -510,7 +510,7 @@ waw.Enemy = waw.Unit.extend({
 
         if (x !== oldPos.x || y !== oldPos.y) {
             this.setPosition(x, y);
-            this.setZOrder(250 - y);
+            this.setLocalZOrder(250 - y);
             this.shadowSprite.setPosition(this.x, this.y + this.shadowYoffset);
         }
         if (cc.pDistanceSQ(cc.p(this.targetX, this.targetY), oldPos) < 32) {

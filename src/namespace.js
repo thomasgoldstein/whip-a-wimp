@@ -35,7 +35,8 @@ var waw = {
 };
 
 //Global vars
-var startPlayerPos = cc.p(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+//var startPlayerPos = cc.Point(320 / 2, 240 / 2); //Start player position. Global var to keep players coords
+var startPlayerPos = {x: 320 / 2, y: 240 / 2}; //Start player position. Global var to keep players coords
 var rooms = []; //2d 9x9 array of the level rooms
 var real_rooms = []; //1d array with all generated rooms
 var secret_rooms = []; //array with all secret rooms
@@ -71,8 +72,9 @@ var TAG_BULLET= 300+1;
 var TAG_BOSS= 300+2;
 
 // Disable anti-aliasing
+/*
 waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;
 cc.Texture2D.prototype.handleLoadedTexture = function() {
     waw.ccTexture2D_handleLoadedTexture.apply(this, arguments);
     this.setAliasTexParameters();
-};
+};*/

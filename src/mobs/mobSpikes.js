@@ -91,7 +91,7 @@ waw.MobSpikes = waw.Enemy.extend({
         this.direction = this.state;
     },
     initIdle: function () {
-        this.setZOrder(250 - this.y - 27);  //used once
+        this.setLocalZOrder(250 - this.y - 27);  //used once
         var currentTime = new Date();
         this.timeToThink = currentTime.getTime() + 2500 + Math.random() * 500;
         this.sprite.playAnimation(this.getAnimationName());
