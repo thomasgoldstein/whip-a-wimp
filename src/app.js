@@ -165,7 +165,8 @@ waw.MainLayer = cc.Layer.extend({
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-waw.player.y);
 
-        waw.player.addChild(waw.whip,10);
+        //waw.player.addChild(waw.whip,10);
+        //TODO FIX add/remove whip
         waw.whip.init();
 
         //waw.score = new waw.Score();
