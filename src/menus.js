@@ -171,12 +171,20 @@ waw.Score = cc.Node.extend({
     }
 );
 
+waw.DebugButton = function (layer, x, y, name, f) {
+    var label = new cc.LabelTTF(name, "System", 10);
+    var menuItem = new cc.MenuItemLabel(label, f, layer);
+    var menu = new cc.Menu(menuItem);
+    menu.setPosition(0, 0);
+    layer.addChild(menu, 300);
+    menuItem.setPosition(x, y);
+};
+
 waw.MenuDebug = function (layer) {
     var menu, labelDebug;
     //if(!waw.KEYS[cc.KEY.down] || !waw.KEYS[cc.KEY.up])
     //    return;
-    labelDebug = new cc.LabelTTF("MOB", "System", 12);
-    var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
+    waw.DebugButton(layer, 18, 208, "MOB",
         function () {
             switch (Math.round(Math.random() * 0)) {
                 case 0:
@@ -209,16 +217,8 @@ waw.MenuDebug = function (layer) {
             //position shadow
             e.shadowSprite.setPosition(pos.x, pos.y - 0);
             waw.mobs.push(e);
-
-        }, layer);
-    //debugOnOffItem.setAnchorPoint(0.5, 0.5);
-    menu = new cc.Menu(debugOnOffItem);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16 + 2, 208);
-
-    labelDebug = new cc.LabelTTF("HitBox", "System", 10);
-    var debugOnOffItem = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 239 - 7 - 38, "HitBox",
         function () {
             showDebugInfo = !showDebugInfo;
             waw.player.label.visible = showDebugInfo;
@@ -235,20 +235,13 @@ waw.MenuDebug = function (layer) {
                 waw.units[i].debugCross.visible = showDebugInfo;
             }
             /*for (var i in waw.items) {
-                if (!waw.items[i])
-                    continue;
-                //waw.items[i].debugCross.visible = showDebugInfo;
-                waw.items[i].label.visible = showDebugInfo;
-            }*/
-        }, layer);
-    menu = new cc.Menu(debugOnOffItem);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugOnOffItem.setPosition(16, 239 - 7 - 38);
-
-//---
-    labelDebug = new cc.LabelTTF("Music", "System", 10);
-    var debugMusicOnOff = new cc.MenuItemLabel(labelDebug,
+             if (!waw.items[i])
+             continue;
+             //waw.items[i].debugCross.visible = showDebugInfo;
+             waw.items[i].label.visible = showDebugInfo;
+             }*/
+        });
+    waw.DebugButton(layer, 16, 239 - 7 - 48, "Music",
         function () {
             if (cc.audioEngine.isMusicPlaying()) {
                 cc.audioEngine.pauseMusic();
@@ -256,22 +249,12 @@ waw.MenuDebug = function (layer) {
             } else {
                 cc.audioEngine.resumeMusic();
             }
-        }, layer
-    );
-    menu = new cc.Menu(debugMusicOnOff);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugMusicOnOff.setPosition(16, 239 - 7 - 48);
-
-//---
-    labelDebug = new cc.LabelTTF("Dove", "System", 10);
-    var debugDove = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 239 - 7 - 48 - 10, "Dove",
         function () {
-
             var dove = new waw.BulletDove();
             layer.addChild(dove, 350);
             var bezier = [cc.p(160, 100), cc.p(waw.player.x - waw.RandomPlusMinus(30), waw.player.y + waw.RandomPlusMinus(30)), cc.p(waw.player.x, waw.player.y), waw.pickRandomEdgeCoord()];
-
             var bezierTo = new cc.BezierTo(3, bezier);
             dove.runAction(
                 new cc.Sequence(
@@ -279,16 +262,8 @@ waw.MenuDebug = function (layer) {
                     new cc.RemoveSelf(true)
                 )
             );
-
-        }, layer
-    );
-    menu = new cc.Menu(debugDove);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugDove.setPosition(16, 239 - 7 - 48-10);
-
-    labelDebug = new cc.LabelTTF("Items+", "System", 10);
-    var debugDoors = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 160, "Items",
         function () {
             waw.keys += 3;
             waw.sun += 3;
@@ -303,14 +278,8 @@ waw.MenuDebug = function (layer) {
             waw.whip.addLink();
             waw.whip.addLink();
             waw.whip.addLink();
-        }, layer);
-    menu = new cc.Menu(debugDoors);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugDoors.setPosition(16, 160);
-
-    labelDebug = new cc.LabelTTF("Weapon+", "System", 10);
-    var debugMenu10 = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 150, "WPN",
         function () {
             switch (waw.player.currentWeapon) {
                 case "":
@@ -324,91 +293,50 @@ waw.MenuDebug = function (layer) {
                     waw.player.currentWeapon = "punch";
                     break;
             }
-        }, layer);
-    menu = new cc.Menu(debugMenu10);
-    menu.setPosition(10, 0);
-    layer.addChild(menu, 300);
-    debugMenu10.setPosition(16, 150);
-
-    labelDebug = new cc.LabelTTF("Dark", "System", 10);
-    var debugMenu11 = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 140, "Dark",
         function () {
             waw.curRoom.dark = !waw.curRoom.dark;
-        }, layer);
-    menu = new cc.Menu(debugMenu11);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugMenu11.setPosition(16, 140);
-
-    labelDebug = new cc.LabelTTF("Chest", "System", 12);
-    var debugSpawnChest = new cc.MenuItemLabel(labelDebug,
-            function () {
-                var itemType = Math.random() < 0.5 ? "boots" : Math.random() < 0.5 ? "moon" : "key";
-                var locked = Math.random() < 0.5 ? true : false;
-                var item = {
-                    x: waw.player.x,
-                    y: waw.player.y,
-                    itemType: itemType, inChest: true, locked: locked
-                };
-                waw.curRoom.items.push(item);   //TODO isnt it extra stuff?
-                waw.items[waw.curRoom.items.length-1] = item;
-
-                var e = new waw.NoMobChest(item.locked, item.itemType, waw.curRoom.items.length - 1);
-                var pos = waw.player.getPosition();
-                e.setPosition(pos);
-                e.setScale(0.1);
-                e.runAction(new cc.ScaleTo(0.5, 1));
-                this.addChild(e, 6);
-                this.addChild(e.shadowSprite, -14);
-                e.setLocalZOrder(250 - pos.y);
-                e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
-                e.debugCross.setTextureRect(cc.rect(0,0, e.width, e.height)); //for correct debug grid size
-                e.setTag(TAG_CHEST);
-                this.scheduleOnce(function () {
-                    waw.units.push(e);   //to make it obstacle&
-                }, 1);
-
-            }, layer
-        );
-
-    menu = new cc.Menu(debugSpawnChest);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugSpawnChest.setPosition(16, 126);
-
-    labelDebug = new cc.LabelTTF("LVL+", "System", 12);
-    var debugGetKey = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 126, "Chest",
+        function () {
+            var itemType = Math.random() < 0.5 ? "boots" : Math.random() < 0.5 ? "moon" : "key";
+            var locked = Math.random() < 0.5 ? true : false;
+            var item = {
+                x: waw.player.x,
+                y: waw.player.y,
+                itemType: itemType, inChest: true, locked: locked
+            };
+            waw.curRoom.items.push(item);   //TODO isnt it extra stuff?
+            waw.items[waw.curRoom.items.length - 1] = item;
+            var e = new waw.NoMobChest(item.locked, item.itemType, waw.curRoom.items.length - 1);
+            var pos = waw.player.getPosition();
+            e.setPosition(pos);
+            e.setScale(0.1);
+            e.runAction(new cc.ScaleTo(0.5, 1));
+            this.addChild(e, 6);
+            this.addChild(e.shadowSprite, -14);
+            e.setLocalZOrder(250 - pos.y);
+            e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
+            e.debugCross.setTextureRect(cc.rect(0, 0, e.width, e.height)); //for correct debug grid size
+            e.setTag(TAG_CHEST);
+            this.scheduleOnce(function () {
+                waw.units.push(e);   //to make it obstacle&
+            }, 1);
+        });
+    waw.DebugButton(layer, 16, 116, "LVL+",
         function () {
             //var transition = cc.TransitionZoomFlipAngular;
             var transition = cc.TransitionFade;
             cc.director.runScene(new transition(1, new waw.gotoNextLevel()));
-        }, layer);
-
-    menu = new cc.Menu(debugGetKey);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugGetKey.setPosition(16, 116);
-
-    labelDebug = new cc.LabelTTF("K.O.", "System", 12);
-    var debugInstaKill = new cc.MenuItemLabel(labelDebug,
+        });
+    waw.DebugButton(layer, 16, 102, "K.O.",
         function () {
             waw.player.onDeath(waw.player);
         }, layer);
-
-    menu = new cc.Menu(debugInstaKill);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugInstaKill.setPosition(16, 102);
-
-    labelDebug = new cc.LabelTTF("Trap", "System", 12);
-    var debugTrap = new cc.MenuItemLabel(labelDebug,
+    waw.DebugButton(layer, 16, 90, "Trap",
         function () {
-            if(!waw.curRoom.trapActive)
+            if (!waw.curRoom.trapActive)
                 waw.curRoom.trap = true;
-        }, layer);
-
-    menu = new cc.Menu(debugTrap);
-    menu.setPosition(0, 0);
-    layer.addChild(menu, 300);
-    debugTrap.setPosition(16, 90);
+        });
 };
