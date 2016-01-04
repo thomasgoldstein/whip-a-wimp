@@ -6,12 +6,17 @@ waw.scrollActionDone = true; //isDone scrolling between rooms
 //waw.menu = null;
 waw.scoreMenu = null;
 
-console.log = console.info = function(){};
+//console.log = console.info = function(){};
 
 if (cc.sys.capabilities.hasOwnProperty('keyboard'))
     cc.eventManager.addListener({
         event: cc.EventListener.KEYBOARD,
         onKeyPressed: function (key, event) {
+            console.log(key);
+/*            if(key >= cc.KEY.dpadLeft && key <= cc.KEY.dpadCenter)
+                key -= (cc.KEY.dpadLeft - cc.KEY.left);*/
+            if(key >= 71 && key <= 74)
+                key = cc.KEY.space;
             waw.KEYS[key] = true;
             switch (key) {   //clean opposite arrows pressed status
                 case cc.KEY.up:
@@ -29,6 +34,8 @@ if (cc.sys.capabilities.hasOwnProperty('keyboard'))
             }
         },
         onKeyReleased: function (key, event) {
+            if(key >= 71 && key <= 74)
+                key = cc.KEY.space;
             waw.KEYS[key] = false;
         }
     }, 1);

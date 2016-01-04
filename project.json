@@ -1,9 +1,13 @@
 {
-    "debugMode" : 0,
-    "showFPS" : false,
+    "project_type": "javascript",
+
+    "debugMode" : 1,
+    "showFPS" : true,
     "frameRate" : 60,
+    "noCache" : false,
     "id" : "gameCanvas",
     "renderMode" : 2,
+    "engineDir":"frameworks/cocos2d-html5",
 
     "modules" : ["cocos2d"],
 

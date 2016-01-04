@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "name": "waw39",
+  "description": "Whip-a-Wimp ported to cocos3.9",
+  "launch_path": "/index.html",
+  "icons": {
+    "128": "/res/icon.png"
+  },
+  "developer": {
+    "name": "Don Miguel&Stifu",
+    "url": "http://famesoft.ru/"
+  },
+  "default_locale": "en",
+  "installs_allowed_from": [
+    "*"
+  ],
+  "orientation": "landscape-primary",
+  "fullscreen": "true"
+}
