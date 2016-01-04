@@ -67,6 +67,7 @@ waw.MainScene = cc.Scene.extend({
         waw.player = new waw.Player();
         waw.player.setPosition(startPlayerPos);
         waw.whip = new waw.Whip();
+        waw.player.addChild(waw.whip, 10);
 
         //TODO add menu
         var layer = new waw.MainLayer();
@@ -165,8 +166,6 @@ waw.MainLayer = cc.Layer.extend({
         this.addChild(waw.player.shadowSprite,-14);
         this.addChild(waw.player,250-waw.player.y);
 
-        //waw.player.addChild(waw.whip,10);
-        //TODO FIX add/remove whip
         waw.whip.init();
 
         //waw.score = new waw.Score();
