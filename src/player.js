@@ -392,7 +392,7 @@ waw.Player = waw.Unit.extend({
                         switch (this.direction) {
                             case "down":
                                 this.weaponSprite.rotation = 0;
-                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setLocalZOrder(10);
                                 this.weaponSprite.setPosition(-10, 24);
                                 this.scheduleOnce(function () {
                                     this.weaponSprite.setPosition(-10, 14);
@@ -401,7 +401,7 @@ waw.Player = waw.Unit.extend({
                                 break;
                             case "right":
                                 this.weaponSprite.rotation = -90;
-                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setLocalZOrder(10);
                                 this.weaponSprite.setPosition(-2, 22);
                                 this.scheduleOnce(function () {
                                     this.weaponSprite.setPosition(12, 14);
@@ -410,7 +410,7 @@ waw.Player = waw.Unit.extend({
                                 break;
                             case "up":
                                 this.weaponSprite.rotation = 180;
-                                this.weaponSprite.zIndex = -10;
+                                this.weaponSprite.setLocalZOrder(-10);
                                 this.weaponSprite.setPosition(10, 24);
                                 this.scheduleOnce(function () {
                                     this.weaponSprite.setPosition(10, 14);
@@ -419,7 +419,7 @@ waw.Player = waw.Unit.extend({
                                 break;
                             case "left":
                                 this.weaponSprite.rotation = 90;
-                                this.weaponSprite.zIndex = 10;
+                                this.weaponSprite.setLocalZOrder(10);
                                 this.weaponSprite.setPosition(2, 22);
                                 this.scheduleOnce(function () {
                                     this.weaponSprite.setPosition(-12, 14);
@@ -443,7 +443,7 @@ waw.Player = waw.Unit.extend({
                                     waw.whip.setTo(waw.whip.WHIP_GROUNDL);
                                 }, 0.40);
                                 waw.whip.rotation = 0;
-                                waw.whip.zIndex = 10;
+                                waw.whip.setLocalZOrder(10);
                                 waw.whip.setPosition(-10, 24);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(-10, 14);
@@ -456,7 +456,7 @@ waw.Player = waw.Unit.extend({
                                     waw.whip.setTo(waw.whip.WHIP_GROUNDR);
                                 }, 0.40);
                                 waw.whip.rotation = -90;
-                                waw.whip.zIndex = 10;
+                                waw.whip.setLocalZOrder(10);
                                 waw.whip.setPosition(0, 22);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(12, 14);
@@ -469,7 +469,7 @@ waw.Player = waw.Unit.extend({
                                     waw.whip.setTo(waw.whip.WHIP_GROUNDL);
                                 }, 0.40);
                                 waw.whip.rotation = 180;
-                                waw.whip.zIndex = -10;
+                                waw.whip.setLocalZOrder(-10);
                                 waw.whip.setPosition(10, 24);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(10, 14);
@@ -482,7 +482,7 @@ waw.Player = waw.Unit.extend({
                                     waw.whip.setTo(waw.whip.WHIP_GROUNDL);
                                 }, 0.40);
                                 waw.whip.rotation = 90;
-                                waw.whip.zIndex = 10;
+                                waw.whip.setLocalZOrder(10);
                                 waw.whip.setPosition(0, 22);
                                 this.scheduleOnce(function () {
                                     waw.whip.setPosition(-12, 14);
