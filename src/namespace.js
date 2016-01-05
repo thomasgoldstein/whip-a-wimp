@@ -72,9 +72,8 @@ var TAG_BULLET= 300+1;
 var TAG_BOSS= 300+2;
 
 // Disable anti-aliasing
-/*
 waw.ccTexture2D_handleLoadedTexture = cc.Texture2D.prototype.handleLoadedTexture;
 cc.Texture2D.prototype.handleLoadedTexture = function() {
     waw.ccTexture2D_handleLoadedTexture.apply(this, arguments);
     this.setAliasTexParameters();
-};*/
+};
