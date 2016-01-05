@@ -315,9 +315,7 @@ waw.MenuDebug = function (layer) {
             e.setScale(0.1);
             e.runAction(new cc.ScaleTo(0.5, 1));
             this.addChild(e, 6);
-            this.addChild(e.shadowSprite, -14);
             e.setLocalZOrder(250 - pos.y);
-            e.shadowSprite.setPosition(pos.x, pos.y + e.shadowYoffset);
             e.debugCross.setTextureRect(cc.rect(0, 0, e.width, e.height)); //for correct debug grid size
             e.setTag(TAG_CHEST);
             this.scheduleOnce(function () {

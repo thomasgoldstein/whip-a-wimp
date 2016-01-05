@@ -3,10 +3,7 @@
 
 waw.NoMobChest = waw.Unit.extend({
     mobType: "Chest",
-    shadowYoffset: -4,
     spriteYoffset: -4,
-    //HP: 2,
-    //state: "idle",
     sfx_hurt01: waw.sfx.punch01,
     sfx_hurt02: waw.sfx.punch01,
     sfx_death: waw.sfx.candelabre01,
@@ -43,9 +40,6 @@ waw.NoMobChest = waw.Unit.extend({
             this.lockSprite.setPosition(15, 8);
             waw.makeSpriteJump(this.lockSprite);
         }
-        this.shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
-        this.shadowSprite.setAnchorPoint(0.5, 0.5);
-        this.shadowSprite.scaleY = 0.5;
     },
     //clear from this unit 1. local room mobs 2. global room 3. local units - collision check
     cleanRefs: function () {
@@ -108,7 +102,6 @@ waw.NoMobChest = waw.Unit.extend({
             this.scheduleOnce(function () {
                 this.sprite.runAction(new cc.FadeOut(1));
                 this.topSprite.runAction(new cc.FadeOut(0.8));
-                this.shadowSprite.runAction(new cc.FadeOut(0.7));
             }, 0.6);
             //TODO turn it into sequence
         }, 3);
