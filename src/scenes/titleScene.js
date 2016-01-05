@@ -5,7 +5,7 @@ waw.TitleScene = cc.Scene.extend({
         this._super();
 
         cc.audioEngine.setMusicVolume(0.2);
-        cc.audioEngine.playMusic(waw.bgm.title, true);
+        //cc.audioEngine.playMusic(waw.bgm.title, true);
 
         var layer = new waw.TitleLayer();
         layer.init();
@@ -13,7 +13,7 @@ waw.TitleScene = cc.Scene.extend({
 
         waw.theme.gotoNextTheme();
 
-        waw.pressFireAndGotoScene(this, waw.MainScene, true);
+        waw.pressFireAndGotoScene(this, waw.MenuScene, false);
     }
 });
 
@@ -46,92 +46,45 @@ waw.TitleLayer = cc.Layer.extend({
         };
 
         //var bgLayer = new cc.LayerGradient(cc.color(45,34,0,0), cc.color(0,90,80,0), cc.p(0.5,-1));
-        //this.addChild(bgLayer, -100);
+        var bgLayer = new cc.LayerGradient(cc.color.RED, new cc.Color(255,0,0,0), cc.p(0, -1),
+                                                      [{p:0, color: cc.color.RED},
+                                                      {p:.5, color: new cc.Color(0,0,0,0)},
+                                                     {p:1, color: cc.color.RED}]);
+        //where p = A value between 0.0 and 1.0 that represents the position between start and end in a gradient
+        this.addChild(bgLayer, 1);
 
-        var bgLayer  = new cc.LayerColor(cc.color(191,239,255,255), 320, 240);
-        this.addChild(bgLayer, -100);
+        //part 1
 
-        var gameTitleWhip = new cc.Sprite(waw.gfx.title, cc.rect(0,0,124,44));
-        gameTitleWhip.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitleWhip, 299 + 6);
-        gameTitleWhip.setPosition(320/2, 240);
-
-        var gameTitleA = new cc.Sprite(waw.gfx.title, cc.rect(41,45,42,24));
-        gameTitleA.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitleA, 299 + 5);
-        gameTitleA.setPosition(320/2, 240);
-
-        var gameTitleWimp = new cc.Sprite(waw.gfx.title, cc.rect(0,70,124,46));
-        gameTitleWimp.setAnchorPoint(0.5, 0);
-        this.addChild(gameTitleWimp, 299 + 4);
-        gameTitleWimp.setPosition(320/2, 240);
-
-        var parallax0 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
-        parallax0.setAnchorPoint(0, 0);
-        parallax0.setPosition(-60, 73);
-        this.addChild(parallax0, -10);
-
-        var parallax1 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,0, 640, 48));
-        parallax1.setAnchorPoint(0, 0);
-        parallax1.setPosition(0, 48);
-        this.addChild(parallax1, -9);
-
-        var parallax2 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,49, 640, 48));
-        parallax2.setAnchorPoint(0, 0);
-        parallax2.setPosition(0, 24);
-        this.addChild(parallax2, -8);
-
-        var parallax3 = new cc.Sprite(waw.gfx.titleGFX, new cc.rect(0,98, 640, 48));
-        parallax3.setAnchorPoint(0, 0);
-        parallax3.setPosition(0, 0);
-        this.addChild(parallax3, -7);
-
-        gameTitleWhip.runAction(
+        var fameLogo = new cc.Sprite(waw.gfx.fameLogo);
+        fameLogo.setAnchorPoint(0.5, 1);
+        fameLogo.opacity = 0;
+        //fameLogo.scale = 1;
+        this.addChild(fameLogo, 299 + 4);
+        fameLogo.setPosition(320/2, 240-10);
+        fameLogo.runAction(
             new cc.Sequence(
-                new cc.DelayTime(1),
-                new cc.EaseElasticOut(
-                    new cc.MoveTo(1, 320 / 2, 140),
-                    0.33),
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.2, 0, 4),
-                        new cc.MoveBy(0.2, 0, -4)
-                    )
-                )
-            )
-        );
-        gameTitleA.runAction(
-            new cc.Sequence(
-                new cc.DelayTime(1.25),
-                new cc.EaseElasticOut(
-                    new cc.MoveTo(1, 320 / 2, 120),
-                    0.32)
-            )
-        );
-        gameTitleWimp.runAction(
-            new cc.Sequence(
-                new cc.DelayTime(1.5),
-                new cc.EaseElasticOut(
-                    new cc.MoveTo(1, 320 / 2, 80),
-                    0.33),
-                new cc.RepeatForever(
-                    new cc.Sequence(
-                        new cc.MoveBy(0.2, 0, -3),
-                        new cc.MoveBy(0.2, -20, 3)
-                    )
-                )
+                new cc.FadeIn(7),
+                new cc.DelayTime(3),
+                new cc.MoveBy(2, 0, 10)
             )
         );
 
-        parallax0.runAction(new cc.MoveBy(5, -20, -24));
-        parallax1.runAction(new cc.MoveBy(5, -60, -16));
-        parallax2.runAction(new cc.MoveBy(5, -100, -8));
-        parallax3.runAction(new cc.MoveBy(5, -120, 0));
+        var labelStaff = new cc.LabelTTF("(c)2016 D&S", "System", 14);
+        labelStaff.setAnchorPoint(1, 0);
+        this.addChild(labelStaff, 500);
+        labelStaff.setPosition(316, 1);
+        labelStaff.opacity = 0;
+        labelStaff.runAction(
+            new cc.Sequence(
+                new cc.DelayTime(2),
+                new cc.FadeIn(3)
+            )
+        );
 
         var sprite = new waw.AnimatedSprite(waw.gfx.jesus, animData);
         sprite.setAnchorPoint(0.5, 0);
         sprite.setPosition(-30, 30);
-        this.addChild(sprite);
+        this.addChild(sprite, 10);
         sprite.playAnimation("walk_right");
 
         var shadowSprite = new cc.Sprite(waw.gfx.shadow24x12);
@@ -148,11 +101,6 @@ waw.TitleLayer = cc.Layer.extend({
                     }, this),
                     new cc.DelayTime(5),
                     new cc.CallFunc(function () {
-                        cc.audioEngine.playEffect(waw.sfx.punch01);
-                        sprite.playAnimation("punch_down")
-                    }, this),
-                    new cc.DelayTime(0.8),
-                    new cc.CallFunc(function () {
                         sprite.playAnimation("walk_right");
                         sprite.skewX = 2;
                     }, this),
@@ -161,19 +109,12 @@ waw.TitleLayer = cc.Layer.extend({
                     new cc.CallFunc(function () {
                         sprite.x = -20;
                         sprite.skewX = 0;
+                    }, this),
+                    new cc.CallFunc(function () {
+                        cc.director.runScene(new cc.TransitionFade(0.5,new waw.MenuScene()));
                     }, this)
                 )
             )
-        );
-
-        var contestLogo = new cc.Sprite(waw.gfx.contest);
-        contestLogo.setAnchorPoint(0.5, 1);
-        contestLogo.opacity = 0;
-        contestLogo.scale = 0.2;
-        this.addChild(contestLogo, 299 + 4);
-        contestLogo.setPosition(320/2, 240-10);
-        contestLogo.runAction(
-                    new cc.FadeIn(7)
         );
     }
 });

@@ -1,6 +1,10 @@
 "use strict";
 
 waw.pressFireAndGotoScene = function (self, newScene, preloadResoucres) {
+    if(!self)
+        throw new Error("no self");
+    if(!newScene)
+        throw new Error("no newScene");
 
     self.scheduleOnce(function () {
         var label = new cc.LabelTTF("PRESS FIRE", "System", 16);

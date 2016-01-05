@@ -45,6 +45,7 @@
         "src/mobs/bulletDove.js",
         "src/scenes/commonScenes.js",
         "src/scenes/theEnd.js",
+        "src/scenes/menuScene.js",
         "src/scenes/titleScene.js",
         "src/scenes/gotoNextLevel.js",
         "src/scenes/gameOver.js",

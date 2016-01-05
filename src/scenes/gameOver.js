@@ -11,7 +11,7 @@ waw.GameOverScene = cc.Scene.extend({
         this.scheduleOnce(function () {
             var transition = cc.TransitionFade;
             rooms.initLevel();
-            waw.currentScene = new waw.TitleScene();
+            waw.currentScene = new waw.MenuScene();
             cc.director.runScene(new transition(1,waw.currentScene));
         }, 3);
     }
