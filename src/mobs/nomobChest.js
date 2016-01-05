@@ -21,7 +21,7 @@ waw.NoMobChest = waw.Unit.extend({
         this.cleanItemIndex = n;
         this.setContentSize(32, 16);
 
-        this.sprite = new cc.Sprite(waw.gfx.chest, new cc.rect(0, 5, 32, 24));
+        this.sprite = new cc.Sprite(waw.gfx.chest, new cc.rect(0, 5, 32, 23));
         this.sprite.setPosition(0,this.spriteYoffset);
         this.sprite.setAnchorPoint(0.5, 0);
 
